@@ -1,0 +1,178 @@
+\documentclass[11pt,a4paper,twoside]{report} %impostazione della classe del codumento correttamente
+\usepackage[italian]{babel}%sillabazione
+\usepackage[utf8]{inputenc}%accenti
+
+%per stampare
+%\usepackage[inner=4cm,	outer=1cm,		bottom=1.8cm,		top=1.8cm]	{geometry}
+
+%per leggere su monitor
+\usepackage[inner=2cm,	outer=2cm,		bottom=1.8cm,		top=1.8cm]	{geometry}
+
+
+\usepackage[titles]{tocloft} %table of content
+
+\usepackage{hyperref}%link alle varie sezioni e ai capitoli
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+
+\usepackage[parfill]{parskip} %le nuove righe non iniziano indentate
+
+\usepackage{caption}
+
+\newcommand*\E{\`E\ } %comando \E per fare la e accentata maiuscola
+
+%pacchetti non configurati direttamente
+\usepackage{graphicx,wrapfig,epigraph,titlesec,lipsum,xcolor,anyfontsize}
+
+
+
+
+\graphicspath{{img/},{../}}
+\usepackage{listings}
+\usepackage{courier}
+\usepackage{multicol}
+\lstset{
+	frame=single,
+	basicstyle=\ttfamily
+}
+
+
+%stile di titoli di chapter section e subsection
+
+\newcommand{\hsp}{\hspace{6pt}}
+
+\titleformat{\chapter}[block]
+	{\fontsize{35pt}{0pt}\sffamily\bfseries}
+	{\fontsize{60pt}{0pt}\sffamily\thechapter\hsp\textcolor{gray75}{$|$}\hsp}
+	{0pt}{\fontsize{30pt}{0pt}\bfseries}
+
+\titlespacing{\chapter}{0pt}{-30pt}{30pt}
+
+
+\usepackage{tikz}
+\usepackage{epigraph,anyfontsize}
+
+
+\renewcommand\epigraphflush{flushright}
+\renewcommand\epigraphsize{\normalsize}
+\setlength\epigraphwidth{0.7\textwidth}
+
+\definecolor{titlepagecolor}{cmyk}{.10,.60,1,.20}
+
+\definecolor{gray75}{gray}{0.75}
+
+\makeatletter
+\def\printauthor{%
+	{\Large \sffamily\bfseries \@author}}
+\def\printtitle{%
+	{	\sffamily\bfseries \noindent
+
+		\fontsize{30pt}{60pt} \selectfont \@title}
+}
+\def\printdate{%
+	{ \sffamily \large \@date}}
+
+\makeatother
+
+
+% The following code is borrowed from: http://tex.stackexchange.com/a/86310/10898
+
+\newcommand\titlepagedecoration{%
+	\begin{tikzpicture}[remember picture,overlay,shorten >= -10pt]
+
+	\coordinate (aux1) at ([yshift=-15pt]current page.north east);
+	\coordinate (aux2) at ([yshift=-410pt]current page.north east);
+	\coordinate (aux3) at ([xshift=-4.5cm]current page.north east);
+	\coordinate (aux4) at ([yshift=-150pt]current page.north east);
+
+	\begin{scope}[titlepagecolor!40,line width=12pt,rounded corners=12pt]
+	\draw
+	(aux1) -- coordinate (a)
+	++(225:5) --
+	++(-45:5.1) coordinate (b);
+	\draw[shorten <= -10pt]
+	(aux3) --
+	(a) --
+	(aux1);
+	\draw[opacity=0.6,titlepagecolor,shorten <= -10pt]
+	(b) --
+	++(225:2.2) --
+	++(-45:2.2);
+	\end{scope}
+	\draw[titlepagecolor,line width=8pt,rounded corners=8pt,shorten <= -10pt]
+	(aux4) --
+	++(225:0.8) --
+	++(-45:0.8);
+	\begin{scope}[titlepagecolor!70,line width=6pt,rounded corners=8pt]
+	\draw[shorten <= -10pt]
+	(aux2) --
+	++(225:3) coordinate[pos=0.45] (c) --
+	++(-45:3.1);
+	\draw
+	(aux2) --
+	(c) --
+	++(135:2.5) --
+	++(45:2.5) --
+	++(-45:2.5) coordinate[pos=0.3] (d);
+	\draw
+	(d) -- +(45:1);
+	\end{scope}
+	\end{tikzpicture}%
+}
+
+\renewcommand\maketitle{
+	\begin{titlepage}
+
+		\noindent
+		\printtitle\par
+		%\epigraph{ NOME }
+		%{\textsc{Sviluppo di una Web Application in JSP}}
+		\null\vfill
+		\vspace*{1cm}
+		\noindent
+		\hfill
+		\begin{minipage}{0.55\linewidth}
+			\begin{flushright}
+				\printauthor
+
+				\vspace{10pt}
+
+				\printdate
+			\end{flushright}
+		\end{minipage}
+		%
+		\begin{minipage}{0.02\linewidth}
+			\rule{1pt}{65pt}
+		\end{minipage}
+		\titlepagedecoration
+	\end{titlepage}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\author{Matteo Battilana - 180209 Massimo Girondi - 178114 Daniele Isoni - 181839}
+
+\title{Progetto di \\Introduzione alla \\programmazione per il Web}
+\date{Versione del \today}
+\begin{document}
+\maketitle
+\clearpage\null\newpage
+\tableofcontents
+\clearpage\null\newpage
