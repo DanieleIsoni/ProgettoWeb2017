@@ -81,7 +81,7 @@ public class JDBCDAOFactory implements DAOFactory {
         super();
 
         try {
-            Class.forName("com.mysql.jdbc.Driver", true, getClass().getClassLoader());
+            Class.forName("com.mysql.cj.jdbc.Driver", true, getClass().getClassLoader());
         } catch (ClassNotFoundException cnfe) {
             throw new RuntimeException(cnfe.getMessage(), cnfe.getCause());
         }
