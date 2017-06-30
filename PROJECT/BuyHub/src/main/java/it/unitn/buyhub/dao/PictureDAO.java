@@ -7,6 +7,9 @@ package it.unitn.buyhub.dao;
 
 import it.unitn.buyhub.dao.*;
 import it.unitn.buyhub.dao.entities.Picture;
+import it.unitn.buyhub.dao.entities.Product;
+import it.unitn.buyhub.dao.entities.Review;
+import it.unitn.buyhub.dao.entities.Shop;
 import it.unitn.buyhub.dao.entities.User;
 import it.unitn.buyhub.dao.persistence.DAO;
 import it.unitn.buyhub.dao.persistence.DAO;
@@ -93,4 +96,49 @@ public interface PictureDAO extends DAO<Picture, Integer> {
      */
     @Override
     public Picture update(Picture picture) throws DAOException;
+    
+    /**
+     * Returns the list of the {@link Picture picture} with the product passed as
+     * parameter.
+     *
+     * @param product the {@code product} of the {@code pictures} to get.
+     * @return the list of the {@code pictures} with the product passed as
+     * parameter.
+     * @throws DAOException if an error occurred during the information
+     * retrieving.
+     *
+     * @author Matteo Battilana
+     * @since 1.0.170425
+     */
+    public List<Picture> getByProduct(Product product) throws DAOException;
+    
+        /**
+     * Returns the list of the {@link Picture picture} with the review passed as
+     * parameter.
+     *
+     * @param review the {@code product} of the {@code pictures} to get.
+     * @return the list of the {@code pictures} with the review passed as
+     * parameter.
+     * @throws DAOException if an error occurred during the information
+     * retrieving.
+     *
+     * @author Matteo Battilana
+     * @since 1.0.170425
+     */
+    public List<Picture> getByReview(Review review) throws DAOException;
+    
+        /**
+     * Returns the list of the {@link Picture picture} with the shop passed as
+     * parameter.
+     *
+     * @param shop the {@code product} of the {@code pictures} to get.
+     * @return the list of the {@code pictures} with the shop passed as
+     * parameter.
+     * @throws DAOException if an error occurred during the information
+     * retrieving.
+     *
+     * @author Matteo Battilana
+     * @since 1.0.170425
+     */
+    public List<Picture> getByShop(Shop shop) throws DAOException;
 }

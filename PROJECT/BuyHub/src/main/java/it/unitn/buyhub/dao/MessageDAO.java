@@ -96,24 +96,6 @@ public interface MessageDAO extends DAO<Message, Integer> {
      */
     public List<Message> getByReview(Review review) throws DAOException;
 
-
-    /**
-     * Returns the {@link Message message} with the distance from me less or
-     * equals than the one passed as parameter.
-     *
-     * @param myLatitude the current latitude
-     * @param myLongitude the current longitude
-     * @param range search range
-     * @return the {@code message} with the distance from me less or equals than
-     * the one passed as parameter.
-     * @throws DAOException if an error occurred during the information
-     * retrieving.
-     *
-     * @author Matteo Battilana
-     * @since 1.0.170425
-     */
-    public Message getByRange(double myLatitude, double myLongitude, int range) throws DAOException;
-
     /**
      * Returns the list of all the valid {@link Message messages} stored by the
      * storage system.
