@@ -14,7 +14,7 @@ import java.util.Date;
 public class Message {
 
     private int id;
-    private User review;
+    private Review review;
     private User owner;
     private Date date;
     private Date validationDate;
@@ -24,7 +24,7 @@ public class Message {
         this.id = id;
     }
 
-    public void setReview(User review) {
+    public void setReview(Review review) {
         this.review = review;
     }
 
@@ -48,7 +48,7 @@ public class Message {
         return id;
     }
 
-    public User getReview() {
+    public Review getReview() {
         return review;
     }
 
@@ -68,7 +68,7 @@ public class Message {
         return idValidation;
     }
 
-    public Message(int id, User review, User owner, Date date, Date validationDate, int idValidation) {
+    public Message(int id, Review review, User owner, Date date, Date validationDate, int idValidation) {
         this.id = id;
         this.review = review;
         this.owner = owner;

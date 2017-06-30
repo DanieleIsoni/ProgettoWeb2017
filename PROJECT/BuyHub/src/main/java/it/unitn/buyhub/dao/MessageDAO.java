@@ -6,6 +6,7 @@
 package it.unitn.buyhub.dao;
 
 import it.unitn.buyhub.dao.entities.Message;
+import it.unitn.buyhub.dao.entities.Review;
 import it.unitn.buyhub.dao.entities.User;
 import it.unitn.buyhub.dao.persistence.DAO;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
@@ -21,8 +22,8 @@ import java.util.List;
 public interface MessageDAO extends DAO<Message, Integer> {
 
     /**
-     * Returns the number of {@link Message messages} stored on the
-     * persistence system of the application.
+     * Returns the number of {@link Message messages} stored on the persistence
+     * system of the application.
      *
      * @return the number of records present into the storage system.
      * @throws DAOException if an error occurred during the information
@@ -34,8 +35,8 @@ public interface MessageDAO extends DAO<Message, Integer> {
     public Long getCount() throws DAOException;
 
     /**
-     * Returns the {@link Message message} with the primary key equals to
-     * the one passed as parameter.
+     * Returns the {@link Message message} with the primary key equals to the
+     * one passed as parameter.
      *
      * @param primaryKey the {@code id} of the {@code message} to get.
      * @return the {@code message} with the id equals to the one passed as
@@ -51,29 +52,60 @@ public interface MessageDAO extends DAO<Message, Integer> {
     public Message getByPrimaryKey(Integer primaryKey) throws DAOException;
 
     /**
-     * Returns the list of the {@link Message message} with the reviewer the one 
+     * Returns the list of the {@link Message message} with the owner the one
      * passed as parameter.
      *
-     * @param reviewer the {@code reviewer} of the {@code message} to get.
-     * @return the {@code message}the list of the {@link Message message} with 
-     * the reviewer the one passed as parameter.
+     * @param owner the {@code owner} of the {@code messages} to get.
+     * @return the {@code message}the list of the {@link Message message} with
+     * the owner the one passed as parameter.
      * @throws DAOException if an error occurred during the information
      * retrieving.
      *
      * @author Matteo Battilana
      * @since 1.0.170425
      */
-    public List<Message> getByReviewer(User reviewer) throws DAOException;
-    
-     /**
-     * Returns the {@link Message message} with the distance from me less
-     * or equals than the one passed as parameter.
+    public List<Message> getByOwner(User owner) throws DAOException;
+
+    /**
+     * Returns the list of the {@link Message message} with the validator the
+     * one passed as parameter.
+     *
+     * @param validator the {@code validator} of the {@code messages} to get.
+     * @return the {@code message}the list of the {@link Message message} with
+     * the validator the one passed as parameter.
+     * @throws DAOException if an error occurred during the information
+     * retrieving.
+     *
+     * @author Matteo Battilana
+     * @since 1.0.170425
+     */
+    public List<Message> getByValidation(User validator) throws DAOException;
+
+    /**
+     * Returns the list of the {@link Message message} with the review passed as
+     * parameter.
+     *
+     * @param review the {@code review} of the {@code messages} to get.
+     * @return the {@code message}the list of the {@link Message message} with
+     * the validator the one passed as parameter.
+     * @throws DAOException if an error occurred during the information
+     * retrieving.
+     *
+     * @author Matteo Battilana
+     * @since 1.0.170425
+     */
+    public List<Message> getByReview(Review review) throws DAOException;
+
+
+    /**
+     * Returns the {@link Message message} with the distance from me less or
+     * equals than the one passed as parameter.
      *
      * @param myLatitude the current latitude
      * @param myLongitude the current longitude
      * @param range search range
-     * @return the {@code message} with the distance from me less
-     * or equals than the one passed as parameter.
+     * @return the {@code message} with the distance from me less or equals than
+     * the one passed as parameter.
      * @throws DAOException if an error occurred during the information
      * retrieving.
      *
