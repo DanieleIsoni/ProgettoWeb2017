@@ -7,6 +7,7 @@ package it.unitn.buyhub.examplemysql;
 
 import com.mysql.cj.jdbc.PreparedStatement;
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -45,28 +46,21 @@ public class TestClass {
             e.printStackTrace();
             return;
         }
-        
-        System.out.println("\n\nCONNESSIONE AL DB RIUSCITA\n\n");
 
-        /*
-        Statement stmt = null;
-        ResultSet rs = null;
+        
 
         try {
-            stmt = crunchifyConn.createStatement();
-            rs = stmt.executeQuery("SELECT * FROM test_table");
-
-            // or alternatively, if you don't know ahead of time that
-            // the query will be a SELECT...
-           System.out.println("\n\nCONNESSIONE AL DB RIUSCITA\n\n");
-
-            // Now do something with the ResultSet ....
-        } catch (SQLException ex) {
-            // handle any errors
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
+            DatabaseMetaData md = crunchifyConn.getMetaData();
+            ResultSet rs = md.getTables(null, null, "%", null);
+            while (rs.next()) {
+                System.out.printf("table name: %s%n", rs.getString("TABLE_NAME"));
+            }
+            
+            System.out.println("\n\nCONNESSIONE AL DB RIUSCITA\n\n");
+            
+        } catch (SQLException e) {
+            System.out.println("MySQL Query Failed!");
+            e.printStackTrace();
         }
-        */
     }
 }
