@@ -6,6 +6,7 @@
 package it.unitn.buyhub.dao;
 
 import it.unitn.buyhub.dao.*;
+import it.unitn.buyhub.dao.entities.Notification;
 import it.unitn.buyhub.dao.entities.Picture;
 import it.unitn.buyhub.dao.entities.Product;
 import it.unitn.buyhub.dao.entities.Review;
@@ -37,6 +38,19 @@ public interface PictureDAO extends DAO<Picture, Integer> {
      */
     @Override
     public Long getCount() throws DAOException;
+    
+    /**
+     * Persists the new {@link Picture pictures} passed as parameter to the
+     * storage system.
+     *
+     * @param pictures the new {@code pictures} to persist.
+     * @return the id of the new persisted record.
+     * @throws DAOException if an error occurred during the persist action.
+     *
+     * @author Stefano Chirico
+     * @since 1.0.170425
+     */
+    public Long insert(Picture pictures) throws DAOException;
 
     /**
      * Returns the {@link Picture picture} with the primary key equals to the

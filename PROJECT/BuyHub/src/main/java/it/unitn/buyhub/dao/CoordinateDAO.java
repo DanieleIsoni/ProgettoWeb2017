@@ -31,6 +31,18 @@ public interface CoordinateDAO extends DAO<Coordinate, Integer> {
      */
     @Override
     public Long getCount() throws DAOException;
+    
+     /**
+     * Persists the new {@link Coordinate coordinate} passed as parameter to the 
+     * storage system.
+     * @param coordinate the new {@code coordinate} to persist.
+     * @return the id of the new persisted record. 
+     * @throws DAOException if an error occurred during the persist action.
+     * 
+     * @author Stefano Chirico
+     * @since 1.0.170425
+     */
+    public Long insert(Coordinate coordinate) throws DAOException;
 
     /**
      * Returns the {@link Coordinate coordinate} with the primary key equals to

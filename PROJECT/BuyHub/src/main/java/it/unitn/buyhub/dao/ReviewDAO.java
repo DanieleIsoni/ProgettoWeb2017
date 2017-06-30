@@ -37,6 +37,19 @@ public interface ReviewDAO extends DAO<Review, Integer> {
     public Long getCount() throws DAOException;
 
     /**
+     * Persists the new {@link Review reviews} passed as parameter to the
+     * storage system.
+     *
+     * @param reviews the new {@code reviews} to persist.
+     * @return the id of the new persisted record.
+     * @throws DAOException if an error occurred during the persist action.
+     *
+     * @author Stefano Chirico
+     * @since 1.0.170425
+     */
+    public Long insert(Review reviews) throws DAOException;
+
+    /**
      * Returns the {@link Review review} with the primary key equals to the one
      * passed as parameter.
      *
@@ -109,6 +122,5 @@ public interface ReviewDAO extends DAO<Review, Integer> {
      * @since 1.0.170425
      */
     public List<Review> getByCreator(User creator) throws DAOException;
-
 
 }

@@ -5,6 +5,7 @@
  */
 package it.unitn.buyhub.dao;
 
+import it.unitn.buyhub.dao.entities.Coordinate;
 import it.unitn.buyhub.dao.entities.Message;
 import it.unitn.buyhub.dao.entities.Review;
 import it.unitn.buyhub.dao.entities.User;
@@ -33,6 +34,19 @@ public interface MessageDAO extends DAO<Message, Integer> {
      */
     @Override
     public Long getCount() throws DAOException;
+
+    /**
+     * Persists the new {@link Message message} passed as parameter to the
+     * storage system.
+     *
+     * @param message the new {@code coordinate} to persist.
+     * @return the id of the new persisted record.
+     * @throws DAOException if an error occurred during the persist action.
+     *
+     * @author Stefano Chirico
+     * @since 1.0.170425
+     */
+    public Long insert(Message message) throws DAOException;
 
     /**
      * Returns the {@link Message message} with the primary key equals to the

@@ -6,6 +6,7 @@
 package it.unitn.buyhub.dao;
 
 import it.unitn.buyhub.dao.*;
+import it.unitn.buyhub.dao.entities.Shop;
 import it.unitn.buyhub.dao.entities.User;
 import it.unitn.buyhub.dao.entities.User;
 import it.unitn.buyhub.dao.persistence.DAO;
@@ -23,8 +24,8 @@ import java.util.List;
 public interface UserDAO extends DAO<User, Integer> {
 
     /**
-     * Returns the number of {@link User users} stored on the persistence
-     * system of the application.
+     * Returns the number of {@link User users} stored on the persistence system
+     * of the application.
      *
      * @return the number of records present into the storage system.
      * @throws DAOException if an error occurred during the information
@@ -36,8 +37,21 @@ public interface UserDAO extends DAO<User, Integer> {
     public Long getCount() throws DAOException;
 
     /**
-     * Returns the {@link User user} with the primary key equals to the
-     * one passed as parameter.
+     * Persists the new {@link Users users} passed as parameter to the storage
+     * system.
+     *
+     * @param users the new {@code users} to persist.
+     * @return the id of the new persisted record.
+     * @throws DAOException if an error occurred during the persist action.
+     *
+     * @author Stefano Chirico
+     * @since 1.0.170425
+     */
+    public Long insert(User shops) throws DAOException;
+
+    /**
+     * Returns the {@link User user} with the primary key equals to the one
+     * passed as parameter.
      *
      * @param primaryKey the {@code id} of the {@code user} to get.
      * @return the {@code user} with the id equals to the one passed as
@@ -53,7 +67,7 @@ public interface UserDAO extends DAO<User, Integer> {
     public User getByPrimaryKey(Integer primaryKey) throws DAOException;
 
     /**
-     * Returns the list of the {@link User user} with the password and username 
+     * Returns the list of the {@link User user} with the password and username
      * passed as parameter.
      *
      * @param username the {@code username} of the {@code users} to get.

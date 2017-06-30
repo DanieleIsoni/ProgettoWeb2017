@@ -158,7 +158,7 @@ public class JDBCMessageDAO extends JDBCDAO<Message, Integer> implements Message
                 }
             }
         } catch (SQLException | DAOFactoryException ex) {
-            throw new DAOException("Impossible to get the coordinates for the passed primary key", ex);
+            throw new DAOException("Impossible to get the coordinates for the passed owner", ex);
         }
         return messages;
     }
@@ -208,7 +208,7 @@ public class JDBCMessageDAO extends JDBCDAO<Message, Integer> implements Message
                 }
             }
         } catch (SQLException | DAOFactoryException ex) {
-            throw new DAOException("Impossible to get the coordinates for the passed primary key", ex);
+            throw new DAOException("Impossible to get the coordinates for the passed validator", ex);
         }
         return messages;
     }
@@ -226,7 +226,42 @@ public class JDBCMessageDAO extends JDBCDAO<Message, Integer> implements Message
      * @author Matteo Battilana
      * @since 1.0.170425
      */
-    public List<Message> getByReview(Review review) throws DAOException;
+    public List<Message> getByReview(Review review) throws DAOException {
+        List<Message> messages = new ArrayList<>();
+        if (review == null) {
+            throw new DAOException("review is null");
+        }
+        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM messages WHERE id_review = ?")) {
+            stm.setInt(1, review.getId());
+            try (ResultSet rs = stm.executeQuery()) {
+
+                while (rs.next()) {
+                    Timestamp timestamp = rs.getTimestamp("date");
+                    Date date = new Date(timestamp.getTime());
+                    Message message = new Message();
+                    message.setId(rs.getInt("id"));
+                    message.setDescription(rs.getString("description"));
+                    message.setDate(date);
+
+                    //Get owner associate
+                    UserDAO userDao = getDAO(UserDAO.class);
+                    message.setOwner(userDao.getByPrimaryKey(rs.getInt("id_owner")));
+
+                    //Get validator
+                    UserDAO userDao2 = getDAO(UserDAO.class);
+                    message.setValidation(userDao2.getByPrimaryKey(rs.getInt("id_validation")));
+
+                    //Get review
+                    message.setReview(review);
+
+                    messages.add(message);
+                }
+            }
+        } catch (SQLException | DAOFactoryException ex) {
+            throw new DAOException("Impossible to get the coordinates for the passed review", ex);
+        }
+        return messages;
+    }
 
     /**
      * Returns the list of all the valid {@link Message messages} stored by the
@@ -240,7 +275,38 @@ public class JDBCMessageDAO extends JDBCDAO<Message, Integer> implements Message
      * @since 1.0.170425
      */
     @Override
-    public List<Message> getAll() throws DAOException;
+    public List<Message> getAll() throws DAOException {
+        List<Message> messages = new ArrayList<>();
+        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM messages")) {
+            try (ResultSet rs = stm.executeQuery()) {
+
+                rs.next();
+                Timestamp timestamp = rs.getTimestamp("date");
+                Date date = new Date(timestamp.getTime());
+                Message message = new Message();
+                message.setId(rs.getInt("id"));
+                message.setDescription(rs.getString("description"));
+                message.setDate(date);
+
+                //Get owner associate
+                UserDAO userDao = getDAO(UserDAO.class);
+                message.setOwner(userDao.getByPrimaryKey(rs.getInt("id_owner")));
+
+                //Get validator
+                UserDAO userDao2 = getDAO(UserDAO.class);
+                message.setValidation(userDao2.getByPrimaryKey(rs.getInt("id_validation")));
+
+                //Get review
+                ReviewDAO reviewDao = getDAO(ReviewDAO.class);
+                message.setReview(reviewDao.getByPrimaryKey(rs.getInt("id_review")));
+
+                messages.add(message);
+            }
+        } catch (SQLException | DAOFactoryException ex) {
+            throw new DAOException("Impossible to get the coordinates for the passed primary key", ex);
+        }
+        return messages;
+    }
 
     /**
      * Update the message passed as parameter and returns it.
@@ -253,5 +319,22 @@ public class JDBCMessageDAO extends JDBCDAO<Message, Integer> implements Message
      * @since 1.0.170425
      */
     @Override
-    public Message update(Message message) throws DAOException;
+    public Message update(Message message) throws DAOException{
+         if (message == null) {
+            throw new DAOException("parameter not valid", new IllegalArgumentException("The passed message is null"));
+        }
+
+        try (PreparedStatement std = CON.prepareStatement("UPDATE message SET validation_date = ?, description = ? WHERE id = ?")) {
+            std.setTimestamp(1, new Timestamp(message.getDate().getTime()));
+            std.setString(2, message.getDescription());
+            std.setInt(3, message.getId());
+            if (std.executeUpdate() == 1) {
+                return message;
+            } else {
+                throw new DAOException("Impossible to update the message");
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Impossible to update the message", ex);
+        }
+    }
 }

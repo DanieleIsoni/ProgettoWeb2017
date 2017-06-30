@@ -6,6 +6,7 @@
 package it.unitn.buyhub.dao;
 
 import it.unitn.buyhub.dao.*;
+import it.unitn.buyhub.dao.entities.Review;
 import it.unitn.buyhub.dao.entities.Shop;
 import it.unitn.buyhub.dao.entities.User;
 import it.unitn.buyhub.dao.persistence.DAO;
@@ -34,6 +35,19 @@ public interface ShopDAO extends DAO<Shop, Integer> {
      */
     @Override
     public Long getCount() throws DAOException;
+
+    /**
+     * Persists the new {@link Shop shops} passed as parameter to the
+     * storage system.
+     *
+     * @param shops the new {@code shops} to persist.
+     * @return the id of the new persisted record.
+     * @throws DAOException if an error occurred during the persist action.
+     *
+     * @author Stefano Chirico
+     * @since 1.0.170425
+     */
+    public Long insert(Shop shops) throws DAOException;
 
     /**
      * Returns the {@link Shop shop} with the primary key equals to the one
@@ -108,16 +122,16 @@ public interface ShopDAO extends DAO<Shop, Integer> {
      */
     @Override
     public Shop update(Shop shop) throws DAOException;
-    
+
     /**
-     * Returns the {@link Shop shop} with the distance from me less
-     * or equals than the one passed as parameter.
+     * Returns the {@link Shop shop} with the distance from me less or equals
+     * than the one passed as parameter.
      *
      * @param myLatitude the current latitude
      * @param myLongitude the current longitude
      * @param range search range in km
-     * @return the {@code shop} with the distance from  less
-     * or equals distance than the one passed as parameter.
+     * @return the {@code shop} with the distance from less or equals distance
+     * than the one passed as parameter.
      * @throws DAOException if an error occurred during the information
      * retrieving.
      *
@@ -125,5 +139,5 @@ public interface ShopDAO extends DAO<Shop, Integer> {
      * @since 1.0.170425
      */
     public List<Shop> getByRange(double myLatitude, double myLongitude, int range) throws DAOException;
-    
+
 }
