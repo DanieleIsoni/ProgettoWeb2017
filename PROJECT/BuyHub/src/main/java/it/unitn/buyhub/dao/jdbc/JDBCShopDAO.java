@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package it.unitn.buyhub.dao;
+package it.unitn.buyhub.dao.jdbc;
 
+import it.unitn.buyhub.dao.*;
 import it.unitn.buyhub.dao.*;
 import it.unitn.buyhub.dao.entities.Shop;
 import it.unitn.buyhub.dao.entities.User;
@@ -20,11 +21,11 @@ import java.util.List;
  * @author Matteo Battilana
  * @since 2017.04.25
  */
-public interface ShopDAO extends DAO<Shop, Integer> {
+public interface JDBCShopDAO extends DAO<Shop, Integer> {
 
     /**
-     * Returns the number of {@link Shop shops} stored on the persistence system
-     * of the application.
+     * Returns the number of {@link Shop shops} stored on the persistence
+     * system of the application.
      *
      * @return the number of records present into the storage system.
      * @throws DAOException if an error occurred during the information
@@ -36,8 +37,8 @@ public interface ShopDAO extends DAO<Shop, Integer> {
     public Long getCount() throws DAOException;
 
     /**
-     * Returns the {@link Shop shop} with the primary key equals to the one
-     * passed as parameter.
+     * Returns the {@link Shop shop} with the primary key equals to the
+     * one passed as parameter.
      *
      * @param primaryKey the {@code id} of the {@code shop} to get.
      * @return the {@code shop} with the id equals to the one passed as
@@ -66,14 +67,14 @@ public interface ShopDAO extends DAO<Shop, Integer> {
      * @since 1.0.170425
      */
     public List<Shop> getByOwner(User owner) throws DAOException;
-
-    /**
+    
+       /**
      * Returns the list of the {@link Shop shop} with the name that contains the
      * one passed as parameter.
      *
      * @param name the {@code name} of the {@code shops} to get.
-     * @return the list of the {@code shops} with the name that contains the one
-     * passed as parameter.
+     * @return the list of the {@code shops} with the name that contains the
+     * one passed as parameter.
      * @throws DAOException if an error occurred during the information
      * retrieving.
      *
@@ -108,22 +109,4 @@ public interface ShopDAO extends DAO<Shop, Integer> {
      */
     @Override
     public Shop update(Shop shop) throws DAOException;
-    
-    /**
-     * Returns the {@link Shop shop} with the distance from me less
-     * or equals than the one passed as parameter.
-     *
-     * @param myLatitude the current latitude
-     * @param myLongitude the current longitude
-     * @param range search range in km
-     * @return the {@code shop} with the distance from  less
-     * or equals distance than the one passed as parameter.
-     * @throws DAOException if an error occurred during the information
-     * retrieving.
-     *
-     * @author Matteo Battilana
-     * @since 1.0.170425
-     */
-    public List<Shop> getByRange(double myLatitude, double myLongitude, int range) throws DAOException;
-    
 }

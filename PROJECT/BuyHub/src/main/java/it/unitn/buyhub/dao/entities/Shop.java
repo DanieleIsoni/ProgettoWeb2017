@@ -18,15 +18,6 @@ public class Shop {
     private User creator;
     private int globalValue;
 
-    public Shop(int id, String name, String description, String website, User owner, User creator, int globalValue) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.website = website;
-        this.owner = owner;
-        this.creator = creator;
-        this.globalValue = globalValue;
-    }
 
     public int getId() {
         return id;

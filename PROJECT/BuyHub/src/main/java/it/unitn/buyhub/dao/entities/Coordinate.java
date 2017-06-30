@@ -16,13 +16,6 @@ public class Coordinate {
     private double longitude;
     private String address;
 
-    public Coordinate(int id, double latitude, double longitude, String address) {
-        this.id = id;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.address = address;
-    }
-
     public int getId() {
         return id;
     }

@@ -19,13 +19,6 @@ public class Notification {
     private boolean status;
     private User user;
 
-    public Notification(int id, String description, Date dateCreation, boolean status, User user) {
-        this.id = id;
-        this.description = description;
-        this.dateCreation = dateCreation;
-        this.status = status;
-        this.user = user;
-    }
 
     public int getId() {
         return id;

@@ -10,6 +10,7 @@ package it.unitn.buyhub.dao.entities;
  * @author matteo
  */
 public class User {
+
     private int id;
     private String username;
     private String password;
@@ -18,15 +19,17 @@ public class User {
     private String email;
     private int capability;
 
-    public User(int id, String username, String password, String firstName, String lastName, String email, int capability) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.capability = capability;
+    /*
+    private String avatarPath;
+
+    public void setAvatarPath(String avatarPath) {
+        this.avatarPath = avatarPath;
     }
+
+    public String getAvatarPath() {
+        return avatarPath;
+    }
+     */
 
     public int getId() {
         return id;
@@ -83,7 +86,5 @@ public class User {
     public void setCapability(int capability) {
         this.capability = capability;
     }
-    
-    
-    
+
 }

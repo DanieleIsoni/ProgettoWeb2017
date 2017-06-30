@@ -103,18 +103,6 @@ public class Review {
         return dateCreation;
     }
 
-    public Review(int id, Product product, User creator, int globalValue, int quality, int service, int ValueForMoney, String title, String description, Date dateCreation) {
-        this.id = id;
-        this.product = product;
-        this.creator = creator;
-        this.globalValue = globalValue;
-        this.quality = quality;
-        this.service = service;
-        this.ValueForMoney = ValueForMoney;
-        this.title = title;
-        this.description = description;
-        this.dateCreation = dateCreation;
-    }
     
     
 }

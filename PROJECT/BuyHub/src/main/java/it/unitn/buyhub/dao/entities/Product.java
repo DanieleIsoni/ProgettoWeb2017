@@ -16,13 +16,6 @@ public class Product {
     private double price;
     private Shop shop;
 
-    public Product(int id, String name, String description, double price, Shop shop) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.shop = shop;
-    }
 
     public int getId() {
         return id;
@@ -63,6 +56,5 @@ public class Product {
     public void setShop(Shop shop) {
         this.shop = shop;
     }
-
 
 }

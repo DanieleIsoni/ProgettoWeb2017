@@ -56,13 +56,6 @@ public class Picture {
         return owner;
     }
 
-    public Picture(int id, String name, String description, String path, User owner) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.path = path;
-        this.owner = owner;
-    }
 
     
 }

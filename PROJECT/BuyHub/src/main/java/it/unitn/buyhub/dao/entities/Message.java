@@ -18,7 +18,16 @@ public class Message {
     private User owner;
     private Date date;
     private Date validationDate;
-    private int idValidation;
+    private User validation;
+    private String description;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public void setId(int id) {
         this.id = id;
@@ -40,8 +49,8 @@ public class Message {
         this.validationDate = validationDate;
     }
 
-    public void setIdValidation(int idValidation) {
-        this.idValidation = idValidation;
+    public void setValidation(User validation) {
+        this.validation = validation;
     }
 
     public int getId() {
@@ -64,18 +73,8 @@ public class Message {
         return validationDate;
     }
 
-    public int getIdValidation() {
-        return idValidation;
+    public User getValidation() {
+        return validation;
     }
-
-    public Message(int id, Review review, User owner, Date date, Date validationDate, int idValidation) {
-        this.id = id;
-        this.review = review;
-        this.owner = owner;
-        this.date = date;
-        this.validationDate = validationDate;
-        this.idValidation = idValidation;
-    }
-
 
 }
