@@ -325,7 +325,7 @@ public class JDBCMessageDAO extends JDBCDAO<Message, Integer> implements Message
             throw new DAOException("parameter not valid", new IllegalArgumentException("The passed message is null"));
         }
 
-        try (PreparedStatement std = CON.prepareStatement("UPDATE message SET validation_date = ?, description = ? WHERE id = ?")) {
+        try (PreparedStatement std = CON.prepareStatement("UPDATE messages SET validation_date = ?, description = ? WHERE id = ?")) {
             std.setTimestamp(1, new Timestamp(message.getDate().getTime()));
             std.setString(2, message.getDescription());
             std.setInt(3, message.getId());
@@ -351,7 +351,7 @@ public class JDBCMessageDAO extends JDBCDAO<Message, Integer> implements Message
      * @since 1.0.170425
      */
     public Long insert(Message message) throws DAOException{
-        try (PreparedStatement ps = CON.prepareStatement("INSERT INTO message(id_review, id_owner, date, validation_date, description, id_validation) VALUES(?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement ps = CON.prepareStatement("INSERT INTO messages(id_review, id_owner, date, validation_date, description, id_validation) VALUES(?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
             
             ps.setInt(1, message.getReview().getId());
             ps.setInt(2, message.getOwner().getId());

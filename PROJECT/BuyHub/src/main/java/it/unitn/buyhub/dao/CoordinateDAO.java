@@ -92,7 +92,7 @@ public interface CoordinateDAO extends DAO<Coordinate, Integer> {
      * @author Matteo Battilana
      * @since 1.0.170425
      */
-    public Coordinate getByRange(double myLatitude, double myLongitude, int range) throws DAOException;
+    public List<Coordinate> getByRange(double myLatitude, double myLongitude, int range) throws DAOException;
 
     /**
      * Returns the list of all the valid {@link Coordinate coordinates} stored by the

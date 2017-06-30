@@ -145,7 +145,8 @@ public class JDBCCoordinateDAO extends JDBCDAO<Coordinate, Integer> implements C
      * @author Matteo Battilana
      * @since 1.0.170425
      */
-    public Coordinate getByRange(double myLatitude, double myLongitude, int range) throws DAOException {
+    public List<Coordinate> getByRange(double myLatitude, double myLongitude, int range) throws DAOException {
+        List<Coordinate> coordinates = new ArrayList<>();
         if (range < 1) {
             throw new DAOException("range is to low");
         }
@@ -156,19 +157,21 @@ public class JDBCCoordinateDAO extends JDBCDAO<Coordinate, Integer> implements C
             stm.setInt(4, range);
             try (ResultSet rs = stm.executeQuery()) {
 
-                rs.next();
-                //rs.getInt("id"),rs.getInt("latitude"),rs.getInt("longitude"),rs.getString("address")
-                Coordinate coordinate = new Coordinate();
-                coordinate.setId(rs.getInt("id"));
-                coordinate.setLatitude(rs.getInt("latitude"));
-                coordinate.setLongitude(rs.getInt("longitude"));
-                coordinate.setAddress(rs.getString("address"));
+                while (rs.next()) {
+                    //rs.getInt("id"),rs.getInt("latitude"),rs.getInt("longitude"),rs.getString("address")
+                    Coordinate coordinate = new Coordinate();
+                    coordinate.setId(rs.getInt("id"));
+                    coordinate.setLatitude(rs.getInt("latitude"));
+                    coordinate.setLongitude(rs.getInt("longitude"));
+                    coordinate.setAddress(rs.getString("address"));
+                    coordinates.add(coordinate);
+                }
 
-                return coordinate;
             }
         } catch (SQLException ex) {
             throw new DAOException("Impossible to get the coordinates for the passed range", ex);
         }
+        return coordinates;
     }
 
     /**
@@ -236,19 +239,20 @@ public class JDBCCoordinateDAO extends JDBCDAO<Coordinate, Integer> implements C
         }
     }
 
-     /**
-     * Persists the new {@link Coordinate coordinate} passed as parameter to the 
+    /**
+     * Persists the new {@link Coordinate coordinate} passed as parameter to the
      * storage system.
+     *
      * @param coordinate the new {@code coordinate} to persist.
-     * @return the id of the new persisted record. 
+     * @return the id of the new persisted record.
      * @throws DAOException if an error occurred during the persist action.
-     * 
+     *
      * @author Stefano Chirico
      * @since 1.0.170425
      */
     @Override
     public Long insert(Coordinate coordinate) throws DAOException {
-        try (PreparedStatement ps = CON.prepareStatement("INSERT INTO coordinate(latitude, longitude, address) VALUES(?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement ps = CON.prepareStatement("INSERT INTO coordinates(latitude, longitude, address) VALUES(?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setDouble(1, coordinate.getLatitude());
             ps.setDouble(2, coordinate.getLongitude());

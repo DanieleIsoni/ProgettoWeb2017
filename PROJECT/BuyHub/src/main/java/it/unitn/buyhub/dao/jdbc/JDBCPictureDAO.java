@@ -7,6 +7,7 @@ package it.unitn.buyhub.dao.jdbc;
 
 import it.unitn.buyhub.dao.*;
 import it.unitn.buyhub.dao.*;
+import it.unitn.buyhub.dao.entities.Notification;
 import it.unitn.buyhub.dao.entities.Picture;
 import it.unitn.buyhub.dao.entities.Product;
 import it.unitn.buyhub.dao.entities.Review;
@@ -15,6 +16,14 @@ import it.unitn.buyhub.dao.entities.User;
 import it.unitn.buyhub.dao.persistence.DAO;
 import it.unitn.buyhub.dao.persistence.DAO;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
+import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
+import it.unitn.buyhub.dao.persistence.jdbc.JDBCDAO;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,7 +33,12 @@ import java.util.List;
  * @author Matteo Battilana
  * @since 2017.04.25
  */
-public interface JDBCPictureDAO extends DAO<Picture, Integer> {
+public class JDBCPictureDAO extends JDBCDAO<Picture, Integer> implements PictureDAO {
+
+    public JDBCPictureDAO(Connection con) {
+        super(con);
+        FRIEND_DAOS.put(UserDAO.class, new JDBCUserDAO(CON));
+    }
 
     /**
      * Returns the number of {@link Picture pictures} stored on the persistence
@@ -37,7 +51,18 @@ public interface JDBCPictureDAO extends DAO<Picture, Integer> {
      * @author Matteo Battilana
      */
     @Override
-    public Long getCount() throws DAOException;
+    public Long getCount() throws DAOException {
+        try (PreparedStatement stmt = CON.prepareStatement("SELECT COUNT(*) FROM pictures");) {
+            ResultSet counter = stmt.executeQuery();
+            if (counter.next()) {
+                return counter.getLong(1);
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Impossible to count pictures", ex);
+        }
+
+        return 0L;
+    }
 
     /**
      * Returns the {@link Picture picture} with the primary key equals to the
@@ -54,7 +79,32 @@ public interface JDBCPictureDAO extends DAO<Picture, Integer> {
      * @since 1.0.170425
      */
     @Override
-    public Picture getByPrimaryKey(Integer primaryKey) throws DAOException;
+    public Picture getByPrimaryKey(Integer primaryKey) throws DAOException {
+        if (primaryKey == null) {
+            throw new DAOException("primaryKey is null");
+        }
+        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM pictures WHERE id = ?")) {
+            stm.setInt(1, primaryKey);
+            try (ResultSet rs = stm.executeQuery()) {
+
+                rs.next();
+
+                Picture picture = new Picture();
+                picture.setId(primaryKey);
+                picture.setDescription(rs.getString("description"));
+                picture.setPath(rs.getString("path"));
+                picture.setName(rs.getString("name"));
+
+                //Get user associate
+                UserDAO userDao = getDAO(UserDAO.class);
+                picture.setOwner(userDao.getByPrimaryKey(rs.getInt("id_owner")));
+
+                return picture;
+            }
+        } catch (SQLException | DAOFactoryException ex) {
+            throw new DAOException("Impossible to get the pictures for the passed primary key", ex);
+        }
+    }
 
     /**
      * Returns the list of the {@link Picture picture} with the owner passed as
@@ -97,10 +147,10 @@ public interface JDBCPictureDAO extends DAO<Picture, Integer> {
      */
     @Override
     public Picture update(Picture picture) throws DAOException;
-    
+
     /**
-     * Returns the list of the {@link Picture picture} with the product passed as
-     * parameter.
+     * Returns the list of the {@link Picture picture} with the product passed
+     * as parameter.
      *
      * @param product the {@code product} of the {@code pictures} to get.
      * @return the list of the {@code pictures} with the product passed as
@@ -112,8 +162,8 @@ public interface JDBCPictureDAO extends DAO<Picture, Integer> {
      * @since 1.0.170425
      */
     public List<Picture> getByProduct(Product product) throws DAOException;
-    
-        /**
+
+    /**
      * Returns the list of the {@link Picture picture} with the review passed as
      * parameter.
      *
@@ -127,8 +177,8 @@ public interface JDBCPictureDAO extends DAO<Picture, Integer> {
      * @since 1.0.170425
      */
     public List<Picture> getByReview(Review review) throws DAOException;
-    
-        /**
+
+    /**
      * Returns the list of the {@link Picture picture} with the shop passed as
      * parameter.
      *
