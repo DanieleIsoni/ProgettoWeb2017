@@ -34,7 +34,7 @@ public class TestClass {
 
         try {
             // DriverManager: The basic service for managing a set of JDBC drivers.
-            crunchifyConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/buyhub", "root", "root");
+            crunchifyConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/buyhub?serverTimezone=UTC", "root", "");
             if (crunchifyConn != null) {
                 System.out.println("Connection Successful! Enjoy. Now it's time to push data");
             } else {

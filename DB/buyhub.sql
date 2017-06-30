@@ -10,7 +10,7 @@
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
-SET time_zone = "+00:00";
+SET GLOBAL time_zone = "+01:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -126,7 +126,7 @@ CREATE TABLE `products` (
   `name` int(11) NOT NULL,
   `description` int(11) NOT NULL,
   `price` decimal(10,2) NOT NULL,
-  `shop_id` int(11) NOT NULL
+  `id_shop` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -250,7 +250,7 @@ ALTER TABLE `pictures_shops`
 --
 ALTER TABLE `products`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `shop_id` (`shop_id`);
+  ADD KEY `id_shop` (`id_shop`);
 
 --
 -- Indici per le tabelle `reviews`
@@ -376,7 +376,7 @@ ALTER TABLE `pictures_shops`
 -- Limiti per la tabella `products`
 --
 ALTER TABLE `products`
-  ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`shop_id`) REFERENCES `shops` (`id`);
+  ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`id_shop`) REFERENCES `shops` (`id`);
 
 --
 -- Limiti per la tabella `reviews`

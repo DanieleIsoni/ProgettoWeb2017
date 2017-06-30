@@ -87,7 +87,8 @@ public class JDBCDAOFactory implements DAOFactory {
         }
 
         try {
-            CON = DriverManager.getConnection(dbUrl);
+            //jdbc:mysql://localhost:3306/buyhub
+            CON = DriverManager.getConnection(dbUrl,"root","");
         } catch (SQLException sqle) {
             throw new DAOFactoryException("Cannot create connection", sqle);
         }
