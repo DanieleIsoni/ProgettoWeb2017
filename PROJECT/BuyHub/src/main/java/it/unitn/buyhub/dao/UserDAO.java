@@ -47,7 +47,7 @@ public interface UserDAO extends DAO<User, Integer> {
      * @author Stefano Chirico
      * @since 1.0.170425
      */
-    public Long insert(User shops) throws DAOException;
+    public Long insert(User user) throws DAOException;
 
     /**
      * Returns the {@link User user} with the primary key equals to the one

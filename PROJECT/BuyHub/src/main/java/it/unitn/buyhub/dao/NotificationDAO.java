@@ -35,7 +35,7 @@ public interface NotificationDAO extends DAO<Notification, Integer> {
     public Long getCount() throws DAOException;
 
     /**
-     * Persists the new {@link Notification notification} passed as parameter to the
+     * Persists the new {@link Notification message} passed as parameter to the
      * storage system.
      *
      * @param notification the new {@code notification} to persist.

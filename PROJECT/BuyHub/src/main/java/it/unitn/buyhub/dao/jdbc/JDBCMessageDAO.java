@@ -18,6 +18,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -337,4 +338,56 @@ public class JDBCMessageDAO extends JDBCDAO<Message, Integer> implements Message
             throw new DAOException("Impossible to update the message", ex);
         }
     }
+    
+    /**
+     * Persists the new {@link Message message} passed as parameter to the
+     * storage system.
+     *
+     * @param message the new {@code coordinate} to persist.
+     * @return the id of the new persisted record.
+     * @throws DAOException if an error occurred during the persist action.
+     *
+     * @author Stefano Chirico
+     * @since 1.0.170425
+     */
+    public Long insert(Message message) throws DAOException{
+        try (PreparedStatement ps = CON.prepareStatement("INSERT INTO message(id_review, id_owner, date, validation_date, description, id_validation) VALUES(?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
+            
+            ps.setInt(1, message.getReview().getId());
+            ps.setInt(2, message.getOwner().getId());
+            ps.setTimestamp(3, new Timestamp(message.getDate().getTime()));            
+            ps.setTimestamp(4, new Timestamp(message.getValidationDate().getTime()));
+            ps.setString(5, message.getDescription());
+            ps.setInt(6, message.getValidation().getId());
+
+            if (ps.executeUpdate() == 1) {
+                ResultSet generatedKeys = ps.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    return generatedKeys.getLong(1);
+                } else {
+                    try {
+                        CON.rollback();
+                    } catch (SQLException ex) {
+                        //TODO: log the exception
+                    }
+                    throw new DAOException("Impossible to persist the new message");
+                }
+            } else {
+                try {
+                    CON.rollback();
+                } catch (SQLException ex) {
+                    //TODO: log the exception
+                }
+                throw new DAOException("Impossible to persist the new message");
+            }
+        } catch (SQLException ex) {
+            try {
+                CON.rollback();
+            } catch (SQLException ex1) {
+                //TODO: log the exception
+            }
+            throw new DAOException("Impossible to persist the new message", ex);
+        }
+    }
+
 }

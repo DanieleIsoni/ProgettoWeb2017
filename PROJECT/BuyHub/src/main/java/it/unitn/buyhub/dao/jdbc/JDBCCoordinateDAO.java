@@ -14,6 +14,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -232,6 +233,54 @@ public class JDBCCoordinateDAO extends JDBCDAO<Coordinate, Integer> implements C
             }
         } catch (SQLException ex) {
             throw new DAOException("Impossible to update the coordinate", ex);
+        }
+    }
+
+     /**
+     * Persists the new {@link Coordinate coordinate} passed as parameter to the 
+     * storage system.
+     * @param coordinate the new {@code coordinate} to persist.
+     * @return the id of the new persisted record. 
+     * @throws DAOException if an error occurred during the persist action.
+     * 
+     * @author Stefano Chirico
+     * @since 1.0.170425
+     */
+    @Override
+    public Long insert(Coordinate coordinate) throws DAOException {
+        try (PreparedStatement ps = CON.prepareStatement("INSERT INTO coordinate(latitude, longitude, address) VALUES(?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
+
+            ps.setDouble(1, coordinate.getLatitude());
+            ps.setDouble(2, coordinate.getLongitude());
+            ps.setString(3, coordinate.getAddress());
+
+            if (ps.executeUpdate() == 1) {
+                ResultSet generatedKeys = ps.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    return generatedKeys.getLong(1);
+                } else {
+                    try {
+                        CON.rollback();
+                    } catch (SQLException ex) {
+                        //TODO: log the exception
+                    }
+                    throw new DAOException("Impossible to persist the new coordinate");
+                }
+            } else {
+                try {
+                    CON.rollback();
+                } catch (SQLException ex) {
+                    //TODO: log the exception
+                }
+                throw new DAOException("Impossible to persist the new coordinate");
+            }
+        } catch (SQLException ex) {
+            try {
+                CON.rollback();
+            } catch (SQLException ex1) {
+                //TODO: log the exception
+            }
+            throw new DAOException("Impossible to persist the new coordinate", ex);
         }
     }
 }

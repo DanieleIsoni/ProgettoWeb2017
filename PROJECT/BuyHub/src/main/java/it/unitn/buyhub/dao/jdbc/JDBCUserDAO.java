@@ -18,6 +18,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +33,57 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
 
     public JDBCUserDAO(Connection con) {
         super(con);
+    }
+
+    /**
+     * Persists the new {@link Users users} passed as parameter to the storage
+     * system.
+     *
+     * @param users the new {@code users} to persist.
+     * @return the id of the new persisted record.
+     * @throws DAOException if an error occurred during the persist action.
+     *
+     * @author Stefano Chirico
+     * @since 1.0.170425
+     */
+    public Long insert(User user) throws DAOException {
+        try (PreparedStatement ps = CON.prepareStatement("INSERT INTO users(username, password, first_name, last_name, email, capability) VALUES(?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
+
+            ps.setString(1, user.getUsername());
+            ps.setString(2, user.getPassword());
+            ps.setString(3, user.getFirstName());
+            ps.setString(4, user.getLastName());
+            ps.setString(5, user.getEmail());
+            ps.setInt(6, user.getCapability());
+
+            if (ps.executeUpdate() == 1) {
+                ResultSet generatedKeys = ps.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    return generatedKeys.getLong(1);
+                } else {
+                    try {
+                        CON.rollback();
+                    } catch (SQLException ex) {
+                        //TODO: log the exception
+                    }
+                    throw new DAOException("Impossible to persist the new user");
+                }
+            } else {
+                try {
+                    CON.rollback();
+                } catch (SQLException ex) {
+                    //TODO: log the exception
+                }
+                throw new DAOException("Impossible to persist the new user");
+            }
+        } catch (SQLException ex) {
+            try {
+                CON.rollback();
+            } catch (SQLException ex1) {
+                //TODO: log the exception
+            }
+            throw new DAOException("Impossible to persist the new user", ex);
+        }
     }
 
     /**
