@@ -4,10 +4,10 @@
  * Common - DAO
  * UniTN
  */
-package it.unitn.aa1617.webprogramming.persistence.utils.dao.factories;
+package it.unitn.buyhub.dao.persistence.factories;
 
-import it.unitn.aa1617.webprogramming.persistence.utils.dao.exceptions.DAOFactoryException;
-import it.unitn.aa1617.webprogramming.persistence.utils.dao.DAO;
+import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
+import it.unitn.buyhub.dao.persistence.DAO;
 
 
 /**

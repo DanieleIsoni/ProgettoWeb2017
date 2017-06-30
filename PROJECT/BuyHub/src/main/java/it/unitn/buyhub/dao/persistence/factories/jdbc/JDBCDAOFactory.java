@@ -4,12 +4,12 @@
  * Common - DAO
  * UniTN
  */
-package it.unitn.aa1617.webprogramming.persistence.utils.dao.factories.jdbc;
+package it.unitn.buyhub.dao.persistence.factories.jdbc;
 
-import it.unitn.aa1617.webprogramming.persistence.utils.dao.exceptions.DAOFactoryException;
-import it.unitn.aa1617.webprogramming.persistence.utils.dao.factories.DAOFactory;
-import it.unitn.aa1617.webprogramming.persistence.utils.dao.DAO;
-import it.unitn.aa1617.webprogramming.persistence.utils.dao.jdbc.JDBCDAO;
+import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
+import it.unitn.buyhub.dao.persistence.factories.DAOFactory;
+import it.unitn.buyhub.dao.persistence.DAO;
+import it.unitn.buyhub.dao.persistence.jdbc.JDBCDAO;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;

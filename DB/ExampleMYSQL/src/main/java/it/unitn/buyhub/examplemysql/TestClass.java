@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.webprogramming17.buyhub.examplemysql;
+package it.unitn.buyhub.examplemysql;
 
 import com.mysql.cj.jdbc.PreparedStatement;
 import java.sql.Connection;

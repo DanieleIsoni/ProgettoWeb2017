@@ -4,15 +4,15 @@
  * Common - DAO
  * UniTN
  */
-package it.unitn.aa1617.webprogramming.persistence.utils.dao.exceptions;
+package it.unitn.buyhub.dao.persistence.exceptions;
 
 /**
- * The exception thrown when something goes wrong in data retrieving.
+ * The exception thrown when something goes wrong in dao factoring.
  * 
  * @author Stefano Chirico &lt;stefano dot chirico at unitn dot it&gt;
  * @since 2017.04.17
  */
-public class DAOException extends Exception {
+public class DAOFactoryException extends Exception {
 
     /**
      * Constructs a new exception with {@code null} as its detail message.
@@ -22,7 +22,7 @@ public class DAOException extends Exception {
      * @author Stefano Chirico
      * @since 1.0.170417
      */
-    public DAOException() {
+    public DAOFactoryException() {
         super();
     }
     
@@ -37,7 +37,7 @@ public class DAOException extends Exception {
      * @author Stefano Chirico
      * @since 1.0.170417
      */
-    public DAOException(String message) {
+    public DAOFactoryException(String message) {
         super(message);
     }
     
@@ -57,10 +57,10 @@ public class DAOException extends Exception {
      * @author Stefano Chirico
      * @since 1.0.170417
      */
-    public DAOException(Throwable cause) {
+    public DAOFactoryException(Throwable cause) {
         super(cause);
     }
-
+    
     /**
      * Constructs a new exception with the specified detail message and
      * cause.  <p>Note that the detail message associated with
@@ -77,7 +77,7 @@ public class DAOException extends Exception {
      * @author Stefano Chirico
      * @since 1.0.170417
      */
-    public DAOException(String message, Throwable cause) {
+    public DAOFactoryException(String message, Throwable cause) {
         super(message, cause);
     }
 }

@@ -4,10 +4,10 @@
  * Common - DAO
  * UniTN
  */
-package it.unitn.aa1617.webprogramming.persistence.utils.dao;
+package it.unitn.buyhub.dao.persistence;
 
-import it.unitn.aa1617.webprogramming.persistence.utils.dao.exceptions.DAOException;
-import it.unitn.aa1617.webprogramming.persistence.utils.dao.exceptions.DAOFactoryException;
+import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
+import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import java.util.List;
 
 /**
