@@ -45,7 +45,10 @@ public class TestClass {
             e.printStackTrace();
             return;
         }
+        
+        System.out.println("\n\nCONNESSIONE AL DB RIUSCITA\n\n");
 
+        /*
         Statement stmt = null;
         ResultSet rs = null;
 
@@ -64,5 +67,6 @@ public class TestClass {
             System.out.println("SQLState: " + ex.getSQLState());
             System.out.println("VendorError: " + ex.getErrorCode());
         }
+        */
     }
 }
