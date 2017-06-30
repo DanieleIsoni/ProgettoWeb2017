@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Creato il: Giu 30, 2017 alle 12:09
+-- Creato il: Giu 30, 2017 alle 13:01
 -- Versione del server: 10.1.24-MariaDB
 -- Versione PHP: 7.1.6
 
@@ -184,7 +184,8 @@ CREATE TABLE `users` (
   `password` char(32) COLLATE utf8_bin NOT NULL,
   `first_name` varchar(256) COLLATE utf8_bin NOT NULL,
   `last_name` varchar(256) COLLATE utf8_bin NOT NULL,
-  `email` varchar(128) COLLATE utf8_bin NOT NULL
+  `email` varchar(128) COLLATE utf8_bin NOT NULL,
+  `capability` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
