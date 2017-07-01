@@ -8,6 +8,11 @@
         <param-name>dburl</param-name>
         <param-value>jdbc:mysql://localhost:3306/buyhub</param-value>
     </context-param>
+    <!-- Link to the bundle for multilanguage -->
+    <context-param>
+        <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
+        <param-value>resources.buyhubBundle</param-value>
+    </context-param>
     
     <listener>
         <description>ServletContextListener</description>
