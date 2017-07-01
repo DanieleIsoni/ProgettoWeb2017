@@ -35,15 +35,18 @@ public class JDBCDAOFactory implements DAOFactory {
      * Call this method before use the instance of this class.
      *
      * @param dbUrl the url to access to the database.
+     * @param username the db username
+     * @param password the db password for the given username
+     *
      * @throws DAOFactoryException if an error occurred during dao factory
      * configuration.
      *
      * @author Stefano Chirico
      * @since 1.0.170417
      */
-    public static void configure(String dbUrl) throws DAOFactoryException {
+    public static void configure(String dbUrl, String username, String password) throws DAOFactoryException {
         if (instance == null) {
-            instance = new JDBCDAOFactory(dbUrl);
+            instance = new JDBCDAOFactory(dbUrl, username, password);
         } else {
             throw new DAOFactoryException("DAOFactory already configured. You can call configure only one time");
         }
@@ -71,13 +74,16 @@ public class JDBCDAOFactory implements DAOFactory {
      * {@code DAOFactory}.
      *
      * @param dbUrl the url to access the database.
+     * @param username the db username
+     * @param password the db password for the given username
+     *
      * @throws DAOFactoryException if an error occurred during
      * {@code DAOFactory} creation.
      *
      * @author Stefano Chirico
      * @since 1.0.170417
      */
-    private JDBCDAOFactory(String dbUrl) throws DAOFactoryException {
+    private JDBCDAOFactory(String dbUrl, String username, String password) throws DAOFactoryException {
         super();
 
         try {
@@ -88,7 +94,7 @@ public class JDBCDAOFactory implements DAOFactory {
 
         try {
             //jdbc:mysql://localhost:3306/buyhub
-            CON = DriverManager.getConnection(dbUrl+"?serverTimezone=UTC","root","");
+            CON = DriverManager.getConnection(dbUrl + "?serverTimezone=UTC", username, password);
         } catch (SQLException sqle) {
             throw new DAOFactoryException("Cannot create connection", sqle);
         }
