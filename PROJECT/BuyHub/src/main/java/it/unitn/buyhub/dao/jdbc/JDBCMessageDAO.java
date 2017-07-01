@@ -320,8 +320,8 @@ public class JDBCMessageDAO extends JDBCDAO<Message, Integer> implements Message
      * @since 1.0.170425
      */
     @Override
-    public Message update(Message message) throws DAOException{
-         if (message == null) {
+    public Message update(Message message) throws DAOException {
+        if (message == null) {
             throw new DAOException("parameter not valid", new IllegalArgumentException("The passed message is null"));
         }
 
@@ -338,7 +338,7 @@ public class JDBCMessageDAO extends JDBCDAO<Message, Integer> implements Message
             throw new DAOException("Impossible to update the message", ex);
         }
     }
-    
+
     /**
      * Persists the new {@link Message message} passed as parameter to the
      * storage system.
@@ -350,12 +350,12 @@ public class JDBCMessageDAO extends JDBCDAO<Message, Integer> implements Message
      * @author Stefano Chirico
      * @since 1.0.170425
      */
-    public Long insert(Message message) throws DAOException{
+    public Long insert(Message message) throws DAOException {
         try (PreparedStatement ps = CON.prepareStatement("INSERT INTO messages(id_review, id_owner, date, validation_date, description, id_validation) VALUES(?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
-            
+
             ps.setInt(1, message.getReview().getId());
             ps.setInt(2, message.getOwner().getId());
-            ps.setTimestamp(3, new Timestamp(message.getDate().getTime()));            
+            ps.setTimestamp(3, new Timestamp(message.getDate().getTime()));
             ps.setTimestamp(4, new Timestamp(message.getValidationDate().getTime()));
             ps.setString(5, message.getDescription());
             ps.setInt(6, message.getValidation().getId());

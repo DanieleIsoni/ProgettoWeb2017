@@ -99,7 +99,7 @@ CREATE TABLE `pictures_products` (
 -- Struttura della tabella `pictures_review`
 --
 
-CREATE TABLE `pictures_review` (
+CREATE TABLE `pictures_reviews` (
   `id_picture` int(11) NOT NULL,
   `id_review` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
@@ -123,8 +123,8 @@ CREATE TABLE `pictures_shops` (
 
 CREATE TABLE `products` (
   `id` int(11) NOT NULL,
-  `name` int(11) NOT NULL,
-  `description` int(11) NOT NULL,
+  `name` varchar(256) COLLATE utf8_bin NOT NULL,
+  `description` text COLLATE utf8_bin NOT NULL,
   `price` decimal(10,2) NOT NULL,
   `id_shop` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
@@ -232,9 +232,9 @@ ALTER TABLE `pictures_products`
   ADD KEY `id_picture` (`id_picture`);
 
 --
--- Indici per le tabelle `pictures_review`
+-- Indici per le tabelle `pictures_reviews`
 --
-ALTER TABLE `pictures_review`
+ALTER TABLE `pictures_reviews`
   ADD PRIMARY KEY (`id_picture`,`id_review`),
   ADD KEY `id_review` (`id_review`);
 
@@ -361,9 +361,9 @@ ALTER TABLE `pictures_products`
 --
 -- Limiti per la tabella `pictures_review`
 --
-ALTER TABLE `pictures_review`
-  ADD CONSTRAINT `pictures_review_ibfk_1` FOREIGN KEY (`id_picture`) REFERENCES `pictures` (`id`),
-  ADD CONSTRAINT `pictures_review_ibfk_2` FOREIGN KEY (`id_review`) REFERENCES `reviews` (`id`);
+ALTER TABLE `pictures_reviews`
+  ADD CONSTRAINT `pictures_reviews_ibfk_1` FOREIGN KEY (`id_picture`) REFERENCES `pictures` (`id`),
+  ADD CONSTRAINT `pictures_reviews_ibfk_2` FOREIGN KEY (`id_review`) REFERENCES `reviews` (`id`);
 
 --
 -- Limiti per la tabella `pictures_shops`

@@ -22,7 +22,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -119,7 +121,33 @@ public class JDBCPictureDAO extends JDBCDAO<Picture, Integer> implements Picture
      * @author Matteo Battilana
      * @since 1.0.170425
      */
-    public List<Picture> getByOwner(User owner) throws DAOException;
+    public List<Picture> getByOwner(User owner) throws DAOException {
+        List<Picture> pictures = new ArrayList<>();
+        if (owner == null) {
+            throw new DAOException("owner is user");
+        }
+        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM pictures WHERE id_owner = ?")) {
+            stm.setInt(1, owner.getId());
+            try (ResultSet rs = stm.executeQuery()) {
+
+                while (rs.next()) {
+
+                    Picture picture = new Picture();
+                    picture.setId(rs.getInt("id"));
+                    picture.setDescription(rs.getString("description"));
+                    picture.setName(rs.getString("name"));
+                    picture.setPath(rs.getString("path"));
+                    picture.setOwner(owner);
+
+                    pictures.add(picture);
+                }
+
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Impossible to get the pictures for the passed owner", ex);
+        }
+        return pictures;
+    }
 
     /**
      * Returns the list of all the valid {@link Picture pictures} stored by the
@@ -133,7 +161,31 @@ public class JDBCPictureDAO extends JDBCDAO<Picture, Integer> implements Picture
      * @since 1.0.170425
      */
     @Override
-    public List<Picture> getAll() throws DAOException;
+    public List<Picture> getAll() throws DAOException {
+        List<Picture> pictures = new ArrayList<>();
+        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM pictures")) {
+            try (ResultSet rs = stm.executeQuery()) {
+
+                while (rs.next()) {
+
+                    Picture picture = new Picture();
+                    picture.setId(rs.getInt("id"));
+                    picture.setDescription(rs.getString("description"));
+                    picture.setName(rs.getString("name"));
+                    picture.setPath(rs.getString("path"));
+                    //Get user associate
+                    UserDAO userDao = getDAO(UserDAO.class);
+                    picture.setOwner(userDao.getByPrimaryKey(rs.getInt("id_owner")));
+
+                    pictures.add(picture);
+                }
+
+            }
+        } catch (SQLException | DAOFactoryException ex) {
+            throw new DAOException("Impossible to get the pictures for the passed owner", ex);
+        }
+        return pictures;
+    }
 
     /**
      * Update the picture passed as parameter and returns it.
@@ -146,7 +198,25 @@ public class JDBCPictureDAO extends JDBCDAO<Picture, Integer> implements Picture
      * @since 1.0.170425
      */
     @Override
-    public Picture update(Picture picture) throws DAOException;
+    public Picture update(Picture picture) throws DAOException {
+        if (picture == null) {
+            throw new DAOException("parameter not valid", new IllegalArgumentException("The passed picture is null"));
+        }
+
+        try (PreparedStatement std = CON.prepareStatement("UPDATE pictures SET name = ?, description = ?, description = ?, id_owner = ? WHERE id = ?")) {
+            std.setString(1, picture.getName());
+            std.setString(2, picture.getDescription());
+            std.setString(3, picture.getPath());
+            std.setInt(4, picture.getOwner().getId());
+            if (std.executeUpdate() == 1) {
+                return picture;
+            } else {
+                throw new DAOException("Impossible to update the notification");
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Impossible to update the notification", ex);
+        }
+    }
 
     /**
      * Returns the list of the {@link Picture picture} with the product passed
@@ -161,7 +231,34 @@ public class JDBCPictureDAO extends JDBCDAO<Picture, Integer> implements Picture
      * @author Matteo Battilana
      * @since 1.0.170425
      */
-    public List<Picture> getByProduct(Product product) throws DAOException;
+    public List<Picture> getByProduct(Product product) throws DAOException {
+        List<Picture> pictures = new ArrayList<>();
+        if (product == null) {
+            throw new DAOException("product is null");
+        }
+        try (PreparedStatement stm = CON.prepareStatement("SELECT pi.* FROM pictures pi, pictures_products pp, products pr WHERE pi.id = pp.id_picture AND pp.id_product = ?")) {
+            stm.setInt(1, product.getId());
+            try (ResultSet rs = stm.executeQuery()) {
+                while (rs.next()) {
+
+                    Picture picture = new Picture();
+                    picture.setId(rs.getInt("id"));
+                    picture.setDescription(rs.getString("description"));
+                    picture.setName(rs.getString("name"));
+                    picture.setPath(rs.getString("path"));
+                    //Get user associate
+                    UserDAO userDao = getDAO(UserDAO.class);
+                    picture.setOwner(userDao.getByPrimaryKey(rs.getInt("id_owner")));
+
+                    pictures.add(picture);
+                }
+
+            }
+        } catch (SQLException | DAOFactoryException ex) {
+            throw new DAOException("Impossible to get the pictures from product", ex);
+        }
+        return pictures;
+    }
 
     /**
      * Returns the list of the {@link Picture picture} with the review passed as
@@ -176,7 +273,34 @@ public class JDBCPictureDAO extends JDBCDAO<Picture, Integer> implements Picture
      * @author Matteo Battilana
      * @since 1.0.170425
      */
-    public List<Picture> getByReview(Review review) throws DAOException;
+    public List<Picture> getByReview(Review review) throws DAOException {
+        List<Picture> pictures = new ArrayList<>();
+        if (review == null) {
+            throw new DAOException("review is null");
+        }
+        try (PreparedStatement stm = CON.prepareStatement("SELECT pi.* FROM pictures pi, pictures_reviews pp, products pr WHERE pi.id = pp.id_picture AND pp.id_review = ?")) {
+            stm.setInt(1, review.getId());
+            try (ResultSet rs = stm.executeQuery()) {
+                while (rs.next()) {
+
+                    Picture picture = new Picture();
+                    picture.setId(rs.getInt("id"));
+                    picture.setDescription(rs.getString("description"));
+                    picture.setName(rs.getString("name"));
+                    picture.setPath(rs.getString("path"));
+                    //Get user associate
+                    UserDAO userDao = getDAO(UserDAO.class);
+                    picture.setOwner(userDao.getByPrimaryKey(rs.getInt("id_owner")));
+
+                    pictures.add(picture);
+                }
+
+            }
+        } catch (SQLException | DAOFactoryException ex) {
+            throw new DAOException("Impossible to get the pictures from product", ex);
+        }
+        return pictures;
+    }
 
     /**
      * Returns the list of the {@link Picture picture} with the shop passed as
@@ -191,5 +315,80 @@ public class JDBCPictureDAO extends JDBCDAO<Picture, Integer> implements Picture
      * @author Matteo Battilana
      * @since 1.0.170425
      */
-    public List<Picture> getByShop(Shop shop) throws DAOException;
+    public List<Picture> getByShop(Shop shop) throws DAOException {
+        List<Picture> pictures = new ArrayList<>();
+        if (shop == null) {
+            throw new DAOException("shop is null");
+        }
+        try (PreparedStatement stm = CON.prepareStatement("SELECT pi.* FROM pictures pi, pictures_shops pp, products pr WHERE pi.id = pp.id_picture AND pp.id_shop = ?")) {
+            stm.setInt(1, shop.getId());
+            try (ResultSet rs = stm.executeQuery()) {
+                while (rs.next()) {
+
+                    Picture picture = new Picture();
+                    picture.setId(rs.getInt("id"));
+                    picture.setDescription(rs.getString("description"));
+                    picture.setName(rs.getString("name"));
+                    picture.setPath(rs.getString("path"));
+                    //Get user associate
+                    UserDAO userDao = getDAO(UserDAO.class);
+                    picture.setOwner(userDao.getByPrimaryKey(rs.getInt("id_owner")));
+
+                    pictures.add(picture);
+                }
+
+            }
+        } catch (SQLException | DAOFactoryException ex) {
+            throw new DAOException("Impossible to get the pictures from shop", ex);
+        }
+        return pictures;
+    }
+
+    /**
+     * Persists the new {@link Picture pictures} passed as parameter to the
+     * storage system.
+     *
+     * @param pictures the new {@code pictures} to persist.
+     * @return the id of the new persisted record.
+     * @throws DAOException if an error occurred during the persist action.
+     *
+     * @author Stefano Chirico
+     * @since 1.0.170425
+     */
+    public Long insert(Picture pictures) throws DAOException {
+        try (PreparedStatement ps = CON.prepareStatement("INSERT INTO pictures(name, description, description, id_owner) VALUES(?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
+            ps.setString(1, pictures.getName());
+            ps.setString(2, pictures.getDescription());
+            ps.setString(3, pictures.getPath());
+            ps.setInt(4, pictures.getOwner().getId());
+
+            if (ps.executeUpdate() == 1) {
+                ResultSet generatedKeys = ps.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    return generatedKeys.getLong(1);
+                } else {
+                    try {
+                        CON.rollback();
+                    } catch (SQLException ex) {
+                        //TODO: log the exception
+                    }
+                    throw new DAOException("Impossible to persist the new pictures");
+                }
+            } else {
+                try {
+                    CON.rollback();
+                } catch (SQLException ex) {
+                    //TODO: log the exception
+                }
+                throw new DAOException("Impossible to persist the new pictures");
+            }
+        } catch (SQLException ex) {
+            try {
+                CON.rollback();
+            } catch (SQLException ex1) {
+                //TODO: log the exception
+            }
+            throw new DAOException("Impossible to persist the new pictures", ex);
+        }
+    }
 }

@@ -88,7 +88,7 @@ public class JDBCDAOFactory implements DAOFactory {
 
         try {
             //jdbc:mysql://localhost:3306/buyhub
-            CON = DriverManager.getConnection(dbUrl,"root","");
+            CON = DriverManager.getConnection(dbUrl+"?serverTimezone=UTC","root","");
         } catch (SQLException sqle) {
             throw new DAOFactoryException("Cannot create connection", sqle);
         }

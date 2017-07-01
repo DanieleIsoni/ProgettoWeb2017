@@ -98,6 +98,21 @@ public interface ProductDAO extends DAO<Product, Integer> {
     public List<Product> getAll() throws DAOException;
 
     /**
+     * Returns the list of all the valid {@link Product products} stored by the
+     * storage system with the price in the range.
+     *
+     * @param min the min price
+     * @param max the max price
+     * @return the list of all the valid {@code products}.
+     * @throws DAOException if an error occurred during the information
+     * retrieving.
+     *
+     * @author Matteo Battilana
+     * @since 1.0.170425
+     */
+    public List<Product> getAllWithPriceRange(double min, double max) throws DAOException;
+
+    /**
      * Update the product passed as parameter and returns it.
      *
      * @param product the product used to update the persistence system.
