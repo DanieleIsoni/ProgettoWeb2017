@@ -32,7 +32,7 @@
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown" onchange="submit()">
-                            <a href="#" class="dropdown-toggle uppercase" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">${language}<span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle uppercase" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><div class="navbar-header two_chars">${language}</div><span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="?language=it">IT</a></li>
                                 <li><a href="?language=en">EN</a></li>
