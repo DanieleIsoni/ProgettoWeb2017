@@ -8,12 +8,11 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
-<html>
+<html lang="${language}">
     <%-- Include the bootstrap js, css and jquery--%>
     <jsp:include page="include.jsp" />
 
     <body>
-        Test lingua: <fmt:message key="welcome"/>
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
@@ -32,21 +31,19 @@
                     <ul class="nav navbar-nav">
 
                     </ul>
-                    <p class="navbar-text navbar-right">
-                        <a href="#" class="site-header-link"><fmt:message key="login"/></a>  <fmt:message key="or"/>  <a href="#" class="site-header-link"><fmt:message key="sign_up"/></a>
-                    </p>
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                        <li class="dropdown" onchange="submit()">
+                            <a href="#" class="dropdown-toggle uppercase" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">${language}<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">Action</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something else here</a></li>
-                                <li role="separator" class="divider"></li>
-                                <li><a href="#">Separated link</a></li>
+                                <li><a href="?language=it">IT</a></li>
+                                <li><a href="?language=en">EN</a></li>
                             </ul>
                         </li>
                     </ul>
+                    <p class="navbar-text navbar-right">
+                        <a href="#" class="site-header-link"><fmt:message key="login"/></a>  <fmt:message key="or"/>  <a href="#" class="site-header-link"><fmt:message key="sign_up"/></a>
+                    </p>
+
                     <form class="navbar-form navbar-right">
                         <div class="form-group">
                             <input type="text" class="form-control" placeholder="<fmt:message key="search"/>">

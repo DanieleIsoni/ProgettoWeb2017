@@ -6,7 +6,15 @@
 
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/fmt" prefix = "fmt" %>
+
+<%-- Set language --%>
+<c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
+<fmt:setLocale value="${language}" scope="session" />
+
+<%-- Set Bundle language --%>
 <fmt:setBundle basename="bundle.buyhubBundle" scope="application"/>
+
+
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -16,4 +24,5 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <link href="../css/custom_style.css" rel="stylesheet" type="text/css">    
+    <script type="text/javascript" src="../js/script.js"></script>
 </head>
