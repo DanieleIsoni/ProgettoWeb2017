@@ -1,0 +1,23 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 3-lug-2017, 12.17.51
+    Author     : matteo
+*/
+
+.site-header-link:visited {
+    color: #0366d6 !important;
+}
+
+.site-header-link:active {
+    color: #0366d6 !important;
+}
+
+.site-header-link {
+    color: #0366d6 !important;
+    font-weight: bold !important;
+    font-size: 16px !important;
+}
