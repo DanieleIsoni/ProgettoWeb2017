@@ -5,13 +5,14 @@
  */
 package it.unitn.buyhub.dao.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  *
  * @author matteo
  */
-public class Message {
+public class Message implements Serializable {
 
     private int id;
     private Review review;

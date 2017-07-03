@@ -5,11 +5,13 @@
  */
 package it.unitn.buyhub.dao.entities;
 
+import java.io.Serializable;
+
 /**
  *
  * @author matteo
  */
-public class User {
+public class User implements Serializable {
 
     private int id;
     private String username;
@@ -30,7 +32,6 @@ public class User {
         return avatarPath;
     }
      */
-
     public int getId() {
         return id;
     }

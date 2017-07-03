@@ -5,13 +5,15 @@
  */
 package it.unitn.buyhub.dao.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  *
  * @author matteo
  */
-public class Review {
+public class Review implements Serializable {
+
     private int id;
     private Product product;
     private User creator;
@@ -103,6 +105,4 @@ public class Review {
         return dateCreation;
     }
 
-    
-    
 }

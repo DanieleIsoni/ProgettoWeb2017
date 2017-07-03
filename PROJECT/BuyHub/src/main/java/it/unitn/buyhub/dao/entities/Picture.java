@@ -5,11 +5,14 @@
  */
 package it.unitn.buyhub.dao.entities;
 
+import java.io.Serializable;
+
 /**
  *
  * @author matteo
  */
-public class Picture {
+public class Picture implements Serializable {
+
     private int id;
     private String name;
     private String description;
@@ -56,6 +59,4 @@ public class Picture {
         return owner;
     }
 
-
-    
 }

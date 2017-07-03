@@ -5,20 +5,20 @@
  */
 package it.unitn.buyhub.dao.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  *
  * @author matteo
  */
-public class Notification {
+public class Notification implements Serializable {
 
     private int id;
     private String description;
     private Date dateCreation;
     private boolean status;
     private User user;
-
 
     public int getId() {
         return id;
@@ -59,5 +59,5 @@ public class Notification {
     public void setUser(User user) {
         this.user = user;
     }
-    
+
 }

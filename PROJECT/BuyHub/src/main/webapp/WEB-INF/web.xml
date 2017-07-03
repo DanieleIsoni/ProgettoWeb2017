@@ -13,15 +13,21 @@
         <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
         <param-value>resources.buyhubBundle</param-value>
     </context-param>
-    
     <listener>
         <description>ServletContextListener</description>
         <listener-class>it.unitn.buyhub.listeners.WebAppContextListener</listener-class>
     </listener>
+    <servlet>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>it.unitn.buyhub.servlet.LoginServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/LoginServlet</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
-    
 </web-app>

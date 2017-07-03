@@ -5,17 +5,19 @@
  */
 package it.unitn.buyhub.dao.entities;
 
+import java.io.Serializable;
+
 /**
  *
  * @author matteo
  */
-public class Product {
+public class Product implements Serializable {
+
     private int id;
     private String name;
     private String description;
     private double price;
     private Shop shop;
-
 
     public int getId() {
         return id;

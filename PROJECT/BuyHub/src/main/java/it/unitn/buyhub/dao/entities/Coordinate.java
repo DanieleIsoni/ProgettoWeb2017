@@ -5,11 +5,13 @@
  */
 package it.unitn.buyhub.dao.entities;
 
+import java.io.Serializable;
+
 /**
  *
  * @author matteo
  */
-public class Coordinate {
+public class Coordinate implements Serializable {
 
     private int id;
     private double latitude;

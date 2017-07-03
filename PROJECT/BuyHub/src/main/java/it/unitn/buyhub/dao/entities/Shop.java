@@ -5,11 +5,14 @@
  */
 package it.unitn.buyhub.dao.entities;
 
+import java.io.Serializable;
+
 /**
  *
  * @author matteo
  */
-public class Shop {
+public class Shop implements Serializable {
+
     private int id;
     private String name;
     private String description;
@@ -17,7 +20,6 @@ public class Shop {
     private User owner;
     private User creator;
     private int globalValue;
-
 
     public int getId() {
         return id;
@@ -74,7 +76,5 @@ public class Shop {
     public void setGlobalValue(int globalValue) {
         this.globalValue = globalValue;
     }
-    
-    
-    
+
 }

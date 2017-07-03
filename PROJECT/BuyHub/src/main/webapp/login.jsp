@@ -17,14 +17,14 @@
         <img src="images/icon.png" alt="BuyHub logo" height="42" width="42">
         <h3><fmt:message key="login_desc"/></h3>
         <div class="panel panel-default panel-footer">
-            <form id="login-form">
+            <form method="POST" id="login-form" action="<c:url value="/LoginServlet" />">
                 <div class="form-group">
-                    <label for="email">Email address:</label>
-                    <input type="email" class="form-control" id="email">
+                    <label for="username"><fmt:message key="username"/>:</label>
+                    <input type="text" name="username" class="form-control" id="username">
                 </div>
                 <div class="form-group">
                     <label>Password:</label><a href="#" class="to-right site-header-link2"><fmt:message key="forgot_password"/></a>
-                    <input type="password" class="form-control" id="pwd">
+                    <input type="password" name="password" class="form-control" id="password">
                 </div>
                 <div class="checkbox">
                     <label><input type="checkbox"><fmt:message key="remember_me"/></label>
