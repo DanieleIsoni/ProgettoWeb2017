@@ -22,6 +22,20 @@ and open the template in the editor.
     font-size: 16px !important;
 }
 
+.site-header-link2:visited {
+    color: #0366d6 !important;
+}
+
+.site-header-link2:active {
+    color: #0366d6 !important;
+}
+
+.site-header-link2 {
+    color: #0366d6 !important;
+    font-weight: bold !important;
+    font-size: 13px !important;
+}
+
 .uppercase {
     text-transform: uppercase;
 }
@@ -33,3 +47,24 @@ and open the template in the editor.
     white-space: nowrap;
 }
 
+body.login{  
+    margin: auto;
+}
+
+.panel{
+    width: 300px;
+    display: block;
+    margin: auto;
+    min-width: 300px;
+}
+
+.to-right{
+     float:right;
+}
+
+#login-form{
+    text-align: left;
+    padding: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}

@@ -39,7 +39,7 @@
                         </li>
                     </ul>
                     <p class="navbar-text navbar-right">
-                        <a href="../login.jsp" class="site-header-link"><fmt:message key="login"/></a>  <fmt:message key="or"/>  <a href="../signup.jsp" class="site-header-link"><fmt:message key="sign_up"/></a>
+                        <a href="<c:url value="/login.jsp" />" class="site-header-link"><fmt:message key="login"/></a>  <fmt:message key="or"/>  <a href="<c:url value="/signup.jsp" />" class="site-header-link"><fmt:message key="sign_up"/></a>
                     </p>
 
                     <form class="navbar-form navbar-right">
