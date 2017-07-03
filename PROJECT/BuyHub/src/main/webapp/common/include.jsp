@@ -4,7 +4,8 @@
     Author     : matteo
 --%>
 
-<%@include file="taglib.jsp" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%-- Set language --%>
 <c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
@@ -22,7 +23,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    <link href="../css/custom_style.css" rel="stylesheet" type="text/css">    
-    <script type="text/javascript" src="../js/script.js"></script>
-    <link rel="icon" href="../images/icon.png">
+    <link href="<c:url value="/css/style.css" />" rel="stylesheet" type="text/css">    
+    <script type="text/javascript" src="<c:url value="/js/script.js" />"></script>
+    <link rel="icon" href="<c:url value="/images/icon.png" />">
+
 </head>

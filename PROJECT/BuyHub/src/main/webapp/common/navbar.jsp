@@ -9,9 +9,7 @@
 
 <html>
     <%-- Include the bootstrap js, css and jquery--%>
-    <%@include file="taglib.jsp" %>
-    <jsp:include page="include.jsp" />
-
+    <%@include file="include.jsp" %>
     <body>
         <nav class="navbar navbar-default">
             <div class="container-fluid">
@@ -33,7 +31,7 @@
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown" onchange="submit()">
-                            <a href="#" maxlength="2" class="dropdown-toggle uppercase" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">${language}<span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle uppercase" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">${language}<span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="?language=it">IT</a></li>
                                 <li><a href="?language=en">EN</a></li>

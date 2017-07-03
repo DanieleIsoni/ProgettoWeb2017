@@ -9,11 +9,12 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <%@include file="common/taglib.jsp" %>
-        <jsp:include page="common/include.jsp" />
+        <%@include file="common/include.jsp" %>
+        
         <title><fmt:message key="login_title"/></title>
     </head>
-    <body class="center">
+    <body class="text-center login">
+        <img src="images/icon.png" alt="BuyHub logo" height="42" width="42">
         <h1>Hello World!</h1>
     </body>
 </html>
