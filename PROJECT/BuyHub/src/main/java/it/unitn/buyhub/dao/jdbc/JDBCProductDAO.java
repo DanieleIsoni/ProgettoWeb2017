@@ -8,6 +8,7 @@ package it.unitn.buyhub.dao.jdbc;
 import info.debatty.java.stringsimilarity.JaroWinkler;
 import it.unitn.buyhub.dao.*;
 import it.unitn.buyhub.dao.*;
+import it.unitn.buyhub.dao.entities.Category;
 import it.unitn.buyhub.dao.entities.Notification;
 import it.unitn.buyhub.dao.entities.Product;
 import it.unitn.buyhub.dao.entities.Review;
@@ -92,6 +93,49 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
     }
 
     /**
+     * Returns the list of the {@link Product product} with the category passed
+     * as parameter.
+     *
+     * @param category the {@code category} of the {@code products} to get.
+     * @return the list of the {@link Product product} with the category the one
+     * passed as parameter.
+     * @throws DAOException if an error occurred during the information
+     * retrieving.
+     *
+     * @author Matteo Battilana
+     * @since 1.0.170425
+     */
+    public List<Product> getByCategory(Category category) throws DAOException {
+        if (category == null) {
+            throw new DAOException("category is null");
+        }
+        List<Product> products = new ArrayList<>();
+        try (PreparedStatement stm = CON.prepareStatement("SELECT p.* FROM products p, categories_products cp, categories c WHERE p.id = cp.id_product AND cp.id_category = ?")) {
+            stm.setInt(1, category.getId());
+            try (ResultSet rs = stm.executeQuery()) {
+
+                while (rs.next()) {
+                    Product product = new Product();
+                    product.setId(rs.getInt("id"));
+                    product.setName(rs.getString("name"));
+                    product.setDescription(rs.getString("description"));
+                    product.setPrice(rs.getDouble("price"));
+
+                    //Get user associate
+                    ShopDAO shopDao = getDAO(ShopDAO.class);
+                    product.setShop(shopDao.getByPrimaryKey(rs.getInt("id_shop")));
+
+                    products.add(product);
+                }
+
+            }
+        } catch (SQLException | DAOFactoryException ex) {
+            throw new DAOException("Impossible to get the shops for the passed shop", ex);
+        }
+        return products;
+    }
+
+    /**
      * Returns the number of {@link Product products} stored on the persistence
      * system of the application.
      *
@@ -145,7 +189,7 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
                 product.setDescription(rs.getString("description"));
                 product.setPrice(rs.getDouble("price"));
 
-                //Get user associate
+                //Get shop associate
                 ShopDAO shopDao = getDAO(ShopDAO.class);
                 product.setShop(shopDao.getByPrimaryKey(rs.getInt("id_shop")));
 
@@ -355,7 +399,7 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
      */
     public List<Product> getByNameAndPriceRange(String name, double min, double max) throws DAOException {
         //MUST IMPLEMENT string-similarity -> https://github.com/tdebatty/java-string-similarity
-        List<Product> all = getAllWithPriceRange(min,max);
+        List<Product> all = getAllWithPriceRange(min, max);
         List<Product> filtered = new ArrayList<>();
 
         //Start JaroWinkler filter

@@ -6,6 +6,7 @@
 package it.unitn.buyhub.dao;
 
 import it.unitn.buyhub.dao.*;
+import it.unitn.buyhub.dao.entities.Category;
 import it.unitn.buyhub.dao.entities.Picture;
 import it.unitn.buyhub.dao.entities.Product;
 import it.unitn.buyhub.dao.entities.Review;
@@ -82,6 +83,21 @@ public interface ProductDAO extends DAO<Product, Integer> {
      * @since 1.0.170425
      */
     public List<Product> getByShop(Shop shop) throws DAOException;
+
+    /**
+     * Returns the list of the {@link Product product} with the category passed as
+     * parameter.
+     *
+     * @param category the {@code category} of the {@code products} to get.
+     * @return the list of the {@link Product product} with the category the one
+     * passed as parameter.
+     * @throws DAOException if an error occurred during the information
+     * retrieving.
+     *
+     * @author Matteo Battilana
+     * @since 1.0.170425
+     */
+    public List<Product> getByCategory(Category category) throws DAOException;
 
     /**
      * Returns the list of all the valid {@link Product products} stored by the

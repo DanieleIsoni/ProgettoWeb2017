@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Creato il: Lug 03, 2017 alle 11:36
+-- Creato il: Lug 03, 2017 alle 11:55
 -- Versione del server: 10.1.24-MariaDB
 -- Versione PHP: 7.1.6
 
@@ -228,7 +228,8 @@ ALTER TABLE `categories`
 -- Indici per le tabelle `categories_products`
 --
 ALTER TABLE `categories_products`
-  ADD PRIMARY KEY (`id_category`,`id_product`);
+  ADD PRIMARY KEY (`id_category`,`id_product`),
+  ADD KEY `id_product` (`id_product`);
 
 --
 -- Indici per le tabelle `coordinates`
@@ -370,6 +371,13 @@ ALTER TABLE `users`
 --
 -- Limiti per le tabelle scaricate
 --
+
+--
+-- Limiti per la tabella `categories_products`
+--
+ALTER TABLE `categories_products`
+  ADD CONSTRAINT `categories_products_ibfk_1` FOREIGN KEY (`id_category`) REFERENCES `categories` (`id`),
+  ADD CONSTRAINT `categories_products_ibfk_2` FOREIGN KEY (`id_product`) REFERENCES `products` (`id`);
 
 --
 -- Limiti per la tabella `messages`
