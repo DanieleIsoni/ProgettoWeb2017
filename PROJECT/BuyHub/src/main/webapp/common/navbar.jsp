@@ -4,12 +4,12 @@
     Author     : matteo
 --%>
 
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
-<html lang="${language}">
+<html>
     <%-- Include the bootstrap js, css and jquery--%>
+    <%@include file="taglib.jsp" %>
     <jsp:include page="include.jsp" />
 
     <body>
@@ -41,7 +41,7 @@
                         </li>
                     </ul>
                     <p class="navbar-text navbar-right">
-                        <a href="#" class="site-header-link"><fmt:message key="login"/></a>  <fmt:message key="or"/>  <a href="#" class="site-header-link"><fmt:message key="sign_up"/></a>
+                        <a href="../login.jsp" class="site-header-link"><fmt:message key="login"/></a>  <fmt:message key="or"/>  <a href="../signup.jsp" class="site-header-link"><fmt:message key="sign_up"/></a>
                     </p>
 
                     <form class="navbar-form navbar-right">

@@ -25,3 +25,8 @@ and open the template in the editor.
 .uppercase {
     text-transform: uppercase;
 }
+
+body.center {
+    margin-left: auto;
+    margin-right: auto;
+}

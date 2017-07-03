@@ -4,8 +4,7 @@
     Author     : matteo
 --%>
 
-<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
-<%@ taglib uri = "http://java.sun.com/jsp/jstl/fmt" prefix = "fmt" %>
+<%@include file="taglib.jsp" %>
 
 <%-- Set language --%>
 <c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
@@ -25,4 +24,5 @@
 
     <link href="../css/custom_style.css" rel="stylesheet" type="text/css">    
     <script type="text/javascript" src="../js/script.js"></script>
+    <link rel="icon" href="../images/icon.png">
 </head>
