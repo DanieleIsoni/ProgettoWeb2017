@@ -10,6 +10,8 @@ import it.unitn.buyhub.dao.entities.User;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.factories.DAOFactory;
+import it.unitn.buyhub.utils.MD5;
+import static it.unitn.buyhub.utils.MD5.getMD5Hex;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -52,7 +54,7 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String username = request.getParameter("username");
         //already in MD5 hash
-        String password = request.getParameter("password");
+        String password = request.getParameter("password");        
 
         String contextPath = getServletContext().getContextPath();
         if (!contextPath.endsWith("/")) {
@@ -60,7 +62,7 @@ public class LoginServlet extends HttpServlet {
         }
 
         try {
-            User user = userDao.getByUsernameAndPassord(username, password);
+            User user = userDao.getByUsernameAndPassord(username, MD5.getMD5Hex(password));
             if (user == null) {
                 response.sendRedirect(response.encodeRedirectURL(contextPath + "login.jsp"));
             } else {
