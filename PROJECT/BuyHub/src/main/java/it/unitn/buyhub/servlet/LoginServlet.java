@@ -65,7 +65,7 @@ public class LoginServlet extends HttpServlet {
                 response.sendRedirect(response.encodeRedirectURL(contextPath + "login.jsp"));
             } else {
                 request.getSession().setAttribute("authenticatedUser", user);
-
+                response.sendRedirect(response.encodeRedirectURL(contextPath + "home.jsp"));
             }
         } catch (DAOException ex) {
             //TODO: log exception
