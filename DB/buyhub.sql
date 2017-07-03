@@ -28,18 +28,6 @@ USE buyhub;
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `categories`
---
-
-CREATE TABLE `categories` (
-  `id` int(11) NOT NULL,
-  `name` varchar(256) NOT NULL,
-  `description` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- Struttura della tabella `categories_products`
 --
 
@@ -219,12 +207,6 @@ CREATE TABLE `users` (
 --
 
 --
--- Indici per le tabelle `categories`
---
-ALTER TABLE `categories`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indici per le tabelle `categories_products`
 --
 ALTER TABLE `categories_products`
@@ -324,11 +306,6 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT per la tabella `categories`
---
-ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
 -- AUTO_INCREMENT per la tabella `coordinates`
 --
 ALTER TABLE `coordinates`
@@ -376,7 +353,6 @@ ALTER TABLE `users`
 -- Limiti per la tabella `categories_products`
 --
 ALTER TABLE `categories_products`
-  ADD CONSTRAINT `categories_products_ibfk_1` FOREIGN KEY (`id_category`) REFERENCES `categories` (`id`),
   ADD CONSTRAINT `categories_products_ibfk_2` FOREIGN KEY (`id_product`) REFERENCES `products` (`id`);
 
 --

@@ -8,7 +8,6 @@ package it.unitn.buyhub.dao.jdbc;
 import info.debatty.java.stringsimilarity.JaroWinkler;
 import it.unitn.buyhub.dao.*;
 import it.unitn.buyhub.dao.*;
-import it.unitn.buyhub.dao.entities.Category;
 import it.unitn.buyhub.dao.entities.Notification;
 import it.unitn.buyhub.dao.entities.Product;
 import it.unitn.buyhub.dao.entities.Review;
@@ -96,7 +95,7 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
      * Returns the list of the {@link Product product} with the category passed
      * as parameter.
      *
-     * @param category the {@code category} of the {@code products} to get.
+     * @param categoryId the {@code category id} of the {@code products} to get.
      * @return the list of the {@link Product product} with the category the one
      * passed as parameter.
      * @throws DAOException if an error occurred during the information
@@ -105,13 +104,10 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
      * @author Matteo Battilana
      * @since 1.0.170425
      */
-    public List<Product> getByCategory(Category category) throws DAOException {
-        if (category == null) {
-            throw new DAOException("category is null");
-        }
+    public List<Product> getByCategory(int categoryId) throws DAOException {
         List<Product> products = new ArrayList<>();
         try (PreparedStatement stm = CON.prepareStatement("SELECT p.* FROM products p, categories_products cp, categories c WHERE p.id = cp.id_product AND cp.id_category = ?")) {
-            stm.setInt(1, category.getId());
+            stm.setInt(1, categoryId);
             try (ResultSet rs = stm.executeQuery()) {
 
                 while (rs.next()) {
