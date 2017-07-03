@@ -13,6 +13,14 @@
         <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
         <param-value>resources.buyhubBundle</param-value>
     </context-param>
+    <filter>
+        <filter-name>AuthenticationFilter</filter-name>
+        <filter-class>it.unitn.buyhub.filter.AuthenticationFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthenticationFilter</filter-name>
+        <url-pattern>/restricted/*</url-pattern>
+    </filter-mapping>
     <listener>
         <description>ServletContextListener</description>
         <listener-class>it.unitn.buyhub.listeners.WebAppContextListener</listener-class>

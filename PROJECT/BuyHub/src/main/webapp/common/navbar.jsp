@@ -4,6 +4,7 @@
     Author     : matteo
 --%>
 
+<%@page import="it.unitn.buyhub.dao.entities.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 
