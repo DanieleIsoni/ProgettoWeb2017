@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Creato il: Giu 30, 2017 alle 13:01
+-- Creato il: Lug 03, 2017 alle 11:36
 -- Versione del server: 10.1.24-MariaDB
 -- Versione PHP: 7.1.6
 
@@ -24,6 +24,29 @@ SET GLOBAL time_zone = "+01:00";
 
 CREATE DATABASE buyhub;
 USE buyhub;
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `categories`
+--
+
+CREATE TABLE `categories` (
+  `id` int(11) NOT NULL,
+  `name` varchar(256) NOT NULL,
+  `description` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `categories_products`
+--
+
+CREATE TABLE `categories_products` (
+  `id_category` int(11) NOT NULL,
+  `id_product` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -96,7 +119,7 @@ CREATE TABLE `pictures_products` (
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `pictures_review`
+-- Struttura della tabella `pictures_reviews`
 --
 
 CREATE TABLE `pictures_reviews` (
@@ -196,6 +219,18 @@ CREATE TABLE `users` (
 --
 
 --
+-- Indici per le tabelle `categories`
+--
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indici per le tabelle `categories_products`
+--
+ALTER TABLE `categories_products`
+  ADD PRIMARY KEY (`id_category`,`id_product`);
+
+--
 -- Indici per le tabelle `coordinates`
 --
 ALTER TABLE `coordinates`
@@ -288,6 +323,11 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT per la tabella `categories`
+--
+ALTER TABLE `categories`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT per la tabella `coordinates`
 --
 ALTER TABLE `coordinates`
@@ -359,7 +399,7 @@ ALTER TABLE `pictures_products`
   ADD CONSTRAINT `pictures_products_ibfk_2` FOREIGN KEY (`id_product`) REFERENCES `products` (`id`);
 
 --
--- Limiti per la tabella `pictures_review`
+-- Limiti per la tabella `pictures_reviews`
 --
 ALTER TABLE `pictures_reviews`
   ADD CONSTRAINT `pictures_reviews_ibfk_1` FOREIGN KEY (`id_picture`) REFERENCES `pictures` (`id`),
