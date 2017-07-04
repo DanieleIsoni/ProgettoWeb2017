@@ -9,9 +9,11 @@
 <%@taglib prefix="right-corner" uri="/WEB-INF/tld/navbar.tld"%>
 <!DOCTYPE html>
 
+
 <html>
     <%-- Include the bootstrap js, css and jquery--%>
     <%@include file="include.jsp" %>
+    <right-corner:userInformation />
 
     <body>
         <nav class="navbar navbar-default">
@@ -41,6 +43,7 @@
                             </ul>
                         </li>
                     </ul>
+
                     <p class="navbar-text navbar-right">
                         <a href="<c:url value="/login.jsp" />" class="site-header-link"><fmt:message key="login"/></a>  <fmt:message key="or"/>  <a href="<c:url value="/signup.jsp" />" class="site-header-link"><fmt:message key="sign_up"/></a>
                     </p>
@@ -53,8 +56,7 @@
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
         </nav>
+       
     </body>
-    
-    
-    <right-corner:userInformation />
+     
 </html>
