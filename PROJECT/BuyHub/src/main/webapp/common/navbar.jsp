@@ -6,11 +6,13 @@
 
 <%@page import="it.unitn.buyhub.dao.entities.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="right-corner" uri="/WEB-INF/tld/navbar.tld"%>
 <!DOCTYPE html>
 
 <html>
     <%-- Include the bootstrap js, css and jquery--%>
     <%@include file="include.jsp" %>
+
     <body>
         <nav class="navbar navbar-default">
             <div class="container-fluid">
@@ -52,4 +54,7 @@
             </div><!-- /.container-fluid -->
         </nav>
     </body>
+    
+    
+    <right-corner:userInformation />
 </html>
