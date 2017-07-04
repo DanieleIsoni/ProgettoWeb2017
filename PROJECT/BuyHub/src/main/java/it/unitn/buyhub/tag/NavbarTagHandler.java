@@ -37,11 +37,12 @@ public class NavbarTagHandler extends SimpleTagSupport {
         try {
             if (user == null) {
                 //not logged
-                out.println("<h1>asdsad</h1> <fmt:message key='search'/>");
+            
+                out.println("<h1>asdsad</h1> "+getLocalizedString("search"));//<fmt:message key='search'/>");
                 out.flush();
             } else {
                 //logged
-                out.println("<h1>asdsad</h1> <fmt:message key='search'/>");
+                out.println("<h1>asdsad</h1> "+getLocalizedString("search"));// <fmt:message key='search'/>");
             }
         } catch (IOException es) {
             es.printStackTrace();
