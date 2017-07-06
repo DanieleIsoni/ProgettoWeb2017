@@ -59,8 +59,7 @@ public class SignupServlet extends HttpServlet {
         String first_name = request.getParameter("first_name");
         String last_name = request.getParameter("last_name");
         String email = request.getParameter("email");
-        
-        System.out.println("LLLLLLLLLLLLL"+password+" -> "+password2);
+       
         
         String contextPath = getServletContext().getContextPath();
         if (!contextPath.endsWith("/")) {

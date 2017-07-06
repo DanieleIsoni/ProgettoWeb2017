@@ -54,9 +54,12 @@
             30
         </session-timeout>
     </session-config>
+    <!--
     <error-page>
         <location>/common/error.jsp</location>
     </error-page>
+    
+    -->
     <welcome-file-list>
         <welcome-file>login.jsp</welcome-file>
     </welcome-file-list>
