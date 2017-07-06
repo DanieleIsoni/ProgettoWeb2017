@@ -13,7 +13,7 @@
 <html>
     <%-- Include the bootstrap js, css and jquery--%>
     <%@include file="include.jsp" %>
-    <right-corner:userInformation />
+
 
     <body>
         <nav class="navbar navbar-default">
@@ -42,11 +42,10 @@
                                 <li><a href="?language=en">EN</a></li>
                             </ul>
                         </li>
+
                     </ul>
 
-                    <p class="navbar-text navbar-right">
-                        <a href="<c:url value="/login.jsp" />" class="site-header-link"><fmt:message key="login"/></a>  <fmt:message key="or"/>  <a href="<c:url value="/signup.jsp" />" class="site-header-link"><fmt:message key="sign_up"/></a>
-                    </p>
+                    <right-corner:userInformation />
 
                     <form class="navbar-form navbar-right">
                         <div class="form-group">
@@ -56,7 +55,6 @@
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
         </nav>
-       
     </body>
-     
+
 </html>

@@ -29,16 +29,23 @@
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>it.unitn.buyhub.servlet.LoginServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SignupServlet</servlet-name>
+        <servlet-class>it.unitn.buyhub.servlet.SignupServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SignupServlet</servlet-name>
+        <url-pattern>/SignupServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
-    
     <error-page>
         <location>/common/error.jsp</location>
     </error-page>

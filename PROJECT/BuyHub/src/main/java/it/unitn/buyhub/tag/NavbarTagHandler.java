@@ -5,11 +5,22 @@
  */
 package it.unitn.buyhub.tag;
 
+import it.unitn.buyhub.dao.NotificationDAO;
+import it.unitn.buyhub.dao.UserDAO;
+import it.unitn.buyhub.dao.entities.Notification;
 import it.unitn.buyhub.dao.entities.User;
+import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
+import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
+import it.unitn.buyhub.dao.persistence.factories.DAOFactory;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -33,16 +44,51 @@ public class NavbarTagHandler extends SimpleTagSupport {
         user = (User) getJspContext().getAttribute("authenticatedUser", PageContext.SESSION_SCOPE);
 
         JspWriter out = getJspContext().getOut();
+        PageContext pageContext = (PageContext) getJspContext();
+        HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
 
         try {
             if (user == null) {
                 //not logged
-            
-                out.println("<h1>asdsad</h1> "+getLocalizedString("search"));//<fmt:message key='search'/>");
-                out.flush();
+                out.println("<p class=\"navbar-text navbar-right\">\n"
+                        + "                        <a href=\"" + String.format("%s/login.jsp", request.getContextPath()) + "\" class=\"site-header-link\">" + getLocalizedString("login") + "</a>  " + getLocalizedString("or") + "  <a href=\"" + String.format("%s/signup.jsp", request.getContextPath()) + "\" class=\"site-header-link\">" + getLocalizedString("sign_up") + "</a>\n"
+                        + "                    </p>");
+
             } else {
                 //logged
-                out.println("<h1>asdsad</h1> "+getLocalizedString("search"));// <fmt:message key='search'/>");
+                NotificationDAO notificationDao;
+                List<Notification> userNotifications = new ArrayList<>();
+
+                DAOFactory daoFactory = (DAOFactory) getJspContext().getAttribute("daoFactory", PageContext.APPLICATION_SCOPE);
+                if (daoFactory == null) {
+                    throw new JspTagException("Impossible to get dao factory for user storage system");
+                }
+                try {
+                    notificationDao = daoFactory.getDAO(NotificationDAO.class);
+                } catch (DAOFactoryException ex) {
+                    throw new JspTagException("Impossible to get notificationDao for user storage system", ex);
+                }
+
+                try {
+                    userNotifications = notificationDao.getUnreadByUser(user);
+                } catch (DAOException ex) {
+                    throw new JspTagException("Impossible to get unread notification user storage system", ex);
+                }
+
+                out.println("<ul class=\"nav navbar-nav navbar-right\">                        \n"
+                        + "                        <li>\n"
+                        + "                            <a href=\"#\"> \n"
+                        + "                                <div>\n");
+                if (userNotifications.size() > 0) {
+                    out.println("                                    <div class=\"numberCircle\">" + userNotifications.size() + "</div>\n");
+                }
+                out.println("                                    <span class=\"glyphicon glyphicon-bell\" id=\"logIcon\"></span>\n"
+                        + "                                </div>\n"
+                        + "                            </a>\n"
+                        + "\n"
+                        + "                        </li>\n"
+                        + "                        <li><a href=\"#\">"+user.getFirstName()+"</a></li>\n"
+                        + "                    </ul>");
             }
         } catch (IOException es) {
             es.printStackTrace();
