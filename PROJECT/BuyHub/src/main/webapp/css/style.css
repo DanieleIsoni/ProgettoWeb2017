@@ -88,3 +88,11 @@ body.login{
     line-height: 13px;
     font-size: 65%;
 }
+
+.popover-title { display: none; }
+
+.popover {
+    white-space: normal !important;
+    word-break: break-all!important;
+    width:300px;
+}

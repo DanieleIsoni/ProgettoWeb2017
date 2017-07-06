@@ -14,6 +14,7 @@ import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.factories.DAOFactory;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -51,8 +52,8 @@ public class NavbarTagHandler extends SimpleTagSupport {
             if (user == null) {
                 //not logged
                 out.println("<p class=\"navbar-text navbar-right\">\n"
-                        + "                        <a href=\"" + String.format("%s/login.jsp", request.getContextPath()) + "\" class=\"site-header-link\">" + getLocalizedString("login") + "</a>  " + getLocalizedString("or") + "  <a href=\"" + String.format("%s/signup.jsp", request.getContextPath()) + "\" class=\"site-header-link\">" + getLocalizedString("sign_up") + "</a>\n"
-                        + "                    </p>");
+                        + "<a href=\"" + String.format("%s/login.jsp", request.getContextPath()) + "\" class=\"site-header-link\">" + getLocalizedString("login") + "</a>  " + getLocalizedString("or") + "  <a href=\"" + String.format("%s/signup.jsp", request.getContextPath()) + "\" class=\"site-header-link\">" + getLocalizedString("sign_up") + "</a>\n"
+                        + "</p>");
 
             } else {
                 //logged
@@ -75,20 +76,26 @@ public class NavbarTagHandler extends SimpleTagSupport {
                     throw new JspTagException("Impossible to get unread notification user storage system", ex);
                 }
 
-                out.println("<ul class=\"nav navbar-nav navbar-right\">                        \n"
-                        + "                        <li>\n"
-                        + "                            <a href=\"#\"> \n"
-                        + "                                <div>\n");
-                if (userNotifications.size() > 0) {
-                    out.println("                                    <div class=\"numberCircle\">" + userNotifications.size() + "</div>\n");
+                //Generation all notification list
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                String notifications = "";
+                for (Notification n : userNotifications) {
+                    notifications += "<div><p>" + n.getDescription() + "</p>\n<p>" + dateFormat.format(n.getDateCreation()) + "</p></div>";
                 }
-                out.println("                                    <span class=\"glyphicon glyphicon-bell\" id=\"logIcon\"></span>\n"
-                        + "                                </div>\n"
-                        + "                            </a>\n"
-                        + "\n"
-                        + "                        </li>\n"
-                        + "                        <li><a href=\"#\">"+user.getFirstName()+"</a></li>\n"
-                        + "                    </ul>");
+
+                out.println("<ul class=\"nav navbar-nav navbar-right\">\n"
+                        + "<li>\n"
+                        + "<a href=\"#\"> \n"
+                        + "<div>\n");
+                if (userNotifications.size() > 0) {
+                    out.println("<div class=\"numberCircle\">" + userNotifications.size() + "</div>\n");
+                }
+                out.println("<span data-html=\"true\" data-placement=\"bottom\"  title=\"" + getLocalizedString("notifications") + "\" data-trigger=\"focus\" tabindex=\"0\" data-toggle=\"popover\" data-content=\"" + notifications + "\" class=\"glyphicon glyphicon-bell\" id=\"logIcon\" ></span>\n"
+                        + "</div>\n"
+                        + "</a>\n"
+                        + "</li>\n"
+                        + "<li><a href=\"#\" data-placement=\"bottom\" data-trigger=\"focus\" tabindex=\"0\" title=\"" + getLocalizedString("user") + "\" data-toggle=\"popover\">" + user.getFirstName() + "</a></li>\n"
+                        + "</ul>");
             }
         } catch (IOException es) {
             es.printStackTrace();
