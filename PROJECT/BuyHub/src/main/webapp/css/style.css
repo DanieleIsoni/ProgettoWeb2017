@@ -96,3 +96,7 @@ body.login{
     word-break: break-all!important;
     width:300px;
 }
+
+.glyphicon{
+    font-size: 1.2em;
+}

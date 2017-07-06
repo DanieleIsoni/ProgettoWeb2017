@@ -12,6 +12,8 @@
         <title>JSP Page</title>
     </head>
     <body>
+        <%@include file="common/navbar.jsp" %>
+
         <h1>Hello World!</h1>
     </body>
 </html>

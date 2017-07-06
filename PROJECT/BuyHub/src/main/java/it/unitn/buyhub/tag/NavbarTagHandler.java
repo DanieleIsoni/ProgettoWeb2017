@@ -84,13 +84,13 @@ public class NavbarTagHandler extends SimpleTagSupport {
                 }
 
                 out.println("<ul class=\"nav navbar-nav navbar-right\">\n"
-                        + "<li>\n"
+                        + "<li data-html=\"true\" data-placement=\"bottom\"  title=\"" + getLocalizedString("notifications") + "\" data-trigger=\"focus\" tabindex=\"0\" data-toggle=\"popover\" data-content=\"" + notifications + "\">\n"
                         + "<a href=\"#\"> \n"
                         + "<div>\n");
                 if (userNotifications.size() > 0) {
                     out.println("<div class=\"numberCircle\">" + userNotifications.size() + "</div>\n");
                 }
-                out.println("<span data-html=\"true\" data-placement=\"bottom\"  title=\"" + getLocalizedString("notifications") + "\" data-trigger=\"focus\" tabindex=\"0\" data-toggle=\"popover\" data-content=\"" + notifications + "\" class=\"glyphicon glyphicon-bell\" id=\"logIcon\" ></span>\n"
+                out.println("<span class=\"glyphicon glyphicon-bell\" id=\"logIcon\" ></span>\n"
                         + "</div>\n"
                         + "</a>\n"
                         + "</li>\n"
