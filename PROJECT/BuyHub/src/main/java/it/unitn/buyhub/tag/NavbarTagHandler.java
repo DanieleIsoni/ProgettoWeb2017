@@ -50,13 +50,12 @@ public class NavbarTagHandler extends SimpleTagSupport {
 
         try {
             if (user == null) {
-                //not logged
-                out.println("<p class=\"navbar-text navbar-right\">\n"
-                        + "<a href=\"" + String.format("%s/login.jsp", request.getContextPath()) + "\" class=\"site-header-link\">" + getLocalizedString("login") + "</a>  " + getLocalizedString("or") + "  <a href=\"" + String.format("%s/signup.jsp", request.getContextPath()) + "\" class=\"site-header-link\">" + getLocalizedString("sign_up") + "</a>\n"
-                        + "</p>");
+                //not logged, so show link to login and signup
+                out.println(generateLoginAndSingupLink(request));
 
             } else {
-                //logged
+                //logged, show user name and notification (counter + list)
+
                 NotificationDAO notificationDao;
                 List<Notification> userNotifications = new ArrayList<>();
 
@@ -75,27 +74,9 @@ public class NavbarTagHandler extends SimpleTagSupport {
                 } catch (DAOException ex) {
                     throw new JspTagException("Impossible to get unread notification user storage system", ex);
                 }
+                //print notification ad user info
+                out.print(generateRightCornerUserInfo(userNotifications, request, user));
 
-                //Generation all notification list
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                String notifications = "";
-                for (Notification n : userNotifications) {
-                    notifications += "<div><p>" + n.getDescription() + "</p>\n<p>" + dateFormat.format(n.getDateCreation()) + "</p></div>";
-                }
-
-                out.println("<ul class=\"nav navbar-nav navbar-right\">\n"
-                        + "<li data-html=\"true\" data-placement=\"bottom\"  title=\"" + getLocalizedString("notifications") + "\" data-trigger=\"focus\" tabindex=\"0\" data-toggle=\"popover\" data-content=\"" + notifications + "\">\n"
-                        + "<a href=\"#\"> \n"
-                        + "<div>\n");
-                if (userNotifications.size() > 0) {
-                    out.println("<div class=\"numberCircle\">" + userNotifications.size() + "</div>\n");
-                }
-                out.println("<span class=\"glyphicon glyphicon-bell\" id=\"logIcon\" ></span>\n"
-                        + "</div>\n"
-                        + "</a>\n"
-                        + "</li>\n"
-                        + "<li><a href=\"#\" data-placement=\"bottom\" data-trigger=\"focus\" tabindex=\"0\" title=\"" + getLocalizedString("user") + "\" data-toggle=\"popover\">" + user.getFirstName() + "</a></li>\n"
-                        + "</ul>");
             }
         } catch (IOException es) {
             es.printStackTrace();
@@ -110,12 +91,50 @@ public class NavbarTagHandler extends SimpleTagSupport {
         return value;
     }
 
+    private String generateLoginAndSingupLink(HttpServletRequest request) {
+        return "<p class=\"navbar-text navbar-right\">\n"
+                + "<a href=\"" + String.format("%s/login.jsp", request.getContextPath()) + "\" class=\"site-header-link\">" + getLocalizedString("login") + "</a>  " + getLocalizedString("or") + "  <a href=\"" + String.format("%s/signup.jsp", request.getContextPath()) + "\" class=\"site-header-link\">" + getLocalizedString("sign_up") + "</a>\n"
+                + "</p>";
+    }
+
+    private String generateRightCornerUserInfo(List<Notification> userNotifications, HttpServletRequest request, User currentUser) {
+        String out = "<ul class=\"nav navbar-nav navbar-right\">\n"
+                + "<li data-html=\"true\" data-placement=\"bottom\"  title=\"" + getLocalizedString("notifications") + "\"  tabindex=\"0\" data-toggle=\"popover\" data-content=\"" + generateNotificationList(userNotifications, request) + "\">\n"
+                + "<a href=\"#\"> \n"
+                + "<div>\n";
+        if (userNotifications.size() > 0) {
+            out += "<div class=\"numberCircle\">" + userNotifications.size() + "</div>\n";
+        }
+        out += "<span class=\"glyphicon glyphicon-bell\" id=\"logIcon\" ></span>\n"
+                + "</div>\n"
+                + "</a>\n"
+                + "</li>\n"
+                + "<li><a href=\"#\" data-placement=\"bottom\" data-trigger=\"focus\" tabindex=\"0\" title=\"" + getLocalizedString("user") + "\" data-toggle=\"popover\">" + currentUser.getFirstName() + "</a></li>\n"
+                + "</ul>";
+        return out;
+    }
+
+    private String generateNotificationList(List<Notification> notifications, HttpServletRequest request) {
+
+        //Generation all notification list
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String out = "";
+        for (Notification n : notifications) {
+            out += "<hr><div class='notification-element'>\n"
+                    + "            <table  align='center'>\n"
+                    + "                <tr>\n"
+                    + "                    <th id='image' rowspan='2'>\n"
+                    + "                        <img src='" + String.format("%s/images/icon.png", request.getContextPath()) + "' />\n"
+                    + "                    </th>\n"
+                    + "                    <th>" + n.getDescription() + "</th>\n"
+                    + "                </tr>\n"
+                    + "                <tr>\n"
+                    + "                    <td>" + dateFormat.format(n.getDateCreation()) + "</td>\n"
+                    + "                </tr>\n"
+                    + "            </table>\n"
+                    + "        </div>";
+        }
+        return out;
+    }
+
 }
-/**
- *
- * out.println("<p class=\"navbar-text navbar-right\">\n" + "
- * <a href=\"/login.jsp\" class=\"site-header-link\">"+getLocalizedString("login")+"</a>
- * "+getLocalizedString("or")+"
- * <a href=\"/signup.jsp\" class=\"site-header-link\">"+getLocalizedString("sign_up")+"</a>\n"
- * + "                    </p>");
- */

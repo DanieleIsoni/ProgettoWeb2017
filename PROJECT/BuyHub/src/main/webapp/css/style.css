@@ -93,10 +93,38 @@ body.login{
 
 .popover {
     white-space: normal !important;
-    word-break: break-all!important;
+    font-size: 0.9em;
     width:300px;
+    border-radius: 3px;
 }
 
 .glyphicon{
     font-size: 1.2em;
+}
+
+.notification-element{
+    padding: 15px;
+}
+
+.notification-element img{
+    height: 45px;
+    border-radius: 50%;
+
+}
+
+.notification-element table{
+    width: 100%;
+}
+
+#image{
+    width: 65px;
+}
+
+.popover-content {
+    padding: 0px 0px;
+}
+
+hr{
+    padding: 0px;
+    margin: 0px;    
 }
