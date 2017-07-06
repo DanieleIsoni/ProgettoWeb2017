@@ -26,5 +26,6 @@
     <link href="<c:url value="/css/style.css" />" rel="stylesheet" type="text/css">    
     <script type="text/javascript" src="<c:url value="/js/script.js" />"></script>
     <link rel="icon" href="<c:url value="/images/icon.png" />">
+    <script type="text/javascript" src="<c:url value="/js/script.js" />"></script>
 
 </head>
