@@ -99,7 +99,7 @@ public class NavbarTagHandler extends SimpleTagSupport {
 
     private String generateRightCornerUserInfo(List<Notification> userNotifications, HttpServletRequest request, User currentUser) {
         String out = "<ul class=\"nav navbar-nav navbar-right\">\n"
-                + "<li data-html=\"true\" data-placement=\"bottom\"  title=\"" + getLocalizedString("notifications") + "\"  tabindex=\"0\" data-toggle=\"popover\" data-content=\"" + generateNotificationList(userNotifications, request) + "\">\n"
+                + "<li data-html=\"true\" data-trigger=\"focus\" data-placement=\"bottom\"  title=\"" + getLocalizedString("notifications") + "\"  tabindex=\"0\" data-toggle=\"popover\" data-content=\"" + generateNotificationList(userNotifications, request) + "\">\n"
                 + "<a href=\"#\"> \n"
                 + "<div>\n";
         if (userNotifications.size() > 0) {
@@ -109,9 +109,13 @@ public class NavbarTagHandler extends SimpleTagSupport {
                 + "</div>\n"
                 + "</a>\n"
                 + "</li>\n"
-                + "<li><a href=\"#\" data-placement=\"bottom\" data-trigger=\"focus\" tabindex=\"0\" title=\"" + getLocalizedString("user") + "\" data-toggle=\"popover\">" + currentUser.getFirstName() + "</a></li>\n"
+                + "<li class=\"user-popover\" ><a href=\"#\" data-html=\"true\" data-placement=\"bottom\" data-content=\"" + generateUserList(request) + "\" data-trigger=\"focus\" tabindex=\"0\" title=\"" + getLocalizedString("user") + "\" data-toggle=\"popover\">" + currentUser.getFirstName() + "</a></li>\n"
                 + "</ul>";
         return out;
+    }
+
+    private String generateUserList(HttpServletRequest request) {
+        return "<a href='" + String.format("%s/LogoutServlet", request.getContextPath()) + "' class='btn btn-danger user' role='button'>" + getLocalizedString("logout") + "</a>";
     }
 
     private String generateNotificationList(List<Notification> notifications, HttpServletRequest request) {
@@ -119,6 +123,9 @@ public class NavbarTagHandler extends SimpleTagSupport {
         //Generation all notification list
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String out = "";
+        if(notifications.size()==0){
+            out+="<div class='no-notification'>"+getLocalizedString("no_notification")+"</div>";
+        }
         for (Notification n : notifications) {
             out += "<hr><div class='notification-element'>\n"
                     + "            <table  align='center'>\n"
