@@ -18,7 +18,8 @@ public class Cart implements Serializable {
     private List<CartElement> products = new ArrayList<>();
     
     public Cart(){
-        products.add(new CartElement(11, 11));
+        products.add(new CartElement(11, 4));
+        products.add(new CartElement(2, 1));
     }
 
     public void addProduct(int id, int number) {
