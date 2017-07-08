@@ -13,6 +13,7 @@
 
 <%-- Set Bundle language --%>
 <fmt:setBundle basename="bundle.buyhubBundle" scope="application"/>
+<jsp:useBean id="userCart" scope="session" class="it.unitn.buyhub.dao.entities.Cart" />
 
 
 

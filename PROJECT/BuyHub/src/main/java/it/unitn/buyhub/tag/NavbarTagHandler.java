@@ -7,6 +7,7 @@ package it.unitn.buyhub.tag;
 
 import it.unitn.buyhub.dao.NotificationDAO;
 import it.unitn.buyhub.dao.UserDAO;
+import it.unitn.buyhub.dao.entities.Cart;
 import it.unitn.buyhub.dao.entities.Notification;
 import it.unitn.buyhub.dao.entities.User;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
@@ -74,8 +75,15 @@ public class NavbarTagHandler extends SimpleTagSupport {
                 } catch (DAOException ex) {
                     throw new JspTagException("Impossible to get unread notification user storage system", ex);
                 }
+                
+                //Getting user cart
+                Cart cart = (Cart) getJspContext().getAttribute("userCart", PageContext.SESSION_SCOPE);
+                if (cart == null) {
+                    throw new JspTagException("Impossible to get cart for user storage system");
+                }
+
                 //print notification ad user info
-                out.print(generateRightCornerUserInfo(userNotifications, request, user));
+                out.print(generateRightCornerUserInfo(userNotifications, request, user, cart));
 
             }
         } catch (IOException es) {
@@ -97,7 +105,7 @@ public class NavbarTagHandler extends SimpleTagSupport {
                 + "</p>";
     }
 
-    private String generateRightCornerUserInfo(List<Notification> userNotifications, HttpServletRequest request, User currentUser) {
+    private String generateRightCornerUserInfo(List<Notification> userNotifications, HttpServletRequest request, User currentUser, Cart cart) {
         String out = "<ul class=\"nav navbar-nav navbar-right\">\n"
                 + "<li data-html=\"true\" data-trigger=\"focus\" data-placement=\"bottom\"  title=\"" + getLocalizedString("notifications") + "\"  tabindex=\"0\" data-toggle=\"popover\" data-content=\"" + generateNotificationList(userNotifications, request) + "\">\n"
                 + "<a href=\"#\"> \n"
@@ -106,6 +114,16 @@ public class NavbarTagHandler extends SimpleTagSupport {
             out += "<div class=\"numberCircle\">" + userNotifications.size() + "</div>\n";
         }
         out += "<span class=\"glyphicon glyphicon-bell\" id=\"logIcon\" ></span>\n"
+                + "</div>\n"
+                + "</a>\n"
+                + "</li>\n"
+                + "<li>\n"
+                + "<a href=\"" + String.format("%s/cart.jsp", request.getContextPath()) + "\"> \n"
+                + "<div>\n";
+        if (cart.getCount() > 0) {
+            out += "<div class=\"numberCircle\">" + cart.getCount() + "</div>\n";
+        }
+        out += "<span class=\"glyphicon glyphicon-shopping-cart\" id=\"logIcon\" ></span>\n"
                 + "</div>\n"
                 + "</a>\n"
                 + "</li>\n"
@@ -123,8 +141,8 @@ public class NavbarTagHandler extends SimpleTagSupport {
         //Generation all notification list
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String out = "";
-        if(notifications.size()==0){
-            out+="<div class='no-notification'>"+getLocalizedString("no_notification")+"</div>";
+        if (notifications.size() == 0) {
+            out += "<div class='no-notification'>" + getLocalizedString("no_notification") + "</div>";
         }
         for (Notification n : notifications) {
             out += "<hr><div class='notification-element'>\n"
