@@ -236,7 +236,13 @@ public class JDBCPictureDAO extends JDBCDAO<Picture, Integer> implements Picture
         if (product == null) {
             throw new DAOException("product is null");
         }
-        try (PreparedStatement stm = CON.prepareStatement("SELECT pi.* FROM pictures pi, pictures_products pp, products pr WHERE pi.id = pp.id_picture AND pp.id_product = ?")) {
+        try (PreparedStatement stm = CON.prepareStatement(
+                "SELECT pi.* FROM pictures pi "
+                + "JOIN pictures_products pp "
+                + "ON pi.id=pp.id_picture "
+                + "JOIN products pr "
+                + "ON pp.id_product=pr.id "
+                + "WHERE pr.id = ?")) {
             stm.setInt(1, product.getId());
             try (ResultSet rs = stm.executeQuery()) {
                 while (rs.next()) {
@@ -249,13 +255,15 @@ public class JDBCPictureDAO extends JDBCDAO<Picture, Integer> implements Picture
                     //Get user associate
                     UserDAO userDao = getDAO(UserDAO.class);
                     picture.setOwner(userDao.getByPrimaryKey(rs.getInt("id_owner")));
-
+                     
                     pictures.add(picture);
                 }
 
             }
         } catch (SQLException | DAOFactoryException ex) {
+            System.out.println(ex.toString());
             throw new DAOException("Impossible to get the pictures from product", ex);
+            
         }
         return pictures;
     }
