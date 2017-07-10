@@ -25,7 +25,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <link href="<c:url value="/css/style.css" />" rel="stylesheet" type="text/css">    
-    <link href="<c:url value="/css/easyzoom.css" />" rel="stylesheet" type="text/css">    
+    <link href="http://i-like-robots.github.io/EasyZoom/css/easyzoom.css" rel="stylesheet" type="text/css">    
+    <link href="<c:url value="/css/easyzoom_custom.css" />"  rel="stylesheet" type="text/css">    
     <link rel="icon" href="<c:url value="/images/icon.png" />">
     <script type="text/javascript" src="<c:url value="/js/script.js" />"></script>
 

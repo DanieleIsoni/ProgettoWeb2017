@@ -5,14 +5,17 @@
  */
 package it.unitn.buyhub.servlet;
 
+import it.unitn.buyhub.dao.PictureDAO;
 import it.unitn.buyhub.dao.ProductDAO;
 import it.unitn.buyhub.dao.UserDAO;
+import it.unitn.buyhub.dao.entities.Picture;
 import it.unitn.buyhub.dao.entities.Product;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.factories.DAOFactory;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -36,6 +39,7 @@ public class ProductServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     private ProductDAO productDAO;
+    private PictureDAO pictureDAO;
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
@@ -50,6 +54,7 @@ public class ProductServlet extends HttpServlet {
         }
         try {
             productDAO = daoFactory.getDAO(ProductDAO.class);
+            pictureDAO = daoFactory.getDAO(PictureDAO.class);
         } catch (DAOFactoryException ex) {
             throw new ServletException("Impossible to get dao factory for product storage system", ex);
         }
@@ -74,6 +79,13 @@ public class ProductServlet extends HttpServlet {
                 response.sendRedirect(response.encodeRedirectURL(contextPath + "home.jsp"));
             } else {
                 request.getSession().setAttribute("product", product);
+                
+                List<Picture> pictures=pictureDAO.getByProduct(product);
+                
+                request.getSession().setAttribute("pictures", pictures);
+                
+                
+                                
                 request.getRequestDispatcher("product.jsp").forward(request, response);
             }
         } catch (DAOException|NumberFormatException ex) {

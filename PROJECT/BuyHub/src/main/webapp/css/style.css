@@ -147,13 +147,6 @@ hr{
     font-size: 1.6em;
 }
 
-/* Shrink wrap strategy 1 */
-.easyzoom {
-    display: inline-block;
-}
-.easyzoom img {
-    vertical-align: bottom;
-}
 
 .product_title{
     font-size: 200% ;

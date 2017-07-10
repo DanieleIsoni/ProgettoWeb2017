@@ -37,22 +37,24 @@ import javax.servlet.jsp.tagext.JspFragment;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 import static javax.servlet.jsp.tagext.Tag.EVAL_PAGE;
 import org.apache.taglibs.standard.tag.common.fmt.BundleSupport;
+import it.unitn.buyhub.utils.Utility;
 
 public class NavbarTagHandler extends SimpleTagSupport {
 
+    PageContext pageContext;
+    
     @Override
+    
     public void doTag() throws JspException {
         User user = null;
         user = (User) getJspContext().getAttribute("authenticatedUser", PageContext.SESSION_SCOPE);
 
         JspWriter out = getJspContext().getOut();
-        PageContext pageContext = (PageContext) getJspContext();
-        HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
-
+        pageContext = (PageContext) getJspContext();
         try {
             if (user == null) {
                 //not logged, so show link to login and signup
-                out.println(generateLoginAndSingupLink(request));
+                out.println(generateLoginAndSingupLink());
 
             } else {
                 //logged, show user name and notification (counter + list)
@@ -83,7 +85,7 @@ public class NavbarTagHandler extends SimpleTagSupport {
                 }
 
                 //print notification ad user info
-                out.print(generateRightCornerUserInfo(userNotifications, request, user, cart));
+                out.print(generateRightCornerUserInfo(userNotifications, user, cart));
 
             }
         } catch (IOException es) {
@@ -92,22 +94,17 @@ public class NavbarTagHandler extends SimpleTagSupport {
 
     }
 
-    private String getLocalizedString(final String key) {
-        PageContext pageContext = (PageContext) getJspContext();
-        String value = LocaleSupport.getLocalizedMessage(pageContext, key, "bundle.buyhubBundle");
+   
 
-        return value;
-    }
-
-    private String generateLoginAndSingupLink(HttpServletRequest request) {
+    private String generateLoginAndSingupLink() {
         return "<p class=\"navbar-text navbar-right\">\n"
-                + "<a href=\"" + String.format("%s/login.jsp", request.getContextPath()) + "\" class=\"site-header-link\">" + getLocalizedString("login") + "</a>  " + getLocalizedString("or") + "  <a href=\"" + String.format("%s/signup.jsp", request.getContextPath()) + "\" class=\"site-header-link\">" + getLocalizedString("sign_up") + "</a>\n"
+                + "<a href=\"" + Utility.getUrl(pageContext,"login.jsp") + "\" class=\"site-header-link\">" + Utility.getLocalizedString(pageContext,"login") + "</a>  " + Utility.getLocalizedString(pageContext,"or") + "  <a href=\"" + Utility.getUrl(pageContext,"signup.jsp") + "\" class=\"site-header-link\">" + Utility.getLocalizedString(pageContext,"sign_up") + "</a>\n"
                 + "</p>";
     }
 
-    private String generateRightCornerUserInfo(List<Notification> userNotifications, HttpServletRequest request, User currentUser, Cart cart) {
+    private String generateRightCornerUserInfo(List<Notification> userNotifications, User currentUser, Cart cart) {
         String out = "<ul class=\"nav navbar-nav navbar-right\">\n"
-                + "<li data-html=\"true\" data-trigger=\"focus\" data-placement=\"bottom\"  title=\"" + getLocalizedString("notifications") + "\"  tabindex=\"0\" data-toggle=\"popover\" data-content=\"" + generateNotificationList(userNotifications, request) + "\">\n"
+                + "<li data-html=\"true\" data-trigger=\"focus\" data-placement=\"bottom\"  title=\"" + Utility.getLocalizedString(pageContext,"notifications") + "\"  tabindex=\"0\" data-toggle=\"popover\" data-content=\"" + generateNotificationList(userNotifications) + "\">\n"
                 + "<a href=\"#\"> \n"
                 + "<div>\n";
         if (userNotifications.size() > 0) {
@@ -118,7 +115,7 @@ public class NavbarTagHandler extends SimpleTagSupport {
                 + "</a>\n"
                 + "</li>\n"
                 + "<li>\n"
-                + "<a href=\"" + String.format("%s/cart.jsp", request.getContextPath()) + "\"> \n"
+                + "<a href=\"" + Utility.getUrl(pageContext,"cart.jsp") + "\"> \n"
                 + "<div>\n";
         if (cart.getCount() > 0) {
             out += "<div class=\"numberCircle\">" + cart.getCount() + "</div>\n";
@@ -127,29 +124,29 @@ public class NavbarTagHandler extends SimpleTagSupport {
                 + "</div>\n"
                 + "</a>\n"
                 + "</li>\n"
-                + "<li class=\"user-popover\" ><a href=\"#\" data-html=\"true\" data-placement=\"bottom\" data-content=\"" + generateUserList(request) + "\" data-trigger=\"focus\" tabindex=\"0\" title=\"" + getLocalizedString("user") + "\" data-toggle=\"popover\">" + currentUser.getFirstName() + "</a></li>\n"
+                + "<li class=\"user-popover\" ><a href=\"#\" data-html=\"true\" data-placement=\"bottom\" data-content=\"" + generateUserList() + "\" data-trigger=\"focus\" tabindex=\"0\" title=\"" + Utility.getLocalizedString(pageContext,"user") + "\" data-toggle=\"popover\">" + currentUser.getFirstName() + "</a></li>\n"
                 + "</ul>";
         return out;
     }
 
-    private String generateUserList(HttpServletRequest request) {
-        return "<a href='" + String.format("%s/LogoutServlet", request.getContextPath()) + "' class='btn btn-danger user' role='button'>" + getLocalizedString("logout") + "</a>";
+    private String generateUserList() {
+        return "<a href='" + Utility.getUrl(pageContext,"LogoutServlet") + "' class='btn btn-danger user' role='button'>" + Utility.getLocalizedString(pageContext,"logout") + "</a>";
     }
 
-    private String generateNotificationList(List<Notification> notifications, HttpServletRequest request) {
+    private String generateNotificationList(List<Notification> notifications) {
 
         //Generation all notification list
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String out = "";
         if (notifications.size() == 0) {
-            out += "<div class='no-notification'>" + getLocalizedString("no_notification") + "</div>";
+            out += "<div class='no-notification'>" + Utility.getLocalizedString(pageContext,"no_notification") + "</div>";
         }
         for (Notification n : notifications) {
             out += "<hr><div class='notification-element'>\n"
                     + "            <table  align='center'>\n"
                     + "                <tr>\n"
                     + "                    <th id='image' rowspan='2'>\n"
-                    + "                        <img src='" + String.format("%s/images/icon.png", request.getContextPath()) + "' />\n"
+                    + "                        <img src='" + Utility.getUrl(pageContext,"images/icon.png") + "' />\n"
                     + "                    </th>\n"
                     + "                    <th>" + n.getDescription() + "</th>\n"
                     + "                </tr>\n"
