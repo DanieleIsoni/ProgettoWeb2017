@@ -174,7 +174,7 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
         if (primaryKey == null) {
             throw new DAOException("primaryKey is null");
         }
-        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM review WHERE id = ?")) {
+        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM products WHERE id = ?")) {
             stm.setInt(1, primaryKey);
             try (ResultSet rs = stm.executeQuery()) {
 
@@ -192,7 +192,7 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
                 return product;
             }
         } catch (SQLException | DAOFactoryException ex) {
-            throw new DAOException("Impossible to get the coordinates for the passed primary key", ex);
+            throw new DAOException("Impossible to get the product for the passed primary key", ex);
         }
     }
 
@@ -271,7 +271,7 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
 
             }
         } catch (SQLException | DAOFactoryException ex) {
-            throw new DAOException("Impossible to get the coordinates for the passed primary key", ex);
+            throw new DAOException("Impossible to get the products for the passed primary key", ex);
         }
         return products;
     }
@@ -313,7 +313,7 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
 
             }
         } catch (SQLException | DAOFactoryException ex) {
-            throw new DAOException("Impossible to get the coordinates for the passed primary key", ex);
+            throw new DAOException("Impossible to get the products for the passed primary key", ex);
         }
         return products;
     }
