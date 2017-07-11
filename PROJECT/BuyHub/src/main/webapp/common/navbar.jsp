@@ -6,7 +6,7 @@
 
 <%@page import="it.unitn.buyhub.dao.entities.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="right-corner" uri="/WEB-INF/tld/navbar.tld"%>
+<%@taglib prefix="nv" uri="/WEB-INF/tld/navbar.tld"%>
 <!DOCTYPE html>
 
 
@@ -40,14 +40,16 @@
                         <li class="dropdown" onchange="submit()">
                             <a href="#" class="dropdown-toggle uppercase" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><div class="navbar-header two_chars">${language}</div><span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="?language=it">IT</a></li>
-                                <li><a href="?language=en">EN</a></li>
+                                <li><a href="<nv:languagelink lang="it"/>">IT</a></li>
+                                <li><a href="<nv:languagelink lang="en"/>">EN</a></li>
+                                
+                                
                             </ul>
                         </li>
 
                     </ul>
 
-                    <right-corner:userInformation />
+                    <nv:userInformation />
 
                     <form class="navbar-form navbar-right">
                         <div class="form-group">

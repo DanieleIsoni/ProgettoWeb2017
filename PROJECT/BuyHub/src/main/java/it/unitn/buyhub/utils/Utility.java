@@ -26,5 +26,9 @@ public class Utility {
               return String.format("%s/"+url, request.getContextPath());
     
      }
+     public static String getCategory(PageContext pageContext, int key)
+     {
+         return getLocalizedString(pageContext, "category_"+key);
+     }
      
 }
