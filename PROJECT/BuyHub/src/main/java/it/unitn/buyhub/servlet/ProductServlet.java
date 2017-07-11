@@ -13,6 +13,7 @@ import it.unitn.buyhub.dao.entities.Product;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.factories.DAOFactory;
+import it.unitn.buyhub.utils.Utility;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -21,6 +22,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.jsp.PageContext;
 /**
  *
  * @author massimo
@@ -82,9 +84,7 @@ public class ProductServlet extends HttpServlet {
                 List<Picture> pictures=pictureDAO.getByProduct(product);
                 
                 request.setAttribute("pictures", pictures);
-                
-                
-                                
+                                   
                 request.getRequestDispatcher("product.jsp").forward(request, response);
             }
         } catch (DAOException|NumberFormatException ex) {

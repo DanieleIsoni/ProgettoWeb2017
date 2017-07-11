@@ -8,9 +8,19 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:useBean id="product" class="it.unitn.buyhub.dao.entities.Product" scope="session"/>
 <%@taglib prefix="gallery" uri="/WEB-INF/tld/gallery.tld"%>
+<%@taglib prefix="pr" uri="/WEB-INF/tld/product.tld"%>
 
 <%@include file="common/navbar.jsp" %>
   <div class="container header">
+      <div class="row">
+          
+          <div class="col-md-1"></div>
+          <div class="col-md-4">
+              <pr:category></pr:category>
+          </div>
+          
+      </div>
+      
       <div class="row">
           <div class="col-md-4 g">
               <gallery:Gallery></gallery:Gallery>
