@@ -55,11 +55,13 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
      * @since 1.0.170425
      */
     public Long insert(Product products) throws DAOException {
-        try (PreparedStatement ps = CON.prepareStatement("INSERT INTO products(name, description, price, id_shop) VALUES(?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement ps = CON.prepareStatement("INSERT INTO products(name, description, price, id_shop,category) VALUES(?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, products.getName());
             ps.setString(2, products.getDescription());
             ps.setDouble(3, products.getPrice());
             ps.setInt(4, products.getShop().getId());
+            ps.setInt(5, products.getCategory());
+            
 
             if (ps.executeUpdate() == 1) {
                 ResultSet generatedKeys = ps.getGeneratedKeys();
@@ -106,7 +108,7 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
      */
     public List<Product> getByCategory(int categoryId) throws DAOException {
         List<Product> products = new ArrayList<>();
-        try (PreparedStatement stm = CON.prepareStatement("SELECT p.* FROM products p, categories_products cp, categories c WHERE p.id = cp.id_product AND cp.id_category = ?")) {
+        try (PreparedStatement stm = CON.prepareStatement("SELECT p.* FROM products p WHERE p.category = ?")) {
             stm.setInt(1, categoryId);
             try (ResultSet rs = stm.executeQuery()) {
 
@@ -116,7 +118,7 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
                     product.setName(rs.getString("name"));
                     product.setDescription(rs.getString("description"));
                     product.setPrice(rs.getDouble("price"));
-
+                    product.setCategory(rs.getInt("category"));
                     //Get user associate
                     ShopDAO shopDao = getDAO(ShopDAO.class);
                     product.setShop(shopDao.getByPrimaryKey(rs.getInt("id_shop")));
@@ -183,8 +185,8 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
                 product.setId(primaryKey);
                 product.setName(rs.getString("name"));
                 product.setDescription(rs.getString("description"));
-                product.setPrice(rs.getDouble("price"));
-
+                product.setPrice(rs.getDouble("price"));             
+                product.setCategory(rs.getInt("category"));
                 //Get shop associate
                 ShopDAO shopDao = getDAO(ShopDAO.class);
                 product.setShop(shopDao.getByPrimaryKey(rs.getInt("id_shop")));
@@ -224,7 +226,7 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
                     product.setName(rs.getString("name"));
                     product.setDescription(rs.getString("description"));
                     product.setPrice(rs.getDouble("price"));
-
+                    product.setCategory(rs.getInt("category"));
                     //Get user associate
                     product.setShop(shop);
 
@@ -261,7 +263,8 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
                     product.setName(rs.getString("name"));
                     product.setDescription(rs.getString("description"));
                     product.setPrice(rs.getDouble("price"));
-
+                    
+                    product.setCategory(rs.getInt("category"));
                     //Get user associate
                     ShopDAO shopDao = getDAO(ShopDAO.class);
                     product.setShop(shopDao.getByPrimaryKey(rs.getInt("id_shop")));
@@ -303,7 +306,8 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
                     product.setName(rs.getString("name"));
                     product.setDescription(rs.getString("description"));
                     product.setPrice(rs.getDouble("price"));
-
+                    
+                    product.setCategory(rs.getInt("category"));
                     //Get user associate
                     ShopDAO shopDao = getDAO(ShopDAO.class);
                     product.setShop(shopDao.getByPrimaryKey(rs.getInt("id_shop")));
@@ -334,12 +338,13 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
             throw new DAOException("parameter not valid", new IllegalArgumentException("The passed product is null"));
         }
 
-        try (PreparedStatement std = CON.prepareStatement("UPDATE products SET name = ?, description = ?, price = ?, id_shop = ? WHERE id = ?")) {
+        try (PreparedStatement std = CON.prepareStatement("UPDATE products SET name = ?, description = ?, price = ?, id_shop = ?, category = ?  WHERE id = ?")) {
             std.setString(1, product.getName());
             std.setString(2, product.getDescription());
             std.setDouble(3, product.getPrice());
-            std.setInt(4, product.getShop().getId());
-
+            std.setInt(4,product.getCategory());
+            std.setInt(5, product.getShop().getId());
+            
             if (std.executeUpdate() == 1) {
                 return product;
             } else {

@@ -3,14 +3,14 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Creato il: Lug 03, 2017 alle 11:55
+-- Creato il: Lug 11, 2017 alle 15:48
 -- Versione del server: 10.1.24-MariaDB
 -- Versione PHP: 7.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
-SET GLOBAL time_zone = "+01:00";
+SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -21,20 +21,6 @@ SET GLOBAL time_zone = "+01:00";
 --
 -- Database: `buyhub`
 --
-
-CREATE DATABASE buyhub;
-USE buyhub;
-
--- --------------------------------------------------------
-
---
--- Struttura della tabella `categories_products`
---
-
-CREATE TABLE `categories_products` (
-  `id_category` int(11) NOT NULL,
-  `id_product` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -137,7 +123,8 @@ CREATE TABLE `products` (
   `name` varchar(256) COLLATE utf8_bin NOT NULL,
   `description` text COLLATE utf8_bin NOT NULL,
   `price` decimal(10,2) NOT NULL,
-  `id_shop` int(11) NOT NULL
+  `id_shop` int(11) NOT NULL,
+  `category` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -205,13 +192,6 @@ CREATE TABLE `users` (
 --
 -- Indici per le tabelle scaricate
 --
-
---
--- Indici per le tabelle `categories_products`
---
-ALTER TABLE `categories_products`
-  ADD PRIMARY KEY (`id_category`,`id_product`),
-  ADD KEY `id_product` (`id_product`);
 
 --
 -- Indici per le tabelle `coordinates`
@@ -348,12 +328,6 @@ ALTER TABLE `users`
 --
 -- Limiti per le tabelle scaricate
 --
-
---
--- Limiti per la tabella `categories_products`
---
-ALTER TABLE `categories_products`
-  ADD CONSTRAINT `categories_products_ibfk_2` FOREIGN KEY (`id_product`) REFERENCES `products` (`id`);
 
 --
 -- Limiti per la tabella `messages`

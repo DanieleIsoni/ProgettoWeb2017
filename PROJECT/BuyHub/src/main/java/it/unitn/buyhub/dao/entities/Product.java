@@ -18,6 +18,16 @@ public class Product implements Serializable {
     private String description;
     private double price;
     private Shop shop;
+    private int category;
+
+    public int getCategory() {
+        return category;
+    }
+
+    public void setCategory(int category) {
+        this.category = category;
+    }
+    
 
     public int getId() {
         return id;
