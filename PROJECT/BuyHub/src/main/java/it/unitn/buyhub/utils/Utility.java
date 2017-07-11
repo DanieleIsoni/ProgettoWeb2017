@@ -23,7 +23,7 @@ public class Utility {
      public static String getUrl(PageContext pageContext,final String url)
      {
          HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
-              return String.format("%s"+url, request.getContextPath());
+              return String.format("%s/"+url, request.getContextPath());
     
      }
      

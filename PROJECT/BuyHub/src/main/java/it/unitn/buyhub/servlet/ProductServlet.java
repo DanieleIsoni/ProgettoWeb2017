@@ -21,7 +21,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 /**
  *
  * @author massimo
@@ -78,11 +77,11 @@ public class ProductServlet extends HttpServlet {
             if (product == null) {
                 response.sendRedirect(response.encodeRedirectURL(contextPath + "home.jsp"));
             } else {
-                request.getSession().setAttribute("product", product);
+                request.setAttribute("product", product);
                 
                 List<Picture> pictures=pictureDAO.getByProduct(product);
                 
-                request.getSession().setAttribute("pictures", pictures);
+                request.setAttribute("pictures", pictures);
                 
                 
                                 

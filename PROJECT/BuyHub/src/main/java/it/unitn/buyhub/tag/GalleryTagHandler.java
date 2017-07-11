@@ -27,7 +27,7 @@ public class GalleryTagHandler extends SimpleTagSupport {
     public void doTag() throws JspException, IOException {
 
         pageContext=(PageContext) getJspContext();
-        List<Picture> pictures=(List<Picture>) pageContext.getAttribute("pictures");
+        List<Picture> pictures=(List<Picture>) pageContext.getAttribute("pictures",PageContext.REQUEST_SCOPE);
         JspWriter out = pageContext.getOut();
 
         if(pictures == null || pictures.size()==0)
@@ -36,14 +36,14 @@ public class GalleryTagHandler extends SimpleTagSupport {
         {
             out.println("<div class=\"gallery\">");
             out.println("<div class=\"easyzoom easyzoom--overlay easyzoom--with-thumbnails\">");
-            printMain(pictures.get(0));
+            out.println(printMain(pictures.get(0)));
             out.println("</div>");
             if(pictures.size()>1)
             {
                 out.println("<ul class=\"thumbnails\">");
 
                 for (Picture picture : pictures) {
-                           printThumbnail(picture);
+                           out.println(printThumbnail(picture));
                 }
             }
             out.println("</div>");
