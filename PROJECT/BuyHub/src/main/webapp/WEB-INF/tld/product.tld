@@ -22,7 +22,30 @@
     -->
   <tag>
     <name>category</name>
-    <tag-class>it.unitn.buyhub.tag.categoryTaghandler</tag-class>
-    <body-content>scriptless</body-content>
+    <tag-class>it.unitn.buyhub.tag.CategoryTaghandler</tag-class>
+    <body-content>empty</body-content>
+  </tag>
+  <tag>
+    <name>ReviewStars</name>
+    <tag-class>it.unitn.buyhub.tag.ReviewStarsTagHandler</tag-class>
+    <body-content>empty</body-content>
+    <attribute>
+      <name>value</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.double</type>
+    </attribute>
+    <attribute>
+      <name>count</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.int</type>
+    </attribute>
+    <attribute>
+      <name>label</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.boolean</type>
+    </attribute>
   </tag>
 </taglib>

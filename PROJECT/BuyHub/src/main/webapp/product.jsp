@@ -1,4 +1,3 @@
-
 <%--
     Document   : product
     Created on : 10-lug-2017, 09.56.05
@@ -6,7 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<jsp:useBean id="product" class="it.unitn.buyhub.dao.entities.Product" scope="session"/>
+<jsp:useBean id="product" class="it.unitn.buyhub.dao.entities.Product" scope="request"/>
+<!--jsp:useBean id="reviews" class="java.util.List<it.unitn.buyhub.dao.entities.Review>" scope="request"/-->
 <%@taglib prefix="gallery" uri="/WEB-INF/tld/gallery.tld"%>
 <%@taglib prefix="pr" uri="/WEB-INF/tld/product.tld"%>
 
@@ -31,6 +31,7 @@
               <div class="product_title">
                   ${product.name}
               </div>
+                  <pr:ReviewStars count="${reviewsCount}" value="${globalValue}" label="true"></pr:ReviewStars>
               <div class="product_description">
                   ${product.description}
               </div>
@@ -63,6 +64,31 @@
 
 
       </div>
+                <div class="row reviews">
+                    <div class="row reviews_header">
+                        
+                        Recensioni degli utenti
+                    </div>
+                    <c:forEach begin="1" end="10">
+                        
+                        <div class="row review">
+
+                            <div class="col-sm-3">
+                                <div class="review_img_box">
+                                    <img src="<c:url value="images/noimage.png"/>" class="img-rounded img-responsive">
+                                </div>
+                                <div class="review-block-name"><a href="#">Autore</a></div>
+                                <div class="review-block-date">January 29, 2016<br/>1 day ago</div>
+                            </div>
+                            <div class="col-sm-9">
+                                    <pr:ReviewStars value="3.2"></pr:ReviewStars>
+                                    <div class="review-block-title">TITOLO</div>
+                                    <div class="review-block-description">Descrizione Descrizione Descrizione Descrizione Descrizione Descrizione Descrizione Descrizione Descrizione Descrizione Descrizione Descrizione </div>
+                            </div>
+                            <hr/>	
+                        </div>
+                                    
+                    </c:forEach>
 
     </div>
 

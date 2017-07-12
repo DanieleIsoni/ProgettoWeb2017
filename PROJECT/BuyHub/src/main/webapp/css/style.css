@@ -165,3 +165,20 @@ hr{
     text-align: right;
     font-style: italic; 
 }
+.stars
+{
+        vertical-align: middle;
+
+}
+
+.review_img_box
+{
+    padding-left: 0px;
+    padding-right: 0px;
+    width: 100px;
+}
+.reviews_header
+{
+   font-size: 150%;
+   font-weight: bold;
+}

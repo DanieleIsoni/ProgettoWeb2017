@@ -17,7 +17,7 @@ import javax.servlet.jsp.tagext.SimpleTagSupport;
  *
  * @author massimo
  */
-public class categoryTaghandler extends SimpleTagSupport {
+public class CategoryTaghandler extends SimpleTagSupport {
 
     @Override
     public void doTag() throws JspException {

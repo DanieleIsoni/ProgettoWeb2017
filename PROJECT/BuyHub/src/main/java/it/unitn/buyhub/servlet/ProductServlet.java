@@ -7,9 +7,11 @@ package it.unitn.buyhub.servlet;
 
 import it.unitn.buyhub.dao.PictureDAO;
 import it.unitn.buyhub.dao.ProductDAO;
+import it.unitn.buyhub.dao.ReviewDAO;
 import it.unitn.buyhub.dao.UserDAO;
 import it.unitn.buyhub.dao.entities.Picture;
 import it.unitn.buyhub.dao.entities.Product;
+import it.unitn.buyhub.dao.entities.Review;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.factories.DAOFactory;
@@ -41,6 +43,7 @@ public class ProductServlet extends HttpServlet {
      */
     private ProductDAO productDAO;
     private PictureDAO pictureDAO;
+    private ReviewDAO reviewDAO;
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
@@ -56,6 +59,7 @@ public class ProductServlet extends HttpServlet {
         try {
             productDAO = daoFactory.getDAO(ProductDAO.class);
             pictureDAO = daoFactory.getDAO(PictureDAO.class);
+            reviewDAO=daoFactory.getDAO(ReviewDAO.class);
         } catch (DAOFactoryException ex) {
             throw new ServletException("Impossible to get dao factory for product storage system", ex);
         }
@@ -82,8 +86,28 @@ public class ProductServlet extends HttpServlet {
                 request.setAttribute("product", product);
                 
                 List<Picture> pictures=pictureDAO.getByProduct(product);
-                
+                List<Review> reviews=reviewDAO.getByProduct(product);
+
                 request.setAttribute("pictures", pictures);
+                request.setAttribute("reviews", reviews);
+                
+                double qualityAvg=0;
+                double serviceAvg=0;
+                double moneyAvg=0;
+                for(Review r:reviews)
+                {
+                    qualityAvg+=r.getQuality();
+                    moneyAvg+=r.getValueForMoney();
+                    serviceAvg+=r.getService();
+                }
+                qualityAvg/=reviews.size();
+                serviceAvg/=reviews.size();
+                moneyAvg/=reviews.size();
+                
+                request.setAttribute("globalValue", (double)(qualityAvg+serviceAvg+moneyAvg)/3);
+                request.setAttribute("reviewsCount", reviews.size());
+
+                
                                    
                 request.getRequestDispatcher("product.jsp").forward(request, response);
             }
