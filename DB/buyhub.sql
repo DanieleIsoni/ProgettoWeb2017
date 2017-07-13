@@ -21,7 +21,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `buyhub`
 --
-
+CREATE DATABASE `buyhub`;
+USE `buyhub`;
 -- --------------------------------------------------------
 
 --
