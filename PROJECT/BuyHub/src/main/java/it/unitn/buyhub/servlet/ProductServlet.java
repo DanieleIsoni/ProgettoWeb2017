@@ -29,7 +29,6 @@ import javax.servlet.jsp.PageContext;
  *
  * @author massimo
  */
-@WebServlet(name = "ProductServlet", urlPatterns = {"/product"})
 public class ProductServlet extends HttpServlet {
 
     /**

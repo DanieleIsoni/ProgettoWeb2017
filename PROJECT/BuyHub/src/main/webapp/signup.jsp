@@ -19,7 +19,7 @@
         <h3><fmt:message key="signup_desc"/></h3>
         <br>
         <div class="panel panel-default panel-footer">
-            <form method="POST" id="login-form" action="<c:url value="/SignupServlet" />">
+            <form method="POST" id="login-form" action="<c:url value="/signup" />">
                 <div class="form-group">
                     <label for="first_name"><fmt:message key="first_name"/>:</label>
                     <input type="text" name="first_name" class="form-control" id="first_name">

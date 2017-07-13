@@ -18,7 +18,7 @@
         <h3><fmt:message key="login_desc"/></h3>
         <br>
         <div class="panel panel-default panel-footer">
-            <form method="POST" id="login-form" action="<c:url value="/LoginServlet" />">
+            <form method="POST" id="login-form" action="<c:url value="/login" />">
                 <div class="form-group">
                     <label for="username"><fmt:message key="username"/>:</label>
                     <input type="text" name="username" class="form-control" id="username">
