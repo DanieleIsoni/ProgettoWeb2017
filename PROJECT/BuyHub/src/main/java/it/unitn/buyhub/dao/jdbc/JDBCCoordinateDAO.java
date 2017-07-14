@@ -117,7 +117,7 @@ public class JDBCCoordinateDAO extends JDBCDAO<Coordinate, Integer> implements C
         }
          List<Coordinate> coordinates = new ArrayList<>();
 
-        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM coordinates WHERE id = ?")) {
+        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM coordinates c JOIN shops_coordinates s ON c.id=s.id_coordinate WHERE s.id_shop = ?")) {
             stm.setInt(1, s.getId());
             try (ResultSet rs = stm.executeQuery()) {
 

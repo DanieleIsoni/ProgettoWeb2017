@@ -17,6 +17,7 @@ public class Coordinate implements Serializable {
     private double latitude;
     private double longitude;
     private String address;
+    
 
     public int getId() {
         return id;
