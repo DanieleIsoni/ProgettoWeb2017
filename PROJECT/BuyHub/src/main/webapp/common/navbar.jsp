@@ -33,10 +33,7 @@
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
-
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
+                    <ul class="nav navbar-nav navbar-right" id="language_dropdown">
                         <li class="dropdown" onchange="submit()">
                             <a href="#" class="dropdown-toggle uppercase" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><div class="navbar-header two_chars">${language}</div><span class="caret"></span></a>
                             <ul class="dropdown-menu">
@@ -51,11 +48,25 @@
 
                     <nv:userInformation />
 
-                    <form class="navbar-form navbar-right">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="<fmt:message key="search"/>">
-                        </div>
-                    </form>
+                    
+                    <div class="input-group search_bar">
+                       <select id="category_select" name="category" class="form-control">
+                            <option value="1">HUF</option>
+                            <option value="2">EUR</option>
+                        </select>
+                        
+                        <!--this is ainvisible divider-->
+                        <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span>
+                        
+                      <input type="text" class="form-control" aria-label="..."  placeholder="<fmt:message key="search"/>"> 
+                      <span class="input-group-btn">
+                        <button class="btn btn-default search_btn" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                      </span>
+                    </div><!-- /input-group -->
+                    
+                    
+                    
+                    
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
         </nav>

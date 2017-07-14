@@ -13,7 +13,7 @@
 <%@include file="common/navbar.jsp" %>
 <div class="container header">
     <div class="row">
-       <div class="col-md-12">
+       <div class="col-md-12 product_category">
             <pr:category></pr:category>
         </div>
         
