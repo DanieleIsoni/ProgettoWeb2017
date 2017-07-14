@@ -12,14 +12,13 @@ INSERT INTO `pictures` (`id`, `name`, `description`, `path`, `id_owner`) VALUES
 (4, 'Tartaruga Nuvolari su libro', 'Tartaruga d’oro realizzata per l’occasione dal gioielliere milanese Mario Buccellati.', 'uploadedContent/2cf9786b-7ae9-4b04-ad39-0a54a25a13ca.jpg', 2),
 (5, 'Tartaruga Nuvolari su libro', 'Tartaruga d’oro realizzata per l’occasione dal gioielliere milanese Mario Buccellati.', 'uploadedContent/f8ebcd50-bc7e-456e-9278-3f6700730f99.jpg', 2);
 
-
 INSERT INTO `shops` (`id`, `name`, `description`, `website`, `id_owner`, `id_creator`, `global_value`) VALUES
 (1, 'Ferramenta del Corso', 'Antica ferramenta, aperta nel 1882, ancora oggi punto di riferimento per tutta la comunità di Thiene', 'http://www.ferramentadelcorso.com', 1, 1, 1),
-(7, 'Orologeria Oreficeria Mariani', 'Negozio sito nel centro storico a Schio(VI) gestito da tre generazioni, prima dal nostro nonno Mariani Alfredo, maestro orologiaio, passato poi ai nostri genitori Mariani Bianca (maestra d\'ottica dipolomata alla scuola L.D.V. di Fiesole (Firenze) e Mariani Imerio (allievo del nonno Alfredo).\r\nTradizione e professionalità si uniscono per fornirvi i migliori prodotti al giusto prezzo.', 'http://www.orimariani.it', 2, 2, 0);
+(2, 'Orologeria Oreficeria Mariani', 'Negozio sito nel centro storico a Schio(VI) gestito da tre generazioni, prima dal nostro nonno Mariani Alfredo, maestro orologiaio, passato poi ai nostri genitori Mariani Bianca (maestra d\'ottica dipolomata alla scuola L.D.V. di Fiesole (Firenze) e Mariani Imerio (allievo del nonno Alfredo).\r\nTradizione e professionalità si uniscono per fornirvi i migliori prodotti al giusto prezzo.', 'http://www.orimariani.it', 2, 2, 0);
 
 INSERT INTO `products` (`id`, `name`, `description`, `price`, `id_shop`, `category`) VALUES
 (1, 'Flessometro Stanley Tylon 3m', 'Cassa in ABS antiurto, molto compatta. Rivestimento completo in gomma antiscivolo. Nastro di qualità professionale con verniciatura polimerizzata e rivestito con pellicola in mat.sintetico Tylon ™ (spessore 0,14 mm). Clip di aggancio.', '15.00', 1, 0),
-(2, 'Spilla Tazio Nuvolari', 'Nel 1932 Il Vate Gabriele D’Annunzio incontra al Vittoriale il pilota Mantovano Tazio Nuvolari.\r\n\r\nOltre a foto ed elogi per le vittorie, fa dono a Nuvolari di una tartaruga d’oro realizzata per l’occasione dal gioielliere milanese Mario Buccellati.\r\n\r\nIl dono viene accompagnato da una frase paradossale: “All’uomo più veloce, l’animale più lento“.\r\nDivenne essa presto l’emblema, il simbolo del pilota Mantovano. Le Sue magliette riportavano sempre tale simbolo, cosi come la propria carta intestata recava in alto a sinistra una piccola tartaruga di colore rosso.\r\nQuesto oggetto più unico che raro, appartenuto per 50 anni al nostro caro amico Rossano Palozzi, è oggi pronto a trovare un nuovo proprietario. Un piccolo pezzo di leggenda destinato ad acquistare velocemente gran valore.', '20000.00', 7, 0);
+(2, 'Spilla Tazio Nuvolari', 'Nel 1932 Il Vate Gabriele D’Annunzio incontra al Vittoriale il pilota Mantovano Tazio Nuvolari.\r\n\r\nOltre a foto ed elogi per le vittorie, fa dono a Nuvolari di una tartaruga d’oro realizzata per l’occasione dal gioielliere milanese Mario Buccellati.\r\n\r\nIl dono viene accompagnato da una frase paradossale: “All’uomo più veloce, l’animale più lento“.\r\nDivenne essa presto l’emblema, il simbolo del pilota Mantovano. Le Sue magliette riportavano sempre tale simbolo, cosi come la propria carta intestata recava in alto a sinistra una piccola tartaruga di colore rosso.\r\nQuesto oggetto più unico che raro, appartenuto per 50 anni al nostro caro amico Rossano Palozzi, è oggi pronto a trovare un nuovo proprietario. Un piccolo pezzo di leggenda destinato ad acquistare velocemente gran valore.', '20000.00', 2, 0);
 
 
 INSERT INTO `reviews` (`id`, `id_product`, `id_creator`, `global_value`, `quality`, `service`, `value_for_money`, `title`, `description`, `date_creation`) VALUES
@@ -36,7 +35,13 @@ INSERT INTO `pictures_products` (`id_product`, `id_picture`) VALUES
 (2, 4),
 (2, 5);
 
-
-
-
-
+INSERT INTO `coordinates` (`id`, `latitude`, `longitude`, `address`) VALUES
+(1, '45.705959', '11.479617', 'Piazza Chilesotti, 17\r\n36016\r\nThiene (VI)\r\nItalia'),
+(2, '45.714211', '11.359345', 'Via Camillo Benso Cavour 18\r\n36015 Schio (VI)\r\nItalia'),
+(3, '45.688891', '11.605844', 'Via Maragnole 33,\r\n36042 Breganze\r\n(VI)'),
+(4, '45.715733', '11.403583', 'Via Lago di Levico, 9\r\n36015 Schio (VI)');
+INSERT INTO `shops_coordinates` (`id_shop`, `id_coordinate`) VALUES
+(1, 1),
+(1, 4),
+(2, 2),
+(2SELECT * FROM `shops_coordinates` WHERE 1, 3);
