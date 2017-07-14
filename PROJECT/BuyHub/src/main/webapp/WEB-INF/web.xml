@@ -8,6 +8,12 @@
         <param-name>dburl</param-name>
         <param-value>jdbc:mysql://localhost:3306/buyhub</param-value>
     </context-param>
+    <context-param>
+        <description>The number of categories present in language bundle and used in DB</description>
+        <param-name>categoriesNumber</param-name>
+        <param-value>42</param-value>
+    </context-param>
+    
     <!-- Link to the bundle for multilanguage -->
     <context-param>
         <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>

@@ -24,4 +24,15 @@
       <type>java.lang.String</type>
     </attribute>
   </tag>
+  <tag>
+    <name>CategoriesPrinter</name>
+    <tag-class>it.unitn.buyhub.tag.CategoriesPrinter</tag-class>
+    <body-content>empty</body-content>
+    <attribute>
+      <name>style</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>java.lang.String</type>
+    </attribute>
+  </tag>
 </taglib>

@@ -51,14 +51,14 @@
                     
                     <div class="input-group search_bar">
                        <select id="category_select" name="category" class="form-control">
-                            <option value="1">HUF</option>
-                            <option value="2">EUR</option>
+                           <option value="-1" selected="selected"><fmt:message key="all_categories"/></option>
+                            <nv:CategoriesPrinter  style="select"/>
                         </select>
                         
                         <!--this is ainvisible divider-->
                         <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span>
                         
-                      <input type="text" class="form-control" aria-label="..."  placeholder="<fmt:message key="search"/>"> 
+                      <input type="text" name="search_text" class="form-control" aria-label="..."  placeholder="<fmt:message key="search"/>"> 
                       <span class="input-group-btn">
                         <button class="btn btn-default search_btn" type="button"><span class="glyphicon glyphicon-search"></span></button>
                       </span>
