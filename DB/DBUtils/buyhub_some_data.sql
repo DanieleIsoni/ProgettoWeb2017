@@ -40,8 +40,9 @@ INSERT INTO `coordinates` (`id`, `latitude`, `longitude`, `address`) VALUES
 (2, '45.714211', '11.359345', 'Via Camillo Benso Cavour 18\r\n36015 Schio (VI)\r\nItalia'),
 (3, '45.688891', '11.605844', 'Via Maragnole 33,\r\n36042 Breganze\r\n(VI)'),
 (4, '45.715733', '11.403583', 'Via Lago di Levico, 9\r\n36015 Schio (VI)');
+
 INSERT INTO `shops_coordinates` (`id_shop`, `id_coordinate`) VALUES
 (1, 1),
 (1, 4),
 (2, 2),
-(2SELECT * FROM `shops_coordinates` WHERE 1, 3);
+(1, 3);
