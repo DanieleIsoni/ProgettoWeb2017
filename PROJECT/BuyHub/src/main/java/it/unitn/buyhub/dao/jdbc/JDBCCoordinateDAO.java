@@ -83,8 +83,8 @@ public class JDBCCoordinateDAO extends JDBCDAO<Coordinate, Integer> implements C
                 //rs.getInt("id"),rs.getInt("latitude"),rs.getInt("longitude"),rs.getString("address")
                 Coordinate coordinate = new Coordinate();
                 coordinate.setId(rs.getInt("id"));
-                coordinate.setLatitude(rs.getInt("latitude"));
-                coordinate.setLongitude(rs.getInt("longitude"));
+                coordinate.setLatitude(rs.getDouble("latitude"));
+                coordinate.setLongitude(rs.getDouble("longitude"));
                 coordinate.setAddress(rs.getString("address"));
 
                 return coordinate;
@@ -126,8 +126,8 @@ public class JDBCCoordinateDAO extends JDBCDAO<Coordinate, Integer> implements C
                     //rs.getInt("id"),rs.getInt("latitude"),rs.getInt("longitude"),rs.getString("address")
                     Coordinate coordinate = new Coordinate();
                     coordinate.setId(rs.getInt("id"));
-                    coordinate.setLatitude(rs.getInt("latitude"));
-                    coordinate.setLongitude(rs.getInt("longitude"));
+                    coordinate.setLatitude(rs.getDouble("latitude"));
+                    coordinate.setLongitude(rs.getDouble("longitude"));
                     coordinate.setAddress(rs.getString("address"));
                     coordinates.add(coordinate);
                 }
@@ -165,8 +165,8 @@ public class JDBCCoordinateDAO extends JDBCDAO<Coordinate, Integer> implements C
                 //rs.getInt("id"),rs.getInt("latitude"),rs.getInt("longitude"),rs.getString("address")
                 Coordinate coordinate = new Coordinate();
                 coordinate.setId(rs.getInt("id"));
-                coordinate.setLatitude(rs.getInt("latitude"));
-                coordinate.setLongitude(rs.getInt("longitude"));
+                coordinate.setLatitude(rs.getDouble("latitude"));
+                coordinate.setLongitude(rs.getDouble("longitude"));
                 coordinate.setAddress(rs.getString("address"));
 
                 return coordinate;
@@ -207,8 +207,8 @@ public class JDBCCoordinateDAO extends JDBCDAO<Coordinate, Integer> implements C
                     //rs.getInt("id"),rs.getInt("latitude"),rs.getInt("longitude"),rs.getString("address")
                     Coordinate coordinate = new Coordinate();
                     coordinate.setId(rs.getInt("id"));
-                    coordinate.setLatitude(rs.getInt("latitude"));
-                    coordinate.setLongitude(rs.getInt("longitude"));
+                    coordinate.setLatitude(rs.getDouble("latitude"));
+                    coordinate.setLongitude(rs.getDouble("longitude"));
                     coordinate.setAddress(rs.getString("address"));
                     coordinates.add(coordinate);
                 }
@@ -241,8 +241,8 @@ public class JDBCCoordinateDAO extends JDBCDAO<Coordinate, Integer> implements C
                 while (rs.next()) {
                     Coordinate coordinate = new Coordinate();
                     coordinate.setId(rs.getInt("id"));
-                    coordinate.setLatitude(rs.getInt("latitude"));
-                    coordinate.setLongitude(rs.getInt("longitude"));
+                    coordinate.setLatitude(rs.getDouble("latitude"));
+                    coordinate.setLongitude(rs.getDouble("longitude"));
                     coordinate.setAddress(rs.getString("address"));
                     coordinates.add(coordinate);
                 }
