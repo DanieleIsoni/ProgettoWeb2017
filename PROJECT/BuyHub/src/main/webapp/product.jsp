@@ -66,6 +66,13 @@
         <div class="row reviews_header">
             <fmt:message  key="customer_reviews"/>
         </div>
+        
+        <c:if test="${empty reviews}">
+            <div>
+                 <fmt:message  key="no_review"/>
+            </div>
+        </c:if>
+        
         <c:forEach items="${reviews}" var="element">
 
             <div class="row review">
