@@ -6,6 +6,7 @@
 package it.unitn.buyhub.dao;
 
 import it.unitn.buyhub.dao.entities.Coordinate;
+import it.unitn.buyhub.dao.entities.Shop;
 import it.unitn.buyhub.dao.persistence.DAO;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import java.util.List;
@@ -120,4 +121,21 @@ public interface CoordinateDAO extends DAO<Coordinate, Integer> {
      */
     @Override
     public Coordinate update(Coordinate coordinate) throws DAOException;
+    
+    
+            /**
+     * Returns the {@link Coordinate coordinate} with the shop key equals to
+     * the one passed as parameter.
+     *
+     * @param s the {@code id} of the {@code shop}'s coordinates to get.
+     * @return the list of {@code coordinate} with the shop id equals to the one passed as
+     * parameter or {@code null} if no entities with that shop's id is not present into
+     * the storage system.
+     * @throws DAOException if an error occurred during the information
+     * retrieving.
+     *
+     * @author Massimo Girondi
+     * @since 1.0.170714
+     */
+    public List<Coordinate> getByShop(Shop s) throws DAOException;
 }

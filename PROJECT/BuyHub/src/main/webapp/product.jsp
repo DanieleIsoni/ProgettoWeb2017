@@ -13,12 +13,10 @@
 <%@include file="common/navbar.jsp" %>
 <div class="container header">
     <div class="row">
-
-        <div class="col-md-1"></div>
-        <div class="col-md-4">
+       <div class="col-md-12">
             <pr:category></pr:category>
-            </div>
-
+        </div>
+        
         </div>
 
         <div class="row">
@@ -72,7 +70,7 @@
 
             <div class="row review">
 
-                <div class="col-sm-3">
+                <div class="col-md-3">
                     <div class="review_img_box">
                         <img src="<c:url value="images/noimage.png"/>" class="img-rounded img-responsive">
                     </div>
@@ -81,22 +79,35 @@
                         <br/><time class="timeago" datetime="<fmt:formatDate pattern="yyyy-MM-dd'T'HH:mm:ss'Z'"  value="${element.dateCreation}" />"></time>
                     </div>
                 </div>
-                <div class="col-sm-9">
+                <div class="col-md-9">
                     <pr:ReviewStars value="${element.globalValue}"></pr:ReviewStars>
                     <div class="review-block-title"><a href="#rev${element.id}" id="#rev${element.id}">
                             <c:out value="${element.title}"/>
                         </a>
                     </div>
-                        <div class="review-block-description"><c:out value="${element.description}"/></div>
-                    </div>
-                    <hr/>	
+                            <div class="review-block-description"><c:out value="${element.description}"/>
+                            <br/>   
+                            <button class="btn" data-toggle="collapse" data-target="#collapsedRev${element.id}"><fmt:message key="show_more"/></button>
+
+                            <div id="collapsedRev${element.id}" class="collapse">
+                            
+                                <div class="detailed_review_header">
+                                    <fmt:message key="quality"/>: <pr:ReviewStars value="${element.quality}"/>
+                                    <fmt:message key="service"/>: <pr:ReviewStars value="${element.service}"/>
+                                    <fmt:message key="value_for_money"/>: <pr:ReviewStars value="${element.valueForMoney}"/>
+                                    
+                                    
+                                </div>
+                                
+                            </div>
+                            </div>
+                            
                 </div>
-
-        </c:forEach>
-
+            </div>
+             <hr/>    
+        </c:forEach>       
     </div>
-
-
+            <pr:ShopMap/>
 </div>
 
 <script src="http://i-like-robots.github.io/EasyZoom/dist/easyzoom.js"></script>
@@ -114,4 +125,5 @@
         // Use EasyZoom's `swap` method
         api1.swap($this.data('standard'), $this.attr('href'));
     });
+        
 </script>

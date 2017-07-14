@@ -12,6 +12,7 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.JspFragment;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
+import javax.servlet.jsp.tagext.Tag;
 
 /**
  *
@@ -35,5 +36,4 @@ public class CategoryTaghandler extends SimpleTagSupport {
             throw new JspException("Error in categoryTaghandler tag", ex);
         }
     }
-    
 }

@@ -7,6 +7,7 @@ package it.unitn.buyhub.dao.jdbc;
 
 import it.unitn.buyhub.dao.*;
 import it.unitn.buyhub.dao.entities.Coordinate;
+import it.unitn.buyhub.dao.entities.Shop;
 import it.unitn.buyhub.dao.persistence.DAO;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.jdbc.JDBCDAO;
@@ -92,7 +93,52 @@ public class JDBCCoordinateDAO extends JDBCDAO<Coordinate, Integer> implements C
             throw new DAOException("Impossible to get the coordinates for the passed primary key", ex);
         }
     }
+    
+    
+        /**
+     * Returns the {@link Coordinate coordinate} with the shop key equals to
+     * the one passed as parameter.
+     *
+     * @param s the {@code id} of the {@code shop}'s coordinates to get.
+     * @return the {@code coordinate} with the shop id equals to the one passed as
+     * parameter or {@code null} if no entities with that shop's id is not present into
+     * the storage system.
+     * @throws DAOException if an error occurred during the information
+     * retrieving.
+     *
+     * @author Massimo Girondi
+     * @since 1.0.170714
+     */
+     @Override
+    public List<Coordinate> getByShop(Shop s) throws DAOException {
+        
+        if (s== null) {
+            throw new DAOException("primaryKey is null");
+        }
+         List<Coordinate> coordinates = new ArrayList<>();
 
+        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM coordinates WHERE id = ?")) {
+            stm.setInt(1, s.getId());
+            try (ResultSet rs = stm.executeQuery()) {
+
+                while(rs.next())
+                {
+                    //rs.getInt("id"),rs.getInt("latitude"),rs.getInt("longitude"),rs.getString("address")
+                    Coordinate coordinate = new Coordinate();
+                    coordinate.setId(rs.getInt("id"));
+                    coordinate.setLatitude(rs.getInt("latitude"));
+                    coordinate.setLongitude(rs.getInt("longitude"));
+                    coordinate.setAddress(rs.getString("address"));
+                    coordinates.add(coordinate);
+                }
+                return coordinates;
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Impossible to get the coordinates for the passed shop", ex);
+        }
+    }
+    
+    
     /**
      * Returns the {@link Coordinate coordinate} with the address that contains
      * the one passed as parameter.

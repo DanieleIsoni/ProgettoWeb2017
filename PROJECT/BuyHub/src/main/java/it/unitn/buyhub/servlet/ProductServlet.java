@@ -5,10 +5,12 @@
  */
 package it.unitn.buyhub.servlet;
 
+import it.unitn.buyhub.dao.CoordinateDAO;
 import it.unitn.buyhub.dao.PictureDAO;
 import it.unitn.buyhub.dao.ProductDAO;
 import it.unitn.buyhub.dao.ReviewDAO;
 import it.unitn.buyhub.dao.UserDAO;
+import it.unitn.buyhub.dao.entities.Coordinate;
 import it.unitn.buyhub.dao.entities.Picture;
 import it.unitn.buyhub.dao.entities.Product;
 import it.unitn.buyhub.dao.entities.Review;
@@ -43,6 +45,7 @@ public class ProductServlet extends HttpServlet {
     private ProductDAO productDAO;
     private PictureDAO pictureDAO;
     private ReviewDAO reviewDAO;
+    private CoordinateDAO coordinateDAO;
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
@@ -59,6 +62,7 @@ public class ProductServlet extends HttpServlet {
             productDAO = daoFactory.getDAO(ProductDAO.class);
             pictureDAO = daoFactory.getDAO(PictureDAO.class);
             reviewDAO=daoFactory.getDAO(ReviewDAO.class);
+            coordinateDAO=daoFactory.getDAO(CoordinateDAO.class);
         } catch (DAOFactoryException ex) {
             throw new ServletException("Impossible to get dao factory for product storage system", ex);
         }
@@ -86,9 +90,11 @@ public class ProductServlet extends HttpServlet {
                 
                 List<Picture> pictures=pictureDAO.getByProduct(product);
                 List<Review> reviews=reviewDAO.getByProduct(product);
-
+                List<Coordinate> coordinates=coordinateDAO.getByShop(product.getShop());
+                
                 request.setAttribute("pictures", pictures);
                 request.setAttribute("reviews", reviews);
+                request.setAttribute("coordinates", coordinates);
                 
                 double qualityAvg=0;
                 double serviceAvg=0;

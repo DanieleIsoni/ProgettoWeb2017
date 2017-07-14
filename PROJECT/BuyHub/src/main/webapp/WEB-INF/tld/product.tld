@@ -48,4 +48,9 @@
       <type>java.lang.boolean</type>
     </attribute>
   </tag>
+  <tag>
+    <name>ShopMap</name>
+    <tag-class>it.unitn.buyhub.tag.ShopMapTagHandler</tag-class>
+    <body-content>empty</body-content>
+  </tag>
 </taglib>

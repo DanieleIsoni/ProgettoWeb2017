@@ -199,3 +199,20 @@ hr{
     margin-top: 25px;
     
 }
+
+div.detailed_review_header
+{
+    display: inline-block;
+}
+.reviews hr
+{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    
+}
+div.map
+{
+    width: 100px;
+    height: 100px;
+    
+}
