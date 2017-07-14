@@ -7,6 +7,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 <%-- Set language --%>
 <c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
 <fmt:setLocale value="${language}" scope="session" />
@@ -30,6 +32,8 @@
     <link rel="icon" href="<c:url value="/images/icon.png" />">
     <script type="text/javascript" src="<c:url value="/js/script.js" />"></script>
     <script src="http://timeago.yarp.com/jquery.timeago.js" type="text/javascript"></script>
-    <script src="<c:url value="/js/jquery.timeago.locales/jquery.timeago.${language}.js"/>" type="text/javascript"></script>
+    
+    <!-- load the correct locale, based on the first two chars of language, extracted with EL function-->
+    <script src="<c:url value="/js/jquery.timeago.locales/jquery.timeago.${fn:substring(language,0,2)}.js"/>" type="text/javascript"></script>
 
 </head>
