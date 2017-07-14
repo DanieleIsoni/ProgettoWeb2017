@@ -66,8 +66,7 @@
     </div>
     <div class="row reviews">
         <div class="row reviews_header">
-
-            Recensioni degli utenti
+            <fmt:message  key="customer_reviews"/>
         </div>
         <c:forEach items="${reviews}" var="element">
 
@@ -78,11 +77,16 @@
                         <img src="<c:url value="images/noimage.png"/>" class="img-rounded img-responsive">
                     </div>
                     <div class="review-block-name"><a href="#"><c:out value="${element.creator.firstName}"/></a></div>
-                    <div class="review-block-date"><c:out value="${element.dateCreation}"/><br/>1 day ago</div>
+                    <div class="review-block-date"><fmt:formatDate type = "date" dateStyle = "long" value = "${element.dateCreation}" />
+                        <br/><time class="timeago" datetime="<fmt:formatDate pattern="yyyy-MM-dd'T'HH:mm:ss'Z'"  value="${element.dateCreation}" />"></time>
+                    </div>
                 </div>
                 <div class="col-sm-9">
                     <pr:ReviewStars value="${element.globalValue}"></pr:ReviewStars>
-                    <div class="review-block-title"><c:out value="${element.title}"/></div>
+                    <div class="review-block-title"><a href="#rev${element.id}" id="#rev${element.id}">
+                            <c:out value="${element.title}"/>
+                        </a>
+                    </div>
                         <div class="review-block-description"><c:out value="${element.description}"/></div>
                     </div>
                     <hr/>	

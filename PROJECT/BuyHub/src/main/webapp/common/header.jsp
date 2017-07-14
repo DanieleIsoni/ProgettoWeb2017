@@ -29,5 +29,7 @@
     <link href="<c:url value="/css/easyzoom_custom.css" />"  rel="stylesheet" type="text/css">    
     <link rel="icon" href="<c:url value="/images/icon.png" />">
     <script type="text/javascript" src="<c:url value="/js/script.js" />"></script>
+    <script src="http://timeago.yarp.com/jquery.timeago.js" type="text/javascript"></script>
+    <script src="<c:url value="/js/jquery.timeago.locales/jquery.timeago.${language}.js"/>" type="text/javascript"></script>
 
 </head>

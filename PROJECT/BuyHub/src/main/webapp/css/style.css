@@ -49,6 +49,9 @@ and open the template in the editor.
 
 body.login{  
     margin: auto;
+    margin-left: 20px;
+    margin-right: 20px;
+    
 }
 
 .panel{
@@ -185,4 +188,14 @@ hr{
 
 .review-block-title{
     font-weight: bold;
+}
+.row .review
+{
+    margin-bottom: 20px;
+}
+.reviews_header
+{
+    margin-bottom: 25px;
+    margin-top: 25px;
+    
 }
