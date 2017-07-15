@@ -9,14 +9,15 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <%@include file="common/navbar.jsp" %>
+        <title><fmt:message key="home_title"/></title>
     </head>
     <body>
-        <%@include file="common/navbar.jsp" %>
+
 
         <div class="container header">
             <div id="myCarousel" class="carousel slide" data-ride="carousel">
-              
+
 
                 <!-- Wrapper for slides -->
                 <div class="carousel-inner">
