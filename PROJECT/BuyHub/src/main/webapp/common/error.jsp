@@ -23,10 +23,9 @@
             <img id="e404" src="<c:url value="/images/errorPage/404.png" />" />
         </div>
 
-        <div id="suggestions">
-            <a href="https://github.com/contact">Contact Support</a> -
-            <a href="https://status.github.com">GitHub Status</a> -
-            <a href="https://twitter.com/githubstatus">@githubstatus</a>
+        <div class="suggestions">
+            <a href="<c:url value="/home.jsp" />"><fmt:message key="home_title"/></a> -
+            <a href="<c:url value="/login.jsp" />"><fmt:message key="login_title"/></a>
         </div>
 
     </body>
