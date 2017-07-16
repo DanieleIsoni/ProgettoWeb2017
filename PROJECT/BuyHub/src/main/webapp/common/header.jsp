@@ -32,8 +32,13 @@
     <link rel="icon" href="<c:url value="/images/icon.png" />">
     <script type="text/javascript" src="<c:url value="/js/script.js" />"></script>
     <script src="http://timeago.yarp.com/jquery.timeago.js" type="text/javascript"></script>
-    
+
     <!-- load the correct locale, based on the first two chars of language, extracted with EL function-->
     <script src="<c:url value="/js/jquery.timeago.locales/jquery.timeago.${fn:substring(language,0,2)}.js"/>" type="text/javascript"></script>
 
+    <!-- ion.rangeSlider -->
+    <link rel="stylesheet" href="<c:url value="/css/ion.rangeSlider.css" />" />
+    <link rel="stylesheet" href="<c:url value="/css/ion.rangeSlider.skinFlat.css" />" />
+    <script type="text/javascript" src="<c:url value="/js/ion.rangeSlider.js" />"></script>
+    
 </head>

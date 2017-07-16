@@ -70,13 +70,12 @@
                     <form  class="navbar-form" id="search" role="search">
                         <div class="input-group">
                             <div class="input-group-btn search-panel">
-                                <select name="category" class="btn btn-default dropdown-toggle search-btn" id="resizing-select" >
+                                <select name="category" name="category_value" class="btn btn-default dropdown-toggle search-btn" id="resizing-select" >
                                     <option value="-1" selected="selected"><fmt:message key="all_categories"/></option>
                                     <nv:CategoriesPrinter  style="select"/>
                                 </select>
-                            </div>
-                            <input type="hidden" name="search_param" value="greather_than" id="search-param">         
-                            <input type="text" class="form-control" name="x" placeholder="<fmt:message key="search"/>">
+                            </div>  
+                            <input type="text" class="form-control" name="search_value" placeholder="<fmt:message key="search"/>">
                             <span class="input-group-btn">
                                 <button class="btn btn-default search-btn" type="button"><span class="glyphicon glyphicon-search"></span></button>
                             </span>
