@@ -254,13 +254,13 @@ div.detailed_review_header
 }
 
 @media (max-width: 745px){
-    #resizing-select {
+    #search_category {
         width: 100px !important;
     }
 }
 
-#resizing-select {
-    width: 150px;
+#search_category {
+    width: 180px;
 } 
 
 #width-tmp-select{
