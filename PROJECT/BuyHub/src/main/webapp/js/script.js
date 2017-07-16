@@ -8,18 +8,12 @@ $(document).ready(function () {
     $('[data-toggle="popover"]').popover();
 
     $("time.timeago").timeago();
-});
 
-
-$(document).ready(function () {
-    $('#resizing-select').change(function () {
-        $("#width-tmp-option").html($('#resizing-select option:selected').text());
+    $('#search_category').change(function () {
+        $("#width-tmp-option").html($('#search_category option:selected').text());
         $(this).width($("#width-tmp-select").width());
     });
-});
-
-$(function () {
-
+    
     $(".range").ionRangeSlider({
         hide_min_max: true,
         keyboard: true,
@@ -28,13 +22,32 @@ $(function () {
         grid: true
     });
 
-});
-
-$(function () {
 
     $(".single-range").ionRangeSlider({
         hide_min_max: true,
         step: 1
     });
 
+    $("#search_text").typeahead({
+	    source:  function (query, process) {
+                return $.getJSON('autocomplete', { term: query , cat: $("#search_category").val()}, function (data) {
+                                console.log(data.res);
+                                
+                                data = data.res;
+
+                            return process(data);
+                        });
+                    },
+            minLength: 3,
+            items:8,
+            matcher: function (item) {
+                // to display not matching items
+                    return true;
+                }
+                });
+
+    
+    
+    
+    
 });

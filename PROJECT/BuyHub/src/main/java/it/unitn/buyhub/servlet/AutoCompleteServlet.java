@@ -2,6 +2,8 @@
 package it.unitn.buyhub.servlet;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import info.debatty.java.stringsimilarity.JaroWinkler;
 import it.unitn.buyhub.dao.ProductDAO;
 import it.unitn.buyhub.dao.entities.Product;
@@ -90,7 +92,7 @@ public class AutoCompleteServlet extends HttpServlet {
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/json;charset=UTF-8");
+        response.setContentType("Application/json;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
 
             
@@ -138,7 +140,7 @@ public class AutoCompleteServlet extends HttpServlet {
                 }
                 from.removeAll(toRemove);
                 Gson gson=new Gson();
-                out.print(gson.toJson(from));
+                out.println("{\"res\" : "+gson.toJson(from)+"}");
                 
             }
             

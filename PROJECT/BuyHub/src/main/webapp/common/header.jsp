@@ -30,7 +30,6 @@
     <link href="http://i-like-robots.github.io/EasyZoom/css/easyzoom.css" rel="stylesheet" type="text/css">    
     <link href="<c:url value="/css/easyzoom_custom.css" />"  rel="stylesheet" type="text/css">    
     <link rel="icon" href="<c:url value="/images/icon.png" />">
-    <script type="text/javascript" src="<c:url value="/js/script.js" />"></script>
     <script src="http://timeago.yarp.com/jquery.timeago.js" type="text/javascript"></script>
 
     <!-- load the correct locale, based on the first two chars of language, extracted with EL function-->
@@ -41,4 +40,8 @@
     <link rel="stylesheet" href="<c:url value="/css/ion.rangeSlider.skinFlat.css" />" />
     <script type="text/javascript" src="<c:url value="/js/ion.rangeSlider.js" />"></script>
     
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js"></script>
+    
+    
+    <script type="text/javascript" src="<c:url value="/js/script.js" />"></script>
 </head>
