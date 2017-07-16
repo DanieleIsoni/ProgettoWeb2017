@@ -33,9 +33,9 @@
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav navbar-right" id="language_dropdown">
+                    <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown" onchange="submit()">
-                            <a href="#" class="dropdown-toggle uppercase" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><div class="navbar-header two_chars">${language}</div><span class="caret"></span></a>
+                            <a href="#" class="dropdown-toggle uppercase" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><div class="navbar-header two-chars">${language}</div><span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="<nv:languagelink lang="it"/>">IT</a></li>
                                 <li><a href="<nv:languagelink lang="en"/>">EN</a></li>
@@ -64,28 +64,19 @@
                       </span>
                     </div><!-- /input-group -->
                     --%>
-                    <select id="width_tmp_select">
-                        <option id="width_tmp_option"></option>
+                    <select id="width-tmp-select">
+                        <option id="width-tmp-option"></option>
                     </select>
                     <form  class="navbar-form" id="search" role="search">
                         <div class="input-group">
                             <div class="input-group-btn search-panel">
-                                <select name="category" class="btn btn-default dropdown-toggle search-btn" id="resizing_select" >
+                                <select name="category" class="btn btn-default dropdown-toggle search-btn" id="resizing-select" >
                                     <option value="-1" selected="selected"><fmt:message key="all_categories"/></option>
                                     <nv:CategoriesPrinter  style="select"/>
                                 </select>
-
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a href="#contains">Contains</a></li>
-                                    <li><a href="#its_equal">It's equal</a></li>
-                                    <li><a href="#greather_than">Greather than &gt;</a></li>
-                                    <li><a href="#less_than">Less than &lt; </a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#all">Anything</a></li>
-                                </ul>
                             </div>
-                            <input type="hidden" name="search_param" value="greather_than" id="search_param">         
-                            <input type="text" class="form-control" name="x" placeholder="Search term...">
+                            <input type="hidden" name="search_param" value="greather_than" id="search-param">         
+                            <input type="text" class="form-control" name="x" placeholder="<fmt:message key="search"/>">
                             <span class="input-group-btn">
                                 <button class="btn btn-default search-btn" type="button"><span class="glyphicon glyphicon-search"></span></button>
                             </span>

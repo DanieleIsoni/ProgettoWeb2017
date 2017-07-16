@@ -40,7 +40,7 @@ and open the template in the editor.
     text-transform: uppercase;
 }
 
-.two_chars{
+.two-chars{
     font-family: monospace;
     width: 2ch;
     overflow: hidden;
@@ -254,16 +254,16 @@ div.detailed_review_header
 }
 
 @media (max-width: 745px){
-    #resizing_select {
+    #resizing-select {
         width: 100px !important;
     }
 }
 
-#resizing_select {
+#resizing-select {
     width: 150px;
 } 
 
-#width_tmp_select{
+#width-tmp-select{
     display : none;
 } 
 
