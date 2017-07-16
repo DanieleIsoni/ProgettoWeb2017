@@ -253,6 +253,12 @@ div.detailed_review_header
     }
 }
 
+@media (max-width: 745px){
+    #resizing_select {
+        width: 100px !important;
+    }
+}
+
 #resizing_select {
     width: 150px;
 } 
