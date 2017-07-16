@@ -233,19 +233,6 @@ div.detailed_review_header
     overflow:auto;
 
 }
-@media (max-width: 767px) {
-    #language_dropdown,
-    #language_dropdown > li > ul > li> a, 
-    #language_dropdown .two_chars,
-    #bs-example-navbar-collapse-1 > p,
-    .product_category
-    {
-        margin: auto;
-        text-align: center;
-    }
-
-
-}
 
 /*Trick to solve https://github.com/twbs/bootstrap/issues/10482*/
 .search-btn
@@ -260,9 +247,19 @@ div.detailed_review_header
     text-align:center;
 }
 
-.navbar-static-top .navbar-collapse.in {
-    overflow-y: visible; /* Bootstrap default is "auto" */
+@media (max-width: 1059px) and (min-width: 745px){
+    .navbar-form .input-group {
+        display: flex ; 
+    }
 }
+
+#resizing_select {
+    width: 150px;
+} 
+
+#width_tmp_select{
+    display : none;
+} 
 
 /* Error page */
 

@@ -64,14 +64,17 @@
                       </span>
                     </div><!-- /input-group -->
                     --%>
-
+                    <select id="width_tmp_select">
+                        <option id="width_tmp_option"></option>
+                    </select>
                     <form  class="navbar-form" id="search" role="search">
                         <div class="input-group">
                             <div class="input-group-btn search-panel">
-                                <select id="category_select" name="category" class="btn btn-default dropdown-toggle search-btn">
+                                <select name="category" class="btn btn-default dropdown-toggle search-btn" id="resizing_select" >
                                     <option value="-1" selected="selected"><fmt:message key="all_categories"/></option>
                                     <nv:CategoriesPrinter  style="select"/>
                                 </select>
+
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a href="#contains">Contains</a></li>
                                     <li><a href="#its_equal">It's equal</a></li>
