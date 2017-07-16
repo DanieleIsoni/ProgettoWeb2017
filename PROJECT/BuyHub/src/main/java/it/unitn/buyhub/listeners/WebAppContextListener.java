@@ -5,9 +5,14 @@
  */
 package it.unitn.buyhub.listeners;
 
+import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.factories.DAOFactory;
 import it.unitn.buyhub.dao.persistence.factories.jdbc.JDBCDAOFactory;
+import it.unitn.buyhub.servlet.AutoCompleteServlet;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletContextEvent;
@@ -20,6 +25,19 @@ import javax.servlet.ServletContextListener;
  */
 public class WebAppContextListener implements ServletContextListener {
 
+    private volatile ScheduledExecutorService executor;
+
+    
+    final Runnable autoCompleteUpdate = new Runnable() {
+        public void run() { 
+               try {
+               new AutoCompleteServlet().rigenera();
+                } catch (DAOException ex) {
+                    Logger.getLogger(WebAppContextListener.class.getName()).log(Level.SEVERE, null, ex);
+                }
+           // System.out.println("EXECUTION");
+        }
+    };
     /**
      * The serlvet container call this method when initializes the application
      * for the first time.
@@ -35,6 +53,9 @@ public class WebAppContextListener implements ServletContextListener {
             JDBCDAOFactory.configure(dburl,"root","");
             DAOFactory daoFactory = JDBCDAOFactory.getInstance();
             sce.getServletContext().setAttribute("daoFactory", daoFactory);
+            
+             executor = Executors.newScheduledThreadPool(2);
+            executor.scheduleAtFixedRate(autoCompleteUpdate, 0, 30, TimeUnit.MINUTES);
 
         } catch (DAOFactoryException ex) {
             Logger.getLogger(WebAppContextListener.class.getName()).log(Level.SEVERE, null, ex);
@@ -56,5 +77,14 @@ public class WebAppContextListener implements ServletContextListener {
             daoFactory.shutdown();
         }
         daoFactory = null;
+        
+        
+        final ScheduledExecutorService executor = this.executor;
+
+        if (executor != null)
+        {
+            executor.shutdown();
+            this.executor = null;
+        }
     }
 }
