@@ -248,11 +248,21 @@ div.detailed_review_header
 }
 
 /*Trick to solve https://github.com/twbs/bootstrap/issues/10482*/
-.search_btn
+.search-btn
 {
     height: 34px;
+    z-index: 100;
 }
 
+
+#search{
+    display:block;
+    text-align:center;
+}
+
+.navbar-static-top .navbar-collapse.in {
+    overflow-y: visible; /* Bootstrap default is "auto" */
+}
 
 /* Error page */
 

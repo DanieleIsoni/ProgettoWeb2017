@@ -39,8 +39,8 @@
                             <ul class="dropdown-menu">
                                 <li><a href="<nv:languagelink lang="it"/>">IT</a></li>
                                 <li><a href="<nv:languagelink lang="en"/>">EN</a></li>
-                                
-                                
+
+
                             </ul>
                         </li>
 
@@ -48,7 +48,7 @@
 
                     <nv:userInformation />
 
-                    
+                    <%--
                     <div class="input-group search_bar">
                        <select id="category_select" name="category" class="form-control">
                            <option value="-1" selected="selected"><fmt:message key="all_categories"/></option>
@@ -63,11 +63,33 @@
                         <button class="btn btn-default search_btn" type="button"><span class="glyphicon glyphicon-search"></span></button>
                       </span>
                     </div><!-- /input-group -->
-                    
-                    
-                    
-                    
-                </div><!-- /.navbar-collapse -->
+                    --%>
+
+                    <form  class="navbar-form" id="search" role="search">
+                        <div class="input-group">
+                            <div class="input-group-btn search-panel">
+                                <select id="category_select" name="category" class="btn btn-default dropdown-toggle search-btn">
+                                    <option value="-1" selected="selected"><fmt:message key="all_categories"/></option>
+                                    <nv:CategoriesPrinter  style="select"/>
+                                </select>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#contains">Contains</a></li>
+                                    <li><a href="#its_equal">It's equal</a></li>
+                                    <li><a href="#greather_than">Greather than &gt;</a></li>
+                                    <li><a href="#less_than">Less than &lt; </a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#all">Anything</a></li>
+                                </ul>
+                            </div>
+                            <input type="hidden" name="search_param" value="greather_than" id="search_param">         
+                            <input type="text" class="form-control" name="x" placeholder="Search term...">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default search-btn" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
         </nav>
 
