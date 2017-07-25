@@ -340,7 +340,6 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
                     Pair <Double,Integer> p=getAvgreview(product.getId());
                     product.setAvgReview(p.Left);
                     product.setReviewCount(p.Right);
-                    
                     products.add(product);
                 }
 
@@ -405,10 +404,11 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
         //Start JaroWinkler filter
         JaroWinkler jw = new JaroWinkler();
         for (Product p : all) {
-            if (jw.similarity(name, p.getName()) > 0.85) {
+            if (jw.similarity(name, p.getName()) > 0.5) {
                 filtered.add(p);
             }
         }
+        System.out.println(filtered.size());
         return filtered;
     }
 
@@ -435,7 +435,7 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
         //Start JaroWinkler filter
         JaroWinkler jw = new JaroWinkler();
         for (Product p : all) {
-            if (jw.similarity(name, p.getName()) > 0.85) {
+            if (jw.similarity(name, p.getName()) > 0.5) {
                 filtered.add(p);
             }
         }
