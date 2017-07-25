@@ -102,7 +102,7 @@ public class SearchServlet extends HttpServlet {
                 
                 int count = products.size();
                 
-                int pages = count/ProductsPerPage;
+                int pages = count/ProductsPerPage +1;
                 
                 int p=1;
                 
@@ -121,10 +121,13 @@ public class SearchServlet extends HttpServlet {
                 if(request.getParameter("p")!=null && Integer.parseInt(request.getParameter("p"))>0)
                 {
                     p=Integer.parseInt(request.getParameter("p"));
-                    products=products.subList(
-                            min(0,(p-1)*ProductsPerPage+1),
-                            max((p)*ProductsPerPage,products.size()));
                 }
+                
+                int from = Math.max(0,(p-1)*ProductsPerPage);
+                int to = Math.min(products.size(),(p)*ProductsPerPage);
+                
+                products=products.subList(from,to);
+                
                 
                 
                 

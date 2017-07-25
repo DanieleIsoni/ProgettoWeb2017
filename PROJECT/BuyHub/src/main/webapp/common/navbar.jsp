@@ -70,12 +70,12 @@
                     <form  class="navbar-form" id="search" role="search">
                         <div class="input-group">
                             <div class="input-group-btn search-panel">
-                                <select name="search_category" class="btn btn-default dropdown-toggle search-btn" id="search_category" >
+                                <select name="c" class="btn btn-default dropdown-toggle search-btn" id="search_category" >
                                     <option value="-1" selected="selected"><fmt:message key="all_categories"/></option>
                                     <nv:CategoriesPrinter  style="select"/>
                                 </select>
                             </div>  
-                                    <input type="text" class="form-control typeahead" name="search_text" id="search_text"  autocomplete="off" placeholder="<fmt:message key="search"/>">
+                                    <input type="text" class="form-control typeahead" name="q" id="search_text"  autocomplete="off" placeholder="<fmt:message key="search"/>">
                             <span class="input-group-btn">
                                 <button class="btn btn-default search-btn" type="button"><span class="glyphicon glyphicon-search"></span></button>
                             </span>

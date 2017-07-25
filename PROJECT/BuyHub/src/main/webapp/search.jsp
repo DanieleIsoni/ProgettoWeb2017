@@ -21,18 +21,21 @@
                     <h2>Filters</h2>
                     <br>
                     <h4>Price</h4>
-                    <input type="text" class="range" prefix="€" value="" name="range" data-from="0" data-to="500" data-prefix="€" data-min="0" data-max="1000" />
+                    <input type="text" id="price" class="range" prefix="€" value="" name="range" data-from="0" data-to="1000" data-prefix="€" data-min="0" data-max="1000" />
                     <br>
                     <h4>Customer Review</h4>
-                    <input type="text" class="single-range" value="" name="range" data-from="3" data-min="0" data-max="5" />
+                    <input type="text" id="minRev" class="single-range" value="0" name="range" data-from="0" data-min="0" data-max="5" />
 
                 </div>
-                <div class="col-xs-7">
+                <div class="col-xs-7" id="products">
                     <!-- Product list -->
-
+                        
                 </div>
             </div>
         </div>
+        
+        <script src="<c:url value="js/search.js" ></c:url>" ></script>
+               
     </body>
 
 </html>
