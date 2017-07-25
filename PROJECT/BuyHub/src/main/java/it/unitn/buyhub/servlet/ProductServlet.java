@@ -96,21 +96,10 @@ public class ProductServlet extends HttpServlet {
                 request.setAttribute("reviews", reviews);
                 request.setAttribute("coordinates", coordinates);
                 
-                double qualityAvg=0;
-                double serviceAvg=0;
-                double moneyAvg=0;
-                for(Review r:reviews)
-                {
-                    qualityAvg+=r.getQuality();
-                    moneyAvg+=r.getValueForMoney();
-                    serviceAvg+=r.getService();
-                }
-                qualityAvg/=reviews.size();
-                serviceAvg/=reviews.size();
-                moneyAvg/=reviews.size();
+               
                 
-                request.setAttribute("globalValue", (double)(qualityAvg+serviceAvg+moneyAvg)/3);
-                request.setAttribute("reviewsCount", reviews.size());
+                request.setAttribute("globalValue", product.getAvgReview());
+                request.setAttribute("reviewsCount", product.getReviewCount());
 
                 
                                    

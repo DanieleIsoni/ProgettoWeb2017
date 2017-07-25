@@ -5,6 +5,7 @@
  */
 package it.unitn.buyhub.dao.jdbc;
 
+import com.mysql.cj.core.conf.url.ConnectionUrlParser;
 import info.debatty.java.stringsimilarity.JaroWinkler;
 import it.unitn.buyhub.dao.*;
 import it.unitn.buyhub.dao.*;
@@ -18,6 +19,8 @@ import it.unitn.buyhub.dao.persistence.DAO;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.jdbc.JDBCDAO;
+import it.unitn.buyhub.utils.Pair;
+import it.unitn.buyhub.utils.Utility;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -191,6 +194,15 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
                 ShopDAO shopDao = getDAO(ShopDAO.class);
                 product.setShop(shopDao.getByPrimaryKey(rs.getInt("id_shop")));
 
+                
+                
+                //get review infos
+                    Pair <Double,Integer> p=getAvgreview(product.getId());
+                    product.setAvgReview(p.Left);
+                    product.setReviewCount(p.Right);
+                  
+                    
+                    
                 return product;
             }
         } catch (SQLException | DAOFactoryException ex) {
@@ -229,6 +241,13 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
                     product.setCategory(rs.getInt("category"));
                     //Get user associate
                     product.setShop(shop);
+                    
+                    
+                    //get review infos
+                    Pair <Double,Integer> p=getAvgreview(product.getId());
+                    product.setAvgReview(p.Left);
+                    product.setReviewCount(p.Right);
+                  
 
                     products.add(product);
                 }
@@ -268,7 +287,12 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
                     //Get user associate
                     ShopDAO shopDao = getDAO(ShopDAO.class);
                     product.setShop(shopDao.getByPrimaryKey(rs.getInt("id_shop")));
-
+                    
+                    //get review infos
+                    Pair <Double,Integer> p=getAvgreview(product.getId());
+                    product.setAvgReview(p.Left);
+                    product.setReviewCount(p.Right);
+                    
                     products.add(product);
                 }
 
@@ -312,6 +336,11 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
                     ShopDAO shopDao = getDAO(ShopDAO.class);
                     product.setShop(shopDao.getByPrimaryKey(rs.getInt("id_shop")));
 
+                    //get review infos
+                    Pair <Double,Integer> p=getAvgreview(product.getId());
+                    product.setAvgReview(p.Left);
+                    product.setReviewCount(p.Right);
+                    
                     products.add(product);
                 }
 
@@ -412,4 +441,29 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
         }
         return filtered;
     }
+    
+    private Pair getAvgreview(int id) throws DAOException
+    {
+        Pair<Double,Integer> p=null;
+        try (PreparedStatement stm = CON.prepareStatement
+                ("SELECT AVG((r.global_value+r.quality+r.service+r.value_for_money)/4) AS avg, COUNT(r.id) AS c " +
+                "FROM reviews r " +
+                "JOIN products p " +
+                "ON p.id=r.id_product " +
+                "WHERE p.id = ?")) {
+            stm.setInt(1, id);
+            
+            try (ResultSet rs = stm.executeQuery()) {
+                rs.next();
+                p=new Pair<>(rs.getDouble("avg"),rs.getInt("c"));
+                 
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Impossible to get the reviews for the passed primary key", ex);
+        }
+        return p;
+
+    }
+
+
 }

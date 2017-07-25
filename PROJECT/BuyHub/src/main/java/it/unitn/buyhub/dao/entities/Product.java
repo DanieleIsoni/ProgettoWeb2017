@@ -19,7 +19,17 @@ public class Product implements Serializable {
     private double price;
     private Shop shop;
     private int category;
+    private double avgReview;
+    private int reviewCount;
 
+    public int getReviewCount() {
+        return reviewCount;
+    }
+
+    public void setReviewCount(int reviewCount) {
+        this.reviewCount = reviewCount;
+    }
+    
     public int getCategory() {
         return category;
     }
@@ -68,5 +78,16 @@ public class Product implements Serializable {
     public void setShop(Shop shop) {
         this.shop = shop;
     }
+
+    public double getAvgReview() {
+        return avgReview;
+    }
+
+    public void setAvgReview(double avgReview) {
+        this.avgReview = avgReview;
+    }
+    
+    
+    
 
 }
