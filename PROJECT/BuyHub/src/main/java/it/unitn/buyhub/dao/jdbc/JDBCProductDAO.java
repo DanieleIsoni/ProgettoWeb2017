@@ -273,7 +273,7 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
     @Override
     public List<Product> getAll() throws DAOException {
         List<Product> products = new ArrayList<>();
-        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM products")) {
+        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM products ORDER BY name")) {
             try (ResultSet rs = stm.executeQuery()) {
 
                 while (rs.next()) {
