@@ -17,6 +17,19 @@ Un'altra opzione, poi scartata, era aggiornare la lista dell'autocompletamento a
 
 L'algoritmo di Jaro-Winkler è utilizzato anche durante la scansione del database, per evitare di inserire nella lista dei suggerimenti titoli doppi o troppo simili (ad esempio ``frigo'' e ``frigorifero'') dato che questi verrebbero comunque selezionati al momento della ricerca, dove è applicata ancora una volta la similarità.
 
+\chapter{Risultati della ricerca}
+la ricerca tra i prodotti è realizzata mediante una servlet che elabora la richiesta e restituisce la lista dei prodotti sottoforma di JSON. L'unico parametro obbligatorio è \texttt{q} che rappresenta la query di ricerca.
+I parametri opzionali sono:
+\begin{itemize}
+  \item \texttt{p}: la pagina desiderata (nel caso di  una ricerca multipagina)
+  \item \texttt{s}: il metodo di ordinamento dei risultati, di default alfabetico (0), alfagetico inverso(1), prezzo crescente (2), prezzo decrescente(3), valutazione decrescente(4),  numero recensioni decrescente(5).
+  \item \texttt{c}: la categoria
+  \item \texttt{min} e \texttt{max}: gli estremi dei prezzi.
+  \item \texttt{minRev}: il minimo del valore delle recensioni.
+\end{itemize}
+Il controllo sul nome del prodotto e sul range di prezzo è effettuato all'interno del DAO del prodotto (mediante SQL per il prezzo e algoritmo di Jaro-Winkler per il nome), mentre il controllo sulla categoria e sul valore minimo della media delle recensioni è effettuato mediante un predicato invocato dal metodo \texttt{removeIf} della lista prodotti.
+Oltre alla lista prodotti nel risultato sono restituiti anche il numero di pagine, il tipo di ordinamento usato e la pagina corrente.
+
 \chapter{Altri capitoli}
 \chapter{Conclusioni}
 \end{document}
