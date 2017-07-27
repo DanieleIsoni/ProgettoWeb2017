@@ -10,6 +10,7 @@ import it.unitn.buyhub.dao.entities.Coordinate;
 import it.unitn.buyhub.dao.entities.Shop;
 import it.unitn.buyhub.dao.persistence.DAO;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
+import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.jdbc.JDBCDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,6 +19,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * All concrete DAO must implement this interface to handle the persistence
@@ -86,8 +89,14 @@ public class JDBCCoordinateDAO extends JDBCDAO<Coordinate, Integer> implements C
                 coordinate.setLatitude(rs.getDouble("latitude"));
                 coordinate.setLongitude(rs.getDouble("longitude"));
                 coordinate.setAddress(rs.getString("address"));
+                
+                ShopDAO shopDao = getDAO(ShopDAO.class);
+                coordinate.setShop(shopDao.getByPrimaryKey(rs.getInt("id_shop")));
 
+                
                 return coordinate;
+            } catch (DAOFactoryException ex) {
+            throw new DAOException("Impossible to get the coordinates for the passed primary key", ex);
             }
         } catch (SQLException ex) {
             throw new DAOException("Impossible to get the coordinates for the passed primary key", ex);
@@ -117,7 +126,7 @@ public class JDBCCoordinateDAO extends JDBCDAO<Coordinate, Integer> implements C
         }
          List<Coordinate> coordinates = new ArrayList<>();
 
-        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM coordinates c JOIN shops_coordinates s ON c.id=s.id_coordinate WHERE s.id_shop = ?")) {
+        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM coordinates c WHERE c.id_shop = ?")) {
             stm.setInt(1, s.getId());
             try (ResultSet rs = stm.executeQuery()) {
 
@@ -129,9 +138,15 @@ public class JDBCCoordinateDAO extends JDBCDAO<Coordinate, Integer> implements C
                     coordinate.setLatitude(rs.getDouble("latitude"));
                     coordinate.setLongitude(rs.getDouble("longitude"));
                     coordinate.setAddress(rs.getString("address"));
+
+                    ShopDAO shopDao = getDAO(ShopDAO.class);
+                    coordinate.setShop(shopDao.getByPrimaryKey(rs.getInt("id_shop")));
+
                     coordinates.add(coordinate);
                 }
                 return coordinates;
+            } catch (DAOFactoryException ex) {
+            throw new DAOException("Impossible to get the coordinates for the passed shop", ex);
             }
         } catch (SQLException ex) {
             throw new DAOException("Impossible to get the coordinates for the passed shop", ex);
@@ -168,9 +183,13 @@ public class JDBCCoordinateDAO extends JDBCDAO<Coordinate, Integer> implements C
                 coordinate.setLatitude(rs.getDouble("latitude"));
                 coordinate.setLongitude(rs.getDouble("longitude"));
                 coordinate.setAddress(rs.getString("address"));
+                ShopDAO shopDao = getDAO(ShopDAO.class);
+                coordinate.setShop(shopDao.getByPrimaryKey(rs.getInt("id_shop")));
 
                 return coordinate;
-            }
+            } catch (DAOFactoryException ex) {
+             throw new DAOException("Impossible to get the coordinates for the passed address", ex);
+      }
         } catch (SQLException ex) {
             throw new DAOException("Impossible to get the coordinates for the passed address", ex);
         }
@@ -210,10 +229,15 @@ public class JDBCCoordinateDAO extends JDBCDAO<Coordinate, Integer> implements C
                     coordinate.setLatitude(rs.getDouble("latitude"));
                     coordinate.setLongitude(rs.getDouble("longitude"));
                     coordinate.setAddress(rs.getString("address"));
+                    ShopDAO shopDao = getDAO(ShopDAO.class);
+                    coordinate.setShop(shopDao.getByPrimaryKey(rs.getInt("id_shop")));
+
                     coordinates.add(coordinate);
                 }
 
-            }
+            } catch (DAOFactoryException ex) {
+           throw new DAOException("Impossible to get the coordinates for the passed range", ex);
+     }
         } catch (SQLException ex) {
             throw new DAOException("Impossible to get the coordinates for the passed range", ex);
         }
@@ -244,8 +268,13 @@ public class JDBCCoordinateDAO extends JDBCDAO<Coordinate, Integer> implements C
                     coordinate.setLatitude(rs.getDouble("latitude"));
                     coordinate.setLongitude(rs.getDouble("longitude"));
                     coordinate.setAddress(rs.getString("address"));
+                    ShopDAO shopDao = getDAO(ShopDAO.class);
+                    coordinate.setShop(shopDao.getByPrimaryKey(rs.getInt("id_shop")));
+
                     coordinates.add(coordinate);
                 }
+            } catch (DAOFactoryException ex) {
+                throw new DAOException("Impossible to get the list of coordinates", ex);
             }
         } catch (SQLException ex) {
             throw new DAOException("Impossible to get the list of coordinates", ex);
@@ -275,6 +304,7 @@ public class JDBCCoordinateDAO extends JDBCDAO<Coordinate, Integer> implements C
             std.setDouble(2, coordinate.getLongitude());
             std.setString(3, coordinate.getAddress());
             std.setInt(4, coordinate.getId());
+            
             if (std.executeUpdate() == 1) {
                 return coordinate;
             } else {
@@ -298,11 +328,12 @@ public class JDBCCoordinateDAO extends JDBCDAO<Coordinate, Integer> implements C
      */
     @Override
     public Long insert(Coordinate coordinate) throws DAOException {
-        try (PreparedStatement ps = CON.prepareStatement("INSERT INTO coordinates(latitude, longitude, address) VALUES(?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement ps = CON.prepareStatement("INSERT INTO coordinates(latitude, longitude, address,shop_id) VALUES(?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setDouble(1, coordinate.getLatitude());
             ps.setDouble(2, coordinate.getLongitude());
             ps.setString(3, coordinate.getAddress());
+            ps.setInt(3, coordinate.getShop().getId());
 
             if (ps.executeUpdate() == 1) {
                 ResultSet generatedKeys = ps.getGeneratedKeys();

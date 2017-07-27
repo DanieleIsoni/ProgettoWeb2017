@@ -17,6 +17,15 @@ public class Coordinate implements Serializable {
     private double latitude;
     private double longitude;
     private String address;
+    private Shop shop;
+
+    public Shop getShop() {
+        return shop;
+    }
+
+    public void setShop(Shop shop) {
+        this.shop = shop;
+    }
     
 
     public int getId() {

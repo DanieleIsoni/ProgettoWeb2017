@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.0
+-- version 4.6.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Creato il: Lug 11, 2017 alle 15:48
--- Versione del server: 10.1.24-MariaDB
--- Versione PHP: 7.1.6
+-- Creato il: Lug 27, 2017 alle 15:50
+-- Versione del server: 10.1.16-MariaDB
+-- Versione PHP: 5.6.24
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -21,16 +19,20 @@ SET time_zone = "+00:00";
 --
 -- Database: `buyhub`
 --
-CREATE DATABASE `buyhub`;
+CREATE DATABASE IF NOT EXISTS `buyhub` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
 USE `buyhub`;
+
 -- --------------------------------------------------------
 
 --
 -- Struttura della tabella `coordinates`
 --
+-- Creazione: Lug 27, 2017 alle 13:41
+--
 
 CREATE TABLE `coordinates` (
   `id` int(11) NOT NULL,
+  `id_shop` int(11) NOT NULL,
   `latitude` decimal(10,6) NOT NULL,
   `longitude` decimal(10,6) NOT NULL,
   `address` text COLLATE utf8_bin NOT NULL
@@ -40,6 +42,8 @@ CREATE TABLE `coordinates` (
 
 --
 -- Struttura della tabella `messages`
+--
+-- Creazione: Lug 27, 2017 alle 13:28
 --
 
 CREATE TABLE `messages` (
@@ -57,6 +61,8 @@ CREATE TABLE `messages` (
 --
 -- Struttura della tabella `notifications`
 --
+-- Creazione: Lug 27, 2017 alle 13:28
+--
 
 CREATE TABLE `notifications` (
   `id` int(11) NOT NULL,
@@ -70,6 +76,8 @@ CREATE TABLE `notifications` (
 
 --
 -- Struttura della tabella `pictures`
+--
+-- Creazione: Lug 27, 2017 alle 13:28
 --
 
 CREATE TABLE `pictures` (
@@ -85,6 +93,8 @@ CREATE TABLE `pictures` (
 --
 -- Struttura della tabella `pictures_products`
 --
+-- Creazione: Lug 27, 2017 alle 13:28
+--
 
 CREATE TABLE `pictures_products` (
   `id_product` int(11) NOT NULL,
@@ -95,6 +105,8 @@ CREATE TABLE `pictures_products` (
 
 --
 -- Struttura della tabella `pictures_reviews`
+--
+-- Creazione: Lug 27, 2017 alle 13:28
 --
 
 CREATE TABLE `pictures_reviews` (
@@ -107,6 +119,8 @@ CREATE TABLE `pictures_reviews` (
 --
 -- Struttura della tabella `pictures_shops`
 --
+-- Creazione: Lug 27, 2017 alle 13:28
+--
 
 CREATE TABLE `pictures_shops` (
   `id_shop` int(11) NOT NULL,
@@ -117,6 +131,8 @@ CREATE TABLE `pictures_shops` (
 
 --
 -- Struttura della tabella `products`
+--
+-- Creazione: Lug 27, 2017 alle 13:28
 --
 
 CREATE TABLE `products` (
@@ -132,6 +148,8 @@ CREATE TABLE `products` (
 
 --
 -- Struttura della tabella `reviews`
+--
+-- Creazione: Lug 27, 2017 alle 13:28
 --
 
 CREATE TABLE `reviews` (
@@ -152,6 +170,8 @@ CREATE TABLE `reviews` (
 --
 -- Struttura della tabella `shops`
 --
+-- Creazione: Lug 27, 2017 alle 13:28
+--
 
 CREATE TABLE `shops` (
   `id` int(11) NOT NULL,
@@ -166,18 +186,9 @@ CREATE TABLE `shops` (
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `shops_coordinates`
---
-
-CREATE TABLE `shops_coordinates` (
-  `id_shop` int(11) NOT NULL,
-  `id_coordinate` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
--- --------------------------------------------------------
-
---
 -- Struttura della tabella `users`
+--
+-- Creazione: Lug 27, 2017 alle 13:28
 --
 
 CREATE TABLE `users` (
@@ -198,7 +209,8 @@ CREATE TABLE `users` (
 -- Indici per le tabelle `coordinates`
 --
 ALTER TABLE `coordinates`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_shop` (`id_shop`);
 
 --
 -- Indici per le tabelle `messages`
@@ -268,13 +280,6 @@ ALTER TABLE `shops`
   ADD KEY `id_owner` (`id_owner`);
 
 --
--- Indici per le tabelle `shops_coordinates`
---
-ALTER TABLE `shops_coordinates`
-  ADD PRIMARY KEY (`id_shop`,`id_coordinate`),
-  ADD KEY `id_coordinate` (`id_coordinate`);
-
---
 -- Indici per le tabelle `users`
 --
 ALTER TABLE `users`
@@ -329,6 +334,12 @@ ALTER TABLE `users`
 --
 -- Limiti per le tabelle scaricate
 --
+
+--
+-- Limiti per la tabella `coordinates`
+--
+ALTER TABLE `coordinates`
+  ADD CONSTRAINT `coordinates_ibfk_1` FOREIGN KEY (`id_shop`) REFERENCES `shops` (`id`);
 
 --
 -- Limiti per la tabella `messages`
@@ -390,14 +401,6 @@ ALTER TABLE `reviews`
 ALTER TABLE `shops`
   ADD CONSTRAINT `shops_ibfk_1` FOREIGN KEY (`id_creator`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `shops_ibfk_2` FOREIGN KEY (`id_owner`) REFERENCES `users` (`id`);
-
---
--- Limiti per la tabella `shops_coordinates`
---
-ALTER TABLE `shops_coordinates`
-  ADD CONSTRAINT `shops_coordinates_ibfk_1` FOREIGN KEY (`id_coordinate`) REFERENCES `coordinates` (`id`),
-  ADD CONSTRAINT `shops_coordinates_ibfk_2` FOREIGN KEY (`id_shop`) REFERENCES `shops` (`id`);
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

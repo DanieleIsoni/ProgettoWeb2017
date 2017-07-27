@@ -54,18 +54,11 @@ INSERT INTO `pictures_products` (`id_product`, `id_picture`) VALUES
 (2, 4),
 (2, 5);
 
-INSERT INTO `coordinates` (`id`, `latitude`, `longitude`, `address`) VALUES
-(1, '45.705959', '11.479617', 'Piazza Chilesotti, 17\r\n36016\r\nThiene (VI)\r\nItalia'),
-(2, '45.714211', '11.359345', 'Via Camillo Benso Cavour 18\r\n36015 Schio (VI)\r\nItalia'),
-(3, '45.688891', '11.605844', 'Via Maragnole 33,\r\n36042 Breganze\r\n(VI)'),
-(4, '45.715733', '11.403583', 'Via Lago di Levico, 9\r\n36015 Schio (VI)'),
-(5, '45.667745', '11.404100', 'Via Schio, 12\r\n36034 Malo (VI)'),
-(6, '45.715502', '11.317440', 'Viale Pasubio, 33\r\n36036 Torrebelvicino VI');
+INSERT INTO `coordinates` (`id`,`id_shop`, `latitude`, `longitude`, `address`) VALUES
+(1,1, '45.705959', '11.479617', 'Piazza Chilesotti, 17\r\n36016\r\nThiene (VI)\r\nItalia'),
+(2,1, '45.714211', '11.359345', 'Via Camillo Benso Cavour 18\r\n36015 Schio (VI)\r\nItalia'),
+(3,2, '45.688891', '11.605844', 'Via Maragnole 33,\r\n36042 Breganze\r\n(VI)'),
+(4,2, '45.715733', '11.403583', 'Via Lago di Levico, 9\r\n36015 Schio (VI)'),
+(5,3, '45.667745', '11.404100', 'Via Schio, 12\r\n36034 Malo (VI)'),
+(6,4, '45.715502', '11.317440', 'Viale Pasubio, 33\r\n36036 Torrebelvicino VI');
 
-INSERT INTO `shops_coordinates` (`id_shop`, `id_coordinate`) VALUES
-(1, 1),
-(1, 3),
-(1, 4),
-(2, 2),
-(3, 5),
-(4, 6);
