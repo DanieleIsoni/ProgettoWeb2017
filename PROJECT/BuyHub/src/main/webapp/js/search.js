@@ -13,11 +13,14 @@ $(function() {
         onFinish: slide_change
     });
 
-
+/*
     $(".single-range").ionRangeSlider({
         hide_min_max: true,
         step: 1,
         onFinish: slide_change
+    });*/
+    $('#minRev').on('change', function () {
+        cerca();
     });
 
     //invoco la prima ricerca
@@ -29,7 +32,7 @@ function cerca()
 {
     var q=$("#search_text").val();
     var c=$("#search_category").val();
-    var minRev=$("#minRev").val();
+    var minRev=5-$("#minRev").val();
     var price=$("#price").val().split(";");
     var min=price[0];
     var max=price[1];
