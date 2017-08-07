@@ -26,7 +26,7 @@
                     <h4><fmt:message key="avgreview"/></h4>
                     <!--<input type="text" id="minRev" class="single-range" value="0" name="range" data-from="0" data-min="0" data-max="5" />
 -->                 <div dir="rtl">
-                    <input type="hidden" id="minRev" class="rating" data-start="0" data-stop="5"/>
+                    <input type="hidden" id="minRev" class="rating" value="5" data-start="0" data-stop="5"/>
                     </div>
                 </div>
                 <div class="col-xs-9" id="products">
@@ -34,7 +34,21 @@
                 </div>
             </div>
         </div>
-        
+        <script>
+          $('#minRev').rating({
+          extendSymbol: function (rate) {
+            $(this).tooltip({
+              container: 'body',
+              placement: 'bottom',
+              title: 5-rate + " <fmt:message key="andmore"/>"
+              
+            });
+          }
+        });
+        </script>
+                    
+                    
+                    
         <script src="<c:url value="js/search.js" ></c:url>" ></script>
                
 <%@include file="common/footer.jsp" %>

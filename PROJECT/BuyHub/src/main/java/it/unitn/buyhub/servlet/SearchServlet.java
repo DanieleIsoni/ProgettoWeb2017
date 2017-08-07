@@ -256,7 +256,7 @@ public class SearchServlet extends HttpServlet {
         private final int c;
         @Override
         public boolean test(Product t) {
-            return t.getAvgReview()<minRev || t.getCategory()!=c;
+            return t.getAvgReview()<minRev || (c!=-1 && t.getCategory()!=c);
 
         }
 
