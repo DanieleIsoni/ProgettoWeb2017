@@ -55,7 +55,7 @@ function cerca()
                 s+="<div class='media'>";
                 s+="<div class='media-left'>";
                 s+="<a href='#'>";
-                s+="<div class='search_img_box'><img class='media-object img-rounded img-responsive' src='"+p.mainPicture.path+"' alt='"+p.name+"'></div>";
+                s+="<div class='search_img_box'><a href='product?id="+p.id+"'><img class='media-object img-rounded img-responsive' src='"+p.mainPicture.path+"' alt='"+p.name+"'/></a></div>";
                 s+="</a>";
                 s+="</div>";
                 s+="<div class='media-body'>";

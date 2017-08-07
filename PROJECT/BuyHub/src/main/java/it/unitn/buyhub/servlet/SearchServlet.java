@@ -146,7 +146,7 @@ public class SearchServlet extends HttpServlet {
                 response.setContentType("Application/json;charset=UTF-8");
        
                 out.println(result);
-                System.out.println(products.get(0).getMainPicture().getPath());
+                
             }
             else
             {

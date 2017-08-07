@@ -31,6 +31,8 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * All concrete DAO must implement this interface to handle the persistence
@@ -45,6 +47,7 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
         super(con);
 
         FRIEND_DAOS.put(ShopDAO.class, new JDBCShopDAO(CON));
+        FRIEND_DAOS.put(PictureDAO.class, new JDBCPictureDAO(CON));
     }
 
     /**
@@ -127,6 +130,11 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
                     ShopDAO shopDao = getDAO(ShopDAO.class);
                     product.setShop(shopDao.getByPrimaryKey(rs.getInt("id_shop")));
 
+                     PictureDAO pictureDao=getDAO(PictureDAO.class);
+                    List<Picture> pictures=pictureDao.getByProduct(product);
+                    product.setMainPicture(pictures.size()>0 ? pictures.get(0): null);
+                  
+                    
                     products.add(product);
                 }
 
@@ -202,7 +210,10 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
                     product.setAvgReview(p.Left);
                     product.setReviewCount(p.Right);
                   
-                    
+                  PictureDAO pictureDao=getDAO(PictureDAO.class);
+                  List<Picture> pictures=pictureDao.getByProduct(product);
+                  product.setMainPicture(pictures.size()>0 ? pictures.get(0): null);
+                     
                     
                 return product;
             }
@@ -249,10 +260,16 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
                     product.setAvgReview(p.Left);
                     product.setReviewCount(p.Right);
                   
+                     PictureDAO pictureDao=getDAO(PictureDAO.class);
+                    List<Picture> pictures=pictureDao.getByProduct(product);
+                    product.setMainPicture(pictures.size()>0 ? pictures.get(0): null);
+                  
 
                     products.add(product);
                 }
 
+            } catch (DAOFactoryException ex) {
+            throw new DAOException("Impossible to get the shops for the passed shop", ex);
             }
         } catch (SQLException ex) {
             throw new DAOException("Impossible to get the shops for the passed shop", ex);
@@ -294,14 +311,14 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
                     product.setAvgReview(p.Left);
                     product.setReviewCount(p.Right);
                     
-              /*    PictureDAO picrtureDao=getDAO(PictureDAO.class);
+                    PictureDAO pictureDao=getDAO(PictureDAO.class);
                     List<Picture> pictures=pictureDao.getByProduct(product);
-                    product.setMainPicture(pictures!=null && pictures.size()>0 ? pictures.get(0): null);
-                */    
+                    product.setMainPicture(pictures.size()>0 ? pictures.get(0): null);
+                  
               //test di funzionamento
-                Picture picture=new Picture(); 
+           /*     Picture picture=new Picture(); 
                 picture.setPath("images/noimage.png");
-                product.setMainPicture(picture);
+                product.setMainPicture(picture);*/
                     products.add(product);
                 }
 
@@ -353,7 +370,7 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
                     
                     PictureDAO pictureDao = getDAO(PictureDAO.class);
                     List<Picture> pictures=pictureDao.getByProduct(product);
-                    product.setMainPicture(pictures!=null && pictures.size()>0 ? pictures.get(0): null);
+                    product.setMainPicture(pictures.size()>0 ? pictures.get(0): null);
                     
                     products.add(product);
                 }
