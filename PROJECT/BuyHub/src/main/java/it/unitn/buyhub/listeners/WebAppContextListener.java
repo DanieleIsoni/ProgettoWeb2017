@@ -25,6 +25,9 @@ import javax.servlet.ServletContextListener;
  */
 public class WebAppContextListener implements ServletContextListener {
 
+    
+    
+    //Componenti runnable per l'esecuzione automatica dei servizi di aggiornamento del DB dei termini di ricerca
     private volatile ScheduledExecutorService executor;
 
     
@@ -54,7 +57,9 @@ public class WebAppContextListener implements ServletContextListener {
             DAOFactory daoFactory = JDBCDAOFactory.getInstance();
             sce.getServletContext().setAttribute("daoFactory", daoFactory);
             
-             executor = Executors.newScheduledThreadPool(2);
+            
+            //Inizializzo un esecutore automatico ogni 30 minuti per aggiornare il DB dei termini di ricerca
+            executor = Executors.newScheduledThreadPool(2);
             executor.scheduleAtFixedRate(autoCompleteUpdate, 0, 30, TimeUnit.MINUTES);
 
         } catch (DAOFactoryException ex) {

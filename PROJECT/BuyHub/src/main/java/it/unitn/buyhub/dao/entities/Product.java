@@ -21,6 +21,16 @@ public class Product implements Serializable {
     private int category;
     private double avgReview;
     private int reviewCount;
+    private Picture mainPicture;
+
+    public Picture getMainPicture() {
+        return mainPicture;
+    }
+
+    public void setMainPicture(Picture mainPicture) {
+        this.mainPicture = mainPicture;
+    }
+    
 
     public int getReviewCount() {
         return reviewCount;

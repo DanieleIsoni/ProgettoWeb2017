@@ -48,8 +48,26 @@ function cerca()
             var products=$("#products");
             products.empty();
             for (var i in msg.products) {
-                var p=msg.products[i];
-                products.append(p.name);
+            //    for(var i=0;i<10;i++){
+            var p=msg.products[i];
+                
+                var s="<div class='row search_item'>\n";
+                s+="<div class='media'>";
+                s+="<div class='media-left'>";
+                s+="<a href='#'>";
+                s+="<div class='search_img_box'><img class='media-object img-rounded img-responsive' src='"+p.mainPicture.path+"' alt='"+p.name+"'></div>";
+                s+="</a>";
+                s+="</div>";
+                s+="<div class='media-body'>";
+                s+="<h4 class='media-heading'><a href='product?id="+p.id+"'>"+p.name+"</a></h4>";
+                s+="<div class='item_price'>"+p.price+"€</div>";
+                s+="<div class='shop_name'><a href='shop?id="+p.shop.id+"'>"+p.shop.name+"</a></div>";
+                
+                
+                s+="</div></div></div><hr/>\n";
+                
+                //products.append(p.name);
+                products.append(s);
                 
                 
                 //aggiungere prodotti alla lista

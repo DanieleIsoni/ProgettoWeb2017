@@ -317,3 +317,41 @@ div.detailed_review_header
   background-color: #efefef;
   text-align: center;
 }
+.search_item
+{
+    padding-left: 10px;
+}
+#products > img
+{
+    padding-left: 0px;
+    padding-right: 0px;
+    width: 100px;
+
+}
+.search_img_box{
+    padding-left: 0px;
+    padding-right: 0px;
+    width: 150px;
+}
+#products > hr
+{
+    margin-top: 10px;
+    margin-bottom:  10px;
+}
+#products  .shop_name
+{
+    text-align: right;
+}
+#products .item_price
+{
+     text-align: right;
+     font-weight: bold;
+     font-size: 120%;
+}
+
+#products .media-heading
+{
+     font-weight: bolder;
+     font-size: 120%;
+    
+}

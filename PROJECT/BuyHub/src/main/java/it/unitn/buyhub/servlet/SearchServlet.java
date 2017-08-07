@@ -83,9 +83,9 @@ public class SearchServlet extends HttpServlet {
                 
                 List<Product> products;
                 try {
-                    if(min!=0 || max!= Double.MAX_VALUE)
+                   /* if(min!=0 || max!= Double.MAX_VALUE)
                         products = productDAO.getByNameAndPriceRange(q, min, max);
-                    else
+                    else*/
                         products = productDAO.getByName(q);
                     
                     //rimozioni non voluti
@@ -146,14 +146,13 @@ public class SearchServlet extends HttpServlet {
                 response.setContentType("Application/json;charset=UTF-8");
        
                 out.println(result);
-                
+                System.out.println(products.get(0).getMainPicture().getPath());
             }
             else
             {
             
                 response.setContentType("Application/json;charset=UTF-8");
                 out.println("{\"msg\": \"No query specified\"}");
-            
             }   
             
             

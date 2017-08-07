@@ -10,6 +10,7 @@ import info.debatty.java.stringsimilarity.JaroWinkler;
 import it.unitn.buyhub.dao.*;
 import it.unitn.buyhub.dao.*;
 import it.unitn.buyhub.dao.entities.Notification;
+import it.unitn.buyhub.dao.entities.Picture;
 import it.unitn.buyhub.dao.entities.Product;
 import it.unitn.buyhub.dao.entities.Review;
 import it.unitn.buyhub.dao.entities.Shop;
@@ -293,6 +294,14 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
                     product.setAvgReview(p.Left);
                     product.setReviewCount(p.Right);
                     
+              /*    PictureDAO picrtureDao=getDAO(PictureDAO.class);
+                    List<Picture> pictures=pictureDao.getByProduct(product);
+                    product.setMainPicture(pictures!=null && pictures.size()>0 ? pictures.get(0): null);
+                */    
+              //test di funzionamento
+                Picture picture=new Picture(); 
+                picture.setPath("images/noimage.png");
+                product.setMainPicture(picture);
                     products.add(product);
                 }
 
@@ -340,6 +349,12 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
                     Pair <Double,Integer> p=getAvgreview(product.getId());
                     product.setAvgReview(p.Left);
                     product.setReviewCount(p.Right);
+                    
+                    
+                    PictureDAO pictureDao = getDAO(PictureDAO.class);
+                    List<Picture> pictures=pictureDao.getByProduct(product);
+                    product.setMainPicture(pictures!=null && pictures.size()>0 ? pictures.get(0): null);
+                    
                     products.add(product);
                 }
 

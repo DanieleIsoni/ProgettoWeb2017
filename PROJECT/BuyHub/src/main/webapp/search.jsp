@@ -27,7 +27,7 @@
                     <input type="text" id="minRev" class="single-range" value="0" name="range" data-from="0" data-min="0" data-max="5" />
 
                 </div>
-                <div class="col-xs-7" id="products">
+                <div class="col-xs-9" id="products">
                     <!-- Product list -->
                         
                 </div>
