@@ -38,8 +38,11 @@
                     <div class="product_title">
                     ${product.name}
                 </div>
-                <pr:ReviewStars count="${reviewsCount}" value="${globalValue}" label="true"></pr:ReviewStars>
-                    <div class="product_description">
+                <%--<pr:ReviewStars count="${reviewsCount}" value="${globalValue}" label="true"></pr:ReviewStars>--%>
+                <input type="hidden" class="rating" value="${globalValue}" data-readonly/> ${reviewsCount} <fmt:message key="customer_reviews"/>
+                <br/>
+                <br/>
+                <div class="product_description">
                     ${product.description}
                 </div>
             </div>
@@ -96,7 +99,8 @@
                         </div>
                     </div>
                     <div class="col-md-9">
-                        <pr:ReviewStars value="${element.globalValue}"></pr:ReviewStars>
+                        <%--<pr:ReviewStars value="${element.globalValue}"></pr:ReviewStars>--%>
+                        <input type="hidden" class="rating" value="${element.globalValue}}" data-readonly/>
                         <div class="review-block-title"><a href="#rev${element.id}" id="#rev${element.id}">
                                 <c:out value="${element.title}"/>
                             </a>
@@ -108,10 +112,18 @@
                                 <div id="collapsedRev${element.id}" class="collapse">
 
                                     <div class="detailed_review_header">
+                                        <%--
                                         <fmt:message key="quality"/>: <pr:ReviewStars value="${element.quality}"/>
                                         <fmt:message key="service"/>: <pr:ReviewStars value="${element.service}"/>
                                         <fmt:message key="value_for_money"/>: <pr:ReviewStars value="${element.valueForMoney}"/>
-
+                                        --%>
+                                        <fmt:message key="quality"/>: <input type="hidden" class="rating" value="${element.quality}" data-readonly/>
+                                        <br/>
+                                        <fmt:message key="service"/>: <input type="hidden" class="rating" value="${element.service}" data-readonly/>
+                                        <br/>
+                                        <fmt:message key="value_for_money"/>: <input type="hidden" class="rating" value="${element.valueForMoney}}" data-readonly/>
+                        
+                                       
 
                                     </div>
 
