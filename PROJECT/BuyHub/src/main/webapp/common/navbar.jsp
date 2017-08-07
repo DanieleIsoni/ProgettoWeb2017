@@ -71,7 +71,7 @@
                             </div>  
                                     <input type="text" class="form-control typeahead" name="q" id="search_text"  autocomplete="off" placeholder="<fmt:message key="search"/>">
                             <span class="input-group-btn">
-                                <button class="btn btn-default search-btn" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                                <button class="btn btn-default search-btn" type="submit"><span class="glyphicon glyphicon-search"></span></button>
                             </span>
                         </div>
                     </form>
