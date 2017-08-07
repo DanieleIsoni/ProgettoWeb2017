@@ -3,17 +3,17 @@
     Created on : 16-lug-2017, 14.45.20
     Author     : matteo
 --%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <%@include file="common/navbar.jsp" %>
+        <%@include file="common/header.jsp" %>
 
-        <title><fmt:message key="search_title"/></title>
+        <title><fmt:message key="search_title"/> - BuyHub</title>
     </head>
     <body>
+        
+        <%@include file="common/navbar.jsp" %>
         <div class="container">
             <div class="row">
                 <div class="col-xs-3 well center">
@@ -36,6 +36,4 @@
         
         <script src="<c:url value="js/search.js" ></c:url>" ></script>
                
-    </body>
-
-</html>
+<%@include file="common/footer.jsp" %>

@@ -10,11 +10,13 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <%@include file="common/navbar.jsp" %>
-
-        <title><fmt:message key="signup_title"/></title>
+        
+        <%@include file="common/header.jsp" %>
+        <title><fmt:message key="signup_title"/> - BuyHub</title>
     </head>
     <body class="text-center login">
+        
+        <%@include file="common/navbar.jsp" %>
         <img src="images/icon.png" alt="BuyHub logo" height="42" width="42">
         <h3><fmt:message key="signup_desc"/></h3>
         <br>
@@ -49,5 +51,5 @@
                 <button type="submit" class="btn btn-success"><fmt:message key="sign_up"/></button>
             </form>
         </div>
-    </body>
-</html>
+
+        <%@include file="common/footer.jsp" %>

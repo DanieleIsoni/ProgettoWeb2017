@@ -127,6 +127,7 @@ public class JDBCCoordinateDAO extends JDBCDAO<Coordinate, Integer> implements C
          List<Coordinate> coordinates = new ArrayList<>();
 
         try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM coordinates c WHERE c.id_shop = ?")) {
+           
             stm.setInt(1, s.getId());
             try (ResultSet rs = stm.executeQuery()) {
 
@@ -140,7 +141,7 @@ public class JDBCCoordinateDAO extends JDBCDAO<Coordinate, Integer> implements C
                     coordinate.setAddress(rs.getString("address"));
 
                     ShopDAO shopDao = getDAO(ShopDAO.class);
-                    coordinate.setShop(shopDao.getByPrimaryKey(rs.getInt("id_shop")));
+                    coordinate.setShop(s);
 
                     coordinates.add(coordinate);
                 }
@@ -149,6 +150,7 @@ public class JDBCCoordinateDAO extends JDBCDAO<Coordinate, Integer> implements C
             throw new DAOException("Impossible to get the coordinates for the passed shop", ex);
             }
         } catch (SQLException ex) {
+            
             throw new DAOException("Impossible to get the coordinates for the passed shop", ex);
         }
     }

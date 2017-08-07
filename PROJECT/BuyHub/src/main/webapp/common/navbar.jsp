@@ -5,16 +5,9 @@
 --%>
 
 <%@page import="it.unitn.buyhub.dao.entities.User"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="nv" uri="/WEB-INF/tld/navbar.tld"%>
-<!DOCTYPE html>
 
 
-<html>
-    <%-- Include the bootstrap js, css and jquery--%>
-    <%@include file="header.jsp" %>
-
-    <body>
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
@@ -85,5 +78,3 @@
                 <!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
         </nav>
-
-</html>

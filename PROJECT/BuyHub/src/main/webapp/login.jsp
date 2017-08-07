@@ -9,11 +9,13 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <%@include file="common/navbar.jsp" %>
+        <%@include file="common/header.jsp" %>
 
-        <title><fmt:message key="login_title"/></title>
+        <title><fmt:message key="login_title"/> - BuyHub</title>
     </head>
     <body class="text-center login">
+        
+        <%@include file="common/navbar.jsp" %>
         <img src="images/icon.png" alt="BuyHub logo" height="42" width="42">
         <h3><fmt:message key="login_desc"/></h3>
         <br>
@@ -32,5 +34,5 @@
                 <a href="<c:url value="/signup.jsp" />" class="btn btn-default" role="button"><fmt:message key="sign_up"/></a>
             </form>
         </div>
-    </body>
-</html>
+
+ <%@include file="common/footer.jsp" %>

@@ -4,18 +4,16 @@
     Author     : matteo
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <%@include file="common/navbar.jsp" %>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-
+        <%@include file="common/header.jsp" %>
+        <title><fmt:message key="cart_title"/> - BuyHub</title>
     </head>
     <body>
+        <%@include file="common/navbar.jsp" %>
         <c:forEach items="${userCart.products}" var="pr">
             <h3><c:out value="${pr.id}"/> - <c:out value="${pr.number}"/></h3>
         </c:forEach>
-    </body>
-</html>
+<%@include file="common/footer.jsp" %>
+        

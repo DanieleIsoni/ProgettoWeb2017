@@ -4,16 +4,15 @@
     Author     : matteo
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <%@include file="common/navbar.jsp" %>
+        <%@include file="common/header.jsp" %>
         <title><fmt:message key="home_title"/></title>
     </head>
     <body>
-
+         <%@include file="common/navbar.jsp" %>
+       
 
         <div class="container header">
             <div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -54,5 +53,4 @@
             </div>
         </div>
 
-    </body>
-</html>
+         <%@include file="common/footer.jsp" %>
