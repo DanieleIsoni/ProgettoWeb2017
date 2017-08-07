@@ -440,7 +440,7 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
                 filtered.add(p);
             }
         }
-        System.out.println(filtered.size());
+        //System.out.println(filtered.size());
         return filtered;
     }
 

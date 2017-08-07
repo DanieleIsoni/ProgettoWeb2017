@@ -29,7 +29,6 @@
                 </div>
                 <div class="col-xs-9" id="products">
                     <!-- Product list -->
-                        
                 </div>
             </div>
         </div>
