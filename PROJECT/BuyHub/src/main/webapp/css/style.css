@@ -308,15 +308,6 @@ div.detailed_review_header
 }
 
 
-#footer{
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  padding: 1rem;
-  background-color: #efefef;
-  text-align: center;
-}
 .search_item
 {
     padding-left: 10px;
@@ -358,4 +349,14 @@ div.detailed_review_header
 .pages
 {
     text-align: center;
+}
+
+
+#footer{
+  margin-top: 100px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  background-color: #efefef;
 }
