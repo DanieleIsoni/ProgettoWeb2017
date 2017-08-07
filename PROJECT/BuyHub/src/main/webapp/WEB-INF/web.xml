@@ -79,6 +79,6 @@
         <location>/common/error.jsp</location>
     </error-page>
     <welcome-file-list>
-        <welcome-file>login.jsp</welcome-file>
+        <welcome-file>home.jsp</welcome-file>
     </welcome-file-list>
 </web-app>
