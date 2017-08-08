@@ -48,6 +48,7 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
 
         FRIEND_DAOS.put(ShopDAO.class, new JDBCShopDAO(CON));
         FRIEND_DAOS.put(PictureDAO.class, new JDBCPictureDAO(CON));
+       // FRIEND_DAOS.put(ReviewDAO.class, new JDBCReviewDAO(CON));
     }
 
     /**
@@ -478,7 +479,8 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
     {
         Pair<Double,Integer> p=null;
         try (PreparedStatement stm = CON.prepareStatement
-                ("SELECT AVG((r.global_value+r.quality+r.service+r.value_for_money)/4) AS avg, COUNT(r.id) AS c " +
+                (//"SELECT AVG((r.global_value+r.quality+r.service+r.value_for_money)/4) AS avg, COUNT(r.id) AS c " +
+                "SELECT AVG(r.global_value) AS avg, COUNT(r.id) AS c "+
                 "FROM reviews r " +
                 "JOIN products p " +
                 "ON p.id=r.id_product " +

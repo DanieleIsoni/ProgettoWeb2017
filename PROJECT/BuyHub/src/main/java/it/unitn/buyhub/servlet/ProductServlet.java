@@ -98,8 +98,8 @@ public class ProductServlet extends HttpServlet {
                 
                
                 
-                request.setAttribute("globalValue", product.getAvgReview());
-                request.setAttribute("reviewsCount", product.getReviewCount());
+               // request.setAttribute("globalValue", product.getAvgReview());
+               // request.setAttribute("reviewsCount", product.getReviewCount());
 
                 
                                    

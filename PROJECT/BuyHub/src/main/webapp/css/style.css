@@ -335,7 +335,7 @@ div.detailed_review_header
 }
 #products .item_price
 {
-     text-align: right;
+     /*text-align: right;*/
      font-weight: bold;
      font-size: 120%;
 }
@@ -349,9 +349,8 @@ div.detailed_review_header
 .pages
 {
     text-align: center;
+    margin-top: 20px;
 }
-
-
 #footer{
   margin-top: 100px;
   right: 0;

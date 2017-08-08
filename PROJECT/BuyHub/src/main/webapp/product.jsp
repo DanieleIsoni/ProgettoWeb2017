@@ -39,7 +39,7 @@
                     ${product.name}
                 </div>
                 <%--<pr:ReviewStars count="${reviewsCount}" value="${globalValue}" label="true"></pr:ReviewStars>--%>
-                <input type="hidden" class="rating" value="${globalValue}" data-readonly/> ${reviewsCount} <fmt:message key="customer_reviews"/>
+                <input type="hidden" class="rating" value="${product.avgReview}" data-readonly/> ${product.reviewCount} <fmt:message key="customer_reviews"/>
                 <br/>
                 <br/>
                 <div class="product_description">
@@ -54,14 +54,9 @@
                 </div>
 
                 <div class="product_shopname">
-                    <c:choose>
-                        <c:when test="${empty product.shop.website}">
-                            ${product.shop.name}
-                        </c:when>
-                        <c:otherwise>
-                            <a href="${product.shop.website}"> ${product.shop.name}</a>
-                        </c:otherwise>
-                    </c:choose>
+                    
+                    <a href="shop?id=${product.shop.id}"> ${product.shop.name}</a>
+                    
                 </div>
                 <div class="product_shop_description">
                     ${product.shop.description}

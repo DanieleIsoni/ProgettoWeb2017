@@ -63,11 +63,12 @@ function cerca()
                 s+="</div>";
                 s+="<div class='media-body'>";
                 s+="<h4 class='media-heading'><a href='product?id="+p.id+"'>"+p.name+"</a></h4>\n";
-                s+="<div class='item_price'>"+p.price+"€</div>\n";
-                s+="<div class='shop_name'><a href='shop?id="+p.shop.id+"'>"+p.shop.name+"</a></div>\n";
+                s+="<div class='item_price'>€ "+Number(p.price).toFixed(2); +"</div><br/>\n";
                 if(p.avgReview!=0)
-                s+="<input type='hidden' class='rating' value="+p.avgReview+" data-readonly/>\n";
-                
+                    s+="<div class='item_rating' ><input type='hidden' class='rating' value="+p.avgReview+" data-readonly/></div><br/>\n";
+               
+                s+="<div class='shop_name'><a href='shop?id="+p.shop.id+"'>"+p.shop.name+"</a></div>\n";
+               
                 s+="</div></div></div><hr/>\n";
                 
                 //costruisco la lista
@@ -129,7 +130,7 @@ function cerca()
             }
             
             
-            products.append("\n<br/>\nPagina "+msg.p+" di "+msg.pages);
+           // products.append("\n<br/>\nPagina "+msg.p+" di "+msg.pages);
             $(".rating").rating();
             
         });
