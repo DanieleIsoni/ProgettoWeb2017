@@ -22,6 +22,9 @@ $(function() {
     $('#minRev').on('change', function () {
         cerca();
     });
+     $('#orderby').on('change', function () {
+        cerca();
+    });
 
     //invoco la prima ricerca
     cerca();
@@ -32,6 +35,7 @@ function cerca()
 {
     var q=$("#search_text").val();
     var c=$("#search_category").val();
+    var s=$("#orderby").val();
     var minRev=5-$("#minRev").val();
     var price=$("#price").val().split(";");
     var min=price[0];
@@ -44,7 +48,8 @@ function cerca()
                 "c": c,
                 "minRev": minRev,
                 "min": min,
-                "max": max
+                "max": max,
+                "s" : s
             }
       })
         .done(function( msg ) {

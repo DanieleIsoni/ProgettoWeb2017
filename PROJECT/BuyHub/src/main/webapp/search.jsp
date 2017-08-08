@@ -28,6 +28,20 @@
 -->                 <div dir="rtl">
                     <input type="hidden" id="minRev" class="rating" value="5" data-start="0" data-stop="5"/>
                     </div>
+                    <div class="sorting_method  form-group">
+                    <br/>
+                    <label for="orderby"><fmt:message key="orderby"/></label>
+                        <select class="form-control" id="orderby">
+                            <option value="0" selected><fmt:message key="name"/> (A-Z)</option>
+                            <option value="1"><fmt:message key="name"/> (Z-A)</option>
+                            <option value="2"><fmt:message key="price_asc"/></option>
+                            <option value="3"><fmt:message key="price_desc"/></option>
+                            <option value="4"><fmt:message key="better_avg"/></option>
+                            <option value="5"><fmt:message key="most_review"/></option>
+                        </select>
+
+                    </div>
+
                 </div>
                 <div class="col-xs-9" id="products">
                     <!-- Product list -->
