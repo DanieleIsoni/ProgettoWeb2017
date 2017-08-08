@@ -20,18 +20,17 @@ public class User implements Serializable {
     private String lastName;
     private String email;
     private int capability;
+    private String avatar;
 
-    /*
-    private String avatarPath;
-
-    public void setAvatarPath(String avatarPath) {
-        this.avatarPath = avatarPath;
+    public String getAvatar() {
+        return avatar;
     }
 
-    public String getAvatarPath() {
-        return avatarPath;
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
-     */
+    
+    
     public int getId() {
         return id;
     }

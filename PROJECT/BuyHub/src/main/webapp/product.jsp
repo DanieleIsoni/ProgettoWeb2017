@@ -55,7 +55,7 @@
 
                 <div class="product_shopname">
                     
-                    <a href="shop?id=${product.shop.id}"> ${product.shop.name}</a>
+                    <a href="<c:url value="shop?id=${product.shop.id}"/>"> ${product.shop.name}</a>
                     
                 </div>
                 <div class="product_shop_description">
@@ -86,7 +86,7 @@
 
                     <div class="col-md-3">
                         <div class="review_img_box">
-                            <img src="<c:url value="images/noimage.png"/>" class="img-rounded img-responsive">
+                            <img src="<c:url value="${element.creator.avatar}"/>" class="img-rounded img-responsive">
                         </div>
                         <div class="review-block-name"><a href="#"><c:out value="${element.creator.firstName}"/></a></div>
                         <div class="review-block-date"><fmt:formatDate type = "date" dateStyle = "long" value = "${element.dateCreation}" />

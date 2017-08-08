@@ -47,7 +47,7 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
      * @since 1.0.170425
      */
     public Long insert(User user) throws DAOException {
-        try (PreparedStatement ps = CON.prepareStatement("INSERT INTO users(username, password, first_name, last_name, email, capability) VALUES(?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement ps = CON.prepareStatement("INSERT INTO users(username, password, first_name, last_name, email, capability,avatar) VALUES(?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setString(1, user.getUsername());
             ps.setString(2, user.getPassword());
@@ -55,6 +55,7 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
             ps.setString(4, user.getLastName());
             ps.setString(5, user.getEmail());
             ps.setInt(6, user.getCapability());
+            ps.setString(7,user.getAvatar());
 
             if (ps.executeUpdate() == 1) {
                 ResultSet generatedKeys = ps.getGeneratedKeys();
@@ -143,6 +144,10 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
                 user.setEmail(rs.getString("email"));
                 user.setCapability(rs.getInt("capability"));
                 user.setUsername(rs.getString("username"));
+                    String avatar= rs.getString("avatar");
+                    if(avatar==null)
+                        avatar="images/noimage.png";
+                    user.setAvatar(avatar);
 
                 return user;
             }
@@ -189,7 +194,10 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
                     user.setLastName(rs.getString("last_name"));
                     user.setEmail(rs.getString("email"));
                     user.setCapability(rs.getInt("capability"));
-                    //user.setAvatarPath(rs.getString("avatar_path"));
+                    String avatar= rs.getString("avatar");
+                    if(avatar==null)
+                        avatar="images/noimage.png";
+                    user.setAvatar(avatar);
 
                     return user;
                 }
@@ -228,7 +236,11 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
                     user.setLastName(rs.getString("last_name"));
                     user.setEmail(rs.getString("email"));
                     user.setCapability(rs.getInt("capability"));
-
+                    String avatar= rs.getString("avatar");
+                    if(avatar==null)
+                        avatar="images/noimage.png";
+                    user.setAvatar(avatar);
+                    
                     users.add(user);
                 }
             }
