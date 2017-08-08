@@ -359,3 +359,22 @@ div.detailed_review_header
   padding: 1rem;
   background-color: #efefef;
 }
+
+.profile_img_box
+{
+    padding-left: 0px;
+    padding-right: 0px;
+    max-width: 200px;
+}
+.profile_name
+{
+    font-size: 150%;
+    font-weight: bold;
+}
+.profile_username
+{
+    font-size: 120%;
+    font-weight: bold;
+    padding-left: 20px;
+    color: #6a6a6a;
+}
