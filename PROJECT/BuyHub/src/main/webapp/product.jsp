@@ -88,7 +88,7 @@
                         <div class="review_img_box">
                             <img src="<c:url value="${element.creator.avatar}"/>" class="img-rounded img-responsive">
                         </div>
-                        <div class="review-block-name"><a href="#"><c:out value="${element.creator.firstName}"/></a></div>
+                            <div class="review-block-name"><a href="<c:url value="user/?id=${element.creator.id}"/>"><c:out value="${element.creator.firstName}"/></a></div>
                         <div class="review-block-date"><fmt:formatDate type = "date" dateStyle = "long" value = "${element.dateCreation}" />
                             <br/><time class="timeago" datetime="<fmt:formatDate pattern="yyyy-MM-dd'T'HH:mm:ss'Z'"  value="${element.dateCreation}" />"></time>
                         </div>
@@ -96,7 +96,7 @@
                     <div class="col-md-9">
                         <%--<pr:ReviewStars value="${element.globalValue}"></pr:ReviewStars>--%>
                         <input type="hidden" class="rating" value="${element.globalValue}}" data-readonly/>
-                        <div class="review-block-title"><a href="#rev${element.id}" id="#rev${element.id}">
+                        <div class="review-block-title"><a href="#rev${element.id}" id="rev${element.id}">
                                 <c:out value="${element.title}"/>
                             </a>
                         </div>
