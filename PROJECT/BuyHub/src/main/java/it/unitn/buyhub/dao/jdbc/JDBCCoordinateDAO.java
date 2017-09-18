@@ -90,6 +90,7 @@ public class JDBCCoordinateDAO extends JDBCDAO<Coordinate, Integer> implements C
                 coordinate.setLongitude(rs.getDouble("longitude"));
                 coordinate.setAddress(rs.getString("address"));
                 
+                coordinate.setOpening_hours(rs.getString("opening_hours"));
                 ShopDAO shopDao = getDAO(ShopDAO.class);
                 coordinate.setShop(shopDao.getByPrimaryKey(rs.getInt("id_shop")));
 
@@ -139,7 +140,8 @@ public class JDBCCoordinateDAO extends JDBCDAO<Coordinate, Integer> implements C
                     coordinate.setLatitude(rs.getDouble("latitude"));
                     coordinate.setLongitude(rs.getDouble("longitude"));
                     coordinate.setAddress(rs.getString("address"));
-
+                    
+                coordinate.setOpening_hours(rs.getString("opening_hours"));
                     ShopDAO shopDao = getDAO(ShopDAO.class);
                     coordinate.setShop(s);
 
@@ -185,6 +187,7 @@ public class JDBCCoordinateDAO extends JDBCDAO<Coordinate, Integer> implements C
                 coordinate.setLatitude(rs.getDouble("latitude"));
                 coordinate.setLongitude(rs.getDouble("longitude"));
                 coordinate.setAddress(rs.getString("address"));
+                coordinate.setOpening_hours(rs.getString("opening_hours"));
                 ShopDAO shopDao = getDAO(ShopDAO.class);
                 coordinate.setShop(shopDao.getByPrimaryKey(rs.getInt("id_shop")));
 
@@ -231,6 +234,7 @@ public class JDBCCoordinateDAO extends JDBCDAO<Coordinate, Integer> implements C
                     coordinate.setLatitude(rs.getDouble("latitude"));
                     coordinate.setLongitude(rs.getDouble("longitude"));
                     coordinate.setAddress(rs.getString("address"));
+                    coordinate.setOpening_hours(rs.getString("opening_hours"));
                     ShopDAO shopDao = getDAO(ShopDAO.class);
                     coordinate.setShop(shopDao.getByPrimaryKey(rs.getInt("id_shop")));
 
@@ -270,6 +274,7 @@ public class JDBCCoordinateDAO extends JDBCDAO<Coordinate, Integer> implements C
                     coordinate.setLatitude(rs.getDouble("latitude"));
                     coordinate.setLongitude(rs.getDouble("longitude"));
                     coordinate.setAddress(rs.getString("address"));
+                    coordinate.setOpening_hours(rs.getString("opening_hours"));
                     ShopDAO shopDao = getDAO(ShopDAO.class);
                     coordinate.setShop(shopDao.getByPrimaryKey(rs.getInt("id_shop")));
 
@@ -301,11 +306,12 @@ public class JDBCCoordinateDAO extends JDBCDAO<Coordinate, Integer> implements C
             throw new DAOException("parameter not valid", new IllegalArgumentException("The passed coordinate is null"));
         }
 
-        try (PreparedStatement std = CON.prepareStatement("UPDATE coordinates SET latitude = ?, longitude = ?, address = ? WHERE id = ?")) {
+        try (PreparedStatement std = CON.prepareStatement("UPDATE coordinates SET latitude = ?, longitude = ?, address = ?, opening_hours = ?  WHERE id = ?")) {
             std.setDouble(1, coordinate.getLatitude());
             std.setDouble(2, coordinate.getLongitude());
             std.setString(3, coordinate.getAddress());
             std.setInt(4, coordinate.getId());
+            std.setString(5, coordinate.getOpening_hours());
             
             if (std.executeUpdate() == 1) {
                 return coordinate;
@@ -330,12 +336,13 @@ public class JDBCCoordinateDAO extends JDBCDAO<Coordinate, Integer> implements C
      */
     @Override
     public Long insert(Coordinate coordinate) throws DAOException {
-        try (PreparedStatement ps = CON.prepareStatement("INSERT INTO coordinates(latitude, longitude, address,shop_id) VALUES(?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement ps = CON.prepareStatement("INSERT INTO coordinates(latitude, longitude, address,shop_id, opening_hours=?) VALUES(?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setDouble(1, coordinate.getLatitude());
             ps.setDouble(2, coordinate.getLongitude());
             ps.setString(3, coordinate.getAddress());
             ps.setInt(3, coordinate.getShop().getId());
+            ps.setString(4, coordinate.getOpening_hours());
 
             if (ps.executeUpdate() == 1) {
                 ResultSet generatedKeys = ps.getGeneratedKeys();

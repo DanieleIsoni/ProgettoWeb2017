@@ -35,7 +35,8 @@ CREATE TABLE `coordinates` (
   `id_shop` int(11) NOT NULL,
   `latitude` decimal(10,6) NOT NULL,
   `longitude` decimal(10,6) NOT NULL,
-  `address` text COLLATE utf8_bin NOT NULL
+  `address` text COLLATE utf8_bin NOT NULL,
+  `opening_hours` text COLLATE utf8_bin
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -179,8 +180,7 @@ CREATE TABLE `shops` (
   `description` text COLLATE utf8_bin NOT NULL,
   `website` varchar(256) COLLATE utf8_bin NOT NULL,
   `id_owner` int(11) NOT NULL,
-  `id_creator` int(11) NOT NULL,
-  `global_value` int(11) NOT NULL
+  `id_creator` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------

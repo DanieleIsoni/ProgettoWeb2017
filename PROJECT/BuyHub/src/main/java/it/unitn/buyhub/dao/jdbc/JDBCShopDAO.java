@@ -76,13 +76,12 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
      * @since 1.0.170425
      */
     public Long insert(Shop shops) throws DAOException {
-        try (PreparedStatement ps = CON.prepareStatement("INSERT INTO shops(name, description, web_site, id_owner, id_creator, global_value) VALUES(?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement ps = CON.prepareStatement("INSERT INTO shops(name, description, web_site, id_owner, id_creator) VALUES(?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, shops.getName());
             ps.setString(2, shops.getDescription());
             ps.setString(3, shops.getWebsite());
             ps.setInt(4, shops.getOwner().getId());
             ps.setInt(5, shops.getCreator().getId());
-            ps.setInt(6, shops.getGlobalValue());
 
             if (ps.executeUpdate() == 1) {
                 ResultSet generatedKeys = ps.getGeneratedKeys();
@@ -144,7 +143,6 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
                 shop.setDescription(rs.getString("description"));
                 shop.setWebsite(rs.getString("website"));
                 shop.setName(rs.getString("name"));
-                shop.setGlobalValue(rs.getInt("global_value"));
 
                 //Get owner associate
                 UserDAO userDao = getDAO(UserDAO.class);
@@ -190,7 +188,6 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
                     shop.setDescription(rs.getString("description"));
                     shop.setWebsite(rs.getString("website"));
                     shop.setName(rs.getString("name"));
-                    shop.setGlobalValue(rs.getInt("global_value"));
 
                     //Get owner associate
                     shop.setOwner(owner);
@@ -238,7 +235,6 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
                     shop.setDescription(rs.getString("description"));
                     shop.setWebsite(rs.getString("website"));
                     shop.setName(rs.getString("name"));
-                    shop.setGlobalValue(rs.getInt("global_value"));
 
                     //Get owner associate
                     UserDAO userDao = getDAO(UserDAO.class);
@@ -281,7 +277,6 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
                     shop.setDescription(rs.getString("description"));
                     shop.setName(rs.getString("name"));
                     shop.setWebsite(rs.getString("website"));
-                    shop.setGlobalValue(rs.getInt("global_value"));
 
                     //Get owner associate
                     UserDAO userDao = getDAO(UserDAO.class);
@@ -324,7 +319,6 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
             std.setString(3, shop.getWebsite());
             std.setInt(4, shop.getOwner().getId());
             std.setInt(5, shop.getCreator().getId());
-            std.setInt(6, shop.getGlobalValue());
             std.setInt(7, shop.getId());
             if (std.executeUpdate() == 1) {
                 return shop;
@@ -370,7 +364,6 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
                     shop.setDescription(rs.getString("description"));
                     shop.setName(rs.getString("name"));
                     shop.setWebsite(rs.getString("website"));
-                    shop.setGlobalValue(rs.getInt("global_value"));
 
                     //Get owner associate
                     UserDAO userDao = getDAO(UserDAO.class);

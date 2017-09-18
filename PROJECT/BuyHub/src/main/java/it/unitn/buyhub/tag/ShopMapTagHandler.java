@@ -41,7 +41,17 @@ public class ShopMapTagHandler extends SimpleTagSupport {
                     
                     out.println("<div class=\"row\">");
                     out.println(coordinate.getAddress().replace("\n","\n<br/>\n"));
+                    if(coordinate.getOpening_hours()!=null && coordinate.getOpening_hours()!="")
+                    {
+                        out.println("<br/><em>"+Utility.getLocalizedString(pageContext, "opening_hours")+"<br/>"+coordinate.getOpening_hours().replace("\n","\n<br/>\n")+"</em>");
+                    
+                    }
+                    else
+                    {
+                        out.println("<br/><em>"+Utility.getLocalizedString(pageContext, "no_opening_hours")+"</em>");
+                    }
                     out.println("</div><hr/>");
+                    
                     
                     markers+= "['',"+coordinate.getLatitude()+","+coordinate.getLongitude()+"],\n";
                     details+="`"+coordinate.getAddress()+"`, ";
@@ -54,9 +64,6 @@ public class ShopMapTagHandler extends SimpleTagSupport {
 
                 out.println("<script>\n"+markers+"];\n"+details+"];</script>");
                 out.println("<script src=\""+Utility.getUrl(pageContext, "js/ShopMaps.js")+"\"></script>");
-                
-                
-                
                 
             }
             

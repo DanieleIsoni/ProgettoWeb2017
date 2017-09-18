@@ -18,6 +18,15 @@ public class Coordinate implements Serializable {
     private double longitude;
     private String address;
     private Shop shop;
+    private String opening_hours;
+
+    public String getOpening_hours() {
+        return opening_hours;
+    }
+
+    public void setOpening_hours(String opening_hours) {
+        this.opening_hours = opening_hours;
+    }
 
     public Shop getShop() {
         return shop;

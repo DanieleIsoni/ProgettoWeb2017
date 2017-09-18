@@ -19,7 +19,6 @@ public class Shop implements Serializable {
     private String website;
     private User owner;
     private User creator;
-    private int globalValue;
 
     public int getId() {
         return id;
@@ -43,10 +42,6 @@ public class Shop implements Serializable {
 
     public User getCreator() {
         return creator;
-    }
-
-    public int getGlobalValue() {
-        return globalValue;
     }
 
     public void setId(int id) {
@@ -73,8 +68,5 @@ public class Shop implements Serializable {
         this.creator = creator;
     }
 
-    public void setGlobalValue(int globalValue) {
-        this.globalValue = globalValue;
-    }
 
 }
