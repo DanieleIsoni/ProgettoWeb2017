@@ -60,4 +60,4 @@ INSERT INTO `coordinates` (`id`,`id_shop`, `latitude`, `longitude`, `address`, `
 (3,2, '45.688891', '11.605844', 'Via Maragnole 33,\r\n36042 Breganze\r\n(VI)','Lun-Ven 8:30-13:00'),
 (4,2, '45.715733', '11.403583', 'Via Lago di Levico, 9\r\n36015 Schio (VI)',''),
 (5,3, '45.667745', '11.404100', 'Via Schio, 12\r\n36034 Malo (VI)','Mart-Sab 8:00-20:00'),
-(6,4, '45.715502', '11.317440', 'Viale Pasubio, 33\r\n36036 Torrebelvicino VI', 'Lun-Mar-Ven 8:30-12:30\Gio-Sab 9:00- 19:00');
+(6,4, '45.715502', '11.317440', 'Viale Pasubio, 33\r\n36036 Torrebelvicino VI', 'Lun-Mar-Ven 8:30-12:30\r\nGio-Sab 9:00- 19:00');
