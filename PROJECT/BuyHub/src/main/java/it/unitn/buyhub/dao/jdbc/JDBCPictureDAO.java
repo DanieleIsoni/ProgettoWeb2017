@@ -40,6 +40,7 @@ public class JDBCPictureDAO extends JDBCDAO<Picture, Integer> implements Picture
     public JDBCPictureDAO(Connection con) {
         super(con);
         FRIEND_DAOS.put(UserDAO.class, new JDBCUserDAO(CON));
+        FRIEND_DAOS.put(ShopDAO.class, new JDBCShopDAO(CON));
     }
 
     /**
@@ -328,7 +329,8 @@ public class JDBCPictureDAO extends JDBCDAO<Picture, Integer> implements Picture
         if (shop == null) {
             throw new DAOException("shop is null");
         }
-        try (PreparedStatement stm = CON.prepareStatement("SELECT pi.* FROM pictures pi, pictures_shops pp, products pr WHERE pi.id = pp.id_picture AND pp.id_shop = ?")) {
+        try (PreparedStatement stm = CON.prepareStatement("SELECT pi.* FROM pictures pi, pictures_shops pp WHERE pi.id = pp.id_picture AND pp.id_shop = ?")) {
+      
             stm.setInt(1, shop.getId());
             try (ResultSet rs = stm.executeQuery()) {
                 while (rs.next()) {

@@ -378,3 +378,17 @@ div.detailed_review_header
     padding-left: 20px;
     color: #6a6a6a;
 }
+
+
+
+/*Shop page*/
+.shop_page_name
+{
+    font-size: 250%;
+    font-weight: bold;
+}
+.shop_page_shipment_info
+{
+    font-size: 150%;
+    font-weight: bold;
+}}

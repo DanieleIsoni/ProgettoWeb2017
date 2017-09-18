@@ -62,6 +62,8 @@ public class ShopServlet extends HttpServlet {
         try {
             shopDAO=daoFactory.getDAO(ShopDAO.class);
             coordinateDAO=daoFactory.getDAO(CoordinateDAO.class);
+            pictureDAO=daoFactory.getDAO(PictureDAO.class);
+            
         } catch (DAOFactoryException ex) {
             throw new ServletException("Impossible to get dao factory for shop storage system", ex);
         }
@@ -87,7 +89,7 @@ public class ShopServlet extends HttpServlet {
             } else {
                 request.setAttribute("shop", shop);
                 
-                List<Picture> pictures=pictureDAO.getByShop(shop);
+               List<Picture> pictures=pictureDAO.getByShop(shop);
                 List<Coordinate> coordinates=coordinateDAO.getByShop(shop);
                 
                 request.setAttribute("pictures", pictures);

@@ -50,6 +50,11 @@
         <servlet-name>AutoCompleteServlet</servlet-name>
         <servlet-class>it.unitn.buyhub.servlet.AutoCompleteServlet</servlet-class>
     </servlet>
+    
+    <servlet>
+        <servlet-name>ShopServlet</servlet-name>
+        <servlet-class>it.unitn.buyhub.servlet.ShopServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -57,6 +62,11 @@
     <servlet-mapping>
         <servlet-name>ProductServlet</servlet-name>
         <url-pattern>/product</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>ShopServlet</servlet-name>
+        <url-pattern>/shop</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>SignupServlet</servlet-name>

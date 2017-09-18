@@ -5,11 +5,13 @@
  */
 package it.unitn.buyhub.dao.entities;
 
+import java.io.Serializable;
+
 /**
  *
  * @author matteo
  */
-public class CartElement {
+public class CartElement implements Serializable{
 
     private int id, number;
 

@@ -76,13 +76,13 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
      * @since 1.0.170425
      */
     public Long insert(Shop shops) throws DAOException {
-        try (PreparedStatement ps = CON.prepareStatement("INSERT INTO shops(name, description, web_site, id_owner, id_creator) VALUES(?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement ps = CON.prepareStatement("INSERT INTO shops(name, description, web_site, id_owner, id_creator,shipment) VALUES(?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, shops.getName());
             ps.setString(2, shops.getDescription());
             ps.setString(3, shops.getWebsite());
             ps.setInt(4, shops.getOwner().getId());
             ps.setInt(5, shops.getCreator().getId());
-
+            ps.setString(4, shops.getShipment());
             if (ps.executeUpdate() == 1) {
                 ResultSet generatedKeys = ps.getGeneratedKeys();
                 if (generatedKeys.next()) {
@@ -143,7 +143,7 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
                 shop.setDescription(rs.getString("description"));
                 shop.setWebsite(rs.getString("website"));
                 shop.setName(rs.getString("name"));
-
+                shop.setShipment(rs.getString("shipment"));
                 //Get owner associate
                 UserDAO userDao = getDAO(UserDAO.class);
                 shop.setOwner(userDao.getByPrimaryKey(rs.getInt("id_owner")));
@@ -188,6 +188,7 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
                     shop.setDescription(rs.getString("description"));
                     shop.setWebsite(rs.getString("website"));
                     shop.setName(rs.getString("name"));
+                    shop.setShipment(rs.getString("shipment"));
 
                     //Get owner associate
                     shop.setOwner(owner);
@@ -236,6 +237,8 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
                     shop.setWebsite(rs.getString("website"));
                     shop.setName(rs.getString("name"));
 
+                    shop.setShipment(rs.getString("shipment"));
+
                     //Get owner associate
                     UserDAO userDao = getDAO(UserDAO.class);
                     shop.setOwner(userDao.getByPrimaryKey(rs.getInt("id_owner")));
@@ -277,7 +280,8 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
                     shop.setDescription(rs.getString("description"));
                     shop.setName(rs.getString("name"));
                     shop.setWebsite(rs.getString("website"));
-
+                    shop.setShipment(rs.getString("shipment"));
+                    
                     //Get owner associate
                     UserDAO userDao = getDAO(UserDAO.class);
                     shop.setOwner(userDao.getByPrimaryKey(rs.getInt("id_owner")));
@@ -313,13 +317,14 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
             throw new DAOException("parameter not valid", new IllegalArgumentException("The passed shop is null"));
         }
 
-        try (PreparedStatement std = CON.prepareStatement("UPDATE shops SET name = ?, description = ?, website = ?, id_owner = ?, id_creator = ?, global_value = ? WHERE id = ?")) {
+        try (PreparedStatement std = CON.prepareStatement("UPDATE shops SET name = ?, description = ?, website = ?, id_owner = ?, id_creator = ?, global_value = ?, shipment = ? WHERE id = ?")) {
             std.setString(1, shop.getName());
             std.setString(2, shop.getDescription());
             std.setString(3, shop.getWebsite());
             std.setInt(4, shop.getOwner().getId());
             std.setInt(5, shop.getCreator().getId());
             std.setInt(7, shop.getId());
+            std.setString(8, shop.getShipment());
             if (std.executeUpdate() == 1) {
                 return shop;
             } else {
@@ -364,6 +369,7 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
                     shop.setDescription(rs.getString("description"));
                     shop.setName(rs.getString("name"));
                     shop.setWebsite(rs.getString("website"));
+                    shop.setShipment(rs.getString("shipment"));
 
                     //Get owner associate
                     UserDAO userDao = getDAO(UserDAO.class);
