@@ -28,7 +28,7 @@ INSERT INTO `pictures` (`id`, `name`, `description`, `path`, `id_owner`) VALUES
 (3, 'Tartaruga Nuvolari', 'Tartaruga d’oro realizzata per l’occasione dal gioielliere milanese Mario Buccellati.', 'uploadedContent/95ff4467-0c93-4c92-adc5-65fddad91f7d.jpg', 2),
 (4, 'Tartaruga Nuvolari su libro', 'Tartaruga d’oro realizzata per l’occasione dal gioielliere milanese Mario Buccellati.', 'uploadedContent/2cf9786b-7ae9-4b04-ad39-0a54a25a13ca.jpg', 2),
 (5, 'Tartaruga Nuvolari su libro', 'Tartaruga d’oro realizzata per l’occasione dal gioielliere milanese Mario Buccellati.', 'uploadedContent/f8ebcd50-bc7e-456e-9278-3f6700730f99.jpg', 2),
- (6, 'Ferramenta Del Corso 1', 'Interno', 'uploadedContent/4f96ab51-25b7-4f61-9ee6-b45bf2a006f0.jpg', '1';
+ (6, 'Ferramenta Del Corso 1', 'Interno', 'uploadedContent/4f96ab51-25b7-4f61-9ee6-b45bf2a006f0.jpg', '1');
 
 INSERT INTO `shops` (`id`, `name`, `description`, `website`, `id_owner`, `id_creator`,`shipment`) VALUES
 (1, 'Ferramenta del Corso', 'Antica ferramenta, aperta nel 1882, ancora oggi punto di riferimento per tutta la comunità di Thiene', 'http://www.ferramentadelcorso.com', 1, 1,''),
