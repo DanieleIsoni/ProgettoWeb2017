@@ -76,7 +76,8 @@
                          </div>
                     </div>
 
-
+    </div>
+    </div>
     <script src="http://i-like-robots.github.io/EasyZoom/dist/easyzoom.js"></script>
     <script>
         var $easyzoom = $('.easyzoom').easyZoom();

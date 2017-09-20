@@ -132,6 +132,8 @@
         </div>
                 <pr:ShopMap/>
     </div>
+    </div>
+    
 
     <script src="http://i-like-robots.github.io/EasyZoom/dist/easyzoom.js"></script>
     <script>
@@ -150,5 +152,6 @@
         });
 
     </script>
+    
  <%@include file="common/footer.jsp" %>
    
