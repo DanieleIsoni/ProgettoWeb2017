@@ -52,8 +52,9 @@ public class AvatarUploadServlet extends HttpServlet {
           Enumeration params = multi.getParameterNames();
           while(params.hasMoreElements()) {
             String name = (String)params.nextElement();
+            if(name=="avatar")
+            {
             String value = multi.getParameter(name);
-
             Enumeration files = multi.getFileNames();
             while (files.hasMoreElements()) {
                 String filename = (String)files.nextElement();
@@ -63,8 +64,9 @@ public class AvatarUploadServlet extends HttpServlet {
                 BufferedImage image = ImageIO.read(f);
                 ImageIO.write(image, "jpg", avatar);
                 //RIDIMENSIONARE??
-                
+
             }
+          }
           }
         }
 
