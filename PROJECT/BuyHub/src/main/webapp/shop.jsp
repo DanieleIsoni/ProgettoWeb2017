@@ -22,7 +22,7 @@
         <%@include file="common/navbar.jsp" %>
 
     <div class="container header">
-        
+
             <div class="row">
                 <div class="col-md-4 g">
                     <gallery:Gallery></gallery:Gallery>
@@ -33,7 +33,7 @@
                     <div class="shop_page_name">
                     ${shop.name}
                 </div>
-                
+
                 <div class="shop_description">
                     ${shop.description}
                 </div>
@@ -45,27 +45,27 @@
                     <fmt:message key="owner_info"/>
                 </div>
                 <div class="shop_page_owner">
-                    
+
                     ${shop.owner.firstName} ${shop.owner.lastName}
-                    
+
                 </div>
 
             </div>
             </div>
                      <div class="row">
-                        
+
                         <pr:ShopMap/>
                     </div>
-             
+
                     <hr>
                     <div class="row">
                         <div class="row shop_page_shipment_info">
-                            
+
                         <fmt:message key="shipment_mode"/>
-                        
+
                         </div>
                          <div class="row shop_page_shipment">
-                        
+
                         <c:if test="${empty shop.shipment}">
                             <div>
                                  <fmt:message  key="no_shipment"/>
@@ -96,4 +96,3 @@
 
     </script>
  <%@include file="common/footer.jsp" %>
-   
