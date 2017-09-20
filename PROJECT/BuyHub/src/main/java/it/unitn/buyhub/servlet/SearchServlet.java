@@ -80,12 +80,11 @@ public class SearchServlet extends HttpServlet {
                     minRev=Integer.parseInt(request.getParameter("minRev"));
                 }
                 
-                
                 List<Product> products;
                 try {
-                   /* if(min!=0 || max!= Double.MAX_VALUE)
+                    if(min!=0 || max!= Double.MAX_VALUE)
                         products = productDAO.getByNameAndPriceRange(q, min, max);
-                    else*/
+                    else
                         products = productDAO.getByName(q);
                     
                     //rimozioni non voluti
