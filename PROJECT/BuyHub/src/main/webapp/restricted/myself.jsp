@@ -24,9 +24,17 @@
                 <img class=" img-rounded img-responsive" src="<c:url value="../${authenticatedUser.avatar}"/>" alt="">
             </div>
             <div class="col-md-5">
-                  <div class="profile_name">${authenticatedUser.firstName} ${authenticatedUser.lastName}</div>
-        <div class="profile_username">${authenticatedUser.username} </div>
+                <div class="profile_name">${authenticatedUser.firstName} ${authenticatedUser.lastName}</div>
+                <div class="profile_username">${authenticatedUser.username} </div>
         
+            </div>
+        </div>
+        <div class="row ">
+            <div class="link_box col-md-6 col-centered">
+                <ul class="list-unstyled ">
+                    <li> <a href="../modifyAccount.jsp" ><fmt:message key="modify_account"/></a> </li>
+                    <li> <a href="#"><fmt:message key="ask_refund"/></a> </li>
+                </ul>
             </div>
         </div>
             
