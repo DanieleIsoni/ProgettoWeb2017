@@ -87,12 +87,12 @@
         <url-pattern>/autocomplete</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AvatarUploadServlet</servlet-name>
-        <url-pattern>/avatarUpload</url-pattern>
+        <servlet-name>ModifyAccountServlet</servlet-name>
+        <url-pattern>/restricted/ModifyAccount</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ModifyAccountServlet</servlet-name>
-        <url-pattern>/ModifyAccountServlet</url-pattern>
+        <servlet-name>AvatarUploadServlet</servlet-name>
+        <url-pattern>/restricted/avatarUpload</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
