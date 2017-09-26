@@ -10,6 +10,7 @@ import it.unitn.buyhub.dao.entities.User;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.factories.DAOFactory;
+import it.unitn.buyhub.utils.Log;
 import it.unitn.buyhub.utils.MD5;
 import static it.unitn.buyhub.utils.MD5.getMD5Hex;
 import java.io.IOException;
@@ -52,6 +53,7 @@ public class LoginServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
         String username = request.getParameter("username");
         //already in MD5 hash
         String password = request.getParameter("password");        

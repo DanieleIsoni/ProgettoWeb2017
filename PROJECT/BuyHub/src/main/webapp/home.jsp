@@ -13,7 +13,7 @@
     <body>
          <%@include file="common/navbar.jsp" %>
        
-
+       
         <div class="container header">
             <div id="myCarousel" class="carousel slide" data-ride="carousel">
 

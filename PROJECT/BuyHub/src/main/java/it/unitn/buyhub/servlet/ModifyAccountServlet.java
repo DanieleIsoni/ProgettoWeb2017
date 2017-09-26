@@ -50,44 +50,33 @@ public class ModifyAccountServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
+
         String oldPassword = request.getParameter("old_password");
         String newPassword = request.getParameter("new_password");
         String newPassword2 = request.getParameter("new_password2");
-        String firstName = request.getParameter("first_name");
-        String lastName = request.getParameter("last_name");
-        String email = request.getParameter("email");
        
-        
         String contextPath = getServletContext().getContextPath();
         if (!contextPath.endsWith("/")) {
             contextPath += "/";
         }
 
         User user = (User) request.getSession().getAttribute("authenticatedUser");
-        if(user != null){
-            if(!firstName.equals(user.getFirstName()) && firstName != null){
-                user.setFirstName(firstName);
+
+        if (user != null && (MD5.getMD5Hex(oldPassword)).equals(user.getPassword()) && newPassword != null && newPassword2 != null && newPassword.equals(newPassword2)) {
+            user.setPassword(MD5.getMD5Hex(newPassword));
+            try {
+                userDao.update(user);
+                response.sendRedirect(response.encodeRedirectURL(contextPath + "restricted/myself.jsp"));
+            } catch (DAOException ex) {
+                //TODO: log exception
+                System.err.println("Error updating user");
             }
-            if(!lastName.equals(user.getLastName()) && lastName != null){
-                user.setLastName(lastName);
-            }
-            if(!email.equals(user.getEmail()) && email != null){
-                user.setEmail(email);
-            }
-            if((MD5.getMD5Hex(oldPassword)).equals(user.getPassword()) && newPassword!=null && newPassword2!= null && newPassword.equals(newPassword2)){
-                user.setPassword(MD5.getMD5Hex(newPassword));
-            } else if (!newPassword.equals(newPassword2)){
-                //Wrong new password
-                response.sendRedirect(response.encodeRedirectURL(contextPath + "modifyAccount.jsp?error=2"));
-            }
-        }
-        try {
-            userDao.update(user);
-            response.sendRedirect(response.encodeRedirectURL(contextPath + "restricted/myself.jsp"));
-        } catch (DAOException ex) {
-            //TODO: log exception
-            System.err.println("Error updating user");
+        } else if (newPassword!=null && newPassword2!=null && !newPassword.equals(newPassword2)) {
+            //Wrong new password
+            response.sendRedirect(response.encodeRedirectURL(contextPath + "restricted/modifyAccount.jsp?error=2"));
+
+        } else {
+            response.sendRedirect(response.encodeRedirectURL(contextPath + "restricted/modifyAccount.jsp?error=1"));
         }
     }
 }
