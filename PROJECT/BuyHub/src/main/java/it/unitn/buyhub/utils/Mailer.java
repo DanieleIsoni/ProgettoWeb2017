@@ -22,15 +22,15 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 
-class RunnableMailer implements Runnable { 
+class RunnableMailer implements Runnable {
     /**
      Runnable class to send the mail in separate thread
      */
-    private String from; 
-    private String to; 
-    private String subject; 
-    private String body; 
-    private String url; 
+    private String from;
+    private String to;
+    private String subject;
+    private String body;
+    private String url;
     private String button_txt;
 
     public RunnableMailer(String from, String to, String subject, String body, String url, String button_txt) {
@@ -41,12 +41,12 @@ class RunnableMailer implements Runnable {
         this.url = url;
         this.button_txt = button_txt;
     }
-    
-    public void run() { 
+
+    public void run() {
         Mailer.sendMail(from, to, subject, body, url, button_txt);
-        
-   } 
-} 
+
+   }
+}
 
 
 public class Mailer {
@@ -55,11 +55,13 @@ public class Mailer {
     public static void mail(String from, String to, String subject, String body, String url, String button_txt){
 
         //Invoke the runnable to send the mail
-        new RunnableMailer(from, to, subject, body, url, button_txt).run();
-        
+
+      //Commented for testing purposes
+    //    new RunnableMailer(from, to, subject, body, url, button_txt).run();
+
     }
-    
-    
+
+
     /**
      * Method called by the runnable to send the mail
      */
@@ -114,14 +116,14 @@ public class Mailer {
 
             throw new RuntimeException(e);
         }
-        
+
     }
-    
-    
+
+
     /**
      * Function to build the HTML message
      */
-     
+
     private static String buildMail(String title, String content, String url, String button_txt)
     {
         String preview=content;
