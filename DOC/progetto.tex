@@ -30,9 +30,18 @@ I parametri opzionali sono:
 Il controllo sul nome del prodotto e sul range di prezzo è effettuato all'interno del DAO del prodotto (mediante SQL per il prezzo e algoritmo di Jaro-Winkler per il nome), mentre il controllo sulla categoria e sul valore minimo della media delle recensioni è effettuato mediante un predicato invocato dal metodo \texttt{removeIf} della lista prodotti.
 Oltre alla lista prodotti nel risultato sono restituiti anche il numero di pagine, il tipo di ordinamento usato e la pagina corrente.
 
+
+\chapter{Logging}
+Il logging, fondamentale per un'applicazione di questo tipo, è stato implementato mediante la libreria Apache Log4j, che consente di gestire in modo molto semplice i vari livelli di log e il salvataggio automatico sul disco.
+
+Abbiamo poi creato un wrapper attorno alla libreria per limitare il più possibile il numero di istruzioni richieste per scrivere un messaggio nel log.
+
+I log vengono salvati nella cartella \texttt{\$CATALINA\_HOME/logs} in file testuali che iniziano con il nome \texttt{BuyHub}.
+La cartella \texttt{\$CATALINA\_HOME} è in genere la cartella di installazione di TomCat o GlassFish, ma potrebbe variare in base alla configurazione del sistema.
+
 \chapter{Dettagli implementativi}
 \section{Orari di apertura e negozi solo online}
-Per semplificare la struttura del DB abbiamo deciso di implementare i vari punti vendita dei negozi come una relazione uno a molti tra \texttt{shop} e \texttt{coordinate}. All'interno della tabella \texttt{coordinate} abbiamo inserito il campo \texttt{opening_hours} che contiene gli orari del punto vendita, nel caso in cui per il cliente sia disponibile il ritiro in negozio. Nel caso di negozi che effettuano soltanto vendita online questo campo resta vuoto e viene sostituito all'interno della pagina web con un messaggio che specifica le modalità di vendita solo online del negozio.
+Per semplificare la struttura del DB abbiamo deciso di implementare i vari punti vendita dei negozi come una relazione uno a molti tra \texttt{shop} e \texttt{coordinate}. All'interno della tabella \texttt{coordinate} abbiamo inserito il campo \texttt{opening\_hours} che contiene gli orari del punto vendita, nel caso in cui per il cliente sia disponibile il ritiro in negozio. Nel caso di negozi che effettuano soltanto vendita online questo campo resta vuoto e viene sostituito all'interno della pagina web con un messaggio che specifica le modalità di vendita solo online del negozio.
 \chapter{Altri capitoli}
 \chapter{Conclusioni}
 \end{document}
