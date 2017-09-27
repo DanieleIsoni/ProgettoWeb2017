@@ -124,15 +124,19 @@ public class NavbarTagHandler extends SimpleTagSupport {
                 + "</div>\n"
                 + "</a>\n"
                 + "</li>\n"
-                + "<li class=\"user-popover\" ><a href=\"#\" data-html=\"true\" data-placement=\"bottom\" data-content=\"" + generateUserList() + "\" data-trigger=\"focus\" tabindex=\"0\" title=\"" + Utility.getLocalizedString(pageContext,"user") + "\" data-toggle=\"popover\">" + currentUser.getFirstName() + "</a></li>\n"
+                + "<li class=\"user-popover\" ><a href=\"#\" data-html=\"true\" data-placement=\"bottom\" data-content=\"" + generateUserList(currentUser) + "\" data-trigger=\"focus\" tabindex=\"0\" title=\"" + Utility.getLocalizedString(pageContext,"user") + "\" data-toggle=\"popover\">" + currentUser.getFirstName() + "</a></li>\n"
                 + "</ul>";
         return out;
     }
 
-    private String generateUserList() {
-        return  "<a href='" + Utility.getUrl(pageContext,"restricted/myself.jsp") + "' class='btn btn-primary user' role='button'>" + Utility.getLocalizedString(pageContext,"user_page") + "</a>"+
-                "<a href='" + Utility.getUrl(pageContext,"restricted/myshop.jsp") + "' class='btn btn-primary user' role='button'>" + Utility.getLocalizedString(pageContext,"myshop_page") + "</a>"+
-                "<a href='" + Utility.getUrl(pageContext,"logout") + "' class='btn btn-danger user' role='button'>" + Utility.getLocalizedString(pageContext,"logout") + "</a>";
+    private String generateUserList(User currentUser) {
+        String dropdown=  "<a href='" + Utility.getUrl(pageContext,"restricted/myself.jsp") + "' class='btn btn-primary user' role='button'>" + Utility.getLocalizedString(pageContext,"user_page") + "</a>";
+        if(currentUser.getCapability()==Utility.CAPABILITY.SHOP.ordinal()){
+            dropdown+="<a href='" + Utility.getUrl(pageContext,"restricted/myshop.jsp") + "' class='btn btn-primary user' role='button'>" + Utility.getLocalizedString(pageContext,"myshop_page") + "</a>";
+        }
+        dropdown+="<a href='" + Utility.getUrl(pageContext,"logout") + "' class='btn btn-danger user' role='button'>" + Utility.getLocalizedString(pageContext,"logout") + "</a>";
+        
+        return dropdown;
     }
 
     private String generateNotificationList(List<Notification> notifications) {
