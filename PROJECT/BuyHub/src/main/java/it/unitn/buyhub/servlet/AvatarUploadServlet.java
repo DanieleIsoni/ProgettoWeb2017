@@ -8,6 +8,7 @@ package it.unitn.buyhub.servlet;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import it.unitn.buyhub.dao.entities.User;
+import it.unitn.buyhub.utils.Log;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -21,15 +22,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 /**
  *
  * @author maxgiro96
  */
 public class AvatarUploadServlet extends HttpServlet {
-
-
-
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -44,32 +41,31 @@ public class AvatarUploadServlet extends HttpServlet {
             throws ServletException, IOException {
         PrintWriter out = response.getWriter();
         response.setContentType("text/plain");
-        String dirName="uploadedCOntent/avatars/";
+        String dirName = "uploadedCOntent/avatars/";
         // Use an advanced form of the constructor that specifies a character
         // encoding of the request (not of the file contents) and a file
         // rename policy.
-        MultipartRequest multi =new MultipartRequest(request, dirName, 1024*1024,"ISO-8859-1", new DefaultFileRenamePolicy());
-          Enumeration params = multi.getParameterNames();
-          while(params.hasMoreElements()) {
-            String name = (String)params.nextElement();
-            if(name=="avatar")
-            {
-            String value = multi.getParameter(name);
-            Enumeration files = multi.getFileNames();
-            while (files.hasMoreElements()) {
-                String filename = (String)files.nextElement();
-                File f = multi.getFile(filename);
-                String user=((User)request.getSession().getAttribute("AuthenticatedUser")).getUsername();
-                File avatar=new File(dirName+user+".jpg");
-                BufferedImage image = ImageIO.read(f);
-                ImageIO.write(image, "jpg", avatar);
-                //RIDIMENSIONARE??
+        MultipartRequest multi = new MultipartRequest(request, dirName, 1024 * 1024, "ISO-8859-1", new DefaultFileRenamePolicy());
+        Enumeration params = multi.getParameterNames();
+        while (params.hasMoreElements()) {
+            String name = (String) params.nextElement();
+            if (name == "avatar") {
+                String value = multi.getParameter(name);
+                Enumeration files = multi.getFileNames();
+                while (files.hasMoreElements()) {
+                    String filename = (String) files.nextElement();
+                    File f = multi.getFile(filename);
+                    String user = ((User) request.getSession().getAttribute("authenticatedUser")).getUsername();
+                    File avatar = new File(dirName + user + ".jpg");
+                    BufferedImage image = ImageIO.read(f);
+                    ImageIO.write(image, "jpg", avatar);
+                    //RIDIMENSIONARE??
 
+                }
             }
-          }
-          }
         }
-
+       
+    }
 
     @Override
     public String getServletInfo() {

@@ -10,6 +10,7 @@ import it.unitn.buyhub.dao.entities.User;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.factories.DAOFactory;
+import it.unitn.buyhub.utils.Log;
 import it.unitn.buyhub.utils.MD5;
 import static it.unitn.buyhub.utils.MD5.getMD5Hex;
 import java.io.IOException;
@@ -31,13 +32,16 @@ public class SignupServlet extends HttpServlet {
     public void init() throws ServletException {
         DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
         if (daoFactory == null) {
+            Log.error("Impossible to get dao factory for user storage system");
             throw new ServletException("Impossible to get dao factory for user storage system");
         }
         try {
             userDao = daoFactory.getDAO(UserDAO.class);
         } catch (DAOFactoryException ex) {
+            Log.error("Impossible to get dao factory for user storage system");
             throw new ServletException("Impossible to get dao factory for user storage system", ex);
         }
+        Log.info("SignupServlet init done");
     }
 
     /**
@@ -78,23 +82,27 @@ public class SignupServlet extends HttpServlet {
 
                 Long id = userDao.insert(newUser);
                 if (id == 0) {
+                    Log.warn("Username already used");
                     response.sendRedirect(response.encodeRedirectURL(contextPath + "signup.jsp?error=1"));
                 } else {
                     request.getSession().setAttribute("authenticatedUser", newUser);
+                    Log.info("User "+ newUser.getId() +" correctly signed up" );
                     response.sendRedirect(response.encodeRedirectURL(contextPath + "home.jsp"));
                 }
             } else if (!password.equals(password2)) {
                 //Wrong password
+                Log.warn("Passwords does not match in sign up");
                 response.sendRedirect(response.encodeRedirectURL(contextPath + "signup.jsp?error=2"));
 
             } else {
                 //Missing parameter
+                Log.warn("Missing paramenters during sign up");
                 response.sendRedirect(response.encodeRedirectURL(contextPath + "signup.jsp?error=3"));
 
             }
         } catch (DAOException ex) {
-            //TODO: log exception
-            System.out.println("Error login");
+            
+            Log.error("Error login");
         }
     }
 }

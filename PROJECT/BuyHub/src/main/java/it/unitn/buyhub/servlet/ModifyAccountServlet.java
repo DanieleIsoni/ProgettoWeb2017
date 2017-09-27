@@ -10,6 +10,7 @@ import it.unitn.buyhub.dao.entities.User;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.factories.DAOFactory;
+import it.unitn.buyhub.utils.Log;
 import it.unitn.buyhub.utils.MD5;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -29,13 +30,17 @@ public class ModifyAccountServlet extends HttpServlet {
     public void init() throws ServletException {
         DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
         if (daoFactory == null) {
+            Log.error("Impossible to get dao factory for user storage system");
             throw new ServletException("Impossible to get dao factory for user storage system");
         }
         try {
             userDao = daoFactory.getDAO(UserDAO.class);
         } catch (DAOFactoryException ex) {
+            Log.error("Impossible to get dao factory for user storage system");
             throw new ServletException("Impossible to get dao factory for user storage system", ex);
         }
+        
+        Log.info("ModifyAccountServlet init done");
     }
 
     /**
@@ -66,10 +71,10 @@ public class ModifyAccountServlet extends HttpServlet {
             user.setPassword(MD5.getMD5Hex(newPassword));
             try {
                 userDao.update(user);
+                Log.info("User "+ user.getId() + " updated");
                 response.sendRedirect(response.encodeRedirectURL(contextPath + "restricted/myself.jsp"));
             } catch (DAOException ex) {
-                //TODO: log exception
-                System.err.println("Error updating user");
+                Log.error("Error updating user");
             }
         } else if (newPassword!=null && newPassword2!=null && !newPassword.equals(newPassword2)) {
             //Wrong new password
