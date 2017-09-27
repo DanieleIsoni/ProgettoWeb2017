@@ -131,6 +131,7 @@ public class NavbarTagHandler extends SimpleTagSupport {
 
     private String generateUserList() {
         return  "<a href='" + Utility.getUrl(pageContext,"restricted/myself.jsp") + "' class='btn btn-primary user' role='button'>" + Utility.getLocalizedString(pageContext,"user_page") + "</a>"+
+                "<a href='" + Utility.getUrl(pageContext,"restricted/myshop.jsp") + "' class='btn btn-primary user' role='button'>" + Utility.getLocalizedString(pageContext,"myshop_page") + "</a>"+
                 "<a href='" + Utility.getUrl(pageContext,"logout") + "' class='btn btn-danger user' role='button'>" + Utility.getLocalizedString(pageContext,"logout") + "</a>";
     }
 

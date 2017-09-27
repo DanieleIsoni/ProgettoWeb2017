@@ -1,7 +1,6 @@
 package it.unitn.buyhub.servlet;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import it.unitn.buyhub.dao.ProductDAO;
 import it.unitn.buyhub.dao.ReviewDAO;
 import it.unitn.buyhub.dao.entities.Product;
@@ -11,13 +10,9 @@ import it.unitn.buyhub.dao.persistence.factories.DAOFactory;
 import it.unitn.buyhub.utils.Log;
 import java.io.IOException;
 import java.io.PrintWriter;
-import static java.lang.Integer.max;
-import static java.lang.Integer.min;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Predicate;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
