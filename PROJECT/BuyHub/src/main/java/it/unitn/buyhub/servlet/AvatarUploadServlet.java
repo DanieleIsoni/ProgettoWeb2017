@@ -41,11 +41,15 @@ public class AvatarUploadServlet extends HttpServlet {
             throws ServletException, IOException {
         PrintWriter out = response.getWriter();
         response.setContentType("text/plain");
-        String dirName = "/tmp/";
+        
+         
+        String dirName = "uploadedContent/avatars/";
+        
+        String  realPath = getServletContext().getRealPath(dirName);
         // Use an advanced form of the constructor that specifies a character
         // encoding of the request (not of the file contents) and a file
         // rename policy.
-        MultipartRequest multi = new MultipartRequest(request, dirName, 1024 * 1024, "ISO-8859-1", new DefaultFileRenamePolicy());
+        MultipartRequest multi = new MultipartRequest(request, "/tmp/", 1024 * 1024, "ISO-8859-1", new DefaultFileRenamePolicy());
         Enumeration params = multi.getParameterNames();
         boolean done=false;
         while (params.hasMoreElements() && !done) {
@@ -54,12 +58,16 @@ public class AvatarUploadServlet extends HttpServlet {
                 String value = multi.getParameter(name);
                 Enumeration files = multi.getFileNames();
                 while (files.hasMoreElements() && !done) {
+                    
                     String filename = (String) files.nextElement();
                     File f = multi.getFile(filename);
                     String user = ((User) request.getSession().getAttribute("authenticatedUser")).getUsername();
-                    File avatar = new File(dirName + user + ".jpg");
+                    
+                    File avatar = new File(realPath+ user + ".jpg");
                     BufferedImage image = ImageIO.read(f);
+                    
                     ImageIO.write(image, "jpg", avatar);
+                    
                     //RIDIMENSIONARE??
                     done=true;
 

@@ -46,6 +46,8 @@
                 </ul>
             </div>
         </div>
+            </div>
+    </div>
 
 
                 
@@ -76,7 +78,5 @@
             });
             </script>
 
-
-    </div>
 
 <%@include file="../common/footer.jsp" %>
