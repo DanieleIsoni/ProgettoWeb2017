@@ -6,6 +6,7 @@
 package it.unitn.buyhub.servlet;
 
 import it.unitn.buyhub.dao.entities.User;
+import it.unitn.buyhub.utils.Log;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -40,6 +41,7 @@ public class LogoutServlet extends HttpServlet {
                 session.setAttribute("authenticatedUser", null);
                 session.invalidate();
                 user = null;
+                Log.info("User "+user.getId()+" logged out");
             }
         }
 
@@ -48,6 +50,7 @@ public class LogoutServlet extends HttpServlet {
             contextPath += "/";
         }
 
+        
         response.sendRedirect(response.encodeRedirectURL(contextPath + "login.jsp"));
     }
 

@@ -10,6 +10,7 @@ import it.unitn.buyhub.dao.entities.Product;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.factories.DAOFactory;
+import it.unitn.buyhub.utils.Log;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -35,16 +36,20 @@ public class AutoCompleteServlet extends HttpServlet {
         DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
         
         if (daoFactory == null) {
+            Log.error("Impossible to get dao factory for product storage system");
             throw new ServletException("Impossible to get dao factory for product storage system");
         }
         try {
             productDAO = daoFactory.getDAO(ProductDAO.class);
             rigenera();
         } catch (DAOFactoryException ex) {
+            Log.error("Impossible to get dao factory for prduct storage system");
             throw new ServletException("Impossible to get dao factory for prduct storage system", ex);
         } catch (DAOException ex) {
+            Log.error("Error in autocomplete generation");
            throw new ServletException("Error in autocomplete generation");
         }
+        Log.info("AutoCompleteServlet init done");
         
     }
 
@@ -66,7 +71,7 @@ public class AutoCompleteServlet extends HttpServlet {
         
         titles.clear();
         titles.putAll(newTitles);
-        System.out.println("AutoComplete Updated on"+new Date());
+        Log.info("AutoComplete Updated on"+new Date());
         
         
         

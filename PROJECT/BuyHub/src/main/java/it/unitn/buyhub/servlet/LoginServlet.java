@@ -32,13 +32,17 @@ public class LoginServlet extends HttpServlet {
     public void init() throws ServletException {
         DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
         if (daoFactory == null) {
+            Log.error("Impossible to get dao factory for user storage system");
             throw new ServletException("Impossible to get dao factory for user storage system");
         }
         try {
             userDao = daoFactory.getDAO(UserDAO.class);
         } catch (DAOFactoryException ex) {
+            Log.error("Impossible to get dao factory for user storage system");
             throw new ServletException("Impossible to get dao factory for user storage system", ex);
         }
+        
+        Log.info("LoginServlet init done");
     }
 
     /**
@@ -53,10 +57,10 @@ public class LoginServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
+
         String username = request.getParameter("username");
         //already in MD5 hash
-        String password = request.getParameter("password");        
+        String password = request.getParameter("password");
 
         String contextPath = getServletContext().getContextPath();
         if (!contextPath.endsWith("/")) {
@@ -66,14 +70,15 @@ public class LoginServlet extends HttpServlet {
         try {
             User user = userDao.getByUsernameAndPassord(username, MD5.getMD5Hex(password));
             if (user == null) {
-                response.sendRedirect(response.encodeRedirectURL(contextPath + "login.jsp"));
+                Log.warn("User not found");
+                response.sendRedirect(response.encodeRedirectURL(contextPath + "login.jsp?error=1"));
             } else {
+                Log.info("User " + user.getId() + " logged in");
                 request.getSession().setAttribute("authenticatedUser", user);
                 response.sendRedirect(response.encodeRedirectURL(contextPath + "home.jsp"));
             }
         } catch (DAOException ex) {
-            //TODO: log exception
-            System.out.println("Error login");
+            Log.error("Error login");
         }
     }
 }
