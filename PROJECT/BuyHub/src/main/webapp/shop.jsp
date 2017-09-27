@@ -9,6 +9,7 @@
 <%@taglib prefix="gallery" uri="/WEB-INF/tld/gallery.tld"%>
 
 <%@taglib prefix="pr" uri="/WEB-INF/tld/product.tld"%>
+<%@taglib prefix="map" uri="/WEB-INF/tld/map.tld"%>
 
 
 <!DOCTYPE html>
@@ -54,7 +55,7 @@
             </div>
                      <div class="row">
 
-                        <pr:ShopMap/>
+                        <map:ShopMap/>
                     </div>
 
                     <hr>

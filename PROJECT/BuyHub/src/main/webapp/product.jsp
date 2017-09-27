@@ -8,6 +8,8 @@
 <jsp:useBean id="product" class="it.unitn.buyhub.dao.entities.Product" scope="request"/>
 <%@taglib prefix="gallery" uri="/WEB-INF/tld/gallery.tld"%>
 <%@taglib prefix="pr" uri="/WEB-INF/tld/product.tld"%>
+<%@taglib prefix="map" uri="/WEB-INF/tld/map.tld"%>
+
 
 
 <!DOCTYPE html>
@@ -130,7 +132,7 @@
                  <hr/>    
             </c:forEach>       
         </div>
-                <pr:ShopMap/>
+                <map:ShopMap/>
     </div>
     </div>
     

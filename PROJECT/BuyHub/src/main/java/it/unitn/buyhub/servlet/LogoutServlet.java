@@ -40,8 +40,9 @@ public class LogoutServlet extends HttpServlet {
             if (user != null) {
                 session.setAttribute("authenticatedUser", null);
                 session.invalidate();
+                    Log.info("User "+user.getId()+" logged out");
+            
                 user = null;
-                Log.info("User "+user.getId()+" logged out");
             }
         }
 

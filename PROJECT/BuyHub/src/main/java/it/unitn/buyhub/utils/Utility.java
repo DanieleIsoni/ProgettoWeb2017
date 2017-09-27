@@ -30,5 +30,7 @@ public class Utility {
      {
          return getLocalizedString(pageContext, "category_"+key);
      }
+ 
+     static public enum CAPABILITY{INVALID,USER,SHOP,ADMIN};
      
 }
