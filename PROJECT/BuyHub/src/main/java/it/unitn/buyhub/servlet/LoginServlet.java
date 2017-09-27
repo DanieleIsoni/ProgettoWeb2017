@@ -13,6 +13,7 @@ import it.unitn.buyhub.dao.persistence.factories.DAOFactory;
 import it.unitn.buyhub.utils.Log;
 import it.unitn.buyhub.utils.MD5;
 import static it.unitn.buyhub.utils.MD5.getMD5Hex;
+import it.unitn.buyhub.utils.Utility.CAPABILITY;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -41,7 +42,7 @@ public class LoginServlet extends HttpServlet {
             Log.error("Impossible to get dao factory for user storage system");
             throw new ServletException("Impossible to get dao factory for user storage system", ex);
         }
-        
+
         Log.info("LoginServlet init done");
     }
 
@@ -71,12 +72,19 @@ public class LoginServlet extends HttpServlet {
             User user = userDao.getByUsernameAndPassord(username, MD5.getMD5Hex(password));
             if (user == null) {
                 Log.warn("User not found");
+                
                 response.sendRedirect(response.encodeRedirectURL(contextPath + "login.jsp?error=1"));
-            } else {
+            } else if(user.getCapability()==CAPABILITY.INVALID.ordinal()) {
+             Log.warn("User must validate");
+                response.sendRedirect(response.encodeRedirectURL(contextPath + "login.jsp?error=2"));
+            }
+            else
+            {
                 Log.info("User " + user.getId() + " logged in");
                 request.getSession().setAttribute("authenticatedUser", user);
                 response.sendRedirect(response.encodeRedirectURL(contextPath + "home.jsp"));
             }
+            
         } catch (DAOException ex) {
             Log.error("Error login");
         }

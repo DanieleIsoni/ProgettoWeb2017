@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <taglib version="2.1" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd">
   <tlib-version>1.0</tlib-version>
-  <short-name>pr</short-name>
-  <uri>/tlds/product</uri>
+  <short-name>errors</short-name>
+  <uri>/WEB-INF/tld/errors</uri>
   <!-- A validator verifies that the tags are used correctly at JSP
           translation time. Validator entries look like this: 
        <validator>
@@ -21,31 +21,15 @@
       </listener>
     -->
   <tag>
-    <name>category</name>
-    <tag-class>it.unitn.buyhub.tag.CategoryTaghandler</tag-class>
+    <name>ErrorMessage</name>
+    <tag-class>it.unitn.buyhub.tag.ErrorTagHandler</tag-class>
     <body-content>empty</body-content>
-  </tag>
-  <tag>
-    <name>ReviewStars</name>
-    <tag-class>it.unitn.buyhub.tag.ReviewStarsTagHandler</tag-class>
-    <body-content>empty</body-content>
+
     <attribute>
-      <name>value</name>
+      <name>page</name>
       <required>true</required>
       <rtexprvalue>true</rtexprvalue>
-      <type>java.lang.double</type>
-    </attribute>
-    <attribute>
-      <name>count</name>
-      <required>false</required>
-      <rtexprvalue>true</rtexprvalue>
-      <type>java.lang.int</type>
-    </attribute>
-    <attribute>
-      <name>label</name>
-      <required>false</required>
-      <rtexprvalue>true</rtexprvalue>
-      <type>java.lang.boolean</type>
+      <type>java.lang.String</type>
     </attribute>
   </tag>
 </taglib>

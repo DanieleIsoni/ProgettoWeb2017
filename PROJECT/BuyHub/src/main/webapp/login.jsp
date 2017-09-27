@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="err" uri="/WEB-INF/tld/errors.tld" %>
 
 <!DOCTYPE html>
 <html>
@@ -19,7 +20,10 @@
         <img src="images/icon.png" alt="BuyHub logo" height="42" width="42">
         <h3><fmt:message key="login_desc"/></h3>
         <br>
+        
         <div class="panel panel-default panel-footer">
+            
+            <err:ErrorMessage page="login"/>
             <form method="POST" id="login-form" action="<c:url value="/login" />">
                 <div class="form-group">
                     <label for="username"><fmt:message key="username"/>:</label>
