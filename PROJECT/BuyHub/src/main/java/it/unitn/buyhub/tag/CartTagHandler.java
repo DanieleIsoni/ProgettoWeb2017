@@ -49,23 +49,66 @@ public class CartTagHandler extends SimpleTagSupport {
         } catch (Exception e) {
         }
         Cart cart = (Cart) pageContext.getAttribute("userCart", PageContext.SESSION_SCOPE);
+        double total = 0f;
         try {
 
             for (CartElement ce : cart.getProducts()) {
                 try {
                     Product product = productDAO.getByPrimaryKey(ce.getId());
+                    total += ce.getNumber() * product.getPrice();
 
-                    out.println("<div class=\"row search_item\">\n"
-                            + "                         <div class=\"media\"><div class=\"media-left\"><div class=\"search_img_box\"><a href=\"product?id=" + ce.getId() + "\"><img class=\"media-object img-rounded img-responsive\" src=\"" + pictureDAO.getByProduct(product).get(0).getPath() + "\" alt=\"" + product.getName() + "\"></a></div></div><div class=\"media-body\"><h4 class=\"media-heading\"><a href=\"product?id=" + ce.getId() + "\">" + product.getName() + "</a></h4>\n"
-                            + "<p>" + product.getPrice() + " EUR</p>"
-                            + "<div class=\"input-group input-group-sm\"> <span class=\"input-group-addon\" id=\"sizing-addon3\">@</span> <input class=\"form-control\" placeholder=\"Username\" aria-describedby=\"sizing-addon3\"> </div>"
-                            + "                     </div></div></div><hr>\n"
-                            + "                </div>");
+                    out.println("<table class=\"row search_item\">\n"
+                            + "   <tbody>\n"
+                            + "      <tr>\n"
+                            + "         <th valign=\"center\">\n"
+                            + "               <div class=\"media\">\n"
+                            + "                  <div class=\"media-left\">\n"
+                            + "                     <div class=\"search_img_box\"><a href=\"product?id=3\"><img class=\"media-object img-rounded img-responsive\" src=\"" + pictureDAO.getByProduct(product).get(0).getPath() + "\" alt=\"" + product.getName() + "\"></a></div>\n"
+                            + "                  </div>\n"
+                            + "                  <div class=\"media-body\">\n"
+                            + "                     <h4 class=\"media-heading\"><a href=\"product?id=" + ce.getId() + "\">" + product.getName() + "</a></h4>\n"
+                            + "                     <p>" + product.getPrice() + " EUR</p>\n"
+                            + "                     <div id=\"cart-quantity\" class=\"input-group input-group-sm\"> <span class=\"input-group-addon\" id=\"sizing-addon3\">" + Utility.getLocalizedString(pageContext, "element_quantity") + "</span> <input class=\"form-control\" placeholder=\"" + Utility.getLocalizedString(pageContext, "element_quantity") + "\" value=\"" + ce.getNumber() + "\" aria-describedby=\"sizing-addon3\"></div>\n"
+                            + "                  </div>\n"
+                            + "            </div>\n"
+                            + "         </th>\n"
+                            + "         <th>\n"
+                            + "            <p class=\"total-element-cart\">" + product.getPrice() * ce.getNumber() + " EUR</p>\n"
+                            + "         </th>\n"
+                            + "         <th>"
+                            + "         <a href=\"#\"> \n"
+                            + "             <div>\n"
+                            + "                 <span class=\"glyphicon glyphicon-remove\" id=\"logIcon\" onclick=\"location.href = 'removefromcart?id="+ce.getId()+"'\"></span>\n"
+                            + "             </div>\n"
+                            + "         </a>"
+                            + "     </th>"
+                            + "      </tr>\n"
+                            + "   </tbody>\n"
+                            + "</table><hr>");
 
                 } catch (DAOException ex) {
                     Log.error("Error using ProductDAO");
                 }
+
             }
+            // COUNT TOTAL
+            out.println("<table class=\"row search_item\">\n"
+                    + "   <tbody>\n"
+                    + "      <tr>\n"
+                    + "         <th>\n"
+                    + "             <h2 class=\"media-body\">" + Utility.getLocalizedString(pageContext, "total") + "</h2>"
+                    + "         </th>\n"
+                    + "         <th>\n"
+                    + "            <p class=\"total-element-cart\">" + total + " EUR</p>\n"
+                    + "         </th>\n"
+                    + "      </tr>\n"
+                    + "   </tbody>\n"
+                    + "</table>"
+                    + "<div class=\"to-right\">"
+                    + "   <button type=\"button\" class=\"btn btn btn-danger\" onclick=\"location.href = 'emptycart'\">"+Utility.getLocalizedString(pageContext, "empty_cart")+"</button>"
+                    + "   <button type=\"button\" class=\"btn btn-info\">"+Utility.getLocalizedString(pageContext, "recalculate_cart")+"</button>"
+                    + "   <button type=\"button\" class=\"btn btn-success\" onclick=\"location.href = 'restricted/payment.jsp'\">"+Utility.getLocalizedString(pageContext, "pay")+"</button>"
+                    + "</div>");
         } catch (IOException ec) {
             Log.error("Error writing from CartTagHandler");
         }

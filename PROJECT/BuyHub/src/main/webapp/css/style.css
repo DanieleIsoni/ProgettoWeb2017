@@ -349,16 +349,16 @@ div.detailed_review_header
 }
 #products .item_price
 {
-     /*text-align: right;*/
-     font-weight: bold;
-     font-size: 120%;
+    /*text-align: right;*/
+    font-weight: bold;
+    font-size: 120%;
 }
 
 #products .media-heading
 {
-     font-weight: bolder;
-     font-size: 120%;
-    
+    font-weight: bolder;
+    font-size: 120%;
+
 }
 .pages
 {
@@ -366,12 +366,13 @@ div.detailed_review_header
     margin-top: 20px;
 }
 #footer{
-  margin-top: 100px;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  padding: 1rem;
-  background-color: #efefef;
+    margin-top: 100px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 1rem;
+    position: absolute;
+    background-color: #efefef;
 }
 
 .profile_img_box
@@ -440,4 +441,24 @@ div.detailed_review_header
     color: red;
     font-family: monospace;
     font-weight: normal;
+}
+
+#cart-quantity{
+    width: 30% !important;
+}
+
+.row {
+    margin: 20px;
+}
+
+.total-element-cart{
+    float: right;
+    width: 100px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+
+.to-right{
+    text-align: right;
 }
