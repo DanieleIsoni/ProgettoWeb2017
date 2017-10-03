@@ -12,8 +12,17 @@
     </head>
     <body>
         <%@include file="common/navbar.jsp" %>
-        <c:forEach items="${userCart.products}" var="pr">
-            <h3><c:out value="${pr.id}"/> - <c:out value="${pr.number}"/></h3>
-        </c:forEach>
-<%@include file="common/footer.jsp" %>
-        
+
+        <div class="container">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#"><fmt:message key="cart_title"/> <span class="badge"><c:out value="${userCart.getCount()}"/></span></a></li>
+
+            </ul>
+
+            <c:forEach items="${userCart.products}" var="pr">
+                <h3><c:out value="${pr.id}"/> - <c:out value="${pr.number}"/></h3>
+            </c:forEach>
+        </div>
+
+
+        <%@include file="common/footer.jsp" %>

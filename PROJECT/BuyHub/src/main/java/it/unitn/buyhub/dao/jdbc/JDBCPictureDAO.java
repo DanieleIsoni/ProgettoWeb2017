@@ -266,6 +266,12 @@ public class JDBCPictureDAO extends JDBCDAO<Picture, Integer> implements Picture
             throw new DAOException("Impossible to get the pictures from product", ex);
             
         }
+        if(pictures.size()==0){
+            Picture picture = new Picture();
+            picture.setPath("images/noimage.png");
+            pictures.add(picture);
+        }
+            
         return pictures;
     }
 
