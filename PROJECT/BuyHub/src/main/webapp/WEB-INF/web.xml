@@ -62,9 +62,18 @@
         <servlet-name>ModifyAccountServlet</servlet-name>
         <servlet-class>it.unitn.buyhub.servlet.ModifyAccountServlet</servlet-class>
     </servlet>
+    
+     <servlet>
+        <servlet-name>EmptyCartServlet</servlet-name>
+        <servlet-class>it.unitn.buyhub.servlet.EmptyCartServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EmptyCartServlet</servlet-name>
+        <url-pattern>/emptycart</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ProductServlet</servlet-name>

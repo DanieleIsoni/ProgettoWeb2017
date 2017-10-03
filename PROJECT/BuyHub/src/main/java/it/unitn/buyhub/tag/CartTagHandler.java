@@ -60,7 +60,7 @@ public class CartTagHandler extends SimpleTagSupport {
                     out.println("<table class=\"row search_item\">\n"
                             + "   <tbody>\n"
                             + "      <tr>\n"
-                            + "         <th>\n"
+                            + "         <th valign=\"center\">\n"
                             + "               <div class=\"media\">\n"
                             + "                  <div class=\"media-left\">\n"
                             + "                     <div class=\"search_img_box\"><a href=\"product?id=3\"><img class=\"media-object img-rounded img-responsive\" src=\"" + pictureDAO.getByProduct(product).get(0).getPath() + "\" alt=\"" + product.getName() + "\"></a></div>\n"
@@ -75,6 +75,13 @@ public class CartTagHandler extends SimpleTagSupport {
                             + "         <th>\n"
                             + "            <p class=\"total-element-cart\">" + product.getPrice() * ce.getNumber() + " EUR</p>\n"
                             + "         </th>\n"
+                            + "         <th>"
+                            + "         <a href=\"#\"> \n"
+                            + "             <div>\n"
+                            + "                 <span class=\"glyphicon glyphicon-remove\" id=\"logIcon\"></span>\n"
+                            + "             </div>\n"
+                            + "         </a>"
+                            + "     </th>"
                             + "      </tr>\n"
                             + "   </tbody>\n"
                             + "</table><hr>");
@@ -83,21 +90,25 @@ public class CartTagHandler extends SimpleTagSupport {
                     Log.error("Error using ProductDAO");
                 }
 
-
             }
-             // COUNT TOTAL
-                out.println("<table class=\"row search_item\">\n"
-                        + "   <tbody>\n"
-                        + "      <tr>\n"
-                        + "         <th>\n"
-                        + "             <h2 class=\"media-body\">"+Utility.getLocalizedString(pageContext, "total")+"</h2>"
-                        + "         </th>\n"
-                        + "         <th>\n"
-                        + "            <p class=\"total-element-cart\">" + total+ " EUR</p>\n"
-                        + "         </th>\n"
-                        + "      </tr>\n"
-                        + "   </tbody>\n"
-                        + "</table>");
+            // COUNT TOTAL
+            out.println("<table class=\"row search_item\">\n"
+                    + "   <tbody>\n"
+                    + "      <tr>\n"
+                    + "         <th>\n"
+                    + "             <h2 class=\"media-body\">" + Utility.getLocalizedString(pageContext, "total") + "</h2>"
+                    + "         </th>\n"
+                    + "         <th>\n"
+                    + "            <p class=\"total-element-cart\">" + total + " EUR</p>\n"
+                    + "         </th>\n"
+                    + "      </tr>\n"
+                    + "   </tbody>\n"
+                    + "</table>"
+                    + "<div class=\"to-right\">"
+                    + "   <button type=\"button\" class=\"btn btn btn-danger\" onclick=\"location.href = 'emptycart'\">"+Utility.getLocalizedString(pageContext, "empty_cart")+"</button>"
+                    + "   <button type=\"button\" class=\"btn btn-info\">"+Utility.getLocalizedString(pageContext, "recalculate_cart")+"</button>"
+                    + "   <button href=\"asd.jsp\"type=\"button\" class=\"btn btn-success\">"+Utility.getLocalizedString(pageContext, "pay")+"</button>"
+                    + "</div>");
         } catch (IOException ec) {
             Log.error("Error writing from CartTagHandler");
         }

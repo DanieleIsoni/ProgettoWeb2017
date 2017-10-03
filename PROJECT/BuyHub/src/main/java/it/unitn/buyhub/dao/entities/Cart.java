@@ -55,5 +55,9 @@ public class Cart implements Serializable {
     public void setProducts(List<CartElement> products) {
         this.products = products;
     }
+
+    public void removeAllProducts() {
+        products.clear();
+    }
     
 }

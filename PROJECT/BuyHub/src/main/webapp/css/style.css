@@ -443,3 +443,8 @@ div.detailed_review_header
     display: inline-block;
     vertical-align: middle;
 }
+
+
+.to-right{
+    text-align: right;
+}
