@@ -18,7 +18,7 @@ public class Cart implements Serializable {
     private List<CartElement> products = new ArrayList<>();
     
     public Cart(){
-        products.add(new CartElement(11, 4));
+        products.add(new CartElement(3, 4));
         products.add(new CartElement(2, 1));
     }
 
