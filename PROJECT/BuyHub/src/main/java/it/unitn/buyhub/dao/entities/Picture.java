@@ -59,4 +59,12 @@ public class Picture implements Serializable {
         return owner;
     }
 
+    public static Picture NONE()
+    {
+        Picture P=new Picture();
+        P.setId(-1);
+        P.setName("No picture");
+        P.setPath("images/noimage.png");
+        return P;
+    }
 }

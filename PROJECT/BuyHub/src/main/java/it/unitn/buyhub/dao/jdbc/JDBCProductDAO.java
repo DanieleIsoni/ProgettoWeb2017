@@ -133,7 +133,7 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
 
                      PictureDAO pictureDao=getDAO(PictureDAO.class);
                     List<Picture> pictures=pictureDao.getByProduct(product);
-                    product.setMainPicture(pictures.size()>0 ? pictures.get(0): null);
+                    product.setMainPicture(pictures.size()>0 ? pictures.get(0): Picture.NONE());
                   
                     
                     products.add(product);
@@ -213,7 +213,7 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
                   
                   PictureDAO pictureDao=getDAO(PictureDAO.class);
                   List<Picture> pictures=pictureDao.getByProduct(product);
-                  product.setMainPicture(pictures.size()>0 ? pictures.get(0): null);
+                  product.setMainPicture(pictures.size()>0 ? pictures.get(0): Picture.NONE());
                      
                     
                 return product;
@@ -263,7 +263,7 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
                   
                      PictureDAO pictureDao=getDAO(PictureDAO.class);
                     List<Picture> pictures=pictureDao.getByProduct(product);
-                    product.setMainPicture(pictures.size()>0 ? pictures.get(0): null);
+                    product.setMainPicture(pictures.size()>0 ? pictures.get(0): Picture.NONE());
                   
 
                     products.add(product);
@@ -314,7 +314,7 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
                     
                     PictureDAO pictureDao=getDAO(PictureDAO.class);
                     List<Picture> pictures=pictureDao.getByProduct(product);
-                    product.setMainPicture(pictures.size()>0 ? pictures.get(0): null);
+                    product.setMainPicture(pictures.size()>0 ? pictures.get(0): Picture.NONE());
                   
               //test di funzionamento
            /*     Picture picture=new Picture(); 
@@ -371,7 +371,7 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
                     
                     PictureDAO pictureDao = getDAO(PictureDAO.class);
                     List<Picture> pictures=pictureDao.getByProduct(product);
-                    product.setMainPicture(pictures.size()>0 ? pictures.get(0): null);
+                    product.setMainPicture(pictures.size()>0 ? pictures.get(0): Picture.NONE());
                     
                     products.add(product);
                 }
