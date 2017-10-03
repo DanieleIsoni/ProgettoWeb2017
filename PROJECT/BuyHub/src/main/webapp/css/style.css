@@ -148,6 +148,17 @@ hr{
 }
 
 
+
+.productMainPicture
+{
+    object-fit: scale-down;
+}
+.easyzoom
+{
+    width: 300px;
+    height: 300px;
+}
+
 .product_title{
     font-size: 200% ;
     font-weight: bold;

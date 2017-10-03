@@ -51,7 +51,7 @@ public class GalleryTagHandler extends SimpleTagSupport {
     }
 
     private String noImage() {
-            return "<img class=\"noimage\" src="+Utility.getUrl(pageContext,"/images/noimage.png")+" alt=\""+Utility.getLocalizedString(pageContext, "no_image")+"\"></img>";
+            return "<img class=\"noimage productMainPicture\" src="+Utility.getUrl(pageContext,"/images/noimage.png")+" alt=\""+Utility.getLocalizedString(pageContext, "no_image")+"\"></img>";
     }
     
 
@@ -60,7 +60,7 @@ public class GalleryTagHandler extends SimpleTagSupport {
         String s="<a href=\""+Utility.getUrl(pageContext, p.getPath())+"\">";
         s+="<img src=\""+Utility.getUrl(pageContext, p.getPath())+"\"";
         s+=" alt=\""+p.getDescription()+"\"";
-        s+=" title=\""+p.getName()+"\"";
+        s+=" title=\""+p.getName()+"\" class=\"productMainPicture\"";
         s+="/></a>";
           return s;
     }
@@ -71,7 +71,7 @@ public class GalleryTagHandler extends SimpleTagSupport {
         s+=" data-standard=\""+Utility.getUrl(pageContext, p.getPath())+"\">";
         s+="<img src=\""+Utility.getUrl(pageContext, p.getPath())+"\"";
         s+=" alt=\""+p.getDescription()+"\"";
-        s+=" title=\""+p.getName()+"\"";
+        s+=" title=\""+p.getName()+"\" class=\"productThumbPicture\"";;
         s+="/></a></li>";
         
                 
