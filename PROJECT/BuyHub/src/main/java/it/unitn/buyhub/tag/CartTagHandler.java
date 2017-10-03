@@ -78,7 +78,7 @@ public class CartTagHandler extends SimpleTagSupport {
                             + "         <th>"
                             + "         <a href=\"#\"> \n"
                             + "             <div>\n"
-                            + "                 <span class=\"glyphicon glyphicon-remove\" id=\"logIcon\"></span>\n"
+                            + "                 <span class=\"glyphicon glyphicon-remove\" id=\"logIcon\" onclick=\"location.href = 'removefromcart?id="+ce.getId()+"'\"></span>\n"
                             + "             </div>\n"
                             + "         </a>"
                             + "     </th>"
@@ -107,7 +107,7 @@ public class CartTagHandler extends SimpleTagSupport {
                     + "<div class=\"to-right\">"
                     + "   <button type=\"button\" class=\"btn btn btn-danger\" onclick=\"location.href = 'emptycart'\">"+Utility.getLocalizedString(pageContext, "empty_cart")+"</button>"
                     + "   <button type=\"button\" class=\"btn btn-info\">"+Utility.getLocalizedString(pageContext, "recalculate_cart")+"</button>"
-                    + "   <button href=\"asd.jsp\"type=\"button\" class=\"btn btn-success\">"+Utility.getLocalizedString(pageContext, "pay")+"</button>"
+                    + "   <button type=\"button\" class=\"btn btn-success\" onclick=\"location.href = 'restricted/payment.jsp'\">"+Utility.getLocalizedString(pageContext, "pay")+"</button>"
                     + "</div>");
         } catch (IOException ec) {
             Log.error("Error writing from CartTagHandler");
