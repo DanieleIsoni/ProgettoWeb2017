@@ -312,17 +312,20 @@ div.detailed_review_header
 {
     padding-left: 10px;
 }
-#products > img
+#products  img
 {
     padding-left: 0px;
     padding-right: 0px;
-    width: 100px;
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
 
 }
 .search_img_box{
     padding-left: 0px;
     padding-right: 0px;
     width: 150px;
+    height: 142px;
 }
 #products > hr
 {
