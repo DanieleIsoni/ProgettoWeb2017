@@ -17,6 +17,7 @@ import it.unitn.buyhub.dao.entities.Review;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.factories.DAOFactory;
+import it.unitn.buyhub.utils.Log;
 import it.unitn.buyhub.utils.Mailer;
 import it.unitn.buyhub.utils.Utility;
 import java.io.IOException;
@@ -57,6 +58,7 @@ public class ProductServlet extends HttpServlet {
     public void init() throws ServletException {
         DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
         if (daoFactory == null) {
+            Log.error("Impossible to get dao factory for product storage system");
             throw new ServletException("Impossible to get dao factory for product storage system");
         }
         try {
@@ -65,8 +67,10 @@ public class ProductServlet extends HttpServlet {
             reviewDAO=daoFactory.getDAO(ReviewDAO.class);
             coordinateDAO=daoFactory.getDAO(CoordinateDAO.class);
         } catch (DAOFactoryException ex) {
+            Log.error("Impossible to get dao factory for product storage system");
             throw new ServletException("Impossible to get dao factory for product storage system", ex);
         }
+        Log.info("ProductServlet init done");
     }
 
 
@@ -105,10 +109,8 @@ public class ProductServlet extends HttpServlet {
                 request.getRequestDispatcher("product.jsp").forward(request, response);
             }
         } catch (DAOException|NumberFormatException ex) {
-            //TODO: log exception
-            System.out.println("Error getting product");
+            Log.error("Error getting product "+ ex.toString());
             response.sendRedirect(response.encodeRedirectURL(contextPath + "common/error.jsp"));
-            System.out.println(ex.toString());
         }
     }
 
