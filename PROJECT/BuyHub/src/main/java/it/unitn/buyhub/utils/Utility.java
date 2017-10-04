@@ -33,4 +33,7 @@ public class Utility {
  
      static public enum CAPABILITY{INVALID,USER,SHOP,ADMIN};
      
+     
 }
+
+

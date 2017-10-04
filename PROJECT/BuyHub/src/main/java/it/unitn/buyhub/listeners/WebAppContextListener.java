@@ -10,6 +10,12 @@ import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.factories.DAOFactory;
 import it.unitn.buyhub.dao.persistence.factories.jdbc.JDBCDAOFactory;
 import it.unitn.buyhub.servlet.AutoCompleteServlet;
+import it.unitn.buyhub.utils.Log;
+import it.unitn.buyhub.utils.PropertyHandler;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -51,21 +57,29 @@ public class WebAppContextListener implements ServletContextListener {
      */
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        String dburl = sce.getServletContext().getInitParameter("dburl");
+        //String dburl = sce.getServletContext().getInitParameter("dburl");
+
         try {
-            JDBCDAOFactory.configure(dburl,"root","");
+            PropertyHandler prop=PropertyHandler.getInstance();
+            String dbuser=prop.getValue("dbUser");
+            String dbpassword=prop.getValue("dbPassword");
+            String dbUrl=prop.getValue("dbUrl");
+            System.out.println(dbuser+" "+dbpassword+" "+dbUrl);
+            //JDBCDAOFactory.configure(dburl,"root","");
+            JDBCDAOFactory.configure(dbUrl,dbuser,dbpassword);
+
             DAOFactory daoFactory = JDBCDAOFactory.getInstance();
             sce.getServletContext().setAttribute("daoFactory", daoFactory);
-            
-            
+
+
             //Inizializzo un esecutore automatico ogni 30 minuti per aggiornare il DB dei termini di ricerca
             executor = Executors.newScheduledThreadPool(2);
-            executor.scheduleAtFixedRate(autoCompleteUpdate, 0, 30, TimeUnit.MINUTES);
+            executor.scheduleAtFixedRate(autoCompleteUpdate, 0, 20, TimeUnit.MINUTES);
 
-        } catch (DAOFactoryException ex) {
-            Logger.getLogger(WebAppContextListener.class.getName()).log(Level.SEVERE, null, ex);
-            throw new RuntimeException(ex);
-        }
+            } catch (DAOFactoryException ex) {
+                Log.error("Error initizializing DAOs: "+ex.getMessage());
+                throw new RuntimeException(ex);
+            }
     }
 
     /**

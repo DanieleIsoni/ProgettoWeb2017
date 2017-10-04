@@ -5,6 +5,7 @@
  */
 package it.unitn.buyhub.tag;
 
+import it.unitn.buyhub.utils.PropertyHandler;
 import it.unitn.buyhub.utils.Utility;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.JspException;
@@ -24,7 +25,7 @@ public class CategoriesPrinter extends SimpleTagSupport {
     public void doTag() throws JspException {
         JspWriter out = getJspContext().getOut();
         PageContext pageContext= (PageContext) getJspContext();
-        int categoriesNumber=Integer.parseInt(pageContext.getServletContext().getInitParameter("categoriesNumber"));
+        int categoriesNumber=Integer.parseInt(PropertyHandler.getInstance().getValue("categoriesNumber"));
         //int categoriesNumber=42;
         try {
             for(int i=0;i<categoriesNumber;i++)
