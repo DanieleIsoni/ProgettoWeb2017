@@ -22,87 +22,89 @@
     <body >
         <%@include file="common/navbar.jsp" %>
 
-    <div class="container header">
-        <div class="row">
-           <div class="col-md-12 product_category">
-                <pr:category></pr:category>
-            </div>
-
-            </div>
-
+        <div class="container header">
             <div class="row">
-                <div class="col-md-4 g">
-                <gallery:Gallery></gallery:Gallery>
-                </div>
-
-
-                <div class="col-md-6">
-                    <div class="product_title">
-                    ${product.name}
-                </div>
-                <%--<pr:ReviewStars count="${reviewsCount}" value="${globalValue}" label="true"></pr:ReviewStars>--%>
-                <input type="hidden" class="rating" value="${product.avgReview}" data-readonly/> ${product.reviewCount} <fmt:message key="customer_reviews"/>
-                <br/>
-                <br/>
-                <div class="product_description">
-                    ${product.description}
-                </div>
-            </div>
-
-            <div class="col-md-2">
-
-                <div class="product_price">
-                    <fmt:formatNumber type="currency" maxFractionDigits="2" minFractionDigits="2" value="${product.price}"  currencyCode="EUR"/>
-                </div>
-
-                <div class="product_shopname">
-                    
-                    <a href="<c:url value="shop?id=${product.shop.id}"/>"> ${product.shop.name}</a>
-                    
-                </div>
-                <div class="product_shop_description">
-                    ${product.shop.description}
-                </div>
-                <div class="product_shop_owner">
-                    ${product.shop.owner.firstName} ${product.shop.owner.lastName}
-                </div>
-
-            </div>
-
-
-        </div>
-        <div class="row reviews">
-            <div class="row reviews_header">
-                <fmt:message  key="customer_reviews"/>
-            </div>
-
-            <c:if test="${empty reviews}">
-                <div>
-                     <fmt:message  key="no_review"/>
-                </div>
-            </c:if>
-
-            <c:forEach items="${reviews}" var="element">
-
-                <div class="row review">
-
-                    <div class="col-md-3">
-                        <div class="review_img_box">
-                            <img src="<c:url value="${element.creator.avatar}"/>" class="img-rounded img-responsive">
-                        </div>
-                            <div class="review-block-name"><a href="<c:url value="user/?id=${element.creator.id}"/>"><c:out value="${element.creator.firstName}"/></a></div>
-                        <div class="review-block-date"><fmt:formatDate type = "date" dateStyle = "long" value = "${element.dateCreation}" />
-                            <br/><time class="timeago" datetime="<fmt:formatDate pattern="yyyy-MM-dd'T'HH:mm:ss'Z'"  value="${element.dateCreation}" />"></time>
-                        </div>
+                <div class="col-md-12 product_category">
+                    <pr:category></pr:category>
                     </div>
-                    <div class="col-md-9">
-                        <%--<pr:ReviewStars value="${element.globalValue}"></pr:ReviewStars>--%>
-                        <input type="hidden" class="rating" value="${element.globalValue}}" data-readonly/>
-                        <div class="review-block-title"><a href="#rev${element.id}" id="rev${element.id}">
-                                <c:out value="${element.title}"/>
-                            </a>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 g">
+                    <gallery:Gallery></gallery:Gallery>
+                    </div>
+
+
+                    <div class="col-md-6">
+                        <div class="product_title">
+                        ${product.name}
+                    </div>
+                    <%--<pr:ReviewStars count="${reviewsCount}" value="${globalValue}" label="true"></pr:ReviewStars>--%>
+                    <input type="hidden" class="rating" value="${product.avgReview}" data-readonly/> ${product.reviewCount} <fmt:message key="customer_reviews"/>
+                    <br/>
+                    <br/>
+                    <div class="product_description">
+                        ${product.description}
+                        <br><br>
+                        <div class="input-group" id="cart-quantity"> <input class="form-control" placeholder="<fmt:message key="number_of_product"/>"> <span class="input-group-btn"> <button class="btn btn-success" type="button"><fmt:message key="buy" /></button> </span> </div>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+
+                    <div class="product_price">
+                        <fmt:formatNumber type="currency" maxFractionDigits="2" minFractionDigits="2" value="${product.price}"  currencyCode="EUR"/>
+                    </div>
+
+                    <div class="product_shopname">
+
+                        <a href="<c:url value="shop?id=${product.shop.id}"/>"> ${product.shop.name}</a>
+
+                    </div>
+                    <div class="product_shop_description">
+                        ${product.shop.description}
+                    </div>
+                    <div class="product_shop_owner">
+                        ${product.shop.owner.firstName} ${product.shop.owner.lastName}
+                    </div>
+
+                </div>
+
+
+            </div>
+            <div class="row reviews">
+                <div class="row reviews_header">
+                    <fmt:message  key="customer_reviews"/>
+                </div>
+
+                <c:if test="${empty reviews}">
+                    <div>
+                        <fmt:message  key="no_review"/>
+                    </div>
+                </c:if>
+
+                <c:forEach items="${reviews}" var="element">
+
+                    <div class="row review">
+
+                        <div class="col-md-3">
+                            <div class="review_img_box">
+                                <img src="<c:url value="${element.creator.avatar}"/>" class="img-rounded img-responsive">
+                            </div>
+                            <div class="review-block-name"><a href="<c:url value="user/?id=${element.creator.id}"/>"><c:out value="${element.creator.firstName}"/></a></div>
+                            <div class="review-block-date"><fmt:formatDate type = "date" dateStyle = "long" value = "${element.dateCreation}" />
+                                <br/><time class="timeago" datetime="<fmt:formatDate pattern="yyyy-MM-dd'T'HH:mm:ss'Z'"  value="${element.dateCreation}" />"></time>
+                            </div>
                         </div>
-                                <div class="review-block-description"><c:out value="${element.description}"/>
+                        <div class="col-md-9">
+                            <%--<pr:ReviewStars value="${element.globalValue}"></pr:ReviewStars>--%>
+                            <input type="hidden" class="rating" value="${element.globalValue}}" data-readonly/>
+                            <div class="review-block-title"><a href="#rev${element.id}" id="rev${element.id}">
+                                    <c:out value="${element.title}"/>
+                                </a>
+                            </div>
+                            <div class="review-block-description"><c:out value="${element.description}"/>
                                 <br/>   
                                 <button class="btn" data-toggle="collapse" data-target="#collapsedRev${element.id}"><fmt:message key="show_more"/></button>
 
@@ -119,23 +121,23 @@
                                         <fmt:message key="service"/>: <input type="hidden" class="rating" value="${element.service}" data-readonly/>
                                         <br/>
                                         <fmt:message key="value_for_money"/>: <input type="hidden" class="rating" value="${element.valueForMoney}}" data-readonly/>
-                        
-                                       
+
+
 
                                     </div>
 
                                 </div>
-                                </div>
+                            </div>
 
+                        </div>
                     </div>
-                </div>
-                 <hr/>    
-            </c:forEach>       
+                    <hr/>    
+                </c:forEach>       
+            </div>
+            <map:ShopMap/>
         </div>
-                <map:ShopMap/>
     </div>
-    </div>
-    
+
 
     <script src="http://i-like-robots.github.io/EasyZoom/dist/easyzoom.js"></script>
     <script>
@@ -154,6 +156,6 @@
         });
 
     </script>
-    
- <%@include file="common/footer.jsp" %>
-   
+
+    <%@include file="common/footer.jsp" %>
+

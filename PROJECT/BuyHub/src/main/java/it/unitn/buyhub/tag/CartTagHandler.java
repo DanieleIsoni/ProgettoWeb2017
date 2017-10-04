@@ -51,6 +51,7 @@ public class CartTagHandler extends SimpleTagSupport {
         Cart cart = (Cart) pageContext.getAttribute("userCart", PageContext.SESSION_SCOPE);
         double total = 0f;
         try {
+            out.println("<div id=\"products\">");
 
             for (CartElement ce : cart.getProducts()) {
                 try {
@@ -63,7 +64,7 @@ public class CartTagHandler extends SimpleTagSupport {
                             + "         <th valign=\"center\">\n"
                             + "               <div class=\"media\">\n"
                             + "                  <div class=\"media-left\">\n"
-                            + "                     <div class=\"search_img_box\"><a href=\"product?id=3\"><img class=\"media-object img-rounded img-responsive\" src=\"" + pictureDAO.getByProduct(product).get(0).getPath() + "\" alt=\"" + product.getName() + "\"></a></div>\n"
+                            + "                     <div class=\"search_img_box\"><a href=\"product?id=3\"><img class=\"media-object img-rounded img-responsive\" src=\"" + product.getMainPicture().getPath() + "\" alt=\"" + product.getName() + "\"></a></div>\n"
                             + "                  </div>\n"
                             + "                  <div class=\"media-body\">\n"
                             + "                     <h4 class=\"media-heading\"><a href=\"product?id=" + ce.getId() + "\">" + product.getName() + "</a></h4>\n"
@@ -78,7 +79,7 @@ public class CartTagHandler extends SimpleTagSupport {
                             + "         <th>"
                             + "         <a href=\"#\"> \n"
                             + "             <div>\n"
-                            + "                 <span class=\"glyphicon glyphicon-remove\" id=\"logIcon\" onclick=\"location.href = 'removefromcart?id="+ce.getId()+"'\"></span>\n"
+                            + "                 <span class=\"glyphicon glyphicon-remove\" id=\"logIcon\" onclick=\"location.href = 'removefromcart?id=" + ce.getId() + "'\"></span>\n"
                             + "             </div>\n"
                             + "         </a>"
                             + "     </th>"
@@ -105,10 +106,11 @@ public class CartTagHandler extends SimpleTagSupport {
                     + "   </tbody>\n"
                     + "</table>"
                     + "<div class=\"to-right\">"
-                    + "   <button type=\"button\" class=\"btn btn btn-danger\" onclick=\"location.href = 'emptycart'\">"+Utility.getLocalizedString(pageContext, "empty_cart")+"</button>"
-                    + "   <button type=\"button\" class=\"btn btn-info\">"+Utility.getLocalizedString(pageContext, "recalculate_cart")+"</button>"
-                    + "   <button type=\"button\" class=\"btn btn-success\" onclick=\"location.href = 'restricted/payment.jsp'\">"+Utility.getLocalizedString(pageContext, "pay")+"</button>"
+                    + "   <button type=\"button\" class=\"btn btn btn-danger\" onclick=\"location.href = 'emptycart'\">" + Utility.getLocalizedString(pageContext, "empty_cart") + "</button>"
+                    + "   <button type=\"button\" class=\"btn btn-info\">" + Utility.getLocalizedString(pageContext, "recalculate_cart") + "</button>"
+                    + "   <button type=\"button\" class=\"btn btn-success\" onclick=\"location.href = 'restricted/payment.jsp'\">" + Utility.getLocalizedString(pageContext, "pay") + "</button>"
                     + "</div>");
+            out.println("</div>");
         } catch (IOException ec) {
             Log.error("Error writing from CartTagHandler");
         }
