@@ -11,7 +11,8 @@ import java.io.InputStream;
 import java.util.Properties;
 
 /**
- *
+ * This class is a singleton object to keep the properties object,
+ * avoiding to reload it everytime a property is needed
  * @author massimo
  */
 public class PropertyHandler{
@@ -41,13 +42,20 @@ public class PropertyHandler{
 
         }
    }
-
+   /**
+    * Returns the actual instance, creating it if not present
+    * @return The PropertyHandler actual instance
+    */
    public static synchronized PropertyHandler getInstance(){
        if (instance == null)
            instance = new PropertyHandler();
        return instance;
    }
-
+   /**
+    * To retrieve the property value
+    * @param propKey The name of the property
+    * @return The value of the property. Empty string if the property is not present or it is empty
+    */
    public String getValue(String propKey){
        return this.props.getProperty(propKey)!= null ?this.props.getProperty(propKey) : "";
    }

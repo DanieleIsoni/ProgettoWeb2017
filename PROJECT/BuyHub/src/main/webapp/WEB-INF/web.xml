@@ -80,6 +80,12 @@
         <servlet-name>RemoveFromCartServlet</servlet-name>
         <servlet-class>it.unitn.buyhub.servlet.RemoveFromCartServlet</servlet-class>
     </servlet>
+    
+    <servlet>
+        <servlet-name>UploadedContentServlet</servlet-name>
+        <servlet-class>it.unitn.buyhub.servlet.UploadedContentServlet</servlet-class>
+    </servlet>
+    
     <servlet-mapping>
         <servlet-name>RemoveFromCartServlet</servlet-name>
         <url-pattern>/removefromcart</url-pattern>
@@ -120,6 +126,12 @@
         <servlet-name>AvatarUploadServlet</servlet-name>
         <url-pattern>/restricted/avatarUpload</url-pattern>
     </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>UploadedContentServlet</servlet-name>
+        <url-pattern>/UploadedContent/*</url-pattern>
+    </servlet-mapping>
+    
     <session-config>
         <session-timeout>
             30
