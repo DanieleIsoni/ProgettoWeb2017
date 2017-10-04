@@ -64,7 +64,6 @@ public class WebAppContextListener implements ServletContextListener {
             String dbuser=prop.getValue("dbUser");
             String dbpassword=prop.getValue("dbPassword");
             String dbUrl=prop.getValue("dbUrl");
-            System.out.println(dbuser+" "+dbpassword+" "+dbUrl);
             //JDBCDAOFactory.configure(dburl,"root","");
             JDBCDAOFactory.configure(dbUrl,dbuser,dbpassword);
 
