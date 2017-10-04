@@ -74,7 +74,8 @@ public class Mailer {
         Properties props = new Properties();
 
 
-        //GMAIL SETTINGS
+        //MODIFY WITH YOUR CREDENTIALS
+        
         props.put("mail.smtp.auth", "true");
 //        props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", "srv-hp1.netsons.net");
