@@ -42,6 +42,24 @@ La cartella \texttt{\$CATALINA\_HOME} è in genere la cartella di installazione 
 \chapter{Dettagli implementativi}
 \section{Orari di apertura e negozi solo online}
 Per semplificare la struttura del DB abbiamo deciso di implementare i vari punti vendita dei negozi come una relazione uno a molti tra \texttt{shop} e \texttt{coordinate}. All'interno della tabella \texttt{coordinate} abbiamo inserito il campo \texttt{opening\_hours} che contiene gli orari del punto vendita, nel caso in cui per il cliente sia disponibile il ritiro in negozio. Nel caso di negozi che effettuano soltanto vendita online questo campo resta vuoto e viene sostituito all'interno della pagina web con un messaggio che specifica le modalità di vendita solo online del negozio.
+
+\chapter{Upload/Download}
+
+L'upload dei file è stato gestito mediante la libreria \texttt{com.oreilly.servlet}, mentre il salvataggio dei file è gestito da alcuni metodi all'interno della classe \texttt{Utility}.
+
+In particolare, il metodo \texttt{saveJPEG} si occupa di salvare un immagine, dandogli un nome casuale basato su un UUID, convertendola a JPEG, mediante la libreria ImageIO, integrata in Java.
+Purtroppo questa libreria non gestisce correttamente le trasparenze nelle immagini PNG, e al momento, non è ancora stata trovata una soluzione per ovviare a questo problema, in quanto non è possibile dedurre se questo errore di codifica è avvenuto o no.
+
+I file vengono poi salvati in una cartella definita all'interno del file \texttt{config.properties}, nel quale è possibile inserire sia un path relativo (in base alla propria cartella \texttt{catalina.base}), oppure un percorso assoluto, che verrà automaticamente interpretato e utilizzato per il salvataggio.
+
+Il dowload avviene mediante la servlet \texttt{UploadedContentServlet}, che risponde alle richieste che arrivano alle url del tipo \texttt{/UploadedContent/*}, in modo tale da simulare a tutti gli effeti una cartella. Il file richiesto viene inviato in modalità ``inline'', e con il relativo MIME impostato. Nel caso il file non sia presente nel disco, viene restituita un'immagine che indica la non presenza del file.
+
+La scelta di utilizzare questo sistema è stata piuttosto ardua, in quanto, non volendo usare path assoluti, l'unica opzione per caricare un file direttamente con Java, era caricarlo nella cartella di esecuzione (la \texttt{contextPath}). Nel momento in cui però sarebbe avvenuto un redeploy tutti i file sarebbero stati cancellati, oltre al fatto che alcuni server Java non permettono la scrittura nella \texttt{contextPath}. Altri server, invece, mantengono direttamente tutto il \texttt{.war} dell'applicazione in RAM, senza creare una cartella nel disco rigido, e creare cartelle locali alla \texttt{contextPath} in questo contesto è abbastanza sconsigliato (aumenterebbe a dismisura l'uso di RAM).
+
+Un'altra soluzione, volendo realizzare un prodotto per il mondo reale, sono i CDN, in particolare quelli specifici per le immagini, come cloudinary.com o imgix.com. Questi servizi, però, sono in genere a pagamento e non permettono il controllo completo delle proprie immagini. Per questi motivi la scelta è ricaduta nel caricare le immagini in un path locale alla cartella di esecuzione, ma esterno al \texttt{contextPath}, in modo da preservare i file tra le diverse esecuzioni e deploy dell'applicazione.
+
+
+
 \chapter{Altri capitoli}
 \chapter{Conclusioni}
 \end{document}
