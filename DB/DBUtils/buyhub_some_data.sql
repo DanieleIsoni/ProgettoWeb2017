@@ -23,12 +23,12 @@ INSERT INTO `users` (`id`, `username`, `password`, `first_name`, `last_name`, `e
 (22, 'pasquale43', '5f4dcc3b5aa765d61d8327deb882cf99', 'Pasquale', 'Pietrabianca', 'PPietrabianca@gmail.com', 0);
 
 INSERT INTO `pictures` (`id`, `name`, `description`, `path`, `id_owner`) VALUES
-(1, 'StanleyTylon3m', 'Flessometro Stanley Tylon 3m', 'uploadedContent/7ae87bb4-0965-44bb-91f0-12b05c879da3.jpg', 1),
-(2, 'StanleyTylon3m', 'Flessometro Stanley Tylon 3m', 'uploadedContent/34e329d7-b874-4daa-b46b-2ad194da8e9c.jpg', 1),
-(3, 'Tartaruga Nuvolari', 'Tartaruga d’oro realizzata per l’occasione dal gioielliere milanese Mario Buccellati.', 'uploadedContent/95ff4467-0c93-4c92-adc5-65fddad91f7d.jpg', 2),
-(4, 'Tartaruga Nuvolari su libro', 'Tartaruga d’oro realizzata per l’occasione dal gioielliere milanese Mario Buccellati.', 'uploadedContent/2cf9786b-7ae9-4b04-ad39-0a54a25a13ca.jpg', 2),
-(5, 'Tartaruga Nuvolari su libro', 'Tartaruga d’oro realizzata per l’occasione dal gioielliere milanese Mario Buccellati.', 'uploadedContent/f8ebcd50-bc7e-456e-9278-3f6700730f99.jpg', 2),
- (6, 'Ferramenta Del Corso 1', 'Interno', 'uploadedContent/4f96ab51-25b7-4f61-9ee6-b45bf2a006f0.jpg', '1');
+(1, 'StanleyTylon3m', 'Flessometro Stanley Tylon 3m', 'UploadedContent/7ae87bb4-0965-44bb-91f0-12b05c879da3.jpg', 1),
+(2, 'StanleyTylon3m', 'Flessometro Stanley Tylon 3m', 'UploadedContent/34e329d7-b874-4daa-b46b-2ad194da8e9c.jpg', 1),
+(3, 'Tartaruga Nuvolari', 'Tartaruga d’oro realizzata per l’occasione dal gioielliere milanese Mario Buccellati.', 'UploadedContent/95ff4467-0c93-4c92-adc5-65fddad91f7d.jpg', 2),
+(4, 'Tartaruga Nuvolari su libro', 'Tartaruga d’oro realizzata per l’occasione dal gioielliere milanese Mario Buccellati.', 'UploadedContent/2cf9786b-7ae9-4b04-ad39-0a54a25a13ca.jpg', 2),
+(5, 'Tartaruga Nuvolari su libro', 'Tartaruga d’oro realizzata per l’occasione dal gioielliere milanese Mario Buccellati.', 'UploadedContent/f8ebcd50-bc7e-456e-9278-3f6700730f99.jpg', 2),
+ (6, 'Ferramenta Del Corso 1', 'Interno', 'UploadedContent/4f96ab51-25b7-4f61-9ee6-b45bf2a006f0.jpg', '1');
 
 INSERT INTO `shops` (`id`, `name`, `description`, `website`, `id_owner`, `id_creator`,`shipment`) VALUES
 (1, 'Ferramenta del Corso', 'Antica ferramenta, aperta nel 1882, ancora oggi punto di riferimento per tutta la comunità di Thiene', 'http://www.ferramentadelcorso.com', 1, 1,''),
