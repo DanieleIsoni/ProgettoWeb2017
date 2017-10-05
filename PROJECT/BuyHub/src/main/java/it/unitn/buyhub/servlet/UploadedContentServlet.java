@@ -34,7 +34,7 @@ public class UploadedContentServlet  extends HttpServlet {
         //if the image is not present, load the dummy image
         if(!file.exists())
              file = new File(getServletContext().getRealPath("images/noimage.png"));
-        System.out.println(file.getAbsolutePath());
+        //System.out.println(file.getAbsolutePath());
         
         response.setHeader("Content-Type", getServletContext().getMimeType(filename));
         response.setHeader("Content-Length", String.valueOf(file.length()));

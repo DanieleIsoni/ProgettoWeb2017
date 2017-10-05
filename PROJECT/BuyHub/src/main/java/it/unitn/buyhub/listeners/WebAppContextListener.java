@@ -42,7 +42,7 @@ public class WebAppContextListener implements ServletContextListener {
                try {
                new AutoCompleteServlet().rigenera();
                 } catch (DAOException ex) {
-                    Logger.getLogger(WebAppContextListener.class.getName()).log(Level.SEVERE, null, ex);
+                    Log.error("Error rigenerating autocomplete cache: "+ex);
                 }
            // System.out.println("EXECUTION");
         }
