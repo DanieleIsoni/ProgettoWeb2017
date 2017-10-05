@@ -16,14 +16,24 @@ import java.util.List;
 public class Cart implements Serializable {
 
     private List<CartElement> products = new ArrayList<>();
-    
-    public Cart(){
+
+    public Cart() {
         products.add(new CartElement(3, 4));
         products.add(new CartElement(2, 1));
     }
 
     public void addProduct(int id, int number) {
-        products.add(new CartElement(id, number));
+        boolean found = false;
+        for (CartElement ce : products) {
+            if (ce.getId() == id) {
+                found = true;
+                ce.setNumber(ce.getNumber() + number);
+            }
+        }
+
+        if (!found) {
+            products.add(new CartElement(id, number));
+        }
     }
 
     public int getCount() {
@@ -59,5 +69,5 @@ public class Cart implements Serializable {
     public void removeAllProducts() {
         products.clear();
     }
-    
+
 }

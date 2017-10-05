@@ -80,7 +80,10 @@
         <servlet-name>RemoveFromCartServlet</servlet-name>
         <servlet-class>it.unitn.buyhub.servlet.RemoveFromCartServlet</servlet-class>
     </servlet>
-    
+    <servlet>
+        <servlet-name>AddToCartServlet</servlet-name>
+        <servlet-class>it.unitn.buyhub.servlet.AddToCartServlet</servlet-class>
+    </servlet>
     <servlet>
         <servlet-name>UploadedContentServlet</servlet-name>
         <servlet-class>it.unitn.buyhub.servlet.UploadedContentServlet</servlet-class>
@@ -89,6 +92,10 @@
     <servlet-mapping>
         <servlet-name>RemoveFromCartServlet</servlet-name>
         <url-pattern>/removefromcart</url-pattern>
+    </servlet-mapping>
+     <servlet-mapping>
+        <servlet-name>AddToCartServlet</servlet-name>
+        <url-pattern>/addtocart</url-pattern>
     </servlet-mapping>
         <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
