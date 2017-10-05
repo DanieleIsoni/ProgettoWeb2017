@@ -267,7 +267,7 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
             throw new DAOException("parameter not valid", new IllegalArgumentException("The passed user is null"));
         }
 
-        try (PreparedStatement std = CON.prepareStatement("UPDATE users SET username = ?, password = ?, first_name = ?, last_name = ?, email = ?, capability = ? WHERE id = ?")) {
+        try (PreparedStatement std = CON.prepareStatement("UPDATE users SET username = ?, password = ?, first_name = ?, last_name = ?, email = ?, capability = ?, avatar = ? WHERE id = ?")) {
             std.setString(1, user.getUsername());
             std.setString(2, user.getPassword());
             std.setString(3, user.getFirstName());
@@ -275,6 +275,7 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
             std.setString(5, user.getEmail());
             std.setInt(6, user.getCapability());
             std.setInt(7, user.getId());
+            std.setString(8, user.getAvatar());
             if (std.executeUpdate() == 1) {
                 return user;
             } else {

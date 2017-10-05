@@ -5,6 +5,7 @@
  */
 package it.unitn.buyhub.dao.entities;
 
+import it.unitn.buyhub.utils.Utility;
 import java.io.Serializable;
 
 /**
@@ -19,7 +20,7 @@ public class User implements Serializable {
     private String firstName;
     private String lastName;
     private String email;
-    private int capability;
+    private int capability=Utility.CAPABILITY.INVALID.ordinal();
     private String avatar;
 
     public String getAvatar() {
