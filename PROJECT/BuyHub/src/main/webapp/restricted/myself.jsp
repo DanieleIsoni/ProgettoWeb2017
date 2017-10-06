@@ -36,7 +36,7 @@
                                 <li><a href="myshop.jsp"><fmt:message key="myshop_page"/></a></li>
                             </c:when>
                             <c:otherwise>
-                                <li><a href="#"><fmt:message key="create_shop"/></a></li>
+                                <li><a href="createNewShop.jsp"><fmt:message key="create_shop"/></a></li>
                             </c:otherwise>
                         </c:choose>
                         <li> <a href="#"><fmt:message key="ask_refund"/></a> </li>
