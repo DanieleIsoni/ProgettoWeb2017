@@ -17,48 +17,52 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
+
+import javax.crypto.spec.SecretKeySpec;
 
 /**
  * This is a class to work with the AES crypt/decrypt
  * @author massimo
  */
 public class AES {
-    static String initVector = "RandomInitVector"; // 16 bytes IV
-
+   
+    private static final String ALGO = "AES";
+    private Key key;
     
-    public static String encrypt(String key, String value) {
-        try {
-            IvParameterSpec iv = new IvParameterSpec(initVector.getBytes("UTF-8"));
-            SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes("UTF-8"), "AES");
+    
+    public AES(String key)
+    {
+        this.key=new SecretKeySpec(key.getBytes(), ALGO);
 
-            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
-            cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
-
-            byte[] encrypted = cipher.doFinal(value.getBytes());
-
-            return Base64.getEncoder().encodeToString(encrypted);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
-        return null;
+    }
+    /**
+     * Encrypt a string with AES algorithm.
+     *
+     * @param data is a string
+     * @return the encrypted string
+     */
+    public String encrypt(String data) throws Exception {
+        Cipher c = Cipher.getInstance(ALGO);
+        c.init(Cipher.ENCRYPT_MODE, key);
+        byte[] encVal = c.doFinal(data.getBytes());
+        return new BASE64Encoder().encode(encVal);
     }
 
-    public static String decrypt(String key, String encrypted) {
-        try {
-            IvParameterSpec iv = new IvParameterSpec(initVector.getBytes("UTF-8"));
-            SecretKeySpec skeySpec = new SecretKeySpec(key.getBytes("UTF-8"), "AES");
-
-            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
-            cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);
-
-            byte[] original = cipher.doFinal(Base64.getDecoder().decode(encrypted));
-
-            return new String(original);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
-        return null;
+    /**
+     * Decrypt a string with AES algorithm.
+     *
+     * @param encryptedData is a string
+     * @return the decrypted string
+     */
+    public String decrypt(String encryptedData) throws Exception {
+        Cipher c = Cipher.getInstance(ALGO);
+        c.init(Cipher.DECRYPT_MODE, key);
+        byte[] decordedValue = new BASE64Decoder().decodeBuffer(encryptedData);
+        byte[] decValue = c.doFinal(decordedValue);
+        return new String(decValue);
     }
+    
+    
 }
