@@ -57,7 +57,8 @@ public class Mailer {
         //Invoke the runnable to send the mail
 
       //Commented for testing purposes
-    //    new RunnableMailer(from, to, subject, body, url, button_txt).run();
+    //  
+    new RunnableMailer(from, to, subject, body, url, button_txt).run();
 
     }
 
@@ -113,7 +114,7 @@ public class Mailer {
             Transport.send(message);
             Log.info("Sent mail to "+to+" succesfully.");
         } catch (MessagingException e) {
-            Log.warn("Error sending mail to "+to+".");
+            Log.warn("Error sending mail to "+to+": "+e.getMessage());
 
             throw new RuntimeException(e);
         }

@@ -71,7 +71,7 @@ public class AutoCompleteServlet extends HttpServlet {
         
         titles.clear();
         titles.putAll(newTitles);
-        Log.info("AutoComplete Updated on"+new Date());
+        Log.info("AutoComplete Updated");
         
         
         

@@ -274,15 +274,16 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
             std.setString(4, user.getLastName());
             std.setString(5, user.getEmail());
             std.setInt(6, user.getCapability());
-            std.setInt(7, user.getId());
-            std.setString(8, user.getAvatar());
+            std.setInt(8, user.getId());
+            
+            std.setString(7, user.getAvatar());
             if (std.executeUpdate() == 1) {
                 return user;
             } else {
                 throw new DAOException("Impossible to update the user");
             }
         } catch (SQLException ex) {
-            throw new DAOException("Impossible to update the user", ex);
+            throw new DAOException("Impossible to update the user: "+ ex.toString());
         }
     }
 
