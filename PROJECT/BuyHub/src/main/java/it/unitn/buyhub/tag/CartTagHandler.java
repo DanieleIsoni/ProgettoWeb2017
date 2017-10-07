@@ -69,7 +69,7 @@ public class CartTagHandler extends SimpleTagSupport {
                             + "                  <div class=\"media-body\">\n"
                             + "                     <h4 class=\"media-heading\"><a href=\"product?id=" + ce.getId() + "\">" + product.getName() + "</a></h4>\n"
                             + "                     <p>" + product.getPrice() + " EUR</p>\n"
-                            + "                     <div id=\"cart-quantity\" class=\"input-group input-group-sm\"> <span class=\"input-group-addon\" id=\"sizing-addon3\">" + Utility.getLocalizedString(pageContext, "element_quantity") + "</span> <input class=\"form-control\" placeholder=\"" + Utility.getLocalizedString(pageContext, "element_quantity") + "\" value=\"" + ce.getNumber() + "\" aria-describedby=\"sizing-addon3\"></div>\n"
+                            + "                     <div id=\"cart-quantity\" class=\"input-group input-group-sm\"> <span class=\"input-group-addon\" id=\"sizing-addon3\">" + Utility.getLocalizedString(pageContext, "element_quantity") + "</span> <input onkeyup=\"changeItemNumber("+ce.getId()+", this.value)\" class=\"form-control\" placeholder=\"" + Utility.getLocalizedString(pageContext, "element_quantity") + "\" value=\"" + ce.getNumber() + "\" aria-describedby=\"sizing-addon3\"></div>\n"
                             + "                  </div>\n"
                             + "            </div>\n"
                             + "         </th>\n"
@@ -107,7 +107,7 @@ public class CartTagHandler extends SimpleTagSupport {
                     + "</table>"
                     + "<div class=\"to-right\">"
                     + "   <button type=\"button\" class=\"btn btn btn-danger\" onclick=\"location.href = 'emptycart'\">" + Utility.getLocalizedString(pageContext, "empty_cart") + "</button>"
-                    + "   <button type=\"button\" class=\"btn btn-info\">" + Utility.getLocalizedString(pageContext, "recalculate_cart") + "</button>"
+                    + "   <button type=\"button\" class=\"btn btn-info\" onclick=\"location.href = 'cart.jsp'\">" + Utility.getLocalizedString(pageContext, "recalculate_cart") + "</button>"
                     + "   <button type=\"button\" class=\"btn btn-success\" onclick=\"location.href = 'restricted/payment.jsp'\">" + Utility.getLocalizedString(pageContext, "pay") + "</button>"
                     + "</div>");
             out.println("</div>");

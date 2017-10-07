@@ -70,4 +70,12 @@ public class Cart implements Serializable {
         products.clear();
     }
 
+    public void setProduct(int id, int count) {
+        for (CartElement ce : products) {
+            if (ce.getId() == id) {
+                ce.setNumber(count);
+            }
+        }
+    }
+
 }
