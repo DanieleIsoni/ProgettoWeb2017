@@ -47,7 +47,15 @@
                     <div class="product_description">
                         ${product.description}
                         <br><br>
-                        <div class="input-group" id="cart-quantity"> <input class="form-control" placeholder="<fmt:message key="number_of_product"/>"> <span class="input-group-btn"> <button class="btn btn-success" type="button"><fmt:message key="buy" /></button> </span> </div>
+                        <form action="addtocart" method="GET">
+                            <div class="input-group" id="cart-quantity"> 
+                                <input name="count" class="form-control" placeholder="<fmt:message key="number_of_product"/>"> 
+                                <span class="input-group-btn"> 
+                                    <input type="hidden" name="id" value="${product.id}" />
+                                    <input type="submit" class="btn btn-success" value="<fmt:message key="buy" />"/>
+                                </span>
+                            </div>
+                        </form>
                     </div>
                 </div>
 
