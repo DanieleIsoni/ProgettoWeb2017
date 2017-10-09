@@ -14,6 +14,7 @@ import it.unitn.buyhub.dao.persistence.DAO;
 import it.unitn.buyhub.dao.persistence.DAO;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.jdbc.JDBCDAO;
+import it.unitn.buyhub.utils.Utility;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -209,6 +210,55 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
         }
     }
 
+    
+    
+    /**
+     * Returns the list of all the valid admin {@link User users} stored by the
+     * storage system.
+     *
+     * @return the list of all the admin valid {@code users}.
+     * @throws DAOException if an error occurred during the information
+     * retrieving.
+     *
+     * @author Matteo Battilana
+     * @since 1.0.170425
+     */
+    
+    
+    @Override
+    public List<User> getAdmins() throws DAOException {
+        List<User> users = new ArrayList<>();
+
+        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM users ORDER BY last_name")) {
+            stm.setInt(1, Utility.CAPABILITY.ADMIN.ordinal());
+            try (ResultSet rs = stm.executeQuery()) {
+
+                while (rs.next()) {
+                    User user = new User();
+                    user.setId(rs.getInt("id"));
+                    user.setUsername(rs.getString("username"));
+                    user.setPassword(rs.getString("password"));
+                    user.setFirstName(rs.getString("first_name"));
+                    user.setLastName(rs.getString("last_name"));
+                    user.setEmail(rs.getString("email"));
+                    user.setCapability(rs.getInt("capability"));
+                    String avatar= rs.getString("avatar");
+                    if(avatar==null)
+                        avatar="images/noimage.png";
+                    user.setAvatar(avatar);
+                    
+                    users.add(user);
+                }
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Impossible to get the list of admins", ex);
+        }
+
+        return users;
+    }
+
+    
+    
     /**
      * Returns the list of all the valid {@link User users} stored by the
      * storage system.
@@ -224,7 +274,7 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
     public List<User> getAll() throws DAOException {
         List<User> users = new ArrayList<>();
 
-        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM users ORDER BY last_name")) {
+        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM users WHERE capability=? ORDER BY last_name")) {
             try (ResultSet rs = stm.executeQuery()) {
 
                 while (rs.next()) {
@@ -250,7 +300,8 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
 
         return users;
     }
-
+    
+    
     /**
      * Update the user passed as parameter and returns it.
      *
@@ -287,4 +338,5 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
         }
     }
 
+    
 }

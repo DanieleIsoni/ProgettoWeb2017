@@ -96,6 +96,18 @@ public interface UserDAO extends DAO<User, Integer> {
     @Override
     public List<User> getAll() throws DAOException;
 
+        /**
+     * Returns the list of all the valid {@link User users} stored by the
+     * storage system that have admin privileges.
+     *
+     * @return the list of all the valid admin {@code users}.
+     * @throws DAOException if an error occurred during the information
+     * retrieving.
+     *
+     * @author Massimo Girondi
+     * @since 1.0.170425
+     */
+    public List<User> getAdmins() throws DAOException;
     /**
      * Update the user passed as parameter and returns it.
      *
