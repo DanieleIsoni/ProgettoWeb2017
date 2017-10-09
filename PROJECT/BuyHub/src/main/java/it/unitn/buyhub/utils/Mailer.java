@@ -68,8 +68,10 @@ public class Mailer {
     new RunnableMailer(from, to, subject, body, url, button_txt).run();
 
     }
-    
-    public static void mailToAdmin(String from, String subject, String body, String url, String button_txt, ServletContext context)
+    /*
+    A function to send an email to all the admins in the system
+    */
+    public static void mailToAdmins(String from, String subject, String body, String url, String button_txt, ServletContext context)
     {
         try{
             UserDAO userDao;
@@ -86,6 +88,8 @@ public class Mailer {
             }
             
             List<User> admins= userDao.getAdmins();
+            
+            //For each admin in the list, send an email
             for (User admin : admins) {
                 mail(from, admin.getEmail(), subject, body, url, button_txt);
             }
