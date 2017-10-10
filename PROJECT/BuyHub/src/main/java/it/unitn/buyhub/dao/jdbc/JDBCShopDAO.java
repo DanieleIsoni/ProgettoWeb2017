@@ -76,13 +76,13 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
      * @since 1.0.170425
      */
     public Long insert(Shop shops) throws DAOException {
-        try (PreparedStatement ps = CON.prepareStatement("INSERT INTO shops(name, description, web_site, id_owner, id_creator,shipment) VALUES(?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement ps = CON.prepareStatement("INSERT INTO shops(name, description, web_site, id_owner,shipment, validity) VALUES(?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, shops.getName());
             ps.setString(2, shops.getDescription());
             ps.setString(3, shops.getWebsite());
             ps.setInt(4, shops.getOwner().getId());
-            ps.setInt(5, shops.getCreator().getId());
-            ps.setString(4, shops.getShipment());
+            ps.setString(5, shops.getShipment());
+            ps.setInt(6, shops.getValidity());
             if (ps.executeUpdate() == 1) {
                 ResultSet generatedKeys = ps.getGeneratedKeys();
                 if (generatedKeys.next()) {
@@ -144,14 +144,12 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
                 shop.setWebsite(rs.getString("website"));
                 shop.setName(rs.getString("name"));
                 shop.setShipment(rs.getString("shipment"));
+                shop.setValidity(rs.getInt("validity"));
                 //Get owner associate
                 UserDAO userDao = getDAO(UserDAO.class);
                 shop.setOwner(userDao.getByPrimaryKey(rs.getInt("id_owner")));
 
-                //Get owner associate
-                UserDAO userDao2 = getDAO(UserDAO.class);
-                shop.setCreator(userDao2.getByPrimaryKey(rs.getInt("id_creator")));
-
+                
                 return shop;
             }
         } catch (SQLException | DAOFactoryException ex) {
@@ -189,19 +187,17 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
                     shop.setWebsite(rs.getString("website"));
                     shop.setName(rs.getString("name"));
                     shop.setShipment(rs.getString("shipment"));
+                    shop.setValidity(rs.getInt("validity"));
 
                     //Get owner associate
                     shop.setOwner(owner);
 
-                    //Get owner associate
-                    UserDAO userDao2 = getDAO(UserDAO.class);
-                    shop.setCreator(userDao2.getByPrimaryKey(rs.getInt("id_creator")));
-
+                    
                     shops.add(shop);
                 }
 
             }
-        } catch (SQLException | DAOFactoryException ex) {
+        } catch (SQLException ex) {
             throw new DAOException("Impossible to get the coordinates for the passed primary key", ex);
         }
         return shops;
@@ -238,15 +234,13 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
                     shop.setName(rs.getString("name"));
 
                     shop.setShipment(rs.getString("shipment"));
+                    shop.setValidity(rs.getInt("validity"));
 
                     //Get owner associate
                     UserDAO userDao = getDAO(UserDAO.class);
                     shop.setOwner(userDao.getByPrimaryKey(rs.getInt("id_owner")));
 
-                    //Get owner associate
-                    UserDAO userDao2 = getDAO(UserDAO.class);
-                    shop.setCreator(userDao2.getByPrimaryKey(rs.getInt("id_creator")));
-
+                    
                     shops.add(shop);
                 }
 
@@ -281,15 +275,13 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
                     shop.setName(rs.getString("name"));
                     shop.setWebsite(rs.getString("website"));
                     shop.setShipment(rs.getString("shipment"));
+                    shop.setValidity(rs.getInt("validity"));
                     
                     //Get owner associate
                     UserDAO userDao = getDAO(UserDAO.class);
                     shop.setOwner(userDao.getByPrimaryKey(rs.getInt("id_owner")));
 
-                    //Get creator associate
-                    UserDAO userDao2 = getDAO(UserDAO.class);
-                    shop.setCreator(userDao2.getByPrimaryKey(rs.getInt("id_creator")));
-
+                    
                     shops.add(shop);
 
                 }
@@ -317,14 +309,15 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
             throw new DAOException("parameter not valid", new IllegalArgumentException("The passed shop is null"));
         }
 
-        try (PreparedStatement std = CON.prepareStatement("UPDATE shops SET name = ?, description = ?, website = ?, id_owner = ?, id_creator = ?, global_value = ?, shipment = ? WHERE id = ?")) {
+        try (PreparedStatement std = CON.prepareStatement("UPDATE shops SET name = ?, description = ?, website = ?, id_owner = ?, shipment = ?, validity = ? WHERE id = ?")) {
             std.setString(1, shop.getName());
             std.setString(2, shop.getDescription());
             std.setString(3, shop.getWebsite());
             std.setInt(4, shop.getOwner().getId());
-            std.setInt(5, shop.getCreator().getId());
+            std.setInt(5, shop.getValidity());
+            std.setString(6, shop.getShipment());
             std.setInt(7, shop.getId());
-            std.setString(8, shop.getShipment());
+            
             if (std.executeUpdate() == 1) {
                 return shop;
             } else {
@@ -356,7 +349,7 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
         if (range < 1) {
             throw new DAOException("range is to low");
         }
-        try (PreparedStatement stm = CON.prepareStatement("SELECT shops.* from shops, shops_coordinate WHERE shops.id=shops_coordinate.id_shop AND shops_coordinate.id_coordinate IN (SELECT id, ( 6371 * acos( cos( radians( ? ) ) * cos( radians( `latitude` ) ) * cos( radians( `longitude` ) - radians( ? ) ) + sin(radians(?)) * sin(radians(`latitude`)) ) ) `distance` FROM coordinates HAVING `distance` < ? ORDER BY `distance`)")) {
+        try (PreparedStatement stm = CON.prepareStatement("SELECT shops.* from shops, coordinates WHERE shops.id=coordinates.id_shop AND coordinates.id IN (SELECT id, ( 6371 * acos( cos( radians( ? ) ) * cos( radians( `latitude` ) ) * cos( radians( `longitude` ) - radians( ? ) ) + sin(radians(?)) * sin(radians(`latitude`)) ) ) `distance` FROM coordinates HAVING `distance` < ? ORDER BY `distance`)")) {
             stm.setDouble(1, myLatitude);
             stm.setDouble(2, myLongitude);
             stm.setDouble(3, myLatitude);
@@ -370,15 +363,13 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
                     shop.setName(rs.getString("name"));
                     shop.setWebsite(rs.getString("website"));
                     shop.setShipment(rs.getString("shipment"));
+                    shop.setValidity(rs.getInt("validity"));
 
                     //Get owner associate
                     UserDAO userDao = getDAO(UserDAO.class);
                     shop.setOwner(userDao.getByPrimaryKey(rs.getInt("id_owner")));
 
-                    //Get creator associate
-                    UserDAO userDao2 = getDAO(UserDAO.class);
-                    shop.setCreator(userDao2.getByPrimaryKey(rs.getInt("id_creator")));
-
+                    
                     shops.add(shop);
 
                 }

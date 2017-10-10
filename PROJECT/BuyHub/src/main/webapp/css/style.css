@@ -461,3 +461,16 @@ div.detailed_review_header
 .to-right{
     text-align: right;
 }
+
+/* createNewShop */
+
+
+#description{
+    height: 100px;
+    resize: none;
+}
+
+.newShop{
+    /*width: 30%;*/
+}
+

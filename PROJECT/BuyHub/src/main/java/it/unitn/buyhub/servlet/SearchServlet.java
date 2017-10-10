@@ -133,7 +133,6 @@ public class SearchServlet extends HttpServlet {
                 String result="{\"s\":"+s+",\n\"p\":"+p+",\n\"pages\":"+pages+",\n";
                 //non voglio le informazioni sugli utenti nel JSON
                 for (Product product : products) {
-                    product.getShop().setCreator(null);
                     product.getShop().setOwner(null);
                 }
                 result+="\"products\": "+gson.toJson(products);

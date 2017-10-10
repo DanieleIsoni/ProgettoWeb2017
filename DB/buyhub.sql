@@ -181,7 +181,8 @@ CREATE TABLE `shops` (
   `website` varchar(256) COLLATE utf8_bin NOT NULL,
   `id_owner` int(11) NOT NULL,
   `id_creator` int(11) NOT NULL,
-  `shipment` text COLLATE utf8_bin
+  `shipment` text COLLATE utf8_bin,
+	`validity` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------

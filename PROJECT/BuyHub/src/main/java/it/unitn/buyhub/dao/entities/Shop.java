@@ -18,8 +18,13 @@ public class Shop implements Serializable {
     private String description;
     private String website;
     private User owner;
-    private User creator;
     private String shipment;
+    private int validity;
+
+    public int getValidity() {
+        return validity;
+    }
+
     public int getId() {
         return id;
     }
@@ -38,10 +43,6 @@ public class Shop implements Serializable {
 
     public User getOwner() {
         return owner;
-    }
-
-    public User getCreator() {
-        return creator;
     }
 
     public void setId(int id) {
@@ -64,10 +65,6 @@ public class Shop implements Serializable {
         this.owner = owner;
     }
 
-    public void setCreator(User creator) {
-        this.creator = creator;
-    }
-
     public String getShipment() {
         return shipment;
     }
@@ -76,5 +73,7 @@ public class Shop implements Serializable {
         this.shipment = shipment;
     }
 
-
+    public void setValidity(int validity) {
+        this.validity = validity;
+    }
 }
