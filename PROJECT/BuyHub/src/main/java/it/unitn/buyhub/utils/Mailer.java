@@ -64,9 +64,8 @@ public class Mailer {
         //Invoke the runnable to send the mail
 
       //Commented for testing purposes
-    //  
-    new RunnableMailer(from, to, subject, body, url, button_txt).run();
-
+    //  new RunnableMailer(from, to, subject, body, url, button_txt).run();
+        Log.info("Send mail to"+to+", subject: "+subject+", url:"+url+", body: "+body);
     }
     /*
     A function to send an email to all the admins in the system
