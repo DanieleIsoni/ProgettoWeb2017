@@ -130,7 +130,7 @@ public class SignupServlet extends HttpServlet {
                     Log.info("LINK: "+linkMail);
                     
                     Log.info("User "+ id +" correctly signed up" );
-                    response.sendRedirect(response.encodeRedirectURL(contextPath + "home.jsp"));
+                    response.sendRedirect(response.encodeRedirectURL(contextPath + "signedUp.jsp"));
                 }
             } else if (!password.equals(password2)) {
                 //Wrong password
