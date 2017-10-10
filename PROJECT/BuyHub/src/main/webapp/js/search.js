@@ -36,6 +36,10 @@ $(function() {
 
     //invoco la prima ricerca
     cerca();
+    
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    }
 
 
 });
@@ -217,4 +221,14 @@ function FillInAddress()
   $('#lat').val(lat);
   $('#lng').val(lng);
 
+}
+
+function getLocation() {
+    
+}
+function showPosition(position) {
+    $("#location").val("\u2316 GPS");
+    $('#lat').val(position.coords.latitude);
+    $('#lng').val(position.coords.longitude);
+    cerca();
 }
