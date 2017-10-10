@@ -402,7 +402,6 @@ ALTER TABLE `reviews`
 -- Limiti per la tabella `shops`
 --
 ALTER TABLE `shops`
-  ADD CONSTRAINT `shops_ibfk_1` FOREIGN KEY (`id_creator`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `shops_ibfk_2` FOREIGN KEY (`id_owner`) REFERENCES `users` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
