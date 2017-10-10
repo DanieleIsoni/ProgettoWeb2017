@@ -16,6 +16,7 @@ import it.unitn.buyhub.dao.persistence.DAO;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.jdbc.JDBCDAO;
+import it.unitn.buyhub.utils.Log;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -91,7 +92,7 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
                     try {
                         CON.rollback();
                     } catch (SQLException ex) {
-                        //TODO: log the exception
+                        Log.warn(ex);
                     }
                     throw new DAOException("Impossible to persist the new shops");
                 }
@@ -99,7 +100,7 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
                 try {
                     CON.rollback();
                 } catch (SQLException ex) {
-                    //TODO: log the exception
+                    Log.warn(ex);
                 }
                 throw new DAOException("Impossible to persist the new shops");
             }
@@ -107,7 +108,7 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
             try {
                 CON.rollback();
             } catch (SQLException ex1) {
-                //TODO: log the exception
+                Log.warn(ex1);
             }
             throw new DAOException("Impossible to persist the new notification", ex);
         }
