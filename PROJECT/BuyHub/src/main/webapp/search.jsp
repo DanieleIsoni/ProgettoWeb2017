@@ -41,9 +41,7 @@
                         </select>
 
                     </div>
-                    <h4><fmt:message key="price"/></h4>
-                    <input type="text" id="price" class="range" prefix="€" value="" name="range" data-from="0" data-to="1000" data-prefix="€" data-min="0" data-max="1000" />
-                    <br>
+
 
                     <div id="locationPicker" class="form-group">
                     <h4><fmt:message key="locationPicker"/></h4>
@@ -56,9 +54,9 @@
 
                     <div class="form-group">
                         <label for="distance"><fmt:message key="distance"/> (Km)</label>
-                        <input type="text" name="distance" class="form-control" value="200" id="distance"></input>
-                        <input name="lat" type="hidden" id="lat"/>
-                        <input name="lng" type="hidden"  id="lng"/>
+                        <input type="number" step="50" min="0" name="distance" class="form-control" value="200" id="distance"></input>
+                        <input name="lat" type="hidden" id="lat" value=0 />
+                        <input name="lng" type="hidden"  id="lng" value=0 />
                     </div>
 
 

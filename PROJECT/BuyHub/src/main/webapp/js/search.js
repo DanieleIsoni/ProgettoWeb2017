@@ -26,8 +26,17 @@ $(function() {
         cerca();
     });
 
+
+    $('#location').on('change', function () {
+       cerca();
+     });
+    $('#distance').on('change', function () {
+        cerca();
+      });
+
     //invoco la prima ricerca
     cerca();
+
 
 });
 
@@ -40,19 +49,40 @@ function cerca()
     var price=$("#price").val().split(";");
     var min=price[0];
     var max=price[1];
-
+    var lat=$("#lat").val();
+    var lng=$("#lng").val();
+    var location=$("#location").val();
+    var distance=$("#distance").val();
+    var data;
+    if(lat!=0 && lng!=0 && location != "" && distance>0)
+    {
+      data={ "q": q,
+              "c": c,
+              "minRev": minRev,
+              "min": min,
+              "max": max,
+              "s" : s,
+              "lat":lat,
+              "lng":lng,
+              "dist":distance
+          };
+    }
+    else {
+      data={ "q": q,
+              "c": c,
+              "minRev": minRev,
+              "min": min,
+              "max": max,
+              "s" : s
+           };
+    }
     $.ajax({
         method: "POST",
         url: "search",
-        data: { "q": q,
-                "c": c,
-                "minRev": minRev,
-                "min": min,
-                "max": max,
-                "s" : s
-            }
+        "data": data
       })
         .done(function( msg ) {
+            
             var products=$("#products");
             products.empty();
             for (var i in msg.products) {
@@ -82,6 +112,7 @@ function cerca()
             }
 
             //stampo la lista delle pagine
+
 
             var s="<div class='row pages'>\n";
 
@@ -148,6 +179,9 @@ function slide_change(data)
 }
 
 
+/*
+Autocomplete the location field with Google Maps API
+*/
   var autocomplete;
 
   function initAutocomplete() {
@@ -182,4 +216,5 @@ function FillInAddress()
   var lng=place.geometry.location.lng();
   $('#lat').val(lat);
   $('#lng').val(lng);
+
 }
