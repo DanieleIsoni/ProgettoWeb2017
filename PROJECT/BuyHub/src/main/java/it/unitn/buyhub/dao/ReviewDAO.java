@@ -71,6 +71,7 @@ public interface ReviewDAO extends DAO<Review, Integer> {
      * parameter.
      *
      * @param product the {@code product} of the {@code reviews} to get.
+     * @param isLimited limited number of review
      * @return the list of the {@code reviews} with the product passed as
      * parameter.
      * @throws DAOException if an error occurred during the information
@@ -79,7 +80,7 @@ public interface ReviewDAO extends DAO<Review, Integer> {
      * @author Matteo Battilana
      * @since 1.0.170425
      */
-    public List<Review> getByProduct(Product product) throws DAOException;
+    public List<Review> getByProduct(Product product, boolean isLimited) throws DAOException;
 
     /**
      * Returns the list of all the valid {@link Review reviews} stored by the

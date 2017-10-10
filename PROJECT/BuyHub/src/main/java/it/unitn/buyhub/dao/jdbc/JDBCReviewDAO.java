@@ -35,6 +35,8 @@ import java.util.List;
  * @since 2017.04.25
  */
 public class JDBCReviewDAO extends JDBCDAO<Review, Integer> implements ReviewDAO {
+    
+    private int limit = 5;
 
     public JDBCReviewDAO(Connection con) {
         super(con);
@@ -176,6 +178,7 @@ public class JDBCReviewDAO extends JDBCDAO<Review, Integer> implements ReviewDAO
      * parameter.
      *
      * @param product the {@code product} of the {@code reviews} to get.
+     * @param isLimited limited number of review
      * @return the list of the {@code reviews} with the product passed as
      * parameter.
      * @throws DAOException if an error occurred during the information
@@ -184,12 +187,12 @@ public class JDBCReviewDAO extends JDBCDAO<Review, Integer> implements ReviewDAO
      * @author Matteo Battilana
      * @since 1.0.170425
      */
-    public List<Review> getByProduct(Product product) throws DAOException {
+    public List<Review> getByProduct(Product product, boolean isLimited) throws DAOException {
         List<Review> reviews = new ArrayList<>();
         if (product == null) {
             throw new DAOException("product is null");
         }
-        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM reviews WHERE id_product = ?")) {
+        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM reviews WHERE id_product = ?" + (isLimited?" LIMIT "+limit:""))) {
             stm.setInt(1, product.getId());
             try (ResultSet rs = stm.executeQuery()) {
                 while (rs.next()) {
