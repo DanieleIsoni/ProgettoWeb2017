@@ -140,7 +140,54 @@
                         </div>
                     </div>
                     <hr/>    
-                </c:forEach>       
+                </c:forEach>   
+
+                <!--
+                Form for insert a review
+                -->
+                <c:if test = "${authenticatedUser != null}">
+                    <form action="addreview">
+                        <h4>  <fmt:message key="add_review"/> </h4>  
+                        <div class="row review">
+
+                            <div class="col-md-3">
+                                <div class="review_img_box">
+                                    <img src="${authenticatedUser.avatar}" class="img-rounded img-responsive">
+                                </div>
+                                <div class="review-block-name"></div>
+                                <div class="review-block-date">
+                                    <br/>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+
+                                <div class="detailed_review_header">
+                                    <fmt:message key="rev_total"/> <input type="hidden" value="1" name="total" class="rating" />
+                                    <br/>
+                                    <fmt:message key="quality"/>: <input type="hidden" value="1" name="quality" class="rating" />
+                                    <br/>
+                                    <fmt:message key="service"/>: <input type="hidden" value="1" name="service" class="rating"  />
+                                    <br/>
+                                    <fmt:message key="value_for_money"/>: <input type="hidden" value="1" name="money" class="rating"  />
+
+
+
+                                </div>
+
+                            </div>
+                            <div class="col-md-6">
+
+                                <textarea name="description" class="form-control" id="description"></textarea>
+
+                            </div>
+                            <div class="center">
+                                <br><br><br><br><br><br>
+                                <input type="submit" value=" <fmt:message key="add_review"/>" class="btn btn-success" />
+                            </div>
+                        </div>
+                    </form>
+                </c:if>
+                <!-- Fine form -->
             </div>
             <map:ShopMap/>
         </div>
