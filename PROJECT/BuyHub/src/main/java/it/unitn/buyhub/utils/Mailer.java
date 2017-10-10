@@ -9,7 +9,12 @@ package it.unitn.buyhub.utils;
  *
  * @author maxgiro96
  */
+import it.unitn.buyhub.dao.UserDAO;
+import it.unitn.buyhub.dao.entities.User;
+import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
+import it.unitn.buyhub.dao.persistence.factories.DAOFactory;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,6 +25,8 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 
 
 class RunnableMailer implements Runnable {
@@ -57,9 +64,41 @@ public class Mailer {
         //Invoke the runnable to send the mail
 
       //Commented for testing purposes
-    //    new RunnableMailer(from, to, subject, body, url, button_txt).run();
-
+    //  new RunnableMailer(from, to, subject, body, url, button_txt).run();
+        Log.info("Send mail to"+to+", subject: "+subject+", url:"+url+", body: "+body);
     }
+    /*
+    A function to send an email to all the admins in the system
+    */
+    public static void mailToAdmins(String from, String subject, String body, String url, String button_txt, ServletContext context)
+    {
+        try{
+            UserDAO userDao;
+            DAOFactory daoFactory = (DAOFactory) context.getAttribute("daoFactory");
+            if (daoFactory == null) {
+                Log.error("Impossible to get dao factory for user storage system");
+                throw new ServletException("Impossible to get dao factory for user storage system");
+            }
+            try {
+                userDao = daoFactory.getDAO(UserDAO.class);
+            } catch (DAOFactoryException ex) {
+                Log.error("Impossible to get dao factory for user storage system");
+                throw new ServletException("Impossible to get dao factory for user storage system", ex);
+            }
+            
+            List<User> admins= userDao.getAdmins();
+            
+            //For each admin in the list, send an email
+            for (User admin : admins) {
+                mail(from, admin.getEmail(), subject, body, url, button_txt);
+            }
+
+         } catch (Exception ex)
+        {
+            Log.warn("Error sending mail to admins: "+ex.getMessage());
+        }
+   }
+    
 
 
     /**
@@ -113,7 +152,7 @@ public class Mailer {
             Transport.send(message);
             Log.info("Sent mail to "+to+" succesfully.");
         } catch (MessagingException e) {
-            Log.warn("Error sending mail to "+to+".");
+            Log.warn("Error sending mail to "+to+": "+e.getMessage());
 
             throw new RuntimeException(e);
         }

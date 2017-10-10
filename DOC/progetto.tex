@@ -60,6 +60,19 @@ Un'altra soluzione, volendo realizzare un prodotto per il mondo reale, sono i CD
 
 
 
+
+\chapter{Verifica dell'account}
+
+Quando un utente si registra al sito, è prevista una conferma della registrazione attraverso la mail, onde evitare account fasulli. All'interno della mail viene inserito un link che contiene un codice speciale che abilita l'utente all'accesso.
+
+In particolare, tale codice è composto dall'ID utente e dall'Hash della password, grazie ai quali è possibile identificare l'utente e, data la bassa probabilità di indovinare l'MD5, rende difficile un eventuale attacco.
+
+Questo codice è poi cifrato mediante AES128 secondo una chiave segreta presente nel server, che ci consente quindi di essere \textit{praticamente} certi che un utente smaliziato riesca ad accedere a un account non proprio. Per poter inviare correttamente il risultato mediante una URL il codice è codificato prima in Base64 e poi attraverso la funzione \texttt{URLEncode} di Java. Il codice è quindi così formato:
+\[
+    URLEncode( Base64( AES( \mbox{id}\$MD5(\mbox{password}))))
+\]
+
+
 \chapter{Altri capitoli}
 \chapter{Conclusioni}
 \end{document}
