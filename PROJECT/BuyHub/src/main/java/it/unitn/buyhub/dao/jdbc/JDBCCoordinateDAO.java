@@ -12,6 +12,7 @@ import it.unitn.buyhub.dao.persistence.DAO;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.jdbc.JDBCDAO;
+import it.unitn.buyhub.utils.Log;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -336,14 +337,14 @@ public class JDBCCoordinateDAO extends JDBCDAO<Coordinate, Integer> implements C
      */
     @Override
     public Long insert(Coordinate coordinate) throws DAOException {
-        try (PreparedStatement ps = CON.prepareStatement("INSERT INTO coordinates(latitude, longitude, address,shop_id, opening_hours=?) VALUES(?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement ps = CON.prepareStatement("INSERT INTO coordinates(latitude, longitude, address,id_shop, opening_hours) VALUES(?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setDouble(1, coordinate.getLatitude());
             ps.setDouble(2, coordinate.getLongitude());
             ps.setString(3, coordinate.getAddress());
-            ps.setInt(3, coordinate.getShop().getId());
-            ps.setString(4, coordinate.getOpening_hours());
-
+            ps.setInt(4, coordinate.getShop().getId());
+            ps.setString(5, coordinate.getOpening_hours());
+            Log.info(ps.toString());
             if (ps.executeUpdate() == 1) {
                 ResultSet generatedKeys = ps.getGeneratedKeys();
                 if (generatedKeys.next()) {

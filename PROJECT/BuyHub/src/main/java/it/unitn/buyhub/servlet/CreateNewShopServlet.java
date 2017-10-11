@@ -15,6 +15,8 @@ import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.factories.DAOFactory;
 import it.unitn.buyhub.utils.Log;
+import it.unitn.buyhub.utils.Mailer;
+import it.unitn.buyhub.utils.PropertyHandler;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.mail.Session;
@@ -87,13 +89,15 @@ public class CreateNewShopServlet extends HttpServlet {
                 newShop.setOwner(owner);
                 newShop.setWebsite(website);
                 newShop.setValidity(0);
+                newShop.setShipment(shipment);
                 Long shop_id = shopDao.insert(newShop);
                 if (shop_id == 0){
                     Log.warn("Shop name already used");
                     response.sendRedirect(response.encodeRedirectURL(contextPath + "createNewShop.jsp?error=1"));
                 } else {
                     Log.info("Shop inserted correctly");
-                    /*if(address != null && !address.equals("") &&
+                    newShop.setId(shop_id.intValue());
+                    if(address != null && !address.equals("") &&
                             openingHours != null && !openingHours.equals("")){
                         Coordinate newcoordinate = new Coordinate();
                         newcoordinate.setAddress(address);
@@ -107,11 +111,13 @@ public class CreateNewShopServlet extends HttpServlet {
                         } else {
                             Log.info("Coordinates inserted correctly");
                         }
-                    }*/
+                    }
                 }
+                String msg="A new shop has been created and need to be validated";
+                String linkMail = PropertyHandler.getInstance().getValue("baseUrl")+"home.jsp";
+                Mailer.mailToAdmins(PropertyHandler.getInstance().getValue("noreplyMail"), "New shop created", msg, linkMail,"Go to Shops Manager", super.getServletContext());
                 
-                response.sendRedirect(contextPath + "restricrted/myself.jsp");
-                
+                response.sendRedirect(contextPath + "restricted/myself.jsp");
             }
         } catch (DAOException ex) {
             

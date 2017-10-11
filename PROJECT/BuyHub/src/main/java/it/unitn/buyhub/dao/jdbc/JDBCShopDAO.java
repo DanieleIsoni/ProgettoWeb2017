@@ -77,7 +77,7 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
      * @since 1.0.170425
      */
     public Long insert(Shop shops) throws DAOException {
-        try (PreparedStatement ps = CON.prepareStatement("INSERT INTO shops(name, description, web_site, id_owner,shipment, validity) VALUES(?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement ps = CON.prepareStatement("INSERT INTO shops(name, description, website, id_owner,shipment, validity) VALUES(?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, shops.getName());
             ps.setString(2, shops.getDescription());
             ps.setString(3, shops.getWebsite());
