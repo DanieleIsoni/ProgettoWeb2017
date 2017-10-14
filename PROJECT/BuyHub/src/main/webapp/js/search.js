@@ -36,7 +36,7 @@ $(function() {
 
     //invoco la prima ricerca
     cerca();
-    
+
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition);
     }
@@ -45,6 +45,11 @@ $(function() {
 });
 
 function cerca()
+{
+  cerca_pagina(1);
+}
+
+function cerca_pagina(p)
 {
     var q=$("#search_text").val();
     var c=$("#search_category").val();
@@ -60,6 +65,7 @@ function cerca()
     var data;
     if(lat!=0 && lng!=0 && location != "" && distance>0)
     {
+      // ricerca geografica
       data={ "q": q,
               "c": c,
               "minRev": minRev,
@@ -68,7 +74,8 @@ function cerca()
               "s" : s,
               "lat":lat,
               "lng":lng,
-              "dist":distance
+              "dist":distance,
+              "p": p
           };
     }
     else {
@@ -77,7 +84,8 @@ function cerca()
               "minRev": minRev,
               "min": min,
               "max": max,
-              "s" : s
+              "s" : s,
+              "p" : p
            };
     }
     $.ajax({
@@ -86,7 +94,7 @@ function cerca()
         "data": data
       })
         .done(function( msg ) {
-            
+
             var products=$("#products");
             products.empty();
             for (var i in msg.products) {
@@ -124,7 +132,7 @@ function cerca()
             {
             for(var i=1;i<=msg.pages;i++)
                 if(i!=msg.p)
-                    s+="<button type='button' class='btn btn-secondary'>"+i+"</button>";
+                    s+="<button type='button' class='btn btn-secondary' onclick=\"cerca_pagina("+i+")\">"+i+"</button>";
                 else
                     s+="<button type='button' class='btn btn-primary' disabled>"+i+"</button>";
             products.append(s);
@@ -146,7 +154,7 @@ function cerca()
 
                 for(;i<f;i++)
                     if(i!=msg.p)
-                        s+="<button type='button' class='btn btn-secondary'>"+i+"</button>";
+                        s+="<button type='button' class='btn btn-secondary' onclick=\"cerca_pagina("+i+")\">"+i+"</button>";
                     else
                         s+="<button type='button' class='btn btn-primary' disabled>"+i+"</button>";
 
@@ -157,9 +165,10 @@ function cerca()
                 //se non l'ho stampato
                 if(f<msg.pages)
                     if(msg.pages!=msg.p)
-                        s+="<button type='button' class='btn btn-secondary'>"+msg.pages+"</button>";
+                        s+="<button type='button' class='btn btn-secondary' onclick=\"cerca_pagina("+msg.pages+")\">"+msg.pages+"</button>";
                     else
                         s+="<button type='button' class='btn btn-primary' disabled>"+msg.pages+"</button>";
+
 
 
 
@@ -224,7 +233,7 @@ function FillInAddress()
 }
 
 function getLocation() {
-    
+
 }
 function showPosition(position) {
     $("#location").val("\u2316 GPS");
