@@ -108,6 +108,10 @@
         <servlet-name>VerifyAccountServlet</servlet-name>
         <servlet-class>it.unitn.buyhub.servlet.VerifyAccountServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ShopsServlet</servlet-name>
+        <servlet-class>it.unitn.buyhub.servlet.ShopsServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ModifyCartItemNumberServlet</servlet-name>
         <url-pattern>/modifycartitemnumber</url-pattern>
@@ -167,6 +171,10 @@
     <servlet-mapping>
         <servlet-name>VerifyAccountServlet</servlet-name>
         <url-pattern>/verifyAccount</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShopsServlet</servlet-name>
+        <url-pattern>/restricted/admin/shops</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
