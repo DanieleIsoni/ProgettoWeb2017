@@ -50,15 +50,15 @@
     </listener>
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>it.unitn.buyhub.servlet.LoginServlet</servlet-class>
+        <servlet-class>it.unitn.buyhub.servlet.user.LoginServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SignupServlet</servlet-name>
-        <servlet-class>it.unitn.buyhub.servlet.SignupServlet</servlet-class>
+        <servlet-class>it.unitn.buyhub.servlet.user.SignupServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>LogoutServlet</servlet-name>
-        <servlet-class>it.unitn.buyhub.servlet.LogoutServlet</servlet-class>
+        <servlet-class>it.unitn.buyhub.servlet.user.LogoutServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ProductServlet</servlet-name>
@@ -74,27 +74,27 @@
     </servlet>
     <servlet>
         <servlet-name>AvatarUploadServlet</servlet-name>
-        <servlet-class>it.unitn.buyhub.servlet.AvatarUploadServlet</servlet-class>
+        <servlet-class>it.unitn.buyhub.servlet.user.AvatarUploadServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ModifyAccountServlet</servlet-name>
-        <servlet-class>it.unitn.buyhub.servlet.ModifyAccountServlet</servlet-class>
+        <servlet-class>it.unitn.buyhub.servlet.user.ModifyAccountServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ModifyCartItemNumberServlet</servlet-name>
-        <servlet-class>it.unitn.buyhub.servlet.ModifyCartItemNumberServlet</servlet-class>
+        <servlet-class>it.unitn.buyhub.servlet.cart.ModifyCartItemNumberServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>EmptyCartServlet</servlet-name>
-        <servlet-class>it.unitn.buyhub.servlet.EmptyCartServlet</servlet-class>
+        <servlet-class>it.unitn.buyhub.servlet.cart.EmptyCartServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>RemoveFromCartServlet</servlet-name>
-        <servlet-class>it.unitn.buyhub.servlet.RemoveFromCartServlet</servlet-class>
+        <servlet-class>it.unitn.buyhub.servlet.cart.RemoveFromCartServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AddToCartServlet</servlet-name>
-        <servlet-class>it.unitn.buyhub.servlet.AddToCartServlet</servlet-class>
+        <servlet-class>it.unitn.buyhub.servlet.cart.AddToCartServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>UploadedContentServlet</servlet-name>
@@ -106,11 +106,11 @@
     </servlet>
     <servlet>
         <servlet-name>VerifyAccountServlet</servlet-name>
-        <servlet-class>it.unitn.buyhub.servlet.VerifyAccountServlet</servlet-class>
+        <servlet-class>it.unitn.buyhub.servlet.user.VerifyAccountServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ShopsServlet</servlet-name>
-        <servlet-class>it.unitn.buyhub.servlet.ShopsServlet</servlet-class>
+        <servlet-class>it.unitn.buyhub.servlet.admin.ShopsServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ModifyCartItemNumberServlet</servlet-name>
