@@ -315,8 +315,8 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
             std.setString(2, shop.getDescription());
             std.setString(3, shop.getWebsite());
             std.setInt(4, shop.getOwner().getId());
-            std.setInt(5, shop.getValidity());
-            std.setString(6, shop.getShipment());
+            std.setString(5, shop.getShipment());
+            std.setInt(6, shop.getValidity());
             std.setInt(7, shop.getId());
             
             if (std.executeUpdate() == 1) {

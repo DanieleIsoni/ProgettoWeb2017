@@ -486,3 +486,9 @@ div.detailed_review_header
 .item_required{
     font-weight: bold;
 }
+
+/*shops page*/
+.btn_1{
+    width: 150px;
+}
+

@@ -22,6 +22,10 @@
     <div class="container">
 
       <div class="col">
+        <div class="row">
+              <h2><b><fmt:message key="shopspage_title"/></b></h2>
+        </div>
+        <div class="row">
         <table class="table table-striped table-bordered" id="shops">
           <thead>
             <td> ID</td>
@@ -37,7 +41,20 @@
               <td>${shop.id}</td>
               <td><a href="../../shop?id=${shop.id}"> ${shop.name}</td>
               <td><a href="user?id=${shop.owner.id}"/>  ${shop.owner.firstName} ${shop.owner.lastName} (${shop.owner.username}) </td>
-              <td>  </td>
+              <td>
+                  <c:choose>
+                      <c:when test="${shop.validity==0}">
+                          <a href="<c:url value='EnableShop?id=${shop.id}&status=1'/>" role="button" class="btn_1 but btn btn-success">
+                              <fmt:message key="enable"/>
+                          </a>
+                      </c:when>
+                      <c:otherwise>
+                          <a href="<c:url value='EnableShop?id=${shop.id}&status=0'/>" role="button" class="btn_1 but btn btn-danger">
+                              <fmt:message key="disable"/>
+                          </a>
+                      </c:otherwise>    
+                  </c:choose>
+              </td>
 
 
             </tr>
@@ -46,6 +63,7 @@
         </table>
       </div>
      </div>
+   </div>
 
 
      <script>
