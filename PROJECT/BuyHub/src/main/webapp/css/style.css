@@ -483,6 +483,6 @@ div.detailed_review_header
     resize: none;
 }
 
-.newShop{
-    /*width: 30%;*/
+.item_required{
+    font-weight: bold;
 }
