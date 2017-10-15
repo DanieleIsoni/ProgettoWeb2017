@@ -6,6 +6,7 @@
 package it.unitn.buyhub.filter;
 
 import it.unitn.buyhub.dao.entities.User;
+import it.unitn.buyhub.utils.Log;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
@@ -27,7 +28,7 @@ import javax.servlet.http.HttpSession;
  */
 public class AuthenticationFilter implements Filter {
 
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     // The filter configuration object we are associated with.  If
     // this value is null, this filter instance is not currently
@@ -55,6 +56,14 @@ public class AuthenticationFilter implements Filter {
                 if (!contextPath.endsWith("/")) {
                     contextPath += "/";
                 }
+                
+                //Save the target url to redirect after login
+                HttpServletRequest req=((HttpServletRequest) request);
+                String qs="";
+                if(req.getQueryString()!=null)
+                    qs="?"+ req.getQueryString();
+                req.getSession().setAttribute("origin", req.getRequestURI()+qs);
+                //Log.info(((HttpServletRequest) request).getRequestURI());
                 ((HttpServletResponse) response).sendRedirect(((HttpServletResponse) response).encodeRedirectURL(contextPath + "login.jsp"));
                 return false;
             }
@@ -233,9 +242,11 @@ public class AuthenticationFilter implements Filter {
 
     public void log(String msg) {
         filterConfig.getServletContext().log(msg);
+        Log.info(msg);
     }
 
     public void log(String msg, Throwable throwable) {
         filterConfig.getServletContext().log(msg, throwable);
+        Log.error(msg+":"+throwable.getMessage());
     }
 }

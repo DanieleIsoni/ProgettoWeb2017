@@ -82,7 +82,13 @@ public class LoginServlet extends HttpServlet {
             {
                 Log.info("User " + user.getId() + " logged in");
                 request.getSession().setAttribute("authenticatedUser", user);
-                response.sendRedirect(response.encodeRedirectURL(contextPath + "home.jsp"));
+                String target=contextPath+"home.jsp";
+                if(request.getSession().getAttribute("origin")!=null)
+                {
+                    target=(String) request.getSession().getAttribute("origin");
+                }
+                request.getSession().removeAttribute("origin");
+                response.sendRedirect(response.encodeRedirectURL(target));
             }
             
         } catch (DAOException ex) {

@@ -6,6 +6,7 @@
 package it.unitn.buyhub.filter;
 
 import it.unitn.buyhub.dao.entities.User;
+import it.unitn.buyhub.utils.Log;
 import it.unitn.buyhub.utils.Utility;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -29,7 +30,7 @@ import javax.servlet.http.HttpSession;
  */
 public class AdminFilter implements Filter {
 
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     // The filter configuration object we are associated with.  If
     // this value is null, this filter instance is not currently
@@ -235,9 +236,11 @@ public class AdminFilter implements Filter {
 
     public void log(String msg) {
         filterConfig.getServletContext().log(msg);
+        Log.info(msg);
     }
 
     public void log(String msg, Throwable throwable) {
         filterConfig.getServletContext().log(msg, throwable);
+        Log.error(msg+":"+throwable.getMessage());
     }
 }
