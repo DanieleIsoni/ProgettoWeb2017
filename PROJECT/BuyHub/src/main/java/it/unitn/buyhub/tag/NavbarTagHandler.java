@@ -136,6 +136,7 @@ public class NavbarTagHandler extends SimpleTagSupport {
         }
         if(currentUser.getCapability()>=Utility.CAPABILITY.ADMIN.ordinal()){
             dropdown+="<a href='" + Utility.getUrl(pageContext,"restricted/admin/shops") + "' class='btn btn-warning user' role='button'>" + Utility.getLocalizedString(pageContext,"shops_management") + "</a>";
+            dropdown+="<a href='" + Utility.getUrl(pageContext,"restricted/admin/users") + "' class='btn btn-warning user' role='button'>" + Utility.getLocalizedString(pageContext,"users_management") + "</a>";
         }
         dropdown+="<a href='" + Utility.getUrl(pageContext,"logout") + "' class='btn btn-danger user' role='button'>" + Utility.getLocalizedString(pageContext,"logout") + "</a>";
         
