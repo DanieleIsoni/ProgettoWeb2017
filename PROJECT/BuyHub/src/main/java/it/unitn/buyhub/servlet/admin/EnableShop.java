@@ -16,6 +16,7 @@ import it.unitn.buyhub.dao.entities.Picture;
 import it.unitn.buyhub.dao.entities.Product;
 import it.unitn.buyhub.dao.entities.Review;
 import it.unitn.buyhub.dao.entities.Shop;
+import it.unitn.buyhub.dao.entities.User;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.factories.DAOFactory;
@@ -47,6 +48,7 @@ public class EnableShop extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     private ShopDAO shopDAO;
+    private UserDAO userDAO;
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -63,6 +65,7 @@ public class EnableShop extends HttpServlet {
         }
         try {
             shopDAO = daoFactory.getDAO(ShopDAO.class);
+            userDAO = daoFactory.getDAO(UserDAO.class);
             
         } catch (DAOFactoryException ex) {
             Log.error("Impossible to get dao factory for shop storage system");
@@ -88,6 +91,16 @@ public class EnableShop extends HttpServlet {
             
                 Shop shop = shopDAO.getByPrimaryKey(id);
                 shop.setValidity(status=='1'? 1 : 0);//if not 1 is false-> don't enable shop
+                
+                if(status=='1' && shop.getOwner().getCapability()<Utility.CAPABILITY.SHOP.ordinal())
+                {
+                    User u=shop.getOwner();
+                    u.setCapability(Utility.CAPABILITY.SHOP.ordinal());
+                    userDAO.update(u);
+                    Log.info("User "+id+" promoted to shop user ");
+                
+                }
+                    
                 shopDAO.update(shop);
                 Log.info("Shop "+id+": validity set to "+status);
                 
