@@ -116,6 +116,10 @@
         <servlet-name>EnableShop</servlet-name>
         <servlet-class>it.unitn.buyhub.servlet.admin.EnableShop</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UsersServlet</servlet-name>
+        <servlet-class>it.unitn.buyhub.servlet.admin.UsersServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ModifyCartItemNumberServlet</servlet-name>
         <url-pattern>/modifycartitemnumber</url-pattern>
@@ -183,6 +187,10 @@
     <servlet-mapping>
         <servlet-name>EnableShop</servlet-name>
         <url-pattern>/restricted/admin/enableshop</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UsersServlet</servlet-name>
+        <url-pattern>/restricted/admin/users</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
