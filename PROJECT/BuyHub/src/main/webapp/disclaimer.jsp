@@ -101,7 +101,8 @@ jsessionid, unique token, sessional, Allows BuyHub to store information about yo
 
 cart, unique token, persistent for 2 weeks, Stores information about the contents of your cart.
 
-We don't use user-tracking cookies.
+
+If you want to learn more on cookies and how we need them to provide a better service, visit cookiesandyou.com.
 
 
 SECTION 7 - AGE OF CONSENT
