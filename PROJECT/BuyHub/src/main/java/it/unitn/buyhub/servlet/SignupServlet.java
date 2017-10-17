@@ -79,7 +79,13 @@ public class SignupServlet extends HttpServlet {
         }
 
         try {
-            if (username != null && password != null && password2 != null && first_name != null && last_name != null && email != null && password.equals(password2)) {
+            if (username != null && !username.equals("") && 
+                    password != null && !password.equals("") && 
+                    password2 != null && !password2.equals("") &&
+                    first_name != null && !first_name.equals("") && 
+                    last_name != null && !last_name.equals("") &&
+                    email != null && !email.equals("") &&
+                    password.equals(password2)) {
                 User newUser = new User();
                 newUser.setCapability(0);
                 newUser.setEmail(email);
