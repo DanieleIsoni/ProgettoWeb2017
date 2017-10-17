@@ -6,9 +6,12 @@
 package it.unitn.buyhub.servlet;
 
 import it.unitn.buyhub.dao.CoordinateDAO;
+import it.unitn.buyhub.dao.ProductDAO;
 import it.unitn.buyhub.dao.ReviewDAO;
 import it.unitn.buyhub.dao.ShopDAO;
 import it.unitn.buyhub.dao.UserDAO;
+import it.unitn.buyhub.dao.entities.Product;
+import it.unitn.buyhub.dao.entities.Review;
 import it.unitn.buyhub.dao.entities.Shop;
 import it.unitn.buyhub.dao.entities.User;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
@@ -17,6 +20,7 @@ import it.unitn.buyhub.dao.persistence.factories.DAOFactory;
 import it.unitn.buyhub.utils.Log;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import javax.mail.Session;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -27,10 +31,11 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Daniso
  */
-public class AddReview extends HttpServlet {
+public class AddReviewServlet extends HttpServlet {
     
     private ReviewDAO reviewDao;
     private UserDAO userDao;
+    private ProductDAO productDAO;
     
     @Override
     public void init() throws ServletException {
@@ -42,13 +47,14 @@ public class AddReview extends HttpServlet {
         try {
             reviewDao = daoFactory.getDAO(ReviewDAO.class);
             userDao = daoFactory.getDAO(UserDAO.class);
+            productDAO = daoFactory.getDAO(ProductDAO.class);
         } catch (DAOFactoryException ex) {
             Log.error("Impossible to get dao factory for shop storage system");
             throw new ServletException("Impossible to get dao factory for shop storage system", ex);
         }
         Log.info("CreateNewShopServlet init done");
     }
-    
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -61,45 +67,54 @@ public class AddReview extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String name = (String) request.getAttribute("shopName");
-        String description = (String) request.getAttribute("description");
-        String website = (String) request.getAttribute("website");
-        String shipment = (String) request.getAttribute("shipment");
+        String description = (String) request.getParameter("description");
+        String total = (String) request.getParameter("total");
+        
+        String productId = (String) request.getParameter("prod_id");
+        String quality = (String) request.getParameter("quality");
+        String service = (String) request.getParameter("service");
+        String money = (String) request.getParameter("money");
+        String title = (String) request.getParameter("title");
         User owner = (User) request.getSession().getAttribute("authenticatedUser");
-        String address = (String) request.getSession().getAttribute("autocomplete_address");
-        String openingHours = (String) request.getSession().getAttribute("opening_hours");
         
         String contextPath = getServletContext().getContextPath();
         if (!contextPath.endsWith("/")) {
             contextPath += "/";
         }
+        System.out.println("PRODID "+productId);
+
         
         try {
-            if(name != null && !name.equals("") && 
-                    description != null && !description.equals("") &&
-                    website != null && !website.equals("") &&
-                    shipment != null && !shipment.equals("") &&
-                    owner != null &&
-                    address != null && !address.equals("") &&
-                    openingHours != null && !openingHours.equals("")){
-                Shop newShop = new Shop();
-                newShop.setDescription(description);
-                newShop.setName(name);
-                newShop.setOwner(owner);
-                newShop.setWebsite(website);
-                Long id = shopDao.insert(newShop);
-                if (id == 0){
-                    Log.warn("Shop name already used");
-                    response.sendRedirect(response.encodeRedirectURL(contextPath + "createNewShop.jsp?error=1"));
+            if (title != null && !title.equals("") && productId != null && owner != null && description != null && total != null && quality != null && service != null && money != null
+                    && !description.equals("") && !total.equals("") && !quality.equals("") && !service.equals("") && !money.equals("")) {
+
+                Product prod = productDAO.getByPrimaryKey(Integer.valueOf(productId));
+                Review review = new Review();
+                review.setCreator(owner);
+                review.setDateCreation(new Date());
+                review.setDescription(description);
+                review.setGlobalValue(Integer.valueOf(total));
+                review.setProduct(prod);
+                review.setQuality(Integer.valueOf(quality));
+                review.setService(Integer.valueOf(service));
+                review.setTitle(title);
+                review.setValueForMoney(Integer.valueOf(money));
+
+                long id = reviewDao.insert(review);
+                if (id == 0) {
+                    Log.error("Error adding review, already used");
+
+                    response.sendRedirect(response.encodeRedirectURL(contextPath + "product?id=" + prod.getId() + "&error=1"));
                 }
             }
         } catch (DAOException ex) {
-            
-            Log.error("Error creating shop");
+
+            Log.error("Error adding review" + ex.getMessage().toString());
+
         }
+        response.sendRedirect(response.encodeRedirectURL(contextPath + "product?id="+productId));
     }
 
-    
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -126,6 +141,6 @@ public class AddReview extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-    }    
-
+    }
+    
 }

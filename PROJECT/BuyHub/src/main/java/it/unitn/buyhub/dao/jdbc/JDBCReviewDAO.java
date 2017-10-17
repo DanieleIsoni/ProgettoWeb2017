@@ -57,7 +57,7 @@ public class JDBCReviewDAO extends JDBCDAO<Review, Integer> implements ReviewDAO
      * @since 1.0.170425
      */
     public Long insert(Review reviews) throws DAOException {
-        try (PreparedStatement ps = CON.prepareStatement("INSERT INTO reviews(id_product, id_creator, quality, service, value_for_money, title, description, date_creation) VALUES(?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement ps = CON.prepareStatement("INSERT INTO reviews(id_product, id_creator, global_value, quality, service, value_for_money, title, description, date_creation) VALUES(?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
             ps.setInt(1, reviews.getProduct().getId());
             ps.setInt(2, reviews.getCreator().getId());
             ps.setInt(3, reviews.getGlobalValue());

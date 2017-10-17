@@ -272,6 +272,7 @@ ALTER TABLE `products`
 ALTER TABLE `reviews`
   ADD PRIMARY KEY (`id`),
   ADD KEY `id_creator` (`id_creator`),
+  ADD UNIQUE KEY `id_product_id_creator` (`id_product`, `id_creator`),
   ADD KEY `id_product` (`id_product`);
 
 --

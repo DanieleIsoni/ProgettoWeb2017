@@ -169,6 +169,7 @@
                                     <fmt:message key="service"/>: <input type="hidden" value="1" name="service" class="rating"  />
                                     <br/>
                                     <fmt:message key="value_for_money"/>: <input type="hidden" value="1" name="money" class="rating"  />
+                                    <input type="hidden" name="prod_id" value="${product.id}"/>
 
 
 
@@ -176,7 +177,7 @@
 
                             </div>
                             <div class="col-md-6">
-
+                                <input name="title"  class="form-control"/>
                                 <textarea name="description" class="form-control" id="description"></textarea>
 
                             </div>
