@@ -338,5 +338,37 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
         }
     }
 
+    @Override
+    public User getByEmail(String mail) throws DAOException {
+         if (mail == null) {
+            throw new DAOException("mail is null");
+        }
+        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM users WHERE email = ?")) {
+            stm.setString(1, mail);
+            try (ResultSet rs = stm.executeQuery()) {
+
+                rs.next();
+                //rs.getInt("id"),rs.getInt("latitude"),rs.getInt("longitude"),rs.getString("address")
+                User user = new User();
+                user.setId(rs.getInt("id"));
+                user.setLastName(rs.getString("last_name"));
+                user.setFirstName(rs.getString("first_name"));
+                user.setPassword(rs.getString("password"));
+                user.setEmail(rs.getString("email"));
+                user.setCapability(rs.getInt("capability"));
+                user.setUsername(rs.getString("username"));
+                    String avatar= rs.getString("avatar");
+                    if(avatar==null)
+                        avatar="images/noimage.png";
+                    user.setAvatar(avatar);
+
+                return user;
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Impossible to get the user for the passed email", ex);
+        }
+        
+    }
+
     
 }
