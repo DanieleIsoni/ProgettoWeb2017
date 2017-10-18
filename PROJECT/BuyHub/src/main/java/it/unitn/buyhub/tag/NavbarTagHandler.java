@@ -131,8 +131,12 @@ public class NavbarTagHandler extends SimpleTagSupport {
 
     private String generateUserList(User currentUser) {
         String dropdown=  "<a href='" + Utility.getUrl(pageContext,"restricted/myself.jsp") + "' class='btn btn-primary user' role='button'>" + Utility.getLocalizedString(pageContext,"user_page") + "</a>";
-        if(currentUser.getCapability()==Utility.CAPABILITY.SHOP.ordinal()){
-            dropdown+="<a href='" + Utility.getUrl(pageContext,"restricted/myshop.jsp") + "' class='btn btn-primary user' role='button'>" + Utility.getLocalizedString(pageContext,"myshop_page") + "</a>";
+        if(currentUser.getCapability()>=Utility.CAPABILITY.SHOP.ordinal()){
+            dropdown+="<a href='" + Utility.getUrl(pageContext,"restricted/myshop.jsp") + "' class='btn btn-success user' role='button'>" + Utility.getLocalizedString(pageContext,"myshop_page") + "</a>";
+        }
+        if(currentUser.getCapability()>=Utility.CAPABILITY.ADMIN.ordinal()){
+            dropdown+="<a href='" + Utility.getUrl(pageContext,"restricted/admin/shops") + "' class='btn btn-warning user' role='button'>" + Utility.getLocalizedString(pageContext,"shops_management") + "</a>";
+            dropdown+="<a href='" + Utility.getUrl(pageContext,"restricted/admin/users") + "' class='btn btn-warning user' role='button'>" + Utility.getLocalizedString(pageContext,"users_management") + "</a>";
         }
         dropdown+="<a href='" + Utility.getUrl(pageContext,"logout") + "' class='btn btn-danger user' role='button'>" + Utility.getLocalizedString(pageContext,"logout") + "</a>";
         

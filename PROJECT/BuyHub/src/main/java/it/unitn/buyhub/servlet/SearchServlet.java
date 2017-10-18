@@ -141,7 +141,7 @@ public class SearchServlet extends HttpServlet {
                 {
                     p=Integer.parseInt(request.getParameter("p"));
                 }
-
+                
                 int from = Math.max(0,(p-1)*ProductsPerPage);
                 int to = Math.min(products.size(),(p)*ProductsPerPage);
 
@@ -321,7 +321,7 @@ public class SearchServlet extends HttpServlet {
               for (Iterator<Coordinate> iterator = c.iterator(); iterator.hasNext() ;){    // && test;) {
                   Coordinate coordinate = iterator.next();
                   test= test || distance(coordinate.getLatitude(), coordinate.getLongitude(), lat, lng)< dist;
-                  Log.info(distance(coordinate.getLatitude(), coordinate.getLongitude(), lat, lng));
+               
               }
 
 

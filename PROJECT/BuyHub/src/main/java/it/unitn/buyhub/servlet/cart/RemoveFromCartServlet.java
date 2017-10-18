@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package it.unitn.buyhub.servlet;
+package it.unitn.buyhub.servlet.cart;
 
+import it.unitn.buyhub.dao.entities.Cart;
 import it.unitn.buyhub.dao.entities.User;
 import it.unitn.buyhub.utils.Log;
 import java.io.IOException;
@@ -19,7 +20,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author matteo
  */
-public class LogoutServlet extends HttpServlet {
+public class RemoveFromCartServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,15 +36,12 @@ public class LogoutServlet extends HttpServlet {
           response.setContentType("text/html;charset=UTF-8");
 
         HttpSession session = request.getSession(false);
-        if (session != null) {
-            User user = (User) session.getAttribute("authenticatedUser");
-            if (user != null) {
-                session.setAttribute("authenticatedUser", null);
-                session.invalidate();
-                    Log.info("User "+user.getId()+" logged out");
-            
-                user = null;
-            }
+        
+        
+        if (session != null && request.getParameter("id")!=null) {
+            int id = Integer.valueOf(request.getParameter("id"));
+            Cart cart = (Cart) session.getAttribute("userCart");
+            cart.removeProduct(id);
         }
 
         String contextPath = getServletContext().getContextPath();
@@ -52,7 +50,7 @@ public class LogoutServlet extends HttpServlet {
         }
 
         
-        response.sendRedirect(response.encodeRedirectURL(contextPath + "login.jsp"));
+        response.sendRedirect(response.encodeRedirectURL(contextPath + "cart.jsp"));
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

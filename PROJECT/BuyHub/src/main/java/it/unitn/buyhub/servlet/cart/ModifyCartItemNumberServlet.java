@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package it.unitn.buyhub.servlet;
+package it.unitn.buyhub.servlet.cart;
 
 import it.unitn.buyhub.dao.entities.Cart;
 import it.unitn.buyhub.dao.entities.User;
@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author matteo
  */
-public class AddToCartServlet extends HttpServlet {
+public class ModifyCartItemNumberServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,7 +44,7 @@ public class AddToCartServlet extends HttpServlet {
                 int count = Integer.valueOf(request.getParameter("count"));
 
                 Cart cart = (Cart) session.getAttribute("userCart");
-                cart.addProduct(id, count);
+                cart.setProduct(id, count);
             } catch (NumberFormatException ec) {
 
             }

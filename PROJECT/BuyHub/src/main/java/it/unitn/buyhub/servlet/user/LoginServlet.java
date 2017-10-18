@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package it.unitn.buyhub.servlet;
+package it.unitn.buyhub.servlet.user;
 
 import it.unitn.buyhub.dao.UserDAO;
 import it.unitn.buyhub.dao.entities.User;
@@ -82,7 +82,13 @@ public class LoginServlet extends HttpServlet {
             {
                 Log.info("User " + user.getId() + " logged in");
                 request.getSession().setAttribute("authenticatedUser", user);
-                response.sendRedirect(response.encodeRedirectURL(contextPath + "home.jsp"));
+                String target=contextPath+"home.jsp";
+                if(request.getSession().getAttribute("origin")!=null)
+                {
+                    target=(String) request.getSession().getAttribute("origin");
+                }
+                request.getSession().removeAttribute("origin");
+                response.sendRedirect(response.encodeRedirectURL(target));
             }
             
         } catch (DAOException ex) {

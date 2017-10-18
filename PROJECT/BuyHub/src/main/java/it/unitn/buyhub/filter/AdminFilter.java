@@ -7,6 +7,7 @@ package it.unitn.buyhub.filter;
 
 import it.unitn.buyhub.dao.entities.User;
 import it.unitn.buyhub.utils.Log;
+import it.unitn.buyhub.utils.Utility;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
@@ -23,10 +24,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- *
- * @author matteo
+ * This filter allow only administrators to see the pages under restricted/admin directory
+ * Redirect to login page if the user isn't administrator
+ * @author Massimo Girondi
  */
-public class AuthenticationFilter implements Filter {
+public class AdminFilter implements Filter {
 
     private static final boolean DEBUG = false;
 
@@ -35,13 +37,13 @@ public class AuthenticationFilter implements Filter {
     // configured. 
     private FilterConfig filterConfig = null;
 
-    public AuthenticationFilter() {
+    public AdminFilter() {
     }
 
     private boolean doBeforeProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (DEBUG) {
-            log("AuthenticationFilter:DoBeforeProcessing");
+            log("AdminFilter:DoBeforeProcessing");
         }
 
         if (request instanceof HttpServletRequest) {
@@ -51,19 +53,11 @@ public class AuthenticationFilter implements Filter {
             if (session != null) {
                 user = (User) session.getAttribute("authenticatedUser");
             }
-            if (user == null) {
+            if (user == null || user.getCapability()<Utility.CAPABILITY.ADMIN.ordinal()) {
                 String contextPath = servletContext.getContextPath();
                 if (!contextPath.endsWith("/")) {
                     contextPath += "/";
                 }
-                
-                //Save the target url to redirect after login
-                HttpServletRequest req=((HttpServletRequest) request);
-                String qs="";
-                if(req.getQueryString()!=null)
-                    qs="?"+ req.getQueryString();
-                req.getSession().setAttribute("origin", req.getRequestURI()+qs);
-                //Log.info(((HttpServletRequest) request).getRequestURI());
                 ((HttpServletResponse) response).sendRedirect(((HttpServletResponse) response).encodeRedirectURL(contextPath + "login.jsp"));
                 return false;
             }
@@ -75,7 +69,7 @@ public class AuthenticationFilter implements Filter {
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (DEBUG) {
-            log("AuthenticationFilter:DoAfterProcessing");
+            log("AdminFilter:DoAfterProcessing");
         }
     }
 
@@ -97,7 +91,7 @@ public class AuthenticationFilter implements Filter {
             throws IOException, ServletException {
 
         if (DEBUG) {
-            log("AuthenticationFilter:doFilter()");
+            log("AdminFilter:doFilter()");
         }
 
         if (!doBeforeProcessing(request, response)) {
@@ -174,7 +168,7 @@ public class AuthenticationFilter implements Filter {
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
             if (DEBUG) {
-                log("AuthenticationFilter:Initializing filter");
+                log("AdminFilter:Initializing filter");
             }
         }
     }
@@ -188,9 +182,9 @@ public class AuthenticationFilter implements Filter {
     @Override
     public String toString() {
         if (filterConfig == null) {
-            return ("AuthenticationFilter()");
+            return ("AdminFilter()");
         }
-        StringBuilder sb = new StringBuilder("AuthenticationFilter(");
+        StringBuilder sb = new StringBuilder("AdminFilter(");
         sb.append(filterConfig);
         sb.append(")");
         return (sb.toString());

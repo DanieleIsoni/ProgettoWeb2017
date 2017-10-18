@@ -113,8 +113,8 @@ public class CreateNewShopServlet extends HttpServlet {
                         }
                     }
                 }
-                String msg="A new shop has been created and need to be validated";
-                String linkMail = PropertyHandler.getInstance().getValue("baseUrl")+"home.jsp";
+                String msg="Dear admin,\n<br/> a new shop has been created and need to be validated";
+                String linkMail = PropertyHandler.getInstance().getValue("baseUrl")+"restricted/admin/shops";
                 Mailer.mailToAdmins(PropertyHandler.getInstance().getValue("noreplyMail"), "New shop created", msg, linkMail,"Go to Shops Manager", super.getServletContext());
                 
                 response.sendRedirect(contextPath + "restricted/myself.jsp");
