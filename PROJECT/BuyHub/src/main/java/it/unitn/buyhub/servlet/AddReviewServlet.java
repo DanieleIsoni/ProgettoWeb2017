@@ -32,11 +32,11 @@ import javax.servlet.http.HttpServletResponse;
  * @author Daniso
  */
 public class AddReviewServlet extends HttpServlet {
-    
+
     private ReviewDAO reviewDao;
     private UserDAO userDao;
     private ProductDAO productDAO;
-    
+
     @Override
     public void init() throws ServletException {
         DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
@@ -66,24 +66,23 @@ public class AddReviewServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         response.setContentType("text/html;charset=UTF-8");
         String description = (String) request.getParameter("description");
         String total = (String) request.getParameter("total");
-        
+
         String productId = (String) request.getParameter("prod_id");
         String quality = (String) request.getParameter("quality");
         String service = (String) request.getParameter("service");
         String money = (String) request.getParameter("money");
         String title = (String) request.getParameter("title");
         User owner = (User) request.getSession().getAttribute("authenticatedUser");
-        
+
         String contextPath = getServletContext().getContextPath();
         if (!contextPath.endsWith("/")) {
             contextPath += "/";
         }
-        System.out.println("PRODID "+productId);
 
-        
         try {
             if (title != null && !title.equals("") && productId != null && owner != null && description != null && total != null && quality != null && service != null && money != null
                     && !description.equals("") && !total.equals("") && !quality.equals("") && !service.equals("") && !money.equals("")) {
@@ -99,20 +98,25 @@ public class AddReviewServlet extends HttpServlet {
                 review.setService(Integer.valueOf(service));
                 review.setTitle(title);
                 review.setValueForMoney(Integer.valueOf(money));
-
-                long id = reviewDao.insert(review);
-                if (id == 0) {
-                    Log.error("Error adding review, already used");
-
-                    response.sendRedirect(response.encodeRedirectURL(contextPath + "product?id=" + prod.getId() + "&error=1"));
+                Long id = 0l;
+                try {
+                    id = reviewDao.insert(review);
+                } catch (DAOException ex) {
+                    Log.warn("Error inserting review, maybe already in the db");
                 }
+                System.out.println(id + "TEST");
+                if (id == 0) {
+                    response.sendRedirect(response.encodeRedirectURL(contextPath + "product?id=" + productId + "&error=1"));
+
+                    Log.error("Error adding review, already used");
+                } else {
+                    response.sendRedirect(response.encodeRedirectURL(contextPath + "product?id=" + productId));
+                }
+
             }
-        } catch (DAOException ex) {
-
+        } catch (Exception ex) {
             Log.error("Error adding review" + ex.getMessage().toString());
-
         }
-        response.sendRedirect(response.encodeRedirectURL(contextPath + "product?id="+productId));
     }
 
     /**
@@ -142,5 +146,5 @@ public class AddReviewServlet extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
     }
-    
+
 }

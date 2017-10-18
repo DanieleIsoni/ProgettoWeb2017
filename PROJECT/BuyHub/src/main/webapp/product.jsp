@@ -9,6 +9,7 @@
 <%@taglib prefix="gallery" uri="/WEB-INF/tld/gallery.tld"%>
 <%@taglib prefix="pr" uri="/WEB-INF/tld/product.tld"%>
 <%@taglib prefix="map" uri="/WEB-INF/tld/map.tld"%>
+<%@taglib prefix="err" uri="/WEB-INF/tld/errors.tld" %>
 
 
 
@@ -22,7 +23,9 @@
     <body >
         <%@include file="common/navbar.jsp" %>
 
+
         <div class="container header">
+            <err:ErrorMessage page="product"/>
             <div class="row">
                 <div class="col-md-12 product_category">
                     <pr:category></pr:category>
@@ -179,7 +182,6 @@
                             <div class="col-md-6">
                                 <input name="title" placeholder="<fmt:message key="review_title"/>" class="form-control"/>
                                 <textarea name="description" placeholder="<fmt:message key="review_description"/>" class="form-control" id="description"></textarea>
-
                             </div>
                         </div>
                         <div class="center">
