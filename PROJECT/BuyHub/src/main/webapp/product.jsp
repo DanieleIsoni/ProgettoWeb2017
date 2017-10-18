@@ -96,6 +96,9 @@
                 </c:if>
 
                 <c:forEach items="${reviews}" var="element">
+                    <c:if test="${element.creator.id == authenticatedUser.id}">
+                        ADD X button
+                    </c:if>
 
                     <div class="row review">
 
