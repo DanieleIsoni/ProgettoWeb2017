@@ -97,7 +97,7 @@ public class CartTagHandler extends SimpleTagSupport {
                     + "   <tbody>\n"
                     + "      <tr>\n"
                     + "         <th>\n"
-                    + "             <h2 class=\"media-body\">" + Utility.getLocalizedString(pageContext, "total") + "</h2>"
+                    + "             <h2 class=\"media-body\">" + Utility.getLocalizedString(pageContext, "cart_total") + "</h2>"
                     + "         </th>\n"
                     + "         <th>\n"
                     + "            <p class=\"total-element-cart\">" + total + " EUR</p>\n"

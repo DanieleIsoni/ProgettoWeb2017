@@ -177,14 +177,13 @@
 
                             </div>
                             <div class="col-md-6">
-                                <input name="title"  class="form-control"/>
-                                <textarea name="description" class="form-control" id="description"></textarea>
+                                <input name="title" placeholder="<fmt:message key="review_title"/>" class="form-control"/>
+                                <textarea name="description" placeholder="<fmt:message key="review_description"/>" class="form-control" id="description"></textarea>
 
                             </div>
-                            <div class="center">
-                                <br><br><br><br><br><br>
-                                <input type="submit" value=" <fmt:message key="add_review"/>" class="btn btn-success" />
-                            </div>
+                        </div>
+                        <div class="center">
+                            <input type="submit" value=" <fmt:message key="add_review"/>" class="btn btn-success" />
                         </div>
                     </form>
                 </c:if>
