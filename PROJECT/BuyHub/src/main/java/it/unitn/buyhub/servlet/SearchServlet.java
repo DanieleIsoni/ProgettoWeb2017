@@ -13,6 +13,8 @@ import it.unitn.buyhub.dao.persistence.factories.DAOFactory;
 import it.unitn.buyhub.utils.Log;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
@@ -116,8 +118,8 @@ public class SearchServlet extends HttpServlet {
                     throw new ServletException("Error on retreving products: "+ex.toString());
                 }
 
-
-
+                
+                
 
                 int count = products.size();
 
@@ -134,7 +136,23 @@ public class SearchServlet extends HttpServlet {
                     productComparator comp=new productComparator(s);
                     products.sort(comp);
                 }
-
+                
+                List<Product> p2=null;
+                if(Integer.parseInt(request.getParameter("s"))!=2)
+                {
+                    p2=new ArrayList<Product>(products);
+                    p2.sort(new productComparator(2));
+                }
+                int minPrice=0;
+                int maxPrice=0;
+                if(count>0)
+                {
+                    minPrice=(int) p2.get(0).getPrice();
+                    maxPrice=(int) p2.get(p2.size()-1).getPrice();
+                }
+                
+                
+                
 
                 //paginazione
                 if(request.getParameter("p")!=null && Integer.parseInt(request.getParameter("p"))>0)
@@ -153,7 +171,7 @@ public class SearchServlet extends HttpServlet {
 
 
                 Gson gson=new Gson();
-                String result="{\"s\":"+s+",\n\"p\":"+p+",\n\"pages\":"+pages+",\n";
+                String result="{\"s\":"+s+",\n\"p\":"+p+",\n\"pages\":"+pages+",\n\"min\":"+minPrice+",\n\"max\":"+maxPrice+",\n";
                 //non voglio le informazioni sugli utenti nel JSON
                 for (Product product : products) {
                     product.getShop().setOwner(null);
