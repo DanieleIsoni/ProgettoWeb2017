@@ -13,14 +13,15 @@
         <%@include file="../common/header.jsp" %>
         <title><fmt:message key="mod_account_title"/> - BuyHub</title>
     </head>
-    <body class="text-center login">
-
+    <body >
+        <div class="text-center login">
         <%@include file="../common/navbar.jsp" %>
         <img src="../images/icon.png" alt="BuyHub logo" height="42" width="42">
         <h3><fmt:message key="mod_account_desc"/></h3>
         <br>
         <div class="panel panel-default panel-footer">
-            <form method="POST" id="modAccount-form" action="ModifyAccount">
+             <err:ErrorMessage page="modifyAccount"/>
+            <form method="POST" id="modAccount-form" action="ModifyAccount" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="first_name"><fmt:message key="first_name"/>:</label>
                     <input type="text" name="first_name" value=${authenticatedUser.firstName} class="form-control" id="first_name" disabled>
@@ -49,5 +50,5 @@
                 <button type="submit" class="btn btn-success"><fmt:message key="save_changes"/></button>
             </form>
         </div>
-
-        <%@include file="../common/footer.jsp" %>
+        </div>
+<%@include file="../common/footer.jsp" %>
