@@ -37,7 +37,6 @@
                     <label for="email"><fmt:message key="email_address"/>:</label>
                     <input type="email" name="email" class="form-control" id="email">
                 </div>
-
                 <div class="form-group">
                     <label for="username"><fmt:message key="username"/>:</label>
                     <input type="text" name="username" class="form-control" id="username">
@@ -50,7 +49,12 @@
                     <label><fmt:message key="repeat_password"/>:</label>
                     <input type="password" name="password2" class="form-control" id="password2">
                 </div>
-
+                <div class="form-group">
+                    <label class="form-check-label">
+                        <input type="checkbox" name="conditions" class="form-check-input" id="conditions" required> <a href="disclaimer.jsp"><fmt:message key="accept_conditions"/></a>
+                    </label>
+                </div>
+                    
                 <button type="submit" class="btn btn-success"><fmt:message key="sign_up"/></button>
             </form>
         </div>

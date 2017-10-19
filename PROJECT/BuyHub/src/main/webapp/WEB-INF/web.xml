@@ -120,6 +120,14 @@
         <servlet-name>UsersServlet</servlet-name>
         <servlet-class>it.unitn.buyhub.servlet.admin.UsersServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ChangePasswordServlet</servlet-name>
+        <servlet-class>it.unitn.buyhub.servlet.user.ChangePasswordServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RequestPasswordChange</servlet-name>
+        <servlet-class>it.unitn.buyhub.servlet.user.RequestPasswordChangeServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ModifyCartItemNumberServlet</servlet-name>
         <url-pattern>/modifycartitemnumber</url-pattern>
@@ -191,6 +199,14 @@
     <servlet-mapping>
         <servlet-name>UsersServlet</servlet-name>
         <url-pattern>/restricted/admin/users</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangePasswordServlet</servlet-name>
+        <url-pattern>/changePassword</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RequestPasswordChange</servlet-name>
+        <url-pattern>/requestPasswordChange</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

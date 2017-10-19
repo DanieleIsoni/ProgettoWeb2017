@@ -105,7 +105,7 @@ public interface UserDAO extends DAO<User, Integer> {
      * retrieving.
      *
      * @author Massimo Girondi
-     * @since 1.0.170425
+     * @since 1.0.171001
      */
     public List<User> getAdmins() throws DAOException;
     /**
@@ -120,4 +120,21 @@ public interface UserDAO extends DAO<User, Integer> {
      */
     @Override
     public User update(User user) throws DAOException;
+    
+        /**
+     * Returns the {@link User user} with the mail given (if present)
+     *
+     * @param mail the {@code mail} of the {@code user} to get.
+     * @return the {@code user} with the id equals to the one passed as
+     * parameter or {@code null} if no entities with that id is not present into
+     * the storage system.
+     * @throws DAOException if an error occurred during the information
+     * retrieving.
+     *
+     * @author Massimo Girondi
+     * @since 1.0.171018
+     */
+    
+    public User getByEmail(String mail) throws DAOException;
+
 }

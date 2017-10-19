@@ -173,7 +173,16 @@ function cerca_pagina(p)
 
 
             products.append(s);
-
+            /*
+            //Modifico il range dello slider del prezzo
+            var inputRange = $('.range');
+            var attributes = {
+                "min": msg.min,
+                "max": msg.max
+                
+            };
+            inputRange.attr(attributes).rangeslider('update', true);
+            */
             }
 
 
