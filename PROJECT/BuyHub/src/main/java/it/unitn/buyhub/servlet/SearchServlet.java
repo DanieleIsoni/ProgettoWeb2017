@@ -54,7 +54,12 @@ public class SearchServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
 
 
-            if(request.getParameter("q")!=null && request.getParameter("q").length()>0)
+            if((request.getParameter("q")!=null && request.getParameter("q").length()>0)
+                    || (request.getParameter("q").equals("") && (!request.getParameter("q").equals("")
+                                                                 ||!request.getParameter("min").equals("")
+                                                                 ||!request.getParameter("max").equals("")
+                                                                 ||!request.getParameter("minRev").equals("")        
+                    )))
             {
                 String q=request.getParameter("q");
 
@@ -102,7 +107,7 @@ public class SearchServlet extends HttpServlet {
                 try {
                     if(min!=0 || max!= Double.MAX_VALUE)
                         products = productDAO.getByNameAndPriceRange(q, min, max);
-                    else
+                    else 
                         products = productDAO.getByName(q);
 
                     //rimozioni non voluti
@@ -143,6 +148,10 @@ public class SearchServlet extends HttpServlet {
                     p2=new ArrayList<Product>(products);
                     p2.sort(new productComparator(2));
                 }
+                /*
+                //prezzo minimo e massimo dei prodotti cercati.
+                //commentato poichè lo slider non ci consente di modificare dinamicamente i valori di minimo e massimo
+                //Quindi la funzione, per il momento, è inutile
                 int minPrice=0;
                 int maxPrice=0;
                 if(count>0)
@@ -150,7 +159,7 @@ public class SearchServlet extends HttpServlet {
                     minPrice=(int) p2.get(0).getPrice();
                     maxPrice=(int) p2.get(p2.size()-1).getPrice();
                 }
-                
+                */
                 
                 
 
@@ -171,7 +180,7 @@ public class SearchServlet extends HttpServlet {
 
 
                 Gson gson=new Gson();
-                String result="{\"s\":"+s+",\n\"p\":"+p+",\n\"pages\":"+pages+",\n\"min\":"+minPrice+",\n\"max\":"+maxPrice+",\n";
+                String result="{\"s\":"+s+",\n\"p\":"+p+",\n\"pages\":"+pages+",\n";//+"\"min\":"+minPrice+",\n\"max\":"+maxPrice+",\n";
                 //non voglio le informazioni sugli utenti nel JSON
                 for (Product product : products) {
                     product.getShop().setOwner(null);
