@@ -26,7 +26,27 @@
                     <div class="profile_username">${authenticatedUser.username} </div>
 
                 </div>
+                    
+                    
             </div>
+
+
+
+            <div id="kv-avatar-errors-2" class="center-block" style="width:800px;display:none"></div>
+            <form class="form form-vertical" action="avatarUpload" method="post" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-sm-4 text-center">
+                        <div class="kv-avatar">
+                            <div class="file-loading">
+                                <input id="avatar-2" name="avatar" type="file" required >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+
+
             <div class="row ">
                 <div class="link_box col-md-6 col-centered">
                     <ul class="list-unstyled ">
@@ -45,6 +65,28 @@
             </div>
         </div>
     </div>
+    
+    <script>
+var btnCust = '<button type="submit" class="btn btn-secondary" title="Submit" >' +
+    '<fmt:message key="confirm"/></i>' +
+    '</button>'; 
+$("#avatar-2").fileinput({
+    overwriteInitial: true,
+    maxFileSize: 3000,
+    showClose: false,
+    showCaption: false,
+    showBrowse: false,
+    browseOnZoneClick: true,
+    removeLabel: '',
+    removeIcon: '<i class="glyphicon glyphicon-remove"></i>',
+    removeTitle: 'Cancel or reset changes',
+    elErrorContainer: '#kv-avatar-errors-2',
+    msgErrorClass: 'alert alert-block alert-danger',
+    defaultPreviewContent: '<img src="../images/noimage.png" alt="Your Avatar"><h6 class="text-muted">Click to select</h6>',
+    layoutTemplates: {main2: '{preview} ' +  btnCust + ' {remove} {browse}'},
+    allowedFileExtensions: ["jpg", "png", "gif"]
+});
+</script>
 
 
                 

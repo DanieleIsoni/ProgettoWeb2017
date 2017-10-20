@@ -21,7 +21,7 @@
         <br>
         <div class="panel panel-default panel-footer">
              <err:ErrorMessage page="modifyAccount"/>
-            <form method="POST" id="modAccount-form" action="ModifyAccount" enctype="multipart/form-data">
+            <form method="POST" id="modAccount-form" action="ModifyAccount">
                 <div class="form-group">
                     <label for="first_name"><fmt:message key="first_name"/>:</label>
                     <input type="text" name="first_name" value=${authenticatedUser.firstName} class="form-control" id="first_name" disabled>

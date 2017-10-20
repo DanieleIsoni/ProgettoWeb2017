@@ -9,10 +9,13 @@ import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import it.unitn.buyhub.dao.entities.User;
 import it.unitn.buyhub.utils.Log;
+import it.unitn.buyhub.utils.Utility;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Enumeration;
@@ -42,10 +45,7 @@ public class AvatarUploadServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         response.setContentType("text/plain");
         
-         
-        String dirName = "uploadedContent/avatars/";
         
-        String  realPath = getServletContext().getRealPath(dirName);
         // Use an advanced form of the constructor that specifies a character
         // encoding of the request (not of the file contents) and a file
         // rename policy.
@@ -63,10 +63,9 @@ public class AvatarUploadServlet extends HttpServlet {
                     File f = multi.getFile(filename);
                     String user = ((User) request.getSession().getAttribute("authenticatedUser")).getUsername();
                     
-                    File avatar = new File(realPath+ user + ".jpg");
-                    BufferedImage image = ImageIO.read(f);
                     
-                    ImageIO.write(image, "jpg", avatar);
+                    InputStream is= new FileInputStream(f);
+                    Utility.saveJPEG(is, "avatars/"+user);
                     
                     //RIDIMENSIONARE??
                     done=true;
