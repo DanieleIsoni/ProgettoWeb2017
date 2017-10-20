@@ -171,8 +171,8 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
      * @author Matteo Battilana
      * @since 1.0.170425
      */
-    public List<Shop> getByOwner(User owner) throws DAOException {
-        List<Shop> shops = new ArrayList<>();
+    public Shop getByOwner(User owner) throws DAOException {
+        Shop shop;
         if (owner == null) {
             throw new DAOException("owner is null");
         }
@@ -180,28 +180,23 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
             stm.setInt(1, owner.getId());
             try (ResultSet rs = stm.executeQuery()) {
 
-                while (rs.next()) {
+                rs.next();
 
-                    Shop shop = new Shop();
-                    shop.setId(rs.getInt("id"));
-                    shop.setDescription(rs.getString("description"));
-                    shop.setWebsite(rs.getString("website"));
-                    shop.setName(rs.getString("name"));
-                    shop.setShipment(rs.getString("shipment"));
-                    shop.setValidity(rs.getInt("validity"));
+                shop = new Shop();
+                shop.setId(rs.getInt("id"));
+                shop.setDescription(rs.getString("description"));
+                shop.setWebsite(rs.getString("website"));
+                shop.setName(rs.getString("name"));
+                shop.setShipment(rs.getString("shipment"));
+                shop.setValidity(rs.getInt("validity"));
+                shop.setOwner(owner);
 
-                    //Get owner associate
-                    shop.setOwner(owner);
-
-                    
-                    shops.add(shop);
-                }
-
+                
+                return shop;
             }
         } catch (SQLException ex) {
             throw new DAOException("Impossible to get the coordinates for the passed primary key", ex);
         }
-        return shops;
     }
 
     /**

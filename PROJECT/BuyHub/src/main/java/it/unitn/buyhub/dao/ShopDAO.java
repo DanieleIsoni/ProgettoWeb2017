@@ -79,7 +79,7 @@ public interface ShopDAO extends DAO<Shop, Integer> {
      * @author Matteo Battilana
      * @since 1.0.170425
      */
-    public List<Shop> getByOwner(User owner) throws DAOException;
+    public Shop getByOwner(User owner) throws DAOException;
 
     /**
      * Returns the list of the {@link Shop shop} with the name that contains the
