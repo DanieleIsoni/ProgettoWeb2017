@@ -137,6 +137,8 @@ public class AvatarUploadServlet extends HttpServlet {
                         userDao.update(user);
                         Log.info("User "+user.getUsername()+" changed avatar image");
                         done=true;
+                        response.sendRedirect(response.encodeRedirectURL(contextPath + "restricted/myself.jsp"));
+            
                     }
                     else  if(item.isFormField() && item.getFieldName().equals("remove"))
                     {
@@ -146,7 +148,7 @@ public class AvatarUploadServlet extends HttpServlet {
                             userDao.update(user);
                         } catch (DAOException ex) {
 
-                        Log.error("User "+user.getUsername()+" error removing avatar");
+                        Log.error("User "+user.getUsername()+" error removing avatar "+ex.getMessage());
                         response.sendRedirect(response.encodeRedirectURL(contextPath + "common/error.jsp"));
 
                         }
@@ -158,8 +160,12 @@ public class AvatarUploadServlet extends HttpServlet {
                     }
                 }
             }
+            
+            response.sendRedirect(response.encodeRedirectURL(contextPath + "restricted/myself.jsp"));
+            
+            
         } catch (Exception ex) {
-           Log.error("Error in avatar upload");
+           Log.error("Error in avatar upload:"+ ex.getMessage());
             
         }
         

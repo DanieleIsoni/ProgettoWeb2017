@@ -19,8 +19,8 @@
 
 
     <div class="container">
+        
         <div class="row">
-            <div class="row">
                 <div class="col-md-5">
                     <div class="profile_name">${authenticatedUser.firstName} ${authenticatedUser.lastName}</div>
                     <div class="profile_username">${authenticatedUser.username} </div>
@@ -29,21 +29,30 @@
                     
                     
             </div>
-
-                    <img id="avatar" src="../${authenticatedUser.avatar}" alt="your image" />
+           <div class="row">
+               <div class="col-md-6">
+                    <div class="row avatar_box">
+                    <img class="img-rounded img-responsive" id="avatar" src="../${authenticatedUser.avatar}" alt="your image" />
+                    </div>
+                    <div class="row">
                     <form method="POST" enctype="multipart/form-data" action="avatarUpload">
                         
-                        <input type="file" name="avatar" id="avatar_field"/>
-                        
-                        <input type="submit"/>  
-                        
-                        <input type="submit" name="remove" value="remove">
+                        <!--<input type="file" name="avatar" id="avatar_field"/>-->
+                        <!--Use a javascript code to avoid show file name-->
+                        <input type="file" id="avatar_field" name="avatar" style="display: none;" />
+                        <input type="button" class="btn btn-primary avatar_button" value="<fmt:message key="select_file"/>" onclick="document.getElementById('avatar_field').click();" />
+                        </div>
+                    <div class="row">
+                        <input type="submit" class="btn btn-success avatar_button" value="<fmt:message key="change_avatar"/>"/>  
+                        </div>
+                    <div class="row">
+                        <input type="submit" class="btn btn-danger avatar_button" name="remove" value="<fmt:message key="remove_avatar"/>">
                         
                     </form>
+                    </div>
+               </div>
                         
-
-
-
+                        <div class="col-md-6">
             <div class="row ">
                 <div class="link_box col-md-6 col-centered">
                     <ul class="list-unstyled ">
@@ -60,6 +69,9 @@
                     </ul>
                 </div>
             </div>
+            </div>
+
+                    </div>
         </div>
     </div>
                     
