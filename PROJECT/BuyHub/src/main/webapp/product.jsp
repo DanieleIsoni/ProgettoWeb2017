@@ -142,7 +142,7 @@
                     <hr/>    
                 </c:forEach>       
             </div>
-            <map:ShopMap page="product"/>
+            <map:ShopMap/>
         </div>
     </div>
 

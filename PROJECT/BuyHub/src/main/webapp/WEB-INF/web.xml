@@ -102,7 +102,7 @@
     </servlet>
     <servlet>
         <servlet-name>CreateNewShopServlet</servlet-name>
-        <servlet-class>it.unitn.buyhub.servlet.CreateNewShopServlet</servlet-class>
+        <servlet-class>it.unitn.buyhub.servlet.user.CreateNewShopServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>VerifyAccountServlet</servlet-name>
@@ -127,6 +127,10 @@
     <servlet>
         <servlet-name>RequestPasswordChange</servlet-name>
         <servlet-class>it.unitn.buyhub.servlet.user.RequestPasswordChangeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddProductServlet</servlet-name>
+        <servlet-class>it.unitn.buyhub.servlet.user.AddProductServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ModifyCartItemNumberServlet</servlet-name>
@@ -207,6 +211,10 @@
     <servlet-mapping>
         <servlet-name>RequestPasswordChange</servlet-name>
         <url-pattern>/requestPasswordChange</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddProductServlet</servlet-name>
+        <url-pattern>/AddProductServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

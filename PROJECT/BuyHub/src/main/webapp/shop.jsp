@@ -61,7 +61,7 @@
             </div>
                      <div class="row">
 
-                        <map:ShopMap page="shop"/>
+                        <map:ShopMap/>
                     </div>
 
                     <hr>

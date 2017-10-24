@@ -10,9 +10,9 @@
 <%@taglib prefix="pr" uri="../WEB-INF/tld/product.tld"%>
 <%@taglib prefix="map" uri="../WEB-INF/tld/map.tld"%>
 
-    <!DOCTYPE html>
-    <html>
-        <head>
+<!DOCTYPE html>
+<html>
+    <head>
         <%@include file="../common/header.jsp" %>
         <link href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" type="text/css"/>
         <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js" ></script>
@@ -52,10 +52,6 @@
 
                 </div>
             </div>
-            <div class="row">
-
-                <map:ShopMap page="myshop"/>
-            </div>
 
             <hr>
             <div class="row">
@@ -87,6 +83,12 @@
                     <td> <fmt:message key="name"/></td>
                     <td> <fmt:message key="category"/></td>
                     <td> <fmt:message key="price"/></td>
+                    <td>
+                        <fmt:message key="add_product" var="plus"/>
+                        <a href="addProduct.jsp?shopId=${myshop.id}" title="${plus}" class="btn btn-primary a-btn-slide-text mybtn">
+                            <span class="glyphicon myglyph glyphicon-plus" aria-hidden="true"></span>          
+                        </a>
+                    </td>
 
                     </thead>
 
@@ -99,7 +101,16 @@
                             <td>
                                 € <fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${product.price}"/>
                             </td>
-
+                            <td>
+                                <fmt:message key="edit_product" var="edit"/>
+                                <a href="#" title="${edit}" class="btn btn-primary a-btn-slide-text mybtn">
+                                    <span class="glyphicon myglyph glyphicon-edit" aria-hidden="true"></span>          
+                                </a>
+                                <fmt:message key="delete_product" var="delete"/>
+                                <a href="#" title="${delete}" class="btn btn-danger a-btn-slide-text mybtn">
+                                    <span class="glyphicon myglyph glyphicon-remove" aria-hidden="true"></span>          
+                                </a>
+                            </td>
                         </tr>
                     </c:forEach>
                 </table>
@@ -131,7 +142,7 @@
                 "language": {
 
                     /*Datatable localization*/
-                    <fmt:message key="datatable_language"/>
+        <fmt:message key="datatable_language"/>
 
                 }
             });

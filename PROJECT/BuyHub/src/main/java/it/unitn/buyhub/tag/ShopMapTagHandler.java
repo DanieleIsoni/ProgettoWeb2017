@@ -1,7 +1,6 @@
 package it.unitn.buyhub.tag;
 
 import it.unitn.buyhub.dao.entities.Coordinate;
-import it.unitn.buyhub.utils.Log;
 import it.unitn.buyhub.utils.Utility;
 import java.text.DecimalFormat;
 import java.util.List;
@@ -16,9 +15,6 @@ import javax.servlet.jsp.tagext.SimpleTagSupport;
  * @author massimo
  */
 public class ShopMapTagHandler extends SimpleTagSupport {
-    
-    String page;
-
   @Override
     public void doTag() throws JspException {
         JspWriter out = getJspContext().getOut();
@@ -26,13 +22,7 @@ public class ShopMapTagHandler extends SimpleTagSupport {
         PageContext pageContext= (PageContext) getJspContext();
         try {
             
-            List<Coordinate> coordinates;
-            if(page == "myshop"){
-                coordinates = ((List<Coordinate>)pageContext.getAttribute("mycoordinates",PageContext.REQUEST_SCOPE));
-            } else {
-                coordinates = ((List<Coordinate>)pageContext.getAttribute("coordinates",PageContext.REQUEST_SCOPE));
-            }    
-            
+            List<Coordinate> coordinates=((List<Coordinate>)pageContext.getAttribute("coordinates",PageContext.REQUEST_SCOPE));
             String markers="var markers=[";
             String details="var details=[";
             if(coordinates!=null && coordinates.size()!=0)
@@ -80,14 +70,6 @@ public class ShopMapTagHandler extends SimpleTagSupport {
         } catch (java.io.IOException ex) {
             throw new JspException("Error in ShopMapTagHandler tag", ex);
         }
-    }
-    
-    public String getPage() {
-        return page;
-    }
-
-    public void setPage(String page) {
-        this.page = page;
     }
     
 }

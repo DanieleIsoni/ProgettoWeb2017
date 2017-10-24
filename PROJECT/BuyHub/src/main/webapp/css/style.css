@@ -497,9 +497,31 @@ div.detailed_review_header
 {
     white-space: pre-line;
 
-    
+
 }
 
 .success_image{
     width: 150px;
+}
+
+/* myshop.jsp */
+
+a.mybtn{
+    width: 33px;
+    height: 30px; 
+    padding: 0;
+}
+
+.myglyph{
+    vertical-align: middle;
+}
+
+.table tr td{
+    text-align: center;
+}
+
+/* addProduct.jsp */
+
+#product_category{
+    width: 100%;
 }
