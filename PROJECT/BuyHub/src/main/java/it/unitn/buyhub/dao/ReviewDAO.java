@@ -124,4 +124,16 @@ public interface ReviewDAO extends DAO<Review, Integer> {
      */
     public List<Review> getByCreator(User creator) throws DAOException;
 
+    /**
+     * Revemore the review passed as parameter and returns it.
+     *
+     * @param review the review used to remove the persistence system.
+     * @return a boolean value, true if removed.
+     * @throws DAOException if an error occurred during the action.
+     *
+     * @author Matteo Battilana
+     * @since 1.0.170425
+     */
+    public boolean remove(Review review) throws DAOException;
+
 }

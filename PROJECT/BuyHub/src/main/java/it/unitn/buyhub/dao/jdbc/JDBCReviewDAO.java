@@ -35,7 +35,7 @@ import java.util.List;
  * @since 2017.04.25
  */
 public class JDBCReviewDAO extends JDBCDAO<Review, Integer> implements ReviewDAO {
-    
+
     private int limit = 5;
 
     public JDBCReviewDAO(Connection con) {
@@ -192,7 +192,7 @@ public class JDBCReviewDAO extends JDBCDAO<Review, Integer> implements ReviewDAO
         if (product == null) {
             throw new DAOException("product is null");
         }
-        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM reviews WHERE id_product = ?" + (isLimited?" LIMIT "+limit:""))) {
+        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM reviews WHERE id_product = ?" + (isLimited ? " LIMIT " + limit : ""))) {
             stm.setInt(1, product.getId());
             try (ResultSet rs = stm.executeQuery()) {
                 while (rs.next()) {
@@ -286,7 +286,7 @@ public class JDBCReviewDAO extends JDBCDAO<Review, Integer> implements ReviewDAO
      * @since 1.0.170425
      */
     @Override
-    public Review update(Review review) throws DAOException{
+    public Review update(Review review) throws DAOException {
         if (review == null) {
             throw new DAOException("parameter not valid", new IllegalArgumentException("The passed review is null"));
         }
@@ -300,7 +300,7 @@ public class JDBCReviewDAO extends JDBCDAO<Review, Integer> implements ReviewDAO
             std.setString(6, review.getTitle());
             std.setString(7, review.getDescription());
             std.setTimestamp(8, new Timestamp(review.getDateCreation().getTime()));
-            
+
             if (std.executeUpdate() == 1) {
                 return review;
             } else {
@@ -310,7 +310,6 @@ public class JDBCReviewDAO extends JDBCDAO<Review, Integer> implements ReviewDAO
             throw new DAOException("Impossible to update the review", ex);
         }
     }
-    
 
     /**
      * Returns the list of the {@link Review review} with the creator passed as
@@ -362,6 +361,35 @@ public class JDBCReviewDAO extends JDBCDAO<Review, Integer> implements ReviewDAO
             throw new DAOException("Impossible to get the pictures from creator", ex);
         }
         return reviews;
+    }
+
+    /**
+     * Revemore the review passed as parameter and returns it.
+     *
+     * @param review the review used to remove the persistence system.
+     * @return a boolean value, true if removed.
+     * @throws DAOException if an error occurred during the action.
+     *
+     * @author Matteo Battilana
+     * @since 1.0.170425
+     */
+    @Override
+    public boolean remove(Review review) throws DAOException {
+        if (review == null) {
+            throw new DAOException("parameter not valid", new IllegalArgumentException("The passed review is null"));
+        }
+
+        try (PreparedStatement std = CON.prepareStatement("DELETE FROM reviews WHERE id =?")) {
+            std.setInt(1, review.getId());
+
+            if (std.executeUpdate() == 1) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Impossible to update the review", ex);
+        }
     }
 
 }

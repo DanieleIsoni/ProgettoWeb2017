@@ -96,11 +96,11 @@
                 </c:if>
 
                 <c:forEach items="${reviews}" var="element">
-                    <c:if test="${element.creator.id == authenticatedUser.id}">
-                        ADD X button
-                    </c:if>
+
 
                     <div class="row review">
+
+
 
                         <div class="col-md-3">
                             <div class="review_img_box">
@@ -111,7 +111,7 @@
                                 <br/><time class="timeago" datetime="<fmt:formatDate pattern="yyyy-MM-dd'T'HH:mm:ss'Z'"  value="${element.dateCreation}" />"></time>
                             </div>
                         </div>
-                        <div class="col-md-9">
+                        <div class="col-md-8">
                             <%--<pr:ReviewStars value="${element.globalValue}"></pr:ReviewStars>--%>
                             <input type="hidden" class="rating" value="${element.globalValue}}" data-readonly/>
                             <div class="review-block-title"><a href="#rev${element.id}" id="rev${element.id}">
@@ -144,6 +144,12 @@
                             </div>
 
                         </div>
+                            <c:if test="${element.creator.id == authenticatedUser.id}">
+                                <div class="col-md-1">
+                                    <span class="glyphicon glyphicon-remove" id="logIcon" onclick="location.href = 'removereview?id_product=${product.shop.id}&id_review=${element.id}'"></span>
+                                </div>
+                            </c:if>
+
                     </div>
                     <hr/>    
                 </c:forEach>   
@@ -201,19 +207,19 @@
 
     <script src="http://i-like-robots.github.io/EasyZoom/dist/easyzoom.js"></script>
     <script>
-        var $easyzoom = $('.easyzoom').easyZoom();
+                                    var $easyzoom = $('.easyzoom').easyZoom();
 
-        // Setup thumbnails example
-        var api1 = $easyzoom.filter('.easyzoom--with-thumbnails').data('easyZoom');
+                                    // Setup thumbnails example
+                                    var api1 = $easyzoom.filter('.easyzoom--with-thumbnails').data('easyZoom');
 
-        $('.thumbnails').on('click', 'a', function (e) {
-            var $this = $(this);
+                                    $('.thumbnails').on('click', 'a', function (e) {
+                                        var $this = $(this);
 
-            e.preventDefault();
+                                        e.preventDefault();
 
-            // Use EasyZoom's `swap` method
-            api1.swap($this.data('standard'), $this.attr('href'));
-        });
+                                        // Use EasyZoom's `swap` method
+                                        api1.swap($this.data('standard'), $this.attr('href'));
+                                    });
 
     </script>
 

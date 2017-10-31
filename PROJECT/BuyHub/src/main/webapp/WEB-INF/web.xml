@@ -53,6 +53,10 @@
         <servlet-class>it.unitn.buyhub.servlet.ProductServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>RemoveReviewServlet</servlet-name>
+        <servlet-class>it.unitn.buyhub.servlet.RemoveReviewServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>AutoCompleteServlet</servlet-name>
         <servlet-class>it.unitn.buyhub.servlet.AutoCompleteServlet</servlet-class>
     </servlet>
@@ -103,6 +107,12 @@
         <servlet-name>VerifyAccountServlet</servlet-name>
         <servlet-class>it.unitn.buyhub.servlet.VerifyAccountServlet</servlet-class>
     </servlet>
+    
+    
+    <servlet-mapping>
+        <servlet-name>RemoveReviewServlet</servlet-name>
+        <url-pattern>/removereview</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ModifyCartItemNumberServlet</servlet-name>
         <url-pattern>/modifycartitemnumber</url-pattern>
