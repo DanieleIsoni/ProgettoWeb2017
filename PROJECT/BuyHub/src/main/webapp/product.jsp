@@ -146,7 +146,7 @@
                         </div>
                             <c:if test="${element.creator.id == authenticatedUser.id}">
                                 <div class="col-md-1">
-                                    <span class="glyphicon glyphicon-remove" id="logIcon" onclick="location.href = 'removereview?id_product=${product.shop.id}&id_review=${element.id}'"></span>
+                                    <a class="glyphicon glyphicon-remove" id="logIcon" href= 'removereview?id_product=${product.shop.id}&id_review=${element.id}' onclick="return confirm('<fmt:message key="confirm"/>')"></a>
                                 </div>
                             </c:if>
 
