@@ -55,6 +55,7 @@
                                 <input name="count" class="form-control" placeholder="<fmt:message key="number_of_product"/>"> 
                                 <span class="input-group-btn"> 
                                     <input type="hidden" name="id" value="${product.id}" />
+                                    <input type="hidden" name="shopid" value="${product.shop.id}" />
                                     <input type="submit" class="btn btn-success" value="<fmt:message key="buy" />"/>
                                 </span>
                             </div>

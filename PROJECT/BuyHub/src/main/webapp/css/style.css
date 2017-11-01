@@ -457,9 +457,21 @@ div.detailed_review_header
     vertical-align: middle;
 }
 
+.panel-default-cart{
+    margin-bottom: 70px;
+    width: 100% !important;
+    padding: 15px;
+}
+
 
 .to-right{
     text-align: right;
+}
+
+.to-right-cart{
+    width: 100%;
+    text-align: right;
+    padding: 17px;
 }
 
 /* createNewShop */
