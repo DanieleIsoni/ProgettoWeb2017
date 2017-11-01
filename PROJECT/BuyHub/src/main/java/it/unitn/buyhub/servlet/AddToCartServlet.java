@@ -37,16 +37,16 @@ public class AddToCartServlet extends HttpServlet {
 
         HttpSession session = request.getSession(false);
 
-        int id = -1;
+        String id = request.getParameter("id");
         if (session != null && request.getParameter("id") != null && !request.getParameter("id").equals("") && request.getParameter("count") != null && !request.getParameter("count").equals("") && request.getParameter("shopid") != null && !request.getParameter("shopid").equals("")) {
             try {
-                id = Integer.valueOf(request.getParameter("id"));
+                int idprod = Integer.valueOf(id);
                 int shopid = Integer.valueOf(request.getParameter("shopid"));
                 int count = Integer.valueOf(request.getParameter("count"));
 
                 Cart cart = (Cart) session.getAttribute("userCart");
-                cart.addProduct(shopid, id, count);
-            } catch (NumberFormatException ec) {
+                cart.addProduct(shopid, idprod, count);
+            } catch (Exception ec) {
 
             }
 

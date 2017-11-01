@@ -29,8 +29,23 @@ public class Cart implements Serializable {
         if (products.get(shopid) == null) {
             products.put(shopid, new ArrayList<CartElement>());
         }
-        products.get(shopid).add(ce);
+        
+        addProductIfAlready(products.get(shopid), ce);
     }
+    private void addProductIfAlready(ArrayList<CartElement> products,CartElement newce) {
+        boolean found = false;
+        for (CartElement ce : products) {
+            if (ce.getId() == newce.getId()) {
+                found = true;
+                ce.setNumber(ce.getNumber() + newce.getNumber());
+            }
+        }
+
+        if (!found) {
+            products.add(new CartElement(newce.getId(), newce.getNumber()));
+        }
+    }
+
 
     public void addProduct(int shopid, int id, int number) {
         insert(shopid, new CartElement(id, number));
