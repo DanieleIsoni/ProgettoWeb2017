@@ -88,8 +88,11 @@
             <div class="row reviews">
                 <div class="row reviews_header">
                     <fmt:message  key="customer_reviews"/>
-                </div>
 
+                </div>
+                <div class="row">
+                    <a href="reviews.jsp?id=${product.id}" ><fmt:message  key="show_all"/></a> 
+                </div>
                 <c:if test="${empty reviews}">
                     <div>
                         <fmt:message  key="no_review"/>
@@ -145,11 +148,11 @@
                             </div>
 
                         </div>
-                            <c:if test="${element.creator.id == authenticatedUser.id}">
-                                <div class="col-md-1">
-                                    <a class="glyphicon glyphicon-remove" id="logIcon" href= 'removereview?id_product=${product.shop.id}&id_review=${element.id}' onclick="return confirm('<fmt:message key="confirm"/>')"></a>
-                                </div>
-                            </c:if>
+                        <c:if test="${element.creator.id == authenticatedUser.id}">
+                            <div class="col-md-1">
+                                <a class="glyphicon glyphicon-remove" id="logIcon" href= 'removereview?id_product=${product.shop.id}&id_review=${element.id}' onclick="return confirm('<fmt:message key="confirm"/>')"></a>
+                            </div>
+                        </c:if>
 
                     </div>
                     <hr/>    

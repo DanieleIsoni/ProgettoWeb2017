@@ -18,6 +18,8 @@
             <h2><b><fmt:message key="reviews_title"/></b></h2>
             <br>
             <reviews:ReviewsList id="${param.id}"/>
+            
+            
 
         </div>
 
