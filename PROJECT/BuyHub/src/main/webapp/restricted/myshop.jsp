@@ -8,7 +8,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="gallery" uri="../WEB-INF/tld/gallery.tld"%>
 <%@taglib prefix="pr" uri="../WEB-INF/tld/product.tld"%>
-<%@taglib prefix="map" uri="../WEB-INF/tld/map.tld"%>
+<%@taglib prefix="shop" uri="../WEB-INF/tld/shop.tld" %>
 
 <!DOCTYPE html>
 <html>
@@ -71,50 +71,8 @@
                     ${myshop.shipment}
                 </div>
             </div>
-            <div class="row">
-
-                <div class="row shop_page_shipment_info">
-                    <fmt:message key="all_products_shop"/>
-                </div>
-
-                <table class="table table-striped table-bordered" id="products_table">
-                    <thead>
-
-                    <td> <fmt:message key="name"/></td>
-                    <td> <fmt:message key="category"/></td>
-                    <td> <fmt:message key="price"/></td>
-                    <td>
-                        <fmt:message key="add_product" var="plus"/>
-                        <a href="addProduct.jsp?shopId=${myshop.id}" title="${plus}" class="btn btn-primary a-btn-slide-text mybtn">
-                            <span class="glyphicon myglyph glyphicon-plus" aria-hidden="true"></span>          
-                        </a>
-                    </td>
-
-                    </thead>
-
-
-                    <c:forEach items="${myproducts}" var="product">
-                        <tr>
-                            <td><a href="product?id=${product.id}"/>${product.name}</a></td>
-                            <td><pr:category category="${product.category}"/> </td>
-
-                            <td>
-                                € <fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${product.price}"/>
-                            </td>
-                            <td>
-                                <fmt:message key="edit_product" var="edit"/>
-                                <a href="#" title="${edit}" class="btn btn-primary a-btn-slide-text mybtn">
-                                    <span class="glyphicon myglyph glyphicon-edit" aria-hidden="true"></span>          
-                                </a>
-                                <fmt:message key="delete_product" var="delete"/>
-                                <a href="#" title="${delete}" class="btn btn-danger a-btn-slide-text mybtn">
-                                    <span class="glyphicon myglyph glyphicon-remove" aria-hidden="true"></span>          
-                                </a>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </table>
-            </div>
+            
+            <shop:ProductTableTagHandler shopId="${myshop.id}"/>
 
         </div>
     </div>

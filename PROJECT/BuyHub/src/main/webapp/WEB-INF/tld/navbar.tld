@@ -34,5 +34,11 @@
       <rtexprvalue>true</rtexprvalue>
       <type>java.lang.String</type>
     </attribute>
+    <attribute>
+      <name>selected</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>int</type>
+    </attribute>
   </tag>
 </taglib>

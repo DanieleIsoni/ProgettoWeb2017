@@ -110,7 +110,7 @@ public class ShopServlet extends HttpServlet {
                 Log.info("Shop" + shop.getId() + "loaded");
             }
         } catch (DAOException|NumberFormatException ex) {
-            Log.error("Error getting shop");
+            Log.error("Error getting shop, "+ ex);
             response.sendRedirect(response.encodeRedirectURL(contextPath + "common/error.jsp"));
         }
     }

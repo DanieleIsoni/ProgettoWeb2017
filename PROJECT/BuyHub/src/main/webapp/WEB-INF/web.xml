@@ -35,6 +35,8 @@
     <filter-mapping>
         <filter-name>AuthenticationFilter</filter-name>
         <url-pattern>/restricted/*</url-pattern>
+        <url-pattern>/EditProductServlet</url-pattern>
+        <url-pattern>/ProductTableTagHandler</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>AdminFilter</filter-name>
@@ -132,6 +134,10 @@
         <servlet-name>AddProductServlet</servlet-name>
         <servlet-class>it.unitn.buyhub.servlet.user.AddProductServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EditProductServlet</servlet-name>
+        <servlet-class>it.unitn.buyhub.servlet.user.EditProductServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ModifyCartItemNumberServlet</servlet-name>
         <url-pattern>/modifycartitemnumber</url-pattern>
@@ -215,6 +221,10 @@
     <servlet-mapping>
         <servlet-name>AddProductServlet</servlet-name>
         <url-pattern>/AddProductServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditProductServlet</servlet-name>
+        <url-pattern>/EditProductServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
