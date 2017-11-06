@@ -20,6 +20,7 @@ import it.unitn.buyhub.dao.persistence.DAO;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.jdbc.JDBCDAO;
+import it.unitn.buyhub.utils.Log;
 import it.unitn.buyhub.utils.Pair;
 import it.unitn.buyhub.utils.Utility;
 import java.sql.Connection;
@@ -498,6 +499,19 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
         }
         return p;
 
+    }
+    
+    public void remove(Product product) throws DAOException{
+        try(PreparedStatement stm = CON.prepareStatement("DELETE FROM products WHERE products.id = ?")){
+            stm.setInt(1, product.getId());
+            if(stm.executeUpdate() == 1){
+                Log.info("Prod "+product.getId()+" deleted");
+            }else{
+                Log.error("Error in executing delete");
+            }
+        } catch (SQLException ex){
+            throw new DAOException("Impossible to delete the product",ex);
+        }
     }
 
 

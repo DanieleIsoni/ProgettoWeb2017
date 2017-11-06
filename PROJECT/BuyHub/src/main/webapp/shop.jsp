@@ -11,15 +11,16 @@
 
 <%@taglib prefix="pr" uri="/WEB-INF/tld/product.tld"%>
 <%@taglib prefix="map" uri="/WEB-INF/tld/map.tld"%>
+<%@taglib prefix="shop" uri="/WEB-INF/tld/shop.tld" %>
 <jsp:useBean id="products" type="java.util.List<Product>" scope="request"></jsp:useBean>
 
 
-<!DOCTYPE html>
-<html>
-    <head>
+    <!DOCTYPE html>
+    <html>
+        <head>
         <%@include file="common/header.jsp" %>
 
-        
+
         <link href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" type="text/css"/>
         <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js" ></script>
         <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
@@ -28,91 +29,64 @@
     <body >
         <%@include file="common/navbar.jsp" %>
 
-    <div class="container header">
+        <div class="container header">
 
             <div class="row">
                 <div class="col-md-4 g">
                     <gallery:Gallery></gallery:Gallery>
-                </div>
-
-
-                <div class="col-md-6">
-                    <div class="shop_page_name">
-                    ${shop.name}
-                </div>
-
-                <div class="shop_description">
-                    ${shop.description}
-                </div>
-            </div>
-
-            <div class="col-md-2">
-
-                <div class="owner_info">
-                    <fmt:message key="owner_info"/>
-                </div>
-                <div class="shop_page_owner">
-
-                    ${shop.owner.firstName} ${shop.owner.lastName}
-
-                </div>
-
-            </div>
-            </div>
-                     <div class="row">
-
-                        <map:ShopMap/>
                     </div>
 
-                    <hr>
-                    <div class="row">
-                        <div class="row shop_page_shipment_info">
 
-                        <fmt:message key="shipment_mode"/>
-
-                        </div>
-                         <div class="row shop_page_shipment">
-
-                        <c:if test="${empty shop.shipment}">
-                            <div>
-                                 <fmt:message  key="no_shipment"/>
-                            </div>
-                        </c:if>
-                         
-                             ${shop.shipment}
-                         </div>
+                    <div class="col-md-6">
+                        <div class="shop_page_name">
+                        ${shop.name}
                     </div>
+
+                    <div class="shop_description">
+                        ${shop.description}
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+
+                    <div class="owner_info">
+                        <fmt:message key="owner_info"/>
+                    </div>
+                    <div class="shop_page_owner">
+
+                        ${shop.owner.firstName} ${shop.owner.lastName}
+
+                    </div>
+
+                </div>
+            </div>
             <div class="row">
-                
+
+                <map:ShopMap/>
+            </div>
+
+            <hr>
+            <div class="row">
                 <div class="row shop_page_shipment_info">
-                    <fmt:message key="all_products_shop"/>
+
+                    <fmt:message key="shipment_mode"/>
+
                 </div>
-                
-                    <table class="table table-striped table-bordered" id="products_table">
-                    <thead>
+                <div class="row shop_page_shipment">
 
-                      <td> <fmt:message key="name"/></td>
-                      <td> <fmt:message key="category"/></td>
-                      <td> <fmt:message key="price"/></td>
+                    <c:if test="${empty shop.shipment}">
+                        <div>
+                            <fmt:message  key="no_shipment"/>
+                        </div>
+                    </c:if>
 
-                    </thead>
+                    ${shop.shipment}
+                </div>
+            </div>
+            
+            <shop:ProductTableTagHandler shopId="${shop.id}" owner="false"/>
 
-
-                   <c:forEach items="${products}" var="product">
-                      <tr>
-                          <td><a href="product?id=${product.id}"/>${product.name}</a></td>
-                        <td><pr:category category="${product.category}"/> </td>
-
-                        <td>
-                            € <fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${product.price}"/>
-                        </td>
-
-                      </tr>
-                   </c:forEach>
-                  </table>
-      </div>
-
-    </div>
+        </div>
     </div>
     <script src="http://i-like-robots.github.io/EasyZoom/dist/easyzoom.js"></script>
     <script>
@@ -131,21 +105,21 @@
         });
 
     </script>
-    
-     <script>
 
-     /*Inizializzazione tabella*/
-     $(document).ready(function() {
-          $('#products_table').DataTable( {
-        "language": {
+    <script>
 
-               /*Datatable localization*/
-               <fmt:message key="datatable_language"/>
+        /*Inizializzazione tabella*/
+        $(document).ready(function () {
+            $('#products_table').DataTable({
+                "language": {
 
-        }
-    } );
-      } );
+                    /*Datatable localization*/
+        <fmt:message key="datatable_language"/>
+
+                }
+            });
+        });
 
 
-     </script>
- <%@include file="common/footer.jsp" %>
+    </script>
+    <%@include file="common/footer.jsp" %>

@@ -72,7 +72,7 @@
                 </div>
             </div>
             
-            <shop:ProductTableTagHandler shopId="${myshop.id}"/>
+            <shop:ProductTableTagHandler shopId="${myshop.id}" owner="true"/>
 
         </div>
     </div>

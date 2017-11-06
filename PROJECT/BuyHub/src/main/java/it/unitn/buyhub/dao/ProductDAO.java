@@ -171,4 +171,6 @@ public interface ProductDAO extends DAO<Product, Integer> {
      * @since 1.0.170425
      */
     public List<Product> getByNameAndPriceRange(String name, double min, double max) throws DAOException;
+    
+    public void remove(Product product) throws DAOException;
 }

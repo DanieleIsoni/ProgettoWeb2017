@@ -30,5 +30,11 @@
       <rtexprvalue>true</rtexprvalue>
       <type>int</type>
     </attribute>
+    <attribute>
+      <name>owner</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>boolean</type>
+    </attribute>
   </tag>
 </taglib>

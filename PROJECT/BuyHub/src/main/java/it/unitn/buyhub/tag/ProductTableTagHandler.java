@@ -33,7 +33,8 @@ import javax.servlet.jsp.tagext.SimpleTagSupport;
  */
 public class ProductTableTagHandler extends SimpleTagSupport {
 
-    private int shopId=-1;
+    private int shopId;
+    private boolean owner;
 
     PageContext pageContext;
     private ShopDAO shopDAO;
@@ -71,13 +72,15 @@ public class ProductTableTagHandler extends SimpleTagSupport {
 "                    <thead>\n" +
 "                    <td> "+Utility.getLocalizedString(pageContext,"name")+"</td>\n" +
 "                    <td> "+Utility.getLocalizedString(pageContext,"category")+"</td>\n" +
-"                    <td> "+Utility.getLocalizedString(pageContext,"price")+"</td>\n" +
-"                    <td>\n" +
+"                    <td> "+Utility.getLocalizedString(pageContext,"price")+"</td>\n");
+            if (owner){
+                out.println("<td>\n" +
 "                        <a href=\"addProduct.jsp?shopId="+shopId+"\" title=\""+Utility.getLocalizedString(pageContext,"add_product")+"\" class=\"btn btn-primary a-btn-slide-text mybtn\">\n" +
 "                            <span class=\"glyphicon myglyph glyphicon-plus\" aria-hidden=\"true\"></span>          \n" +
 "                        </a>\n" +
-"                    </td>\n" +
-"                    </thead>");
+"                    </td>\n");
+            }
+            out.println("</thead>");
             if (products != null){
                 for(Product product: products){
                     out.println("<tr>\n" +
@@ -85,16 +88,18 @@ public class ProductTableTagHandler extends SimpleTagSupport {
 "                            <td>"+Utility.getCategory(pageContext, product.getCategory())+" </td>\n" +
 "                            <td>\n" +
 "                                € "+String.format("%.2f", product.getPrice())+"\n" +
-"                            </td>\n" +
-"                            <td>\n" +
+"                            </td>\n");
+                    if(owner){
+                        out.println("<td>\n" +
 "                                <a href=\"../EditProductServlet?code=1&prodId="+product.getId()+"\" title=\""+Utility.getLocalizedString(pageContext, "edit_product")+"\" class=\"btn btn-primary a-btn-slide-text mybtn\">\n" +
 "                                    <span class=\"glyphicon myglyph glyphicon-edit\" aria-hidden=\"true\"></span>          \n" +
 "                                </a>\n" +
-"                                <a href=\"#\" title=\""+Utility.getLocalizedString(pageContext, "delete_product")+"\" class=\"btn btn-danger a-btn-slide-text mybtn\">\n" +
+"                                <a href=\"../DeleteProductServlet?prodId="+product.getId()+"\" title=\""+Utility.getLocalizedString(pageContext, "delete_product")+"\" class=\"btn btn-danger a-btn-slide-text mybtn\" onclick=\"return confirm('Are you sure you want to continue')\">\n" +
 "                                    <span class=\"glyphicon myglyph glyphicon-remove\" aria-hidden=\"true\"></span>          \n" +
 "                                </a>\n" +
-"                            </td>\n" +
-"                        </tr>");
+"                            </td>\n");
+                    }
+                    out.println("</tr>");
                 }
             }
             out.println("</table>\n" +
@@ -106,6 +111,10 @@ public class ProductTableTagHandler extends SimpleTagSupport {
 
     public void setShopId(int shopId) {
         this.shopId = shopId;
+    }
+    
+    public void setOwner(boolean owner) {
+        this.owner = owner;
     }
     
     private void init() throws ServletException {
