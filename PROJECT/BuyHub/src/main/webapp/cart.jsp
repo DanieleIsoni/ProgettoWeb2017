@@ -15,7 +15,8 @@
         <%@include file="common/navbar.jsp" %>
 
         <div class="container">
-            <h2><b><fmt:message key="cart_title"/></b></h2>
+            <h2><b><fmt:message key="cart_title"/></b>    <button type="button" class="btn btn btn-danger" onclick="location.href = 'emptycart'"> <fmt:message key="empty_cart"/></button></h2>
+                       
             <br>
             <cart:CartList />
 

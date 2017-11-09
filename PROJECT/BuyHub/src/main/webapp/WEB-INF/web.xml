@@ -67,6 +67,10 @@
         <servlet-class>it.unitn.buyhub.servlet.ProductServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>RemoveReviewServlet</servlet-name>
+        <servlet-class>it.unitn.buyhub.servlet.RemoveReviewServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>AutoCompleteServlet</servlet-name>
         <servlet-class>it.unitn.buyhub.servlet.AutoCompleteServlet</servlet-class>
     </servlet>
@@ -97,6 +101,10 @@
     <servlet>
         <servlet-name>AddToCartServlet</servlet-name>
         <servlet-class>it.unitn.buyhub.servlet.cart.AddToCartServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddReviewServlet</servlet-name>
+        <servlet-class>it.unitn.buyhub.servlet.AddReviewServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>UploadedContentServlet</servlet-name>
@@ -130,6 +138,7 @@
         <servlet-name>RequestPasswordChange</servlet-name>
         <servlet-class>it.unitn.buyhub.servlet.user.RequestPasswordChangeServlet</servlet-class>
     </servlet>
+
     <servlet>
         <servlet-name>AddProductServlet</servlet-name>
         <servlet-class>it.unitn.buyhub.servlet.user.AddProductServlet</servlet-class>
@@ -142,6 +151,13 @@
         <servlet-name>DeleteProductServlet</servlet-name>
         <servlet-class>it.unitn.buyhub.servlet.user.DeleteProductServlet</servlet-class>
     </servlet>
+
+
+    <servlet-mapping>
+        <servlet-name>RemoveReviewServlet</servlet-name>
+        <url-pattern>/removereview</url-pattern>
+    </servlet-mapping>
+
     <servlet-mapping>
         <servlet-name>ModifyCartItemNumberServlet</servlet-name>
         <url-pattern>/modifycartitemnumber</url-pattern>
@@ -161,6 +177,10 @@
     <servlet-mapping>
         <servlet-name>EmptyCartServlet</servlet-name>
         <url-pattern>/emptycart</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddReviewServlet</servlet-name>
+        <url-pattern>/addreview</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ProductServlet</servlet-name>
