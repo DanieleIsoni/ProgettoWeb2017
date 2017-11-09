@@ -4,12 +4,14 @@
     Author     : massimo
 --%>
 
+<%@page import="it.unitn.buyhub.dao.entities.Product"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:useBean id="shop" class="it.unitn.buyhub.dao.entities.Shop" scope="request"/>
 <%@taglib prefix="gallery" uri="/WEB-INF/tld/gallery.tld"%>
 
 <%@taglib prefix="pr" uri="/WEB-INF/tld/product.tld"%>
 <%@taglib prefix="map" uri="/WEB-INF/tld/map.tld"%>
+<jsp:useBean id="products" type="java.util.List<Product>" scope="request"></jsp:useBean>
 
 
 <!DOCTYPE html>
@@ -17,6 +19,10 @@
     <head>
         <%@include file="common/header.jsp" %>
 
+        
+        <link href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" type="text/css"/>
+        <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js" ></script>
+        <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
         <title>${shop.name} - BuyHub</title>
     </head>
     <body >
@@ -76,6 +82,35 @@
                              ${shop.shipment}
                          </div>
                     </div>
+            <div class="row">
+                
+                <div class="row shop_page_shipment_info">
+                    <fmt:message key="all_products_shop"/>
+                </div>
+                
+                    <table class="table table-striped table-bordered" id="products_table">
+                    <thead>
+
+                      <td> <fmt:message key="name"/></td>
+                      <td> <fmt:message key="category"/></td>
+                      <td> <fmt:message key="price"/></td>
+
+                    </thead>
+
+
+                   <c:forEach items="${products}" var="product">
+                      <tr>
+                          <td><a href="product?id=${product.id}"/>${product.name}</a></td>
+                        <td><pr:category category="${product.category}"/> </td>
+
+                        <td>
+                            € <fmt:formatNumber maxFractionDigits="2" minFractionDigits="2" value="${product.price}"/>
+                        </td>
+
+                      </tr>
+                   </c:forEach>
+                  </table>
+      </div>
 
     </div>
     </div>
@@ -96,4 +131,21 @@
         });
 
     </script>
+    
+     <script>
+
+     /*Inizializzazione tabella*/
+     $(document).ready(function() {
+          $('#products_table').DataTable( {
+        "language": {
+
+               /*Datatable localization*/
+               <fmt:message key="datatable_language"/>
+
+        }
+    } );
+      } );
+
+
+     </script>
  <%@include file="common/footer.jsp" %>

@@ -180,7 +180,6 @@ CREATE TABLE `shops` (
   `description` text COLLATE utf8_bin NOT NULL,
   `website` varchar(256) COLLATE utf8_bin NOT NULL,
   `id_owner` int(11) NOT NULL,
-  `id_creator` int(11) NOT NULL,
   `shipment` text COLLATE utf8_bin,
 	`validity` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
@@ -280,7 +279,6 @@ ALTER TABLE `reviews`
 --
 ALTER TABLE `shops`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `id_creator` (`id_creator`),
   ADD KEY `id_owner` (`id_owner`);
 
 --

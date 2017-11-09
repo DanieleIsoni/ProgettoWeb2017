@@ -16,6 +16,7 @@ import it.unitn.buyhub.dao.persistence.DAO;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.jdbc.JDBCDAO;
+import it.unitn.buyhub.utils.Log;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -76,7 +77,7 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
      * @since 1.0.170425
      */
     public Long insert(Shop shops) throws DAOException {
-        try (PreparedStatement ps = CON.prepareStatement("INSERT INTO shops(name, description, web_site, id_owner,shipment, validity) VALUES(?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement ps = CON.prepareStatement("INSERT INTO shops(name, description, website, id_owner,shipment, validity) VALUES(?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, shops.getName());
             ps.setString(2, shops.getDescription());
             ps.setString(3, shops.getWebsite());
@@ -91,7 +92,7 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
                     try {
                         CON.rollback();
                     } catch (SQLException ex) {
-                        //TODO: log the exception
+                        Log.warn(ex);
                     }
                     throw new DAOException("Impossible to persist the new shops");
                 }
@@ -99,7 +100,7 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
                 try {
                     CON.rollback();
                 } catch (SQLException ex) {
-                    //TODO: log the exception
+                    Log.warn(ex);
                 }
                 throw new DAOException("Impossible to persist the new shops");
             }
@@ -107,7 +108,7 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
             try {
                 CON.rollback();
             } catch (SQLException ex1) {
-                //TODO: log the exception
+                Log.warn(ex1);
             }
             throw new DAOException("Impossible to persist the new notification", ex);
         }
@@ -314,8 +315,8 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
             std.setString(2, shop.getDescription());
             std.setString(3, shop.getWebsite());
             std.setInt(4, shop.getOwner().getId());
-            std.setInt(5, shop.getValidity());
-            std.setString(6, shop.getShipment());
+            std.setString(5, shop.getShipment());
+            std.setInt(6, shop.getValidity());
             std.setInt(7, shop.getId());
             
             if (std.executeUpdate() == 1) {

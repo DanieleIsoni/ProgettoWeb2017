@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package it.unitn.buyhub.servlet;
+package it.unitn.buyhub.servlet.user;
 
-import it.unitn.buyhub.dao.entities.Cart;
 import it.unitn.buyhub.dao.entities.User;
 import it.unitn.buyhub.utils.Log;
 import java.io.IOException;
@@ -20,7 +19,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author matteo
  */
-public class EmptyCartServlet extends HttpServlet {
+public class LogoutServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,8 +36,14 @@ public class EmptyCartServlet extends HttpServlet {
 
         HttpSession session = request.getSession(false);
         if (session != null) {
-            Cart cart = (Cart) session.getAttribute("userCart");
-            cart.removeAllProducts();
+            User user = (User) session.getAttribute("authenticatedUser");
+            if (user != null) {
+                session.setAttribute("authenticatedUser", null);
+                session.invalidate();
+                    Log.info("User "+user.getId()+" logged out");
+            
+                user = null;
+            }
         }
 
         String contextPath = getServletContext().getContextPath();
@@ -47,7 +52,7 @@ public class EmptyCartServlet extends HttpServlet {
         }
 
         
-        response.sendRedirect(response.encodeRedirectURL(contextPath + "cart.jsp"));
+        response.sendRedirect(response.encodeRedirectURL(contextPath + "login.jsp"));
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

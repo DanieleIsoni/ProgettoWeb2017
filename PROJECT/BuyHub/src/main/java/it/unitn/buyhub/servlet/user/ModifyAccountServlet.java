@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package it.unitn.buyhub.servlet;
+package it.unitn.buyhub.servlet.user;
 
 import it.unitn.buyhub.dao.UserDAO;
 import it.unitn.buyhub.dao.entities.User;
@@ -12,10 +12,7 @@ import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.factories.DAOFactory;
 import it.unitn.buyhub.utils.Log;
 import it.unitn.buyhub.utils.MD5;
-import static it.unitn.buyhub.utils.MD5.getMD5Hex;
-import it.unitn.buyhub.utils.Utility.CAPABILITY;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,9 +20,9 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author matteo
+ * @author Daniele Isoni
  */
-public class LoginServlet extends HttpServlet {
+public class ModifyAccountServlet extends HttpServlet {
 
     private UserDAO userDao;
 
@@ -42,8 +39,8 @@ public class LoginServlet extends HttpServlet {
             Log.error("Impossible to get dao factory for user storage system");
             throw new ServletException("Impossible to get dao factory for user storage system", ex);
         }
-
-        Log.info("LoginServlet init done");
+        
+        Log.info("ModifyAccountServlet init done");
     }
 
     /**
@@ -54,39 +51,37 @@ public class LoginServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      *
-     * @author Matteo Battilana
+     * @author Daniele Isoni
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String username = request.getParameter("username");
-        //already in MD5 hash
-        String password = request.getParameter("password");
-
+        String oldPassword = request.getParameter("old_password");
+        String newPassword = request.getParameter("new_password");
+        String newPassword2 = request.getParameter("new_password2");
+       
         String contextPath = getServletContext().getContextPath();
         if (!contextPath.endsWith("/")) {
             contextPath += "/";
         }
 
-        try {
-            User user = userDao.getByUsernameAndPassord(username, MD5.getMD5Hex(password));
-            if (user == null) {
-                Log.warn("User not found");
-                
-                response.sendRedirect(response.encodeRedirectURL(contextPath + "login.jsp?error=1"));
-            } else if(user.getCapability()==CAPABILITY.INVALID.ordinal()) {
-             Log.warn("User must validate");
-                response.sendRedirect(response.encodeRedirectURL(contextPath + "login.jsp?error=2"));
+        User user = (User) request.getSession().getAttribute("authenticatedUser");
+
+        if (user != null && (MD5.getMD5Hex(oldPassword)).equals(user.getPassword()) && newPassword != null && newPassword2 != null && newPassword.equals(newPassword2)) {
+            user.setPassword(MD5.getMD5Hex(newPassword));
+            try {
+                userDao.update(user);
+                Log.info("User "+ user.getId() + " updated");
+                response.sendRedirect(response.encodeRedirectURL(contextPath + "restricted/myself.jsp"));
+            } catch (DAOException ex) {
+                Log.error("Error updating user");
             }
-            else
-            {
-                Log.info("User " + user.getId() + " logged in");
-                request.getSession().setAttribute("authenticatedUser", user);
-                response.sendRedirect(response.encodeRedirectURL(contextPath + "home.jsp"));
-            }
-            
-        } catch (DAOException ex) {
-            Log.error("Error login");
+        } else if (newPassword!=null && newPassword2!=null && !newPassword.equals(newPassword2)) {
+            //Wrong new password
+            response.sendRedirect(response.encodeRedirectURL(contextPath + "restricted/modifyAccount.jsp?error=1"));
+
+        } else {
+            response.sendRedirect(response.encodeRedirectURL(contextPath + "restricted/modifyAccount.jsp?error=2"));
         }
     }
 }

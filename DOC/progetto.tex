@@ -8,6 +8,7 @@
 
 \chapter{Autocompletamento}
 
+\section{Barra di ricerca}
 L'autocompletamento presente nella barra di ricerca è stato realizzato mediante la libreria JavaScript  \textbf{bootstrap-ajax-typeahead}, la quale recupera i suggerimenti per l'autocompletamento dalla servlet AutoCompleteServlet mediante richieste Ajax, a cui la servlet rispone in formato JSON.
 
 La servlet effettua una ricerca per similarità (secondo l'algoritmo di Jaro-Winkler) all'interno di una lista, la quale viene caricata all'avvio dell'applicazione analizzando i nomi dei prodotti presenti nel database e aggiornata a intervalli prestabiliti (ogni 30 minuti) mediante le classi Executors e ScheduledExecutorService presenti all'interno di Java stesso.
@@ -16,6 +17,9 @@ Abbiamo scelto questa implementazione per evitare di sovraccaricare il database 
 Un'altra opzione, poi scartata, era aggiornare la lista dell'autocompletamento a ogni modifica della tabella dei prodotti, ma questo avrebbe rallentato ogni operazione sulla tabella stessa.
 
 L'algoritmo di Jaro-Winkler è utilizzato anche durante la scansione del database, per evitare di inserire nella lista dei suggerimenti titoli doppi o troppo simili (ad esempio ``frigo'' e ``frigorifero'') dato che questi verrebbero comunque selezionati al momento della ricerca, dove è applicata ancora una volta la similarità.
+
+\section{Indirizzo}
+L'autocompletamento presente nel form di creazione di un nuovo negozio per l'indirizzo è stato utilizzato mediante la libreria JavaScript \textbf{Google Maps API}. Queste API permettono tramite chiamate asincrone di ricevere i suggerimenti i quali vengono mostrati mediante un dropdown. Una volta fatta la scelta vengono riempiti i campi del bean con indirizzo completo, e coordinate (latitudine e longitudine).
 
 \chapter{Risultati della ricerca}
 la ricerca tra i prodotti è realizzata mediante una servlet che elabora la richiesta e restituisce la lista dei prodotti sottoforma di JSON. L'unico parametro obbligatorio è \texttt{q} che rappresenta la query di ricerca.

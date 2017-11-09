@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package it.unitn.buyhub.servlet;
+package it.unitn.buyhub.servlet.cart;
 
 import it.unitn.buyhub.dao.entities.Cart;
 import it.unitn.buyhub.dao.entities.User;
@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author matteo
  */
-public class RemoveFromCartServlet extends HttpServlet {
+public class ModifyCartItemNumberServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,15 +33,22 @@ public class RemoveFromCartServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-          response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
 
         HttpSession session = request.getSession(false);
-        
-        
-        if (session != null && request.getParameter("id")!=null) {
-            int id = Integer.valueOf(request.getParameter("id"));
-            Cart cart = (Cart) session.getAttribute("userCart");
-            cart.removeProduct(id);
+
+        int id = -1;
+        if (session != null && request.getParameter("id") != null && request.getParameter("count") != null) {
+            try {
+                id = Integer.valueOf(request.getParameter("id"));
+                int count = Integer.valueOf(request.getParameter("count"));
+
+                Cart cart = (Cart) session.getAttribute("userCart");
+                cart.setProduct(id, count);
+            } catch (NumberFormatException ec) {
+
+            }
+
         }
 
         String contextPath = getServletContext().getContextPath();
@@ -49,8 +56,7 @@ public class RemoveFromCartServlet extends HttpServlet {
             contextPath += "/";
         }
 
-        
-        response.sendRedirect(response.encodeRedirectURL(contextPath + "cart.jsp"));
+        response.sendRedirect(response.encodeRedirectURL(contextPath + "product?id=" + id));
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

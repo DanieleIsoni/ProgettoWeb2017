@@ -24,6 +24,12 @@
     <name>category</name>
     <tag-class>it.unitn.buyhub.tag.CategoryTaghandler</tag-class>
     <body-content>empty</body-content>
+    <attribute>
+        <name>category</name>
+        <required>false</required>
+        <type>java.lang.int</type>
+     <rtexprvalue>true</rtexprvalue>    
+    </attribute>
   </tag>
   <tag>
     <name>ReviewStars</name>

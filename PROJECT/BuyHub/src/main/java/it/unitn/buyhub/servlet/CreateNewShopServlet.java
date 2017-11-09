@@ -8,12 +8,15 @@ package it.unitn.buyhub.servlet;
 import it.unitn.buyhub.dao.CoordinateDAO;
 import it.unitn.buyhub.dao.ShopDAO;
 import it.unitn.buyhub.dao.UserDAO;
+import it.unitn.buyhub.dao.entities.Coordinate;
 import it.unitn.buyhub.dao.entities.Shop;
 import it.unitn.buyhub.dao.entities.User;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.factories.DAOFactory;
 import it.unitn.buyhub.utils.Log;
+import it.unitn.buyhub.utils.Mailer;
+import it.unitn.buyhub.utils.PropertyHandler;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.mail.Session;
@@ -60,14 +63,15 @@ public class CreateNewShopServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String name = (String) request.getAttribute("shopName");
-        String description = (String) request.getAttribute("description");
-        String website = (String) request.getAttribute("website");
-        String shipment = (String) request.getAttribute("shipment");
+        String name = (String) request.getParameter("shopName");
+        String description = (String) request.getParameter("description");
+        String website = (String) request.getParameter("website");
+        String shipment = (String) request.getParameter("shipment");
         User owner = (User) request.getSession().getAttribute("authenticatedUser");
-        String address = (String) request.getSession().getAttribute("autocomplete_address");
-        String openingHours = (String) request.getSession().getAttribute("opening_hours");
-        
+        String address = (String) request.getParameter("autocomplete_address");
+        String openingHours = (String) request.getParameter("opening_hours");
+        String longitude = (String) request.getParameter("longitude");
+        String latitude = (String) request.getParameter("latitude");
         String contextPath = getServletContext().getContextPath();
         if (!contextPath.endsWith("/")) {
             contextPath += "/";
@@ -78,23 +82,46 @@ public class CreateNewShopServlet extends HttpServlet {
                     description != null && !description.equals("") &&
                     website != null && !website.equals("") &&
                     shipment != null && !shipment.equals("") &&
-                    owner != null &&
-                    address != null && !address.equals("") &&
-                    openingHours != null && !openingHours.equals("")){
+                    owner != null ){
                 Shop newShop = new Shop();
                 newShop.setDescription(description);
                 newShop.setName(name);
                 newShop.setOwner(owner);
                 newShop.setWebsite(website);
-                Long id = shopDao.insert(newShop);
-                if (id == 0){
+                newShop.setValidity(0);
+                newShop.setShipment(shipment);
+                Long shop_id = shopDao.insert(newShop);
+                if (shop_id == 0){
                     Log.warn("Shop name already used");
                     response.sendRedirect(response.encodeRedirectURL(contextPath + "createNewShop.jsp?error=1"));
+                } else {
+                    Log.info("Shop inserted correctly");
+                    newShop.setId(shop_id.intValue());
+                    if(address != null && !address.equals("") &&
+                            openingHours != null && !openingHours.equals("")){
+                        Coordinate newcoordinate = new Coordinate();
+                        newcoordinate.setAddress(address);
+                        newcoordinate.setOpening_hours(openingHours);
+                        newcoordinate.setShop(newShop);
+                        newcoordinate.setLatitude(Double.valueOf(latitude));
+                        newcoordinate.setLongitude(Double.valueOf(longitude));
+                        Long coordinate_id = coordinateDao.insert(newcoordinate);
+                        if (coordinate_id == 0){
+                            Log.warn("Coordinate not inserted in Database");
+                        } else {
+                            Log.info("Coordinates inserted correctly");
+                        }
+                    }
                 }
+                String msg="Dear admin,\n<br/> a new shop has been created and need to be validated";
+                String linkMail = PropertyHandler.getInstance().getValue("baseUrl")+"restricted/admin/shops";
+                Mailer.mailToAdmins(PropertyHandler.getInstance().getValue("noreplyMail"), "New shop created", msg, linkMail,"Go to Shops Manager", super.getServletContext());
+                
+                response.sendRedirect(contextPath + "restricted/myself.jsp");
             }
         } catch (DAOException ex) {
             
-            Log.error("Error creating shop");
+            Log.error("Error creating shop "+ ex);
         }
     }
 

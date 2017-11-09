@@ -131,8 +131,16 @@ public class Utility {
      
      public static String saveJPEG(InputStream is)
      {
+         
+         return saveJPEG(is,UUID.randomUUID().toString());
+         
+     }
+     
+     
+     public static String saveJPEG(InputStream is,String filename)
+     {
          String format="jpg";
-         String name=UUID.randomUUID().toString()+"."+format;
+         String name=filename+"."+format;
       
           try {
              String uploads=PropertyHandler.getInstance().getValue("uploadedContentFolder");
@@ -171,6 +179,7 @@ public class Utility {
          return name;
          
      }
+     
 }
 
 

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package it.unitn.buyhub.servlet;
+package it.unitn.buyhub.servlet.admin;
 
 import it.unitn.buyhub.dao.CoordinateDAO;
 import it.unitn.buyhub.dao.PictureDAO;
@@ -16,10 +16,12 @@ import it.unitn.buyhub.dao.entities.Picture;
 import it.unitn.buyhub.dao.entities.Product;
 import it.unitn.buyhub.dao.entities.Review;
 import it.unitn.buyhub.dao.entities.Shop;
+import it.unitn.buyhub.dao.entities.User;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.factories.DAOFactory;
 import it.unitn.buyhub.utils.Log;
+import it.unitn.buyhub.utils.Mailer;
 import it.unitn.buyhub.utils.Utility;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -34,7 +36,7 @@ import javax.servlet.jsp.PageContext;
  *
  * @author massimo
  */
-public class ShopServlet extends HttpServlet {
+public class EnableShop extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,73 +47,70 @@ public class ShopServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private PictureDAO pictureDAO;
     private ShopDAO shopDAO;
-    private ProductDAO productDAO;
-    private CoordinateDAO coordinateDAO;
+    private UserDAO userDAO;
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-         
-        
-        
+
+
+
+
     }
     public void init() throws ServletException {
         DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
         if (daoFactory == null) {
             Log.error("Impossible to get dao factory for shop storage system");
-            throw new ServletException("Impossible to get dao factory for shop storage system");
+            throw new ServletException("Impossible to get dao factory for product storage system");
         }
         try {
-            shopDAO=daoFactory.getDAO(ShopDAO.class);
-            coordinateDAO=daoFactory.getDAO(CoordinateDAO.class);
-            pictureDAO=daoFactory.getDAO(PictureDAO.class);
-            productDAO=daoFactory.getDAO(ProductDAO.class);
+            shopDAO = daoFactory.getDAO(ShopDAO.class);
+            userDAO = daoFactory.getDAO(UserDAO.class);
             
         } catch (DAOFactoryException ex) {
             Log.error("Impossible to get dao factory for shop storage system");
             throw new ServletException("Impossible to get dao factory for shop storage system", ex);
         }
-        
-        Log.info("ShopServlet init done");
+        Log.info("EnableShop init done");
     }
-    
-    
+
+
     protected void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
-       
-       
+      
         String contextPath = getServletContext().getContextPath();
         if (!contextPath.endsWith("/")) {
             contextPath += "/";
         }
-        
-        
         try {
+        
+            if(request.getParameter("id")!=null && request.getParameter("status")!=null)
+            {
+                int id=Integer.parseInt(request.getParameter("id"));
+                char status=request.getParameter("status").charAt(0);
+
             
-            int id = Integer.parseInt(request.getParameter("id"));
-            Shop shop=shopDAO.getByPrimaryKey(id);
-            if (shop == null) {
-                response.sendRedirect(response.encodeRedirectURL(contextPath + "home.jsp"));
-            } else {
-                request.setAttribute("shop", shop);
+                Shop shop = shopDAO.getByPrimaryKey(id);
+                shop.setValidity(status=='1'? 1 : 0);//if not 1 is false-> don't enable shop
                 
-                List<Picture> pictures=pictureDAO.getByShop(shop);
-                List<Coordinate> coordinates=coordinateDAO.getByShop(shop);
-                List<Product> products=productDAO.getByShop(shop);
-                request.setAttribute("pictures", pictures);
-                request.setAttribute("coordinates", coordinates);
-                request.setAttribute("products", products);
+                if(status=='1' && shop.getOwner().getCapability()<Utility.CAPABILITY.SHOP.ordinal())
+                {
+                    User u=shop.getOwner();
+                    u.setCapability(Utility.CAPABILITY.SHOP.ordinal());
+                    userDAO.update(u);
+                    Log.info("User "+id+" promoted to shop user ");
                 
+                }
+                    
+                shopDAO.update(shop);
+                Log.info("Shop "+id+": validity set to "+status);
                 
-               
-                                   
-                request.getRequestDispatcher("shop.jsp").forward(request, response);
-                Log.info("Shop" + shop.getId() + "loaded");
+                response.sendRedirect(response.encodeRedirectURL("shops"));
             }
-        } catch (DAOException|NumberFormatException ex) {
-            Log.error("Error getting shop");
-            response.sendRedirect(response.encodeRedirectURL(contextPath + "common/error.jsp"));
+         
+            
+        } catch (DAOException ex) {
+            Log.error("Error getting product "+ ex.toString());
+            response.sendRedirect(response.encodeRedirectURL(contextPath + "../../common/error.jsp"));
         }
     }
 
@@ -119,10 +118,10 @@ public class ShopServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
       process(req,resp);
     }
-    
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
       process(req,resp);
     }
-    
+
 }

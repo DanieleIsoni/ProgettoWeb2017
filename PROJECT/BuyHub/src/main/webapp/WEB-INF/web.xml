@@ -28,9 +28,21 @@
         <filter-name>AuthenticationFilter</filter-name>
         <filter-class>it.unitn.buyhub.filter.AuthenticationFilter</filter-class>
     </filter>
+    <filter>
+        <filter-name>AdminFilter</filter-name>
+        <filter-class>it.unitn.buyhub.filter.AdminFilter</filter-class>
+    </filter>
     <filter-mapping>
         <filter-name>AuthenticationFilter</filter-name>
         <url-pattern>/restricted/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AdminFilter</filter-name>
+        <url-pattern>/restricted/admin/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>ERROR</dispatcher>
     </filter-mapping>
     <listener>
         <description>ServletContextListener</description>
@@ -38,15 +50,15 @@
     </listener>
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>it.unitn.buyhub.servlet.LoginServlet</servlet-class>
+        <servlet-class>it.unitn.buyhub.servlet.user.LoginServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SignupServlet</servlet-name>
-        <servlet-class>it.unitn.buyhub.servlet.SignupServlet</servlet-class>
+        <servlet-class>it.unitn.buyhub.servlet.user.SignupServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>LogoutServlet</servlet-name>
-        <servlet-class>it.unitn.buyhub.servlet.LogoutServlet</servlet-class>
+        <servlet-class>it.unitn.buyhub.servlet.user.LogoutServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ProductServlet</servlet-name>
@@ -66,30 +78,27 @@
     </servlet>
     <servlet>
         <servlet-name>AvatarUploadServlet</servlet-name>
-        <servlet-class>it.unitn.buyhub.servlet.AvatarUploadServlet</servlet-class>
+        <servlet-class>it.unitn.buyhub.servlet.user.AvatarUploadServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ModifyAccountServlet</servlet-name>
-        <servlet-class>it.unitn.buyhub.servlet.ModifyAccountServlet</servlet-class>
+        <servlet-class>it.unitn.buyhub.servlet.user.ModifyAccountServlet</servlet-class>
     </servlet>
-
     <servlet>
         <servlet-name>ModifyCartItemNumberServlet</servlet-name>
-        <servlet-class>it.unitn.buyhub.servlet.ModifyCartItemNumberServlet</servlet-class>
+        <servlet-class>it.unitn.buyhub.servlet.cart.ModifyCartItemNumberServlet</servlet-class>
     </servlet>
-
-
     <servlet>
         <servlet-name>EmptyCartServlet</servlet-name>
-        <servlet-class>it.unitn.buyhub.servlet.EmptyCartServlet</servlet-class>
+        <servlet-class>it.unitn.buyhub.servlet.cart.EmptyCartServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>RemoveFromCartServlet</servlet-name>
-        <servlet-class>it.unitn.buyhub.servlet.RemoveFromCartServlet</servlet-class>
+        <servlet-class>it.unitn.buyhub.servlet.cart.RemoveFromCartServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AddToCartServlet</servlet-name>
-        <servlet-class>it.unitn.buyhub.servlet.AddToCartServlet</servlet-class>
+        <servlet-class>it.unitn.buyhub.servlet.cart.AddToCartServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AddReviewServlet</servlet-name>
@@ -105,7 +114,27 @@
     </servlet>
     <servlet>
         <servlet-name>VerifyAccountServlet</servlet-name>
-        <servlet-class>it.unitn.buyhub.servlet.VerifyAccountServlet</servlet-class>
+        <servlet-class>it.unitn.buyhub.servlet.user.VerifyAccountServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ShopsServlet</servlet-name>
+        <servlet-class>it.unitn.buyhub.servlet.admin.ShopsServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EnableShop</servlet-name>
+        <servlet-class>it.unitn.buyhub.servlet.admin.EnableShop</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UsersServlet</servlet-name>
+        <servlet-class>it.unitn.buyhub.servlet.admin.UsersServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChangePasswordServlet</servlet-name>
+        <servlet-class>it.unitn.buyhub.servlet.user.ChangePasswordServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RequestPasswordChange</servlet-name>
+        <servlet-class>it.unitn.buyhub.servlet.user.RequestPasswordChangeServlet</servlet-class>
     </servlet>
     
     
@@ -176,6 +205,26 @@
     <servlet-mapping>
         <servlet-name>VerifyAccountServlet</servlet-name>
         <url-pattern>/verifyAccount</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShopsServlet</servlet-name>
+        <url-pattern>/restricted/admin/shops</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EnableShop</servlet-name>
+        <url-pattern>/restricted/admin/enableshop</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UsersServlet</servlet-name>
+        <url-pattern>/restricted/admin/users</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangePasswordServlet</servlet-name>
+        <url-pattern>/changePassword</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RequestPasswordChange</servlet-name>
+        <url-pattern>/requestPasswordChange</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
