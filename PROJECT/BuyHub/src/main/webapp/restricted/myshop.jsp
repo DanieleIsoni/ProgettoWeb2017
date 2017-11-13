@@ -64,7 +64,7 @@
                 </div>
                 <div class="row shop_page_shipment">
 
-                    <c:if test="${empty shop.shipment}">
+                    <c:if test="${empty myshop.shipment}">
                         <div>
                             <fmt:message  key="no_shipment"/>
                         </div>
