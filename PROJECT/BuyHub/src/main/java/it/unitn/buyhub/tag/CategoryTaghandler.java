@@ -33,7 +33,7 @@ public class CategoryTaghandler extends SimpleTagSupport {
                 category=this.category;
             else
                 category=((Product)pageContext.getAttribute("product",PageContext.REQUEST_SCOPE)).getCategory();
-            out.println("<a href=\""+Utility.getUrl(pageContext, "search.jsp?q=*&category="+category)+"\">");
+            out.println("<a href=\""+Utility.getUrl(pageContext, "search.jsp?c="+category)+"&q=\">");
             out.println(Utility.getCategory(pageContext,category));
             out.println("</a>");
             

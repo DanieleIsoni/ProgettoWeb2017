@@ -7,7 +7,9 @@ package it.unitn.buyhub.dao.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -15,54 +17,84 @@ import java.util.List;
  */
 public class Cart implements Serializable {
 
-    private List<CartElement> products = new ArrayList<>();
+    private HashMap<Integer, ArrayList<CartElement>> products = new HashMap<Integer, ArrayList<CartElement>>();
 
     public Cart() {
-        products.add(new CartElement(3, 4));
-        products.add(new CartElement(2, 1));
+        insert(1, new CartElement(2, 1));
+        insert(1, new CartElement(1, 2));
+        insert(2, new CartElement(3, 3));
     }
 
-    public void addProduct(int id, int number) {
+    private void insert(int shopid, CartElement ce) {
+        if (products.get(shopid) == null) {
+            products.put(shopid, new ArrayList<CartElement>());
+        }
+        
+        addProductIfAlready(products.get(shopid), ce);
+    }
+    private void addProductIfAlready(ArrayList<CartElement> products,CartElement newce) {
         boolean found = false;
         for (CartElement ce : products) {
-            if (ce.getId() == id) {
+            if (ce.getId() == newce.getId()) {
                 found = true;
-                ce.setNumber(ce.getNumber() + number);
+                ce.setNumber(ce.getNumber() + newce.getNumber());
             }
         }
 
         if (!found) {
-            products.add(new CartElement(id, number));
+            products.add(new CartElement(newce.getId(), newce.getNumber()));
         }
     }
 
+
+    public void addProduct(int shopid, int id, int number) {
+        insert(shopid, new CartElement(id, number));
+    }
+
     public int getCount() {
-        return products.size();
+        int count = 0;
+        for (Map.Entry<Integer, ArrayList<CartElement>> entry : products.entrySet()) {
+            count += entry.getValue().size();
+        }
+
+        return count;
     }
 
     public void removeProduct(int id) {
         CartElement temp = null;
-        for (CartElement ce : products) {
-            if (ce.getId() == id) {
-                temp = ce;
+        int tempkey = -1;
+        for (Map.Entry<Integer, ArrayList<CartElement>> entry : products.entrySet()) {
+            for (CartElement ce : entry.getValue()) {
+                if (ce.getId() == id) {
+                    //MUST TEST
+                    temp = ce;
+                    tempkey = entry.getKey();
+
+                }
             }
         }
-        products.remove(temp);
+        if (temp != null) {
+            products.get(tempkey).remove(temp);
+        }
+        if (products.get(tempkey).size() == 0) {
+            products.remove(tempkey);
+        }
+
     }
 
     public void removeProduct(CartElement c) {
-        products.remove(c);
+        removeProduct(c.getId());
     }
 
     public void removeProductAt(int position) {
         products.remove(position);
     }
 
-    public List<CartElement> getProducts() {
+    public HashMap<Integer, ArrayList<CartElement>> getProducts() {
         return products;
     }
 
-    public void setProducts(List<CartElement> products) {
+    public void setProducts(HashMap<Integer, ArrayList<CartElement>> products) {
         this.products = products;
     }
 
@@ -71,11 +103,15 @@ public class Cart implements Serializable {
     }
 
     public void setProduct(int id, int count) {
-        for (CartElement ce : products) {
-            if (ce.getId() == id) {
-                ce.setNumber(count);
+        for (Map.Entry<Integer, ArrayList<CartElement>> entry : products.entrySet()) {
+            for (CartElement ce : entry.getValue()) {
+                if (ce.getId() == id) {
+                    //MUST TEST
+                    ce.setNumber(count);;
+                }
             }
         }
+
     }
 
 }

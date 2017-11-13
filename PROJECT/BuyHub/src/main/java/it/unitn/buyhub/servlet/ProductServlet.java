@@ -92,7 +92,7 @@ public class ProductServlet extends HttpServlet {
                 request.setAttribute("product", product);
 
                 List<Picture> pictures=pictureDAO.getByProduct(product);
-                List<Review> reviews=reviewDAO.getByProduct(product);
+                List<Review> reviews=reviewDAO.getByProduct(product, true);
                 List<Coordinate> coordinates=coordinateDAO.getByShop(product.getShop());
 
                 request.setAttribute("pictures", pictures);

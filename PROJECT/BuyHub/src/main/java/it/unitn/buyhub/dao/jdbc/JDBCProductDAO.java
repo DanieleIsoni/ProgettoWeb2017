@@ -292,6 +292,7 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
      */
     @Override
     public List<Product> getAll() throws DAOException {
+        
         List<Product> products = new ArrayList<>();
         try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM products ORDER BY name")) {
             try (ResultSet rs = stm.executeQuery()) {
@@ -435,15 +436,19 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
         //MUST IMPLEMENT string-similarity -> https://github.com/tdebatty/java-string-similarity
         List<Product> all = getAll();
         List<Product> filtered = new ArrayList<>();
-
-        //Start JaroWinkler filter
-        JaroWinkler jw = new JaroWinkler();
-        for (Product p : all) {
-            if (jw.similarity(name, p.getName()) > 0.5) {
-                filtered.add(p);
+        
+        if(name.equals(""))//carattere jolly
+            filtered=all;
+        else
+        {
+            //Start JaroWinkler filter
+            JaroWinkler jw = new JaroWinkler();
+            for (Product p : all) {
+                if (jw.similarity(name, p.getName()) > 0.5) {
+                    filtered.add(p);
+                }
             }
         }
-        //System.out.println(filtered.size());
         return filtered;
     }
 
@@ -467,11 +472,17 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
         List<Product> all = getAllWithPriceRange(min, max);
         List<Product> filtered = new ArrayList<>();
 
-        //Start JaroWinkler filter
-        JaroWinkler jw = new JaroWinkler();
-        for (Product p : all) {
-            if (jw.similarity(name, p.getName()) > 0.5) {
-                filtered.add(p);
+        
+        if(name.equals(""))//carattere jolly
+            filtered=all;
+        else
+        {
+            //Start JaroWinkler filter
+            JaroWinkler jw = new JaroWinkler();
+            for (Product p : all) {
+                if (jw.similarity(name, p.getName()) > 0.5) {
+                    filtered.add(p);
+                }
             }
         }
         return filtered;

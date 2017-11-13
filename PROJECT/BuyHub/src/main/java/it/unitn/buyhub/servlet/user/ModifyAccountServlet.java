@@ -78,10 +78,10 @@ public class ModifyAccountServlet extends HttpServlet {
             }
         } else if (newPassword!=null && newPassword2!=null && !newPassword.equals(newPassword2)) {
             //Wrong new password
-            response.sendRedirect(response.encodeRedirectURL(contextPath + "restricted/modifyAccount.jsp?error=2"));
+            response.sendRedirect(response.encodeRedirectURL(contextPath + "restricted/modifyAccount.jsp?error=1"));
 
         } else {
-            response.sendRedirect(response.encodeRedirectURL(contextPath + "restricted/modifyAccount.jsp?error=1"));
+            response.sendRedirect(response.encodeRedirectURL(contextPath + "restricted/modifyAccount.jsp?error=2"));
         }
     }
 }
