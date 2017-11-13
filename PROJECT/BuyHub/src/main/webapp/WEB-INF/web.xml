@@ -142,6 +142,10 @@
         <servlet-name>DeleteProductServlet</servlet-name>
         <servlet-class>it.unitn.buyhub.servlet.user.DeleteProductServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EditShopServlet</servlet-name>
+        <servlet-class>it.unitn.buyhub.servlet.user.EditShopServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ModifyCartItemNumberServlet</servlet-name>
         <url-pattern>/modifycartitemnumber</url-pattern>
@@ -233,6 +237,10 @@
     <servlet-mapping>
         <servlet-name>DeleteProductServlet</servlet-name>
         <url-pattern>/DeleteProductServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditShopServlet</servlet-name>
+        <url-pattern>/EditShopServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

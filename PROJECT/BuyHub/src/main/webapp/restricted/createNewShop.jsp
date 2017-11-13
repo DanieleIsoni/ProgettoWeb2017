@@ -22,20 +22,20 @@
                 <form method="POST" id="newShop-form" action="<c:url value="/CreateNewShopServlet" />">
                     <div class="form-group">
                         <label for="shopName"><fmt:message key="shop_name"/>*:</label>
-                        <input type="text" name="shopName" class="form-control" id="shopName" >
+                        <input type="text" name="shopName" class="form-control" id="shopName" required >
                     </div>
                     <div class="form-group">
                         <label for="website"><fmt:message key="website"/>*:</label>
-                        <input type="url" name="website" class="form-control" id="website" >
+                        <input type="url" name="website" class="form-control" id="website" required>
                     </div>
                     <div class="form-group">
                         <label for="shipment"><fmt:message key="shipment_mode"/>:</label>
-                        <input type="text" name="shipment" class="form-control" id="shipment">
+                        <input type="text" name="shipment" class="form-control" id="shipment" >
                     </div>
 
                     <div class="form-group">
                         <label for="description"><fmt:message key="description"/>*:</label>
-                        <textarea name="description" class="form-control" id="description" ></textarea>
+                        <textarea name="description" class="form-control" id="description" required></textarea>
                     </div>
 
                     <div class="form-group">

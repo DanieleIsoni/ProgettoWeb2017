@@ -520,6 +520,10 @@ a.mybtn{
     text-align: center;
 }
 
+#edit_shop_btn{
+    font-size: 55%;
+}
+
 /* addProduct.jsp */
 
 #product_category{
