@@ -3,7 +3,8 @@
     Created on : 3-lug-2017, 18.07.05
     Author     : matteo
 --%>
-
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="lastproduct" uri="/WEB-INF/tld/lastproduct.tld" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -11,11 +12,11 @@
         <title><fmt:message key="home_title"/></title>
     </head>
     <body>
-         <%@include file="common/navbar.jsp" %>
-       
-       
+        <%@include file="common/navbar.jsp" %>
+
+
         <div class="container header">
-            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+            <div id="mainCar" class="carousel slide" data-ride="carousel">
 
 
                 <!-- Wrapper for slides -->
@@ -51,6 +52,9 @@
                     <span class="sr-only">Next</span>
                 </a>
             </div>
+                        
+            <lastproduct:LastProduct/>
+
         </div>
 
-         <%@include file="common/footer.jsp" %>
+        <%@include file="common/footer.jsp" %>
