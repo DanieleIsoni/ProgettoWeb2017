@@ -526,3 +526,12 @@ a.mybtn {
 .avatar_button {
   width: 300px;
 }
+
+#cart-shipment
+{
+    margin-bottom: 10px;
+}
+#cart-shipment > select{
+    max-width: 60%;
+}
+    

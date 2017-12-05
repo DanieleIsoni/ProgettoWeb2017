@@ -488,7 +488,7 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
         return filtered;
     }
     
-    private Pair getAvgreview(int id) throws DAOException
+    public Pair getAvgreview(int id) throws DAOException
     {
         Pair<Double,Integer> p=null;
         try (PreparedStatement stm = CON.prepareStatement

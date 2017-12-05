@@ -63,3 +63,27 @@ function changeItemNumber(id, value) {
     xhttp.send();
 
 }
+
+
+
+
+function setCharAt(str,index,chr) {
+    if(index > str.length-1) return str;
+    return str.substr(0,index) + chr + str.substr(index+1);
+}
+
+
+function changeShipment(shopid)
+{
+    var total=parseFloat($("#originalTotal"+shopid).val());
+    
+    var cost=parseFloat($("#shipment_cost"+shopid).val());
+    if($("#shipment"+shopid).find('option:selected').attr('id')==0)
+        total+=cost;
+    total=total.toFixed(2);
+    var i = total.lastIndexOf('.');
+    total=setCharAt(total,i,',');
+    
+    $("#total"+shopid).html("&euro; "+total);
+    
+}

@@ -20,10 +20,10 @@ public class Cart implements Serializable {
     private HashMap<Integer, ArrayList<CartElement>> products = new HashMap<Integer, ArrayList<CartElement>>();
 
     public Cart() {
-        insert(1, new CartElement(2, 1));
+       /* insert(1, new CartElement(2, 1));
         insert(1, new CartElement(1, 2));
         insert(2, new CartElement(3, 3));
-    }
+    */}
 
     private void insert(int shopid, CartElement ce) {
         if (products.get(shopid) == null) {
