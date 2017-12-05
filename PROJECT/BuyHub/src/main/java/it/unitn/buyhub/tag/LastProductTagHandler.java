@@ -53,63 +53,42 @@ public class LastProductTagHandler extends SimpleTagSupport {
             init();
         } catch (Exception e) {
         }
-
+        /*https://codepen.io/bkainteractive/pen/VLxLYp*/
         try {
             List<Product> allProducts;
             try {
-                allProducts = productDAO.getAllLimit(12);
-                /* out.println("<div class=\"panel panel-default\">");
-                out.println("<div class=\"panel-heading\"> <h3 class=\"panel-title\">Panel title</h3> </div>");
-                out.println("<div class=\"panel-body\">");
-                
+                allProducts = productDAO.getAllLimit(10);
+                out.println(" <div class=\"container\">\n"
+                        + "            <h2>"+Utility.getLocalizedString(pageContext, "last_added")+"</h2>\n"
+                        + "            <div class=\"row\">\n"
+                        + "                <div class=\"col-md-12 heroSlider-fixed\">\n"
+                        + "                    <div class=\"overlay\">\n"
+                        + "                    </div>\n"
+                        + "                    <!-- Slider -->\n"
+                        + "                    <div class=\"slider responsive\">\n");
+
                 for (Product p : allProducts) {
-                    out.println("<div class=\"col-sm-6 col-md-4\">\n"
-                            + "   <div class=\"thumbnail\">\n"
-                            + "      <img alt=\"100%x200\" data-src=\"holder.js/100%x200\" style=\"height: 200px; width: 100%; display: block;\" src=\"data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMzE5IiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDMxOSAyMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjwhLS0KU291cmNlIFVSTDogaG9sZGVyLmpzLzEwMCV4MjAwCkNyZWF0ZWQgd2l0aCBIb2xkZXIuanMgMi42LjAuCkxlYXJuIG1vcmUgYXQgaHR0cDovL2hvbGRlcmpzLmNvbQooYykgMjAxMi0yMDE1IEl2YW4gTWFsb3BpbnNreSAtIGh0dHA6Ly9pbXNreS5jbwotLT48ZGVmcz48c3R5bGUgdHlwZT0idGV4dC9jc3MiPjwhW0NEQVRBWyNob2xkZXJfMTVmZTRhMjMyN2QgdGV4dCB7IGZpbGw6I0FBQUFBQTtmb250LXdlaWdodDpib2xkO2ZvbnQtZmFtaWx5OkFyaWFsLCBIZWx2ZXRpY2EsIE9wZW4gU2Fucywgc2Fucy1zZXJpZiwgbW9ub3NwYWNlO2ZvbnQtc2l6ZToxNnB0IH0gXV0+PC9zdHlsZT48L2RlZnM+PGcgaWQ9ImhvbGRlcl8xNWZlNGEyMzI3ZCI+PHJlY3Qgd2lkdGg9IjMxOSIgaGVpZ2h0PSIyMDAiIGZpbGw9IiNFRUVFRUUiLz48Zz48dGV4dCB4PSIxMTcuMTA5Mzc1IiB5PSIxMDcuMDg3NSI+MzE5eDIwMDwvdGV4dD48L2c+PC9nPjwvc3ZnPg==\" data-holder-rendered=\"true\"> \n"
-                            + "      <div class=\"caption\">\n"
-                            + "         <h3>Thumbnail label</h3>\n"
-                            + "         <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>\n"
-                            + "         <p><a href=\"#\" class=\"btn btn-primary\" role=\"button\">Button</a> <a href=\"#\" class=\"btn btn-default\" role=\"button\">Button</a></p>\n"
-                            + "      </div>\n"
-                            + "   </div>\n"
-                            + "</div>");
-                }
-                
-                out.println("</div>");*/
-                out.println("<div class=\"well\">\n"
-                        + "            <div id=\"myCarousel\" class=\"carousel slide\">\n"
-                        + "                \n"
-                        + "                <!-- Carousel items -->\n"
-                        + "                <div class=\"carousel-inner\">");
-                boolean first= true;
-                for (int i = 0; i <= allProducts.size(); i += 4) {
-                    if (i + 3 < allProducts.size()) {
-                        out.println("<div class=\"item "+(first?"active":"")+"\">\n"
-                                + "                        <div class=\"row\">\n"
-                                + "                            <div class=\"col-sm-3\"><a href=\"#x\"><img src=\""+allProducts.get(i).getMainPicture().getPath()+"\" alt=\"Image\" class=\"img-responsive\"></a>\n"
-                                + "                            </div>\n"
-                                + "                            <div class=\"col-sm-3\"><a href=\"#x\"><img src=\""+allProducts.get(i+1).getMainPicture().getPath()+"\" alt=\"Image\" class=\"img-responsive\"></a>\n"
-                                + "                            </div>\n"
-                                + "                            <div class=\"col-sm-3\"><a href=\"#x\"><img src=\""+allProducts.get(i+2).getMainPicture().getPath()+"\" alt=\"Image\" class=\"img-responsive\"></a>\n"
-                                + "                            </div>\n"
-                                + "                            <div class=\"col-sm-3\"><a href=\"#x\"><img src=\""+allProducts.get(i+3).getMainPicture().getPath()+"\" alt=\"Image\" class=\"img-responsive\"></a>\n"
-                                + "                            </div>\n"
-                                + "                        </div>\n"
-                                + "                        <!--/row-->\n"
-                                + "                    </div>\n"
-                                + "                    <!--/item-->");
-                    }
-                    first = false;
+                    out.println("                        <div>\n"
+                            + "                            <a href=\"product?id="+p.getId()+"\"><img src=\"" + p.getMainPicture().getPath() + "\" alt=\"\" /></a>\n"
+                            + "                        </div>\n");
 
                 }
-                out.println("</div>\n"
-                        + "                <!--/carousel-inner--> <a class=\"left carousel-control\" href=\"#myCarousel\" data-slide=\"prev\">‹</a>\n"
+                out.println("                    </div>\n"
+                        + "                    <!-- control arrows -->\n"
+                        + "                    <div class=\"prev\">\n"
+                        + "                        <span class=\"glyphicon glyphicon-chevron-left\" aria-hidden=\"true\"></span>\n"
+                        + "                    </div>\n"
+                        + "                    <div class=\"next\">\n"
+                        + "                        <span class=\"glyphicon glyphicon-chevron-right\" aria-hidden=\"true\"></span>\n"
+                        + "                    </div>\n"
                         + "\n"
-                        + "                <a class=\"right carousel-control\" href=\"#myCarousel\" data-slide=\"next\">›</a>\n"
+                        + "                </div>\n"
                         + "            </div>\n"
-                        + "            <!--/myCarousel-->\n"
                         + "        </div>\n"
-                        + "        <!--/well-->");
+                        + "        <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>\n"
+                        + "        <script src='https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.5/slick.min.js'></script>\n"
+                        + "\n"
+                        + "        <script  src=\"js/carouselHome.js\"></script>");
             } catch (DAOException ex) {
                 Logger.getLogger(LastProductTagHandler.class.getName()).log(Level.SEVERE, null, ex);
             }
