@@ -21,7 +21,7 @@ public class Order implements Serializable {
    int id;
    boolean paid;
    String shipment;
-   int user_id;
+   User user;
    Shop shop;
 
     public Shop getShop() {
@@ -32,12 +32,12 @@ public class Order implements Serializable {
         this.shop = shop;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public User getUser() {
+        return user;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setUser(User user) {
+        this.user = user;
     }
 
    

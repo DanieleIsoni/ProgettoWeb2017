@@ -10,6 +10,7 @@ import it.unitn.buyhub.dao.OrderedProductDAO;
 import it.unitn.buyhub.dao.PictureDAO;
 import it.unitn.buyhub.dao.ProductDAO;
 import it.unitn.buyhub.dao.ShopDAO;
+import it.unitn.buyhub.dao.UserDAO;
 import it.unitn.buyhub.dao.entities.Coordinate;
 import it.unitn.buyhub.dao.entities.Order;
 import it.unitn.buyhub.dao.entities.OrderedProduct;
@@ -41,8 +42,9 @@ public class JDBCOrderDAO extends JDBCDAO<Order,  Integer> implements OrderDAO{
     
     public JDBCOrderDAO(Connection con) {
         super(con);
-        FRIEND_DAOS.put(OrderedProduct.class, new JDBCOrderedProductDAO(CON));
+        //FRIEND_DAOS.put(OrderedProduct.class, new JDBCOrderedProductDAO(CON));
         FRIEND_DAOS.put(ShopDAO.class, new JDBCShopDAO(CON));
+        FRIEND_DAOS.put(UserDAO.class, new JDBCUserDAO(CON));
     }
 
     @Override
@@ -63,31 +65,35 @@ public class JDBCOrderDAO extends JDBCDAO<Order,  Integer> implements OrderDAO{
             if (primaryKey == null) {
             throw new DAOException("primaryKey is null");
         }
-        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM orders WHERE order_id = ?")) {
+        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM orders WHERE id = ?")) {
             stm.setInt(1, primaryKey);
+            
             try (ResultSet rs = stm.executeQuery()) {
-
+                
                 rs.next();
                 Order o=new Order();
                
-                o.setId(rs.getInt("order_id"));
+                o.setId(rs.getInt("id"));
                 o.setPaid(rs.getBoolean("paid"));
-                o.setUser_id(rs.getInt("user_id"));
+                UserDAO userdao=getDAO(UserDAO.class); 
+                o.setUser(userdao.getByPrimaryKey(rs.getInt("user_id")));
                 o.setShipment(rs.getString("shipment"));
-                o.setShipment_cost(rs.getDouble("shipment_cost"));
+                o.setShipment_cost(rs.getDouble("shipment_costs"));
                 ShopDAO s=getDAO(ShopDAO.class);
-                o.setShop(s.getByPrimaryKey(rs.getInt("id_shop")));     
-                
+                o.setShop(s.getByPrimaryKey(rs.getInt("shop_id")));     
+                /*
                 OrderedProductDAO orderedproductDao=getDAO(OrderedProductDAO.class);
                 List<OrderedProduct> products = orderedproductDao.getByOrder(o.getId());
                 for (OrderedProduct product : products) {
                     o.add(product);
-                }
+                }*/
                 
                 return o;
             }
         } catch (SQLException | DAOFactoryException ex) {
-            throw new DAOException("Impossible to get the product for the passed primary key", ex);
+           // Logger.getLogger("test").log(Level.SEVERE, null, ex);
+            throw new DAOException("Impossible to get the order for the passed primary key", ex);
+           
         }
        
     }
@@ -102,26 +108,27 @@ public class JDBCOrderDAO extends JDBCDAO<Order,  Integer> implements OrderDAO{
                     
                     rs.next();
                     Order o=new Order();
-                    o.setId(rs.getInt("order_id"));
+                    o.setId(rs.getInt("id"));
                     o.setPaid(rs.getBoolean("paid"));
-                    o.setUser_id(rs.getInt("user_id"));
+                    UserDAO userdao=getDAO(UserDAO.class); 
+                    o.setUser(userdao.getByPrimaryKey(rs.getInt("user_id")));
                     o.setShipment(rs.getString("shipment"));
-                    o.setShipment_cost(rs.getDouble("shipment_cost"));
+                    o.setShipment_cost(rs.getDouble("shipment_costs"));
                     ShopDAO s=getDAO(ShopDAO.class);
-                    o.setShop(s.getByPrimaryKey(rs.getInt("id_shop")));
-
+                    o.setShop(s.getByPrimaryKey(rs.getInt("shop_id")));
+/*
                     OrderedProductDAO orderedproductDao=getDAO(OrderedProductDAO.class);
                     List<OrderedProduct> products = orderedproductDao.getByOrder(o.getId());
                     for (OrderedProduct product : products) {
                         o.add(product);
                     }
-
+*/
                         orders.add(o);
                     }
 
             }
         } catch (SQLException | DAOFactoryException ex) {
-            throw new DAOException("Impossible to get the products for the passed primary key", ex);
+            throw new DAOException("Impossible to get the orders", ex);
         }
         return orders;  
     }
@@ -132,12 +139,13 @@ public class JDBCOrderDAO extends JDBCDAO<Order,  Integer> implements OrderDAO{
                throw new DAOException("parameter not valid", new IllegalArgumentException("The passed order is null"));
            }
 
-           try (PreparedStatement std = CON.prepareStatement("UPDATE orders SET shipment=? shipment_costs=?, paid=? WHERE order_id = ?")) {
-               
+           try (PreparedStatement std = CON.prepareStatement("UPDATE orders SET shipment=?, shipment_costs=?, paid=? WHERE id = ?")) {
+            
                std.setString(1,o.getShipment());
                std.setDouble(2,o.getShipment_cost());
                std.setBoolean(3,o.isPaid());
                std.setInt(4,o.getId());
+               System.out.println(std.toString());
 
                
                if (std.executeUpdate() == 1) {
@@ -153,7 +161,7 @@ public class JDBCOrderDAO extends JDBCDAO<Order,  Integer> implements OrderDAO{
     @Override
     public Long insert(Order order) throws DAOException {
          try (PreparedStatement ps = CON.prepareStatement("INSERT INTO orders(user_id,shipment,shipment_costs,paid,shop_id) VALUES(?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
-                ps.setInt(1, order.getUser_id());
+                ps.setInt(1, order.getUser().getId());
                 ps.setString(2, order.getShipment());
                 ps.setDouble(3, order.getShipment_cost());
                 ps.setBoolean(4, order.isPaid());
@@ -218,20 +226,22 @@ public class JDBCOrderDAO extends JDBCDAO<Order,  Integer> implements OrderDAO{
                     
                     rs.next();
                     Order o=new Order();
-                    o.setId(rs.getInt("order_id"));
+                    o.setId(rs.getInt("id"));
                     o.setPaid(rs.getBoolean("paid"));
-                    o.setUser_id(rs.getInt("user_id"));
-                    o.setShipment(rs.getString("shipment"));
-                    o.setShipment_cost(rs.getDouble("shipment_cost"));
-                    ShopDAO s=getDAO(ShopDAO.class);
-                    o.setShop(s.getByPrimaryKey(rs.getInt("id_shop")));
 
-                    OrderedProductDAO orderedproductDao=getDAO(OrderedProductDAO.class);
+                    UserDAO userdao=getDAO(UserDAO.class); 
+                    o.setUser(userdao.getByPrimaryKey(rs.getInt("user_id")));
+                    o.setShipment(rs.getString("shipment"));
+                    o.setShipment_cost(rs.getDouble("shipment_costs"));
+                    ShopDAO s=getDAO(ShopDAO.class);
+                    o.setShop(s.getByPrimaryKey(rs.getInt("shop_id")));
+
+                  /*  OrderedProductDAO orderedproductDao=getDAO(OrderedProductDAO.class);
                     List<OrderedProduct> products = orderedproductDao.getByOrder(o.getId());
                     for (OrderedProduct product : products) {
                         o.add(product);
                     }
-
+*/
                         orders.add(o);
                     }
 

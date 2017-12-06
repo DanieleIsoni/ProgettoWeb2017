@@ -74,7 +74,7 @@ public class PlaceOrderServlet extends HttpServlet {
             
             Order o=new Order();
             o.setPaid(false);
-            o.setUser_id( ((User) request.getSession().getAttribute("authenticatedUser")).getId());
+            o.setUser( (User) request.getSession().getAttribute("authenticatedUser"));
             
             Shop s= shopDAO.getByPrimaryKey(Integer.valueOf(request.getParameter("shopid")));
             if(Integer.valueOf(request.getParameter("shipment"))==-1 && s.getShipment().length()>0)
@@ -99,7 +99,6 @@ public class PlaceOrderServlet extends HttpServlet {
             if(cartElems!= null && cartElems.size()!=0)
             {
                 for(CartElement ce: cartElems){
-                    System.out.println("ID: "+ce.getId());
                     o.add(productDAO.getByPrimaryKey(ce.getId()),ce.getNumber());
                 }
 

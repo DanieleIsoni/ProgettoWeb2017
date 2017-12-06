@@ -158,6 +158,10 @@
         <servlet-name>PlaceOrderServlet</servlet-name>
         <servlet-class>it.unitn.buyhub.servlet.order.PlaceOrderServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PayedServlet</servlet-name>
+        <servlet-class>it.unitn.buyhub.servlet.order.PayedServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RemoveReviewServlet</servlet-name>
         <url-pattern>/removereview</url-pattern>
@@ -265,6 +269,10 @@
     <servlet-mapping>
         <servlet-name>PlaceOrderServlet</servlet-name>
         <url-pattern>/restricted/order/PlaceOrder</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PayedServlet</servlet-name>
+        <url-pattern>/restricted/order/payed</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
