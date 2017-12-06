@@ -182,7 +182,7 @@ CREATE TABLE `shops` (
   `id_owner` int(11) NOT NULL,
   `shipment` text COLLATE utf8_bin,
 	`validity` int(11) NOT NULL DEFAULT 0,
-  `shipment_costs` decimal(10,2) DEFAULT 0,
+  `shipment_costs` decimal(10,2) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
