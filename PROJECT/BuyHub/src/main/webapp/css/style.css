@@ -595,3 +595,12 @@ a.mybtn {
     display: none !important;
   }
 }
+
+#cart-shipment
+{
+    margin-bottom: 10px;
+}
+#cart-shipment > select{
+    max-width: 60%;
+}
+    

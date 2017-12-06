@@ -534,15 +534,16 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
         }
         return filtered;
     }
-
-    private Pair getAvgreview(int id) throws DAOException {
-        Pair<Double, Integer> p = null;
-        try (PreparedStatement stm = CON.prepareStatement(//"SELECT AVG((r.global_value+r.quality+r.service+r.value_for_money)/4) AS avg, COUNT(r.id) AS c " +
-                "SELECT AVG(r.global_value) AS avg, COUNT(r.id) AS c "
-                + "FROM reviews r "
-                + "JOIN products p "
-                + "ON p.id=r.id_product "
-                + "WHERE p.id = ?")) {
+    public Pair getAvgreview(int id) throws DAOException
+    {
+        Pair<Double,Integer> p=null;
+        try (PreparedStatement stm = CON.prepareStatement
+                (//"SELECT AVG((r.global_value+r.quality+r.service+r.value_for_money)/4) AS avg, COUNT(r.id) AS c " +
+                "SELECT AVG(r.global_value) AS avg, COUNT(r.id) AS c "+
+                "FROM reviews r " +
+                "JOIN products p " +
+                "ON p.id=r.id_product " +
+                "WHERE p.id = ?")) {
             stm.setInt(1, id);
 
             try (ResultSet rs = stm.executeQuery()) {

@@ -17,6 +17,7 @@ import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.jdbc.JDBCDAO;
 import it.unitn.buyhub.utils.Log;
+import it.unitn.buyhub.utils.Pair;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -39,6 +40,7 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
     public JDBCShopDAO(Connection con) {
         super(con);
         FRIEND_DAOS.put(UserDAO.class, new JDBCUserDAO(CON));
+       // FRIEND_DAOS.put(CoordinateDAO.class, new JDBCCoordinateDAO(CON));
     }
 
     /**
@@ -77,13 +79,14 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
      * @since 1.0.170425
      */
     public Long insert(Shop shops) throws DAOException {
-        try (PreparedStatement ps = CON.prepareStatement("INSERT INTO shops(name, description, website, id_owner,shipment, validity) VALUES(?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement ps = CON.prepareStatement("INSERT INTO shops(name, description, website, id_owner,shipment, validity,shipment_costs) VALUES(?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, shops.getName());
             ps.setString(2, shops.getDescription());
             ps.setString(3, shops.getWebsite());
             ps.setInt(4, shops.getOwner().getId());
             ps.setString(5, shops.getShipment());
             ps.setInt(6, shops.getValidity());
+            ps.setDouble(7, shops.getShipment_cost());
             if (ps.executeUpdate() == 1) {
                 ResultSet generatedKeys = ps.getGeneratedKeys();
                 if (generatedKeys.next()) {
@@ -146,6 +149,7 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
                 shop.setName(rs.getString("name"));
                 shop.setShipment(rs.getString("shipment"));
                 shop.setValidity(rs.getInt("validity"));
+                shop.setShipment_cost(rs.getDouble("shipment_costs"));
                 //Get owner associate
                 UserDAO userDao = getDAO(UserDAO.class);
                 shop.setOwner(userDao.getByPrimaryKey(rs.getInt("id_owner")));
@@ -189,6 +193,7 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
                 shop.setName(rs.getString("name"));
                 shop.setShipment(rs.getString("shipment"));
                 shop.setValidity(rs.getInt("validity"));
+                shop.setShipment_cost(rs.getDouble("shipment_costs"));
                 shop.setOwner(owner);
 
                 
@@ -228,7 +233,8 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
                     shop.setDescription(rs.getString("description"));
                     shop.setWebsite(rs.getString("website"));
                     shop.setName(rs.getString("name"));
-
+                    
+                    shop.setShipment_cost(rs.getDouble("shipment_costs"));
                     shop.setShipment(rs.getString("shipment"));
                     shop.setValidity(rs.getInt("validity"));
 
@@ -273,6 +279,8 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
                     shop.setShipment(rs.getString("shipment"));
                     shop.setValidity(rs.getInt("validity"));
                     
+                    shop.setShipment_cost(rs.getDouble("shipment_costs"));
+                    
                     //Get owner associate
                     UserDAO userDao = getDAO(UserDAO.class);
                     shop.setOwner(userDao.getByPrimaryKey(rs.getInt("id_owner")));
@@ -305,14 +313,16 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
             throw new DAOException("parameter not valid", new IllegalArgumentException("The passed shop is null"));
         }
 
-        try (PreparedStatement std = CON.prepareStatement("UPDATE shops SET name = ?, description = ?, website = ?, id_owner = ?, shipment = ?, validity = ? WHERE id = ?")) {
+        try (PreparedStatement std = CON.prepareStatement("UPDATE shops SET name = ?, description = ?, website = ?, id_owner = ?, shipment = ?, validity = ?, shipment_costs=? WHERE id = ?")) {
             std.setString(1, shop.getName());
             std.setString(2, shop.getDescription());
             std.setString(3, shop.getWebsite());
             std.setInt(4, shop.getOwner().getId());
             std.setString(5, shop.getShipment());
             std.setInt(6, shop.getValidity());
-            std.setInt(7, shop.getId());
+            std.setDouble(7,shop.getShipment_cost());
+            std.setInt(8, shop.getId());
+            
             
             if (std.executeUpdate() == 1) {
                 return shop;
@@ -360,6 +370,9 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
                     shop.setWebsite(rs.getString("website"));
                     shop.setShipment(rs.getString("shipment"));
                     shop.setValidity(rs.getInt("validity"));
+                    
+                    shop.setShipment_cost(rs.getDouble("shipment_costs"));
+                    
 
                     //Get owner associate
                     UserDAO userDao = getDAO(UserDAO.class);
@@ -376,4 +389,6 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
         }
         return shops;
     }
+    
+    
 }

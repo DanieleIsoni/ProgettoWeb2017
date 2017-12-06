@@ -181,7 +181,8 @@ CREATE TABLE `shops` (
   `website` varchar(256) COLLATE utf8_bin NOT NULL,
   `id_owner` int(11) NOT NULL,
   `shipment` text COLLATE utf8_bin,
-	`validity` int(11) NOT NULL DEFAULT 0
+	`validity` int(11) NOT NULL DEFAULT 0,
+  `shipment_costs` decimal(10,2) DEFAULT 0,
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -406,3 +407,26 @@ ALTER TABLE `shops`
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+CREATE TABLE `orders` (
+  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `user_id` int(11),
+  `shop_id` int(11),
+  `shipment` text NOT NULL,
+  `shipment_costs` decimal(10,2),
+  `paid` int(1) DEFAULT 0,
+  FOREIGN KEY (`user_id`) REFERENCES  `users` (`id`),
+  FOREIGN KEY (`shop_id`) REFERENCES  `shops` (`id`)
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+CREATE TABLE `orders_products` (
+    `order_id` int(11) NOT NULL AUTO_INCREMENT,
+    `product_id` int(11) NOT NULL,
+    `quantity` int(11),
+    `price` decimal(10,2) NOT NULL,
+    FOREIGN KEY (`order_id`) REFERENCES  `orders` (`id`),
+    FOREIGN KEY (`product_id`) REFERENCES  `products` (`id`),
+    PRIMARY KEY (`order_id`, `product_id`)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
