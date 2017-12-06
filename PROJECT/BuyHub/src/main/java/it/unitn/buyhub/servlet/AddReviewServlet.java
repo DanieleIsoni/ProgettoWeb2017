@@ -84,35 +84,42 @@ public class AddReviewServlet extends HttpServlet {
         }
 
         try {
-            if (title != null && !title.equals("") && productId != null && owner != null && description != null && total != null && quality != null && service != null && money != null
-                    && !description.equals("") && !total.equals("") && !quality.equals("") && !service.equals("") && !money.equals("")) {
-
+            if (productId != null) {
                 Product prod = productDAO.getByPrimaryKey(Integer.valueOf(productId));
-                Review review = new Review();
-                review.setCreator(owner);
-                review.setDateCreation(new Date());
-                review.setDescription(description);
-                review.setGlobalValue(Integer.valueOf(total));
-                review.setProduct(prod);
-                review.setQuality(Integer.valueOf(quality));
-                review.setService(Integer.valueOf(service));
-                review.setTitle(title);
-                review.setValueForMoney(Integer.valueOf(money));
-                Long id = 0l;
-                try {
-                    id = reviewDao.insert(review);
-                } catch (DAOException ex) {
-                    Log.warn("Error inserting review, maybe already in the db");
-                }
-                System.out.println(id + "TEST");
-                if (id == 0) {
-                    response.sendRedirect(response.encodeRedirectURL(contextPath + "product?id=" + productId + "&error=1"));
 
-                    Log.error("Error adding review, already used");
+                if (title != null && !title.equals("") && owner != null && description != null && total != null && quality != null && service != null && money != null
+                        && !description.equals("") && !total.equals("") && !quality.equals("") && !service.equals("") && !money.equals("")) {
+
+                    Review review = new Review();
+                    review.setCreator(owner);
+                    review.setDateCreation(new Date());
+                    review.setDescription(description);
+                    review.setGlobalValue(Integer.valueOf(total));
+                    review.setProduct(prod);
+                    review.setQuality(Integer.valueOf(quality));
+                    review.setService(Integer.valueOf(service));
+                    review.setTitle(title);
+                    review.setValueForMoney(Integer.valueOf(money));
+                    Long id = 0l;
+                    try {
+                        id = reviewDao.insert(review);
+                    } catch (DAOException ex) {
+                        Log.warn("Error inserting review, maybe already in the db");
+                    }
+                    System.out.println(id + "TEST");
+                    if (id == 0) {
+                        response.sendRedirect(response.encodeRedirectURL(contextPath + "product?id=" + productId + "&error=1"));
+
+                        Log.error("Error adding review, already used");
+                    } else {
+                        response.sendRedirect(response.encodeRedirectURL(contextPath + "product?id=" + productId));
+                    }
+
                 } else {
                     response.sendRedirect(response.encodeRedirectURL(contextPath + "product?id=" + productId));
                 }
-
+            } else {
+                response.sendRedirect(response.encodeRedirectURL(contextPath + "product?id=-1"));
             }
         } catch (Exception ex) {
             Log.error("Error adding review" + ex.getMessage().toString());
