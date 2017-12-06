@@ -17,7 +17,8 @@ $(document).ready(function () {
 
     $("#search_text").typeahead({
         source: function (query, process) {
-            return $.getJSON('autocomplete', {term: query, cat: $("#search_category").val()}, function (data) {
+            //Use this URL to avoid errors on subdirectories
+            return $.getJSON('../../../../../BuyHub/autocomplete', {term: query, cat: $("#search_category").val()}, function (data) {
                 console.log(data.res);
 
                 data = data.res;
