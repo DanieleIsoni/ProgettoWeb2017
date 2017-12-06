@@ -8,6 +8,7 @@ package it.unitn.buyhub.dao.entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -20,19 +21,21 @@ public class Cart implements Serializable {
     private HashMap<Integer, ArrayList<CartElement>> products = new HashMap<Integer, ArrayList<CartElement>>();
 
     public Cart() {
-       /* insert(1, new CartElement(2, 1));
+        /* insert(1, new CartElement(2, 1));
         insert(1, new CartElement(1, 2));
         insert(2, new CartElement(3, 3));
-    */}
+         */
+    }
 
     private void insert(int shopid, CartElement ce) {
         if (products.get(shopid) == null) {
             products.put(shopid, new ArrayList<CartElement>());
         }
-        
+
         addProductIfAlready(products.get(shopid), ce);
     }
-    private void addProductIfAlready(ArrayList<CartElement> products,CartElement newce) {
+
+    private void addProductIfAlready(ArrayList<CartElement> products, CartElement newce) {
         boolean found = false;
         for (CartElement ce : products) {
             if (ce.getId() == newce.getId()) {
@@ -45,7 +48,6 @@ public class Cart implements Serializable {
             products.add(new CartElement(newce.getId(), newce.getNumber()));
         }
     }
-
 
     public void addProduct(int shopid, int id, int number) {
         insert(shopid, new CartElement(id, number));
@@ -82,15 +84,20 @@ public class Cart implements Serializable {
 
     }
 
-    
-    public void removeIf(List<CartElement> list)
-    {
-    /*     for (CartElement cartElement : list) {
+    public void removeIf(List<CartElement> list1) {
+        List<CartElement> list = new ArrayList<>(list1);
+
+        Iterator<CartElement> iter = list.iterator();
+        while (iter.hasNext()) {
+            
+            CartElement cartElement = iter.next();
+            System.out.println(cartElement.getId()+"asd\n\n\n");
             removeProduct(cartElement);
-        }   
-    */
-    
+            
+        }
+
     }
+
     public void removeProduct(CartElement c) {
         removeProduct(c.getId());
     }
