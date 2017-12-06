@@ -5,11 +5,13 @@
  */
 package it.unitn.buyhub.dao.jdbc;
 
+import it.unitn.buyhub.dao.OrderDAO;
 import it.unitn.buyhub.dao.OrderedProductDAO;
 import it.unitn.buyhub.dao.PictureDAO;
 import it.unitn.buyhub.dao.ProductDAO;
 import it.unitn.buyhub.dao.ShopDAO;
 import it.unitn.buyhub.dao.entities.Coordinate;
+import it.unitn.buyhub.dao.entities.Order;
 import it.unitn.buyhub.dao.entities.OrderedProduct;
 import it.unitn.buyhub.dao.entities.Picture;
 import it.unitn.buyhub.dao.entities.Product;
@@ -17,6 +19,7 @@ import it.unitn.buyhub.dao.persistence.DAO;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.jdbc.JDBCDAO;
+import it.unitn.buyhub.utils.Log;
 import it.unitn.buyhub.utils.Pair;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -25,6 +28,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.transformation.FilteredList;
 
 /**
@@ -36,7 +41,7 @@ public class JDBCOrderedProductDAO extends JDBCDAO<OrderedProduct,  Pair<Integer
     
     public JDBCOrderedProductDAO(Connection con) {
         super(con);
-        FRIEND_DAOS.put(Product.class, new JDBCProductDAO(CON));
+      //  FRIEND_DAOS.put(Product.class, new JDBCProductDAO(CON));
     }
 
     @Override
@@ -65,7 +70,10 @@ public class JDBCOrderedProductDAO extends JDBCDAO<OrderedProduct,  Pair<Integer
                 rs.next();
                 ProductDAO productDao=getDAO(ProductDAO.class);
                 Product p=productDao.getByPrimaryKey(rs.getInt("product_id"));
-                OrderedProduct orderedproduct = new OrderedProduct(p,rs.getInt("quantity"),rs.getInt("order_id"));
+                OrderDAO orderDAO=getDAO(OrderDAO.class);
+                Order o=orderDAO.getByPrimaryKey(rs.getInt("order_id"));
+                OrderedProduct orderedproduct = new OrderedProduct(p,rs.getInt("quantity"),o);
+                    
                 orderedproduct.setPrice(rs.getDouble("price"));
                 
                 return orderedproduct;
@@ -86,7 +94,9 @@ public class JDBCOrderedProductDAO extends JDBCDAO<OrderedProduct,  Pair<Integer
                     
                     ProductDAO productDao=getDAO(ProductDAO.class);
                     Product p=productDao.getByPrimaryKey(rs.getInt("product_id"));
-                    OrderedProduct product = new OrderedProduct(p,rs.getInt("quantity"),rs.getInt("order_id"));
+                    OrderDAO orderDAO=getDAO(OrderDAO.class);
+                    Order o=orderDAO.getByPrimaryKey(rs.getInt("order_id"));
+                    OrderedProduct product = new OrderedProduct(p,rs.getInt("quantity"),o);
                     product.setPrice(rs.getDouble("price"));
                     products.add(product);
                 }
@@ -108,7 +118,7 @@ public class JDBCOrderedProductDAO extends JDBCDAO<OrderedProduct,  Pair<Integer
                
                std.setInt(1,product.getQuantity());
                std.setDouble(2, product.getPrice());
-               std.setInt(3, product.getOrder());
+               std.setInt(3, product.getOrder().getId());
                std.setInt(4, product.getId());
                
 
@@ -125,14 +135,15 @@ public class JDBCOrderedProductDAO extends JDBCDAO<OrderedProduct,  Pair<Integer
     @Override
     public Long insert(OrderedProduct products) throws DAOException {
          try (PreparedStatement ps = CON.prepareStatement("INSERT INTO orders_products(order_id,product_id,price,quantity) VALUES(?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
-            ps.setInt(1, products.getId());            
-            ps.setInt(2, products.getOrder());
+            ps.setInt(1, products.getOrder().getId());
+            ps.setInt(2, products.getId());            
             ps.setDouble(3, products.getPrice());
             ps.setInt(4, products.getQuantity());
-
+            // System.out.println(ps.toString());
             
             if (ps.executeUpdate() == 1) {
                 ResultSet generatedKeys = ps.getGeneratedKeys();
+                
                 if (generatedKeys.next()) {
                     return generatedKeys.getLong(1);
                 } else {
@@ -140,24 +151,34 @@ public class JDBCOrderedProductDAO extends JDBCDAO<OrderedProduct,  Pair<Integer
                         CON.rollback();
                     } catch (SQLException ex) {
                         //TODO: log the exception
+                        Log.error("Error placing order: "+ex);
+
                     }
-                    throw new DAOException("Impossible to persist the new product");
+                    throw new DAOException("Impossible to persist the new product - (1)");
                 }
             } else {
                 try {
                     CON.rollback();
                 } catch (SQLException ex) {
                     //TODO: log the exception
+                    Log.error("Error placing order: "+ex);
+                    
+                    
+
                 }
-                throw new DAOException("Impossible to persist the new product");
+                throw new DAOException("Impossible to persist the new product (2)");
             }
         } catch (SQLException ex) {
             try {
                 CON.rollback();
             } catch (SQLException ex1) {
+                
+                Log.error("Error placing order: "+ex);
+
                 //TODO: log the exception
             }
-            throw new DAOException("Impossible to persist the new notification", ex);
+            
+            throw new DAOException("Impossible to persist the new product (3)", ex);
         }
         
     }
@@ -173,7 +194,10 @@ public class JDBCOrderedProductDAO extends JDBCDAO<OrderedProduct,  Pair<Integer
                     
                     ProductDAO productDao=getDAO(ProductDAO.class);
                     Product p=productDao.getByPrimaryKey(rs.getInt("product_id"));
-                    OrderedProduct product = new OrderedProduct(p,rs.getInt("quantity"),rs.getInt("order_id"));
+                    OrderDAO orderDAO=getDAO(OrderDAO.class);
+                    Order o=orderDAO.getByPrimaryKey(rs.getInt("order_id"));
+                    OrderedProduct product = new OrderedProduct(p,rs.getInt("quantity"),o);
+                    
                     product.setPrice(rs.getDouble("price"));
                     products.add(product);
                 }

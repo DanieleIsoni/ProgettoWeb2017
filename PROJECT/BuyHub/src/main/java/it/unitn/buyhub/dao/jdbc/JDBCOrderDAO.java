@@ -19,6 +19,7 @@ import it.unitn.buyhub.dao.persistence.DAO;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.jdbc.JDBCDAO;
+import it.unitn.buyhub.servlet.order.PlaceOrderServlet;
 import it.unitn.buyhub.utils.Pair;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -27,6 +28,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.transformation.FilteredList;
 
 /**
@@ -39,6 +42,7 @@ public class JDBCOrderDAO extends JDBCDAO<Order,  Integer> implements OrderDAO{
     public JDBCOrderDAO(Connection con) {
         super(con);
         FRIEND_DAOS.put(OrderedProduct.class, new JDBCOrderedProductDAO(CON));
+        FRIEND_DAOS.put(ShopDAO.class, new JDBCShopDAO(CON));
     }
 
     @Override
@@ -71,7 +75,9 @@ public class JDBCOrderDAO extends JDBCDAO<Order,  Integer> implements OrderDAO{
                 o.setUser_id(rs.getInt("user_id"));
                 o.setShipment(rs.getString("shipment"));
                 o.setShipment_cost(rs.getDouble("shipment_cost"));
-                     
+                ShopDAO s=getDAO(ShopDAO.class);
+                o.setShop(s.getByPrimaryKey(rs.getInt("id_shop")));     
+                
                 OrderedProductDAO orderedproductDao=getDAO(OrderedProductDAO.class);
                 List<OrderedProduct> products = orderedproductDao.getByOrder(o.getId());
                 for (OrderedProduct product : products) {
@@ -101,7 +107,8 @@ public class JDBCOrderDAO extends JDBCDAO<Order,  Integer> implements OrderDAO{
                     o.setUser_id(rs.getInt("user_id"));
                     o.setShipment(rs.getString("shipment"));
                     o.setShipment_cost(rs.getDouble("shipment_cost"));
-                    
+                    ShopDAO s=getDAO(ShopDAO.class);
+                    o.setShop(s.getByPrimaryKey(rs.getInt("id_shop")));
 
                     OrderedProductDAO orderedproductDao=getDAO(OrderedProductDAO.class);
                     List<OrderedProduct> products = orderedproductDao.getByOrder(o.getId());
@@ -145,23 +152,41 @@ public class JDBCOrderDAO extends JDBCDAO<Order,  Integer> implements OrderDAO{
 
     @Override
     public Long insert(Order order) throws DAOException {
-         try (PreparedStatement ps = CON.prepareStatement("INSERT INTO orders_products(user_id,shipment,shipment_costs,paid) VALUES(?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
+         try (PreparedStatement ps = CON.prepareStatement("INSERT INTO orders(user_id,shipment,shipment_costs,paid,shop_id) VALUES(?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
                 ps.setInt(1, order.getUser_id());
                 ps.setString(2, order.getShipment());
                 ps.setDouble(3, order.getShipment_cost());
                 ps.setBoolean(4, order.isPaid());
+                ps.setInt(5, 1);//order.getShop().getId());
                 
             if (ps.executeUpdate() == 1) {
                 ResultSet generatedKeys = ps.getGeneratedKeys();
                 if (generatedKeys.next()) {
-                    return generatedKeys.getLong(1);
+                    long key = generatedKeys.getLong(1);
+                   /* try{
+                    OrderedProductDAO orderedproductDao=getDAO(OrderedProductDAO.class);
+                    order.setId((int) key);
+                    for (OrderedProduct op : order.getProducts()) {
+                        op.setOrder(order);
+                        orderedproductDao.insert(op);
+                    }
+                    } catch (Exception ex) {
+                        
+                        
+                    //    Logger.getLogger(JDBCOrderDAO.class.getName()).log(Level.SEVERE, null, ex);
+                        throw new DAOException("Impossible to persist the new order (1)"+ ex);
+                        
+                
+                    }
+                    */
+                    return key;
                 } else {
                     try {
                         CON.rollback();
                     } catch (SQLException ex) {
                         //TODO: log the exception
                     }
-                    throw new DAOException("Impossible to persist the new product");
+                    throw new DAOException("Impossible to persist the new order (2)");
                 }
             } else {
                 try {
@@ -169,7 +194,7 @@ public class JDBCOrderDAO extends JDBCDAO<Order,  Integer> implements OrderDAO{
                 } catch (SQLException ex) {
                     //TODO: log the exception
                 }
-                throw new DAOException("Impossible to persist the new product");
+                throw new DAOException("Impossible to persist the new order (3)");
             }
         } catch (SQLException ex) {
             try {
@@ -177,7 +202,7 @@ public class JDBCOrderDAO extends JDBCDAO<Order,  Integer> implements OrderDAO{
             } catch (SQLException ex1) {
                 //TODO: log the exception
             }
-            throw new DAOException("Impossible to persist the new notification", ex);
+            throw new DAOException("Impossible to persist the new order (4)", ex);
         }
         
     }
@@ -198,7 +223,8 @@ public class JDBCOrderDAO extends JDBCDAO<Order,  Integer> implements OrderDAO{
                     o.setUser_id(rs.getInt("user_id"));
                     o.setShipment(rs.getString("shipment"));
                     o.setShipment_cost(rs.getDouble("shipment_cost"));
-                    
+                    ShopDAO s=getDAO(ShopDAO.class);
+                    o.setShop(s.getByPrimaryKey(rs.getInt("id_shop")));
 
                     OrderedProductDAO orderedproductDao=getDAO(OrderedProductDAO.class);
                     List<OrderedProduct> products = orderedproductDao.getByOrder(o.getId());

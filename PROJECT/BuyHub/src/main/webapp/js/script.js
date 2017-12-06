@@ -78,7 +78,7 @@ function changeShipment(shopid)
     var total=parseFloat($("#originalTotal"+shopid).val());
     
     var cost=parseFloat($("#shipment_cost"+shopid).val());
-    if($("#shipment"+shopid).find('option:selected').attr('id')==0)
+    if($("#shipment"+shopid).find('option:selected').attr('id')==-1)
         total+=cost;
     total=total.toFixed(2);
     var i = total.lastIndexOf('.');
@@ -86,4 +86,11 @@ function changeShipment(shopid)
     
     $("#total"+shopid).html("&euro; "+total);
     
+}
+
+function placeOrderCart(shopid)
+{
+    var data="?shopid="+shopid;
+    data+="&shipment="+$("#shipment"+shopid).find('option:selected').attr('id');
+    location.href="restricted/order/PlaceOrder"+data;
 }

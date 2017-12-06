@@ -11,7 +11,7 @@ package it.unitn.buyhub.dao.entities;
  */
 public class OrderedProduct extends Product{
     int quantity=1;
-    int order;
+    Order order;
 
 
     public int getQuantity() {
@@ -22,7 +22,7 @@ public class OrderedProduct extends Product{
         this.quantity = quantity;
     }
 
-    public OrderedProduct(Product p, int q, int o)
+    public OrderedProduct(Product p, int q, Order o)
     {
         this.setAvgReview(p.getAvgReview());
         this.setCategory(p.getCategory());
@@ -39,11 +39,11 @@ public class OrderedProduct extends Product{
     }
     public OrderedProduct(){}
 
-    public int getOrder() {
+    public Order getOrder() {
         return order;
     }
 
-    public void setOrder(int order) {
+    public void setOrder(Order order) {
         this.order = order;
     }
 

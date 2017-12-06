@@ -124,23 +124,19 @@ public class CartTagHandler extends SimpleTagSupport {
 
                 
                 String select="";
-                String costs="[";
+                
                 List<Coordinate> coordinates = coordinateDAO.getByShop(shop);
-                int i=1;
 
                 if(shop.getShipment()!=null && shop.getShipment().length()!=0)
                 {
-                    select+="<option id=0 >"+format.format(shop.getShipment_cost())+" - "+shop.getShipment()+"</option>\n";
-                    costs+=shop.getShipment_cost()+",";
+                    select+="<option id='-1' >"+format.format(shop.getShipment_cost())+" - "+shop.getShipment()+"</option>\n";
                 }
 
                 for (Coordinate coordinate : coordinates) {
                     String opening=coordinate.getOpening_hours();
                     if(opening!="")
                     {
-                        select+="\n<option id="+i+" >";
-                        costs+="0,";
-                        i++;
+                        select+="\n<option id="+coordinate.getId()+" >";
                         select+=format.format(0)+" - "+Utility.getLocalizedString(pageContext, "pickup_in_store")+" ("+coordinate.getAddress()+")</option>";
                         
                     }
@@ -162,10 +158,11 @@ public class CartTagHandler extends SimpleTagSupport {
                         + "<div class=\"to-right-cart\">"
                         + "   <div id=\"cart-shipment\" >"+Utility.getLocalizedString(pageContext, "shipment_mode_singular")+": </span> <select id=\"shipment"+shop.getId()+"\" onchange=changeShipment("+shop.getId()+") class=\"btn btn-default dropdown-toggle\">"+select+"</select></div>"
                         + "   <button type=\"button\" class=\"btn btn-info\" onclick=\"location.href = 'cart.jsp'\">" + Utility.getLocalizedString(pageContext, "recalculate_cart") + "</button>"
-                        + "   <button type=\"button\" class=\"btn btn-success\" onclick=\"location.href = 'restricted/payment.jsp?sellerid=" + shop.getId() + "'\">" + Utility.getLocalizedString(pageContext, "pay") + "</button>"
+                        + "   <button type=\"button\" class=\"btn btn-success\" onclick=\"placeOrderCart("+shop.getId()+")\">" + Utility.getLocalizedString(pageContext, "pay") + "</button>"
                         + "</div>");
                 out.println("<input type=\"hidden\" id=\"shipment_cost"+shop.getId()+"\" value=\""+shop.getShipment_cost()+"\">");
                 out.println("<input type=\"hidden\" id=\"originalTotal"+shop.getId()+"\" value=\""+total+"\">");
+                out.println("<script> changeShipment("+shop.getId()+")</script>");
             }
             
             out.println("</div>");

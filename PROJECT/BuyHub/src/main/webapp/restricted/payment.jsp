@@ -1,17 +1,29 @@
-<%-- 
-    Document   : payment
-    Created on : 3-ott-2017, 22.18.45
-    Author     : matteo
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <%@page import="it.unitn.buyhub.dao.entities.Order"%>
+        <jsp:useBean id="order" type="Order" scope="request"></jsp:useBean>
+        <%@include file="/common/header.jsp" %>
+        <title>Checkout - BuyHub</title>
+        <link href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" type="text/css"/>
+        <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js" ></script>
+        <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <%@include file="/common/navbar.jsp" %>
+        
+        
+        <c:set var="total" scope="page" value="${order.shipment_cost}"/>
+        <c:forEach var="product" items="${order.products}">
+            <c:set var="total" scope="page" value="${total + product.price}" />
+            
+        </c:forEach>
+        
+        <h1>Pagamento</h1>
+            OrderID: ${order.id}<br/>
+            ShopID:  ${order.shop.id}<br/>
+            ShopID:  ${order.shop.name}<br/>
+            Shipment: ${order.shipment}<br/>
+            Total:  &euro; ${total}
     </body>
 </html>

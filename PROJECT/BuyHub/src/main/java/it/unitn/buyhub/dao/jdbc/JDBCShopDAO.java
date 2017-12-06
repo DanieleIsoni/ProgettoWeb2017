@@ -40,7 +40,7 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
     public JDBCShopDAO(Connection con) {
         super(con);
         FRIEND_DAOS.put(UserDAO.class, new JDBCUserDAO(CON));
-        FRIEND_DAOS.put(CoordinateDAO.class, new JDBCCoordinateDAO(CON));
+       // FRIEND_DAOS.put(CoordinateDAO.class, new JDBCCoordinateDAO(CON));
     }
 
     /**

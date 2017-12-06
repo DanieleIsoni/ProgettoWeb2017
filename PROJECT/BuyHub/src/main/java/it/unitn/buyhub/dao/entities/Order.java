@@ -22,6 +22,15 @@ public class Order implements Serializable {
    boolean paid;
    String shipment;
    int user_id;
+   Shop shop;
+
+    public Shop getShop() {
+        return shop;
+    }
+
+    public void setShop(Shop shop) {
+        this.shop = shop;
+    }
 
     public int getUser_id() {
         return user_id;
@@ -61,7 +70,7 @@ public class Order implements Serializable {
    
    public void add(Product p, int quantity)
    {
-       OrderedProduct op=new OrderedProduct(p,quantity,id);
+       OrderedProduct op=new OrderedProduct(p,quantity,this);
        products.add(op);
    }
    public void add(OrderedProduct p)
@@ -86,6 +95,14 @@ public class Order implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public ArrayList<OrderedProduct> getProducts() {
+        return products;
+    }
+
+    public void setProducts(ArrayList<OrderedProduct> products) {
+        this.products = products;
     }
    
 

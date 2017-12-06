@@ -82,6 +82,15 @@ public class Cart implements Serializable {
 
     }
 
+    
+    public void removeIf(List<CartElement> list)
+    {
+    /*     for (CartElement cartElement : list) {
+            removeProduct(cartElement);
+        }   
+    */
+    
+    }
     public void removeProduct(CartElement c) {
         removeProduct(c.getId());
     }
