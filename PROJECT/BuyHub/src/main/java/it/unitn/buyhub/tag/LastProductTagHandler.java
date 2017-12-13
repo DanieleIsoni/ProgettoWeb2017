@@ -59,7 +59,7 @@ public class LastProductTagHandler extends SimpleTagSupport {
             try {
                 allProducts = productDAO.getAllLimit(10);
                 out.println(" <div class=\"container\">\n"
-                        + "            <h2>"+Utility.getLocalizedString(pageContext, "last_added")+"</h2>\n"
+                        + "            <h2>" + Utility.getLocalizedString(pageContext, "last_added") + "</h2>\n"
                         + "            <div class=\"row\">\n"
                         + "                <div class=\"col-md-12 heroSlider-fixed\">\n"
                         + "                    <div class=\"overlay\">\n"
@@ -69,7 +69,7 @@ public class LastProductTagHandler extends SimpleTagSupport {
 
                 for (Product p : allProducts) {
                     out.println("                        <div>\n"
-                            + "                            <a href=\"product?id="+p.getId()+"\"><img src=\"" + p.getMainPicture().getPath() + "\" alt=\"\" /></a>\n"
+                            + "                            <a href=\"product?id=" + p.getId() + "\"><img src=\"" + p.getMainPicture().getPath() + "\" alt=\"\" /></a>\n"
                             + "                        </div>\n");
 
                 }
@@ -78,14 +78,13 @@ public class LastProductTagHandler extends SimpleTagSupport {
                         + "                    <div class=\"prev\">\n"
                         + "                        <span class=\"glyphicon glyphicon-chevron-left\" aria-hidden=\"true\"></span>\n"
                         + "                    </div>\n"
-                        + "                    <div class=\"next\">\n"
+                        + "                    <div class=\"next-car\">\n"
                         + "                        <span class=\"glyphicon glyphicon-chevron-right\" aria-hidden=\"true\"></span>\n"
                         + "                    </div>\n"
                         + "\n"
                         + "                </div>\n"
                         + "            </div>\n"
                         + "        </div>\n"
-                        + "        <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>\n"
                         + "        <script src='https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.5.5/slick.min.js'></script>\n"
                         + "\n"
                         + "        <script  src=\"js/carouselHome.js\"></script>");

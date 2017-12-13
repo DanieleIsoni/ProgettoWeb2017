@@ -8,7 +8,7 @@
 $('.responsive').slick({
   dots: true,
   prevArrow: $('.prev'),
-  nextArrow: $('.next'),
+  nextArrow: $('.next-car'),
   infinite: false,
   speed: 300,
   slidesToShow: 4,

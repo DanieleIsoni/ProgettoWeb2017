@@ -578,20 +578,20 @@ a.mybtn {
   color: black;
 }
 
-.next {
+.next-car{
   color: #999;
   position: absolute;
   top: 38%;
   right: -2em;
   font-size: 1.5em;
 }
-.next :hover {
+.next-car :hover {
   cursor: pointer;
   color: black;
 }
 
 @media screen and (max-width: 800px) {
-  .next {
+  .next-car {
     display: none !important;
   }
 }

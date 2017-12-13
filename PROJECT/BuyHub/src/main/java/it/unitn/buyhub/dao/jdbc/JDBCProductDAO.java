@@ -342,7 +342,7 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
     public List<Product> getAllLimit(int number) throws DAOException {
 
         List<Product> products = new ArrayList<>();
-        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM products LIMIT ?")) {
+        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM products ORDER BY id DESC LIMIT ?")) {
             stm.setInt(1, number);
             try (ResultSet rs = stm.executeQuery()) {
 
