@@ -163,13 +163,14 @@ public class NavbarTagHandler extends SimpleTagSupport {
             out += "<div class='no-notification'>" + Utility.getLocalizedString(pageContext, "no_notification") + "</div>";
         }
         for (Notification n : notifications) {
-            out += "<hr><div class='notification-element'>\n"
+            out += "<hr><div class='notification-element' style='word-break:break-all;'>\n"
                     + "            <table  align='center'>\n"
                     + "                <tr>\n"
                     + "                    <th id='image' rowspan='2'>\n"
                     + "                        <img src='" + Utility.getUrl(pageContext, "images/icon.png") + "' />\n"
                     + "                    </th>\n"
                     + "                    <th>" + n.getDescription() + "</th>\n"
+                    + "                    <th><a class='glyphicon glyphicon-remove' id='logIcon' href = 'removenotification?id_notification="+n.getId()+"'></a></th>"
                     + "                </tr>\n"
                     + "                <tr>\n"
                     + "                    <td>" + dateFormat.format(n.getDateCreation()) + "</td>\n"

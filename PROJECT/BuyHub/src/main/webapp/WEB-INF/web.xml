@@ -79,6 +79,10 @@
         <servlet-class>it.unitn.buyhub.servlet.ShopServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>RemoveNotificationServlet</servlet-name>
+        <servlet-class>it.unitn.buyhub.servlet.RemoveNotificationServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>AvatarUploadServlet</servlet-name>
         <servlet-class>it.unitn.buyhub.servlet.user.AvatarUploadServlet</servlet-class>
     </servlet>
@@ -169,6 +173,10 @@
     <servlet-mapping>
         <servlet-name>ModifyCartItemNumberServlet</servlet-name>
         <url-pattern>/modifycartitemnumber</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RemoveNotificationServlet</servlet-name>
+        <url-pattern>/removenotification</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>RemoveFromCartServlet</servlet-name>
