@@ -67,7 +67,7 @@ public class PayedServlet extends HttpServlet {
                         + " Your order #"+o.getId()+" has been payed succesfully to "+o.getShop().getName()+"!"
                         + " You will receive an email when your order will be shipped or it's ready for pickup.";
                 Mailer.mail(ph.getValue("noreplyMail"), u.getEmail(), "Your order has been payed", text,ph.getValue("baseUrl"),"Take a look on BuyHub");
-                response.sendRedirect(response.encodeRedirectURL(contextPath + "restricted/user/myorders"));
+                response.sendRedirect(response.encodeRedirectURL(contextPath + "restricted/myorders"));
             }
             else
             {

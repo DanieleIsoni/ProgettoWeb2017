@@ -220,6 +220,8 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
                 return product;
             }
         } catch (SQLException | DAOFactoryException ex) {
+             Logger.getLogger("test").log(Level.SEVERE, null, ex);
+            
             throw new DAOException("Impossible to get the product for the passed primary key", ex);
         }
     }

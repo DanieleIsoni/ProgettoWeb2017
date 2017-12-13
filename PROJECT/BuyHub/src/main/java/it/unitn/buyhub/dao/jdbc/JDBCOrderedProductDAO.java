@@ -41,7 +41,8 @@ public class JDBCOrderedProductDAO extends JDBCDAO<OrderedProduct,  Pair<Integer
     
     public JDBCOrderedProductDAO(Connection con) {
         super(con);
-      //  FRIEND_DAOS.put(Product.class, new JDBCProductDAO(CON));
+        FRIEND_DAOS.put(ProductDAO.class, new JDBCProductDAO(CON));
+        FRIEND_DAOS.put(OrderDAO.class, new JDBCOrderDAO(CON));
     }
 
     @Override
@@ -52,7 +53,7 @@ public class JDBCOrderedProductDAO extends JDBCDAO<OrderedProduct,  Pair<Integer
                 return counter.getLong(1);
             }
         } catch (SQLException ex) {
-            throw new DAOException("Impossible to count coordinates", ex);
+            throw new DAOException("Impossible to count products", ex);
         }
 
         return 0L; }
@@ -79,6 +80,7 @@ public class JDBCOrderedProductDAO extends JDBCDAO<OrderedProduct,  Pair<Integer
                 return orderedproduct;
             }
         } catch (SQLException | DAOFactoryException ex) {
+            
             throw new DAOException("Impossible to get the product for the passed primary key", ex);
         }
        
@@ -103,7 +105,7 @@ public class JDBCOrderedProductDAO extends JDBCDAO<OrderedProduct,  Pair<Integer
 
             }
         } catch (SQLException | DAOFactoryException ex) {
-            throw new DAOException("Impossible to get the products for the passed primary key", ex);
+            throw new DAOException("Impossible to get all ordered products", ex);
         }
         return products;  
     }
@@ -186,7 +188,7 @@ public class JDBCOrderedProductDAO extends JDBCDAO<OrderedProduct,  Pair<Integer
     @Override
     public List<OrderedProduct> getByOrder(int orderId) throws DAOException {
            List<OrderedProduct> products = new ArrayList<>();
-        try (PreparedStatement stm = CON.prepareStatement("SELECT *  FROM orders_products op WHERE order_id=? ORDER BY id ")) {
+        try (PreparedStatement stm = CON.prepareStatement("SELECT *  FROM orders_products  WHERE order_id=? ORDER BY order_id ")) {
             stm.setInt(1,orderId);
             try (ResultSet rs = stm.executeQuery()) {
 
@@ -204,7 +206,8 @@ public class JDBCOrderedProductDAO extends JDBCDAO<OrderedProduct,  Pair<Integer
 
             }
         } catch (SQLException | DAOFactoryException ex) {
-            throw new DAOException("Impossible to get the products for the passed primary key", ex);
+            //Logger.getLogger("test").log(Level.SEVERE, null, ex);
+            throw new DAOException("Impossible to get the products for the passed order", ex);
         }
         return products;  
     

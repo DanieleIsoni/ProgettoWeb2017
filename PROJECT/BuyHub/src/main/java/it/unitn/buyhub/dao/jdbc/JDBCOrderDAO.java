@@ -21,6 +21,7 @@ import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.jdbc.JDBCDAO;
 import it.unitn.buyhub.servlet.order.PlaceOrderServlet;
+import it.unitn.buyhub.utils.Log;
 import it.unitn.buyhub.utils.Pair;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -55,7 +56,7 @@ public class JDBCOrderDAO extends JDBCDAO<Order,  Integer> implements OrderDAO{
                 return counter.getLong(1);
             }
         } catch (SQLException ex) {
-            throw new DAOException("Impossible to count coordinates", ex);
+            throw new DAOException("Impossible to count orders", ex);
         }
 
         return 0L; }
@@ -91,7 +92,6 @@ public class JDBCOrderDAO extends JDBCDAO<Order,  Integer> implements OrderDAO{
                 return o;
             }
         } catch (SQLException | DAOFactoryException ex) {
-           // Logger.getLogger("test").log(Level.SEVERE, null, ex);
             throw new DAOException("Impossible to get the order for the passed primary key", ex);
            
         }
@@ -101,7 +101,7 @@ public class JDBCOrderDAO extends JDBCDAO<Order,  Integer> implements OrderDAO{
     @Override
     public List<Order> getAll() throws DAOException {
          List<Order> orders = new ArrayList<>();
-        try (PreparedStatement stm = CON.prepareStatement("SELECT *  FROM orders o ORDER BY id ")) {
+        try (PreparedStatement stm = CON.prepareStatement("SELECT *  FROM orders o WHERE paid=1 ORDER BY id ")) {
             try (ResultSet rs = stm.executeQuery()) {
 
                 while (rs.next()) {
@@ -145,7 +145,7 @@ public class JDBCOrderDAO extends JDBCDAO<Order,  Integer> implements OrderDAO{
                std.setDouble(2,o.getShipment_cost());
                std.setBoolean(3,o.isPaid());
                std.setInt(4,o.getId());
-               System.out.println(std.toString());
+               //System.out.println(std.toString());
 
                
                if (std.executeUpdate() == 1) {
@@ -224,11 +224,9 @@ public class JDBCOrderDAO extends JDBCDAO<Order,  Integer> implements OrderDAO{
 
                 while (rs.next()) {
                     
-                    rs.next();
                     Order o=new Order();
                     o.setId(rs.getInt("id"));
                     o.setPaid(rs.getBoolean("paid"));
-
                     UserDAO userdao=getDAO(UserDAO.class); 
                     o.setUser(userdao.getByPrimaryKey(rs.getInt("user_id")));
                     o.setShipment(rs.getString("shipment"));
@@ -247,7 +245,8 @@ public class JDBCOrderDAO extends JDBCDAO<Order,  Integer> implements OrderDAO{
 
             }
         } catch (SQLException | DAOFactoryException ex) {
-            throw new DAOException("Impossible to get the products for the passed primary key", ex);
+           // Logger.getLogger("test").log(Level.SEVERE, null, ex);
+            throw new DAOException("Impossible to get the orders for the passed user", ex);
         }
         return orders;  
     }

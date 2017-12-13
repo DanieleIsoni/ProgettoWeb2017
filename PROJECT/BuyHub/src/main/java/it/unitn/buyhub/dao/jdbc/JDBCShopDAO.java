@@ -61,7 +61,7 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
                 return counter.getLong(1);
             }
         } catch (SQLException ex) {
-            throw new DAOException("Impossible to count coordinates", ex);
+            throw new DAOException("Impossible to count shops", ex);
         }
 
         return 0L;
@@ -158,7 +158,7 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
                 return shop;
             }
         } catch (SQLException | DAOFactoryException ex) {
-            throw new DAOException("Impossible to get the coordinates for the passed primary key", ex);
+            throw new DAOException("Impossible to get the shops for the passed primary key", ex);
         }
     }
 
@@ -200,7 +200,7 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
                 return shop;
             }
         } catch (SQLException ex) {
-            throw new DAOException("Impossible to get the coordinates for the passed primary key", ex);
+            throw new DAOException("Impossible to get the shops for the passed primary key", ex);
         }
     }
 
@@ -248,7 +248,7 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
 
             }
         } catch (SQLException | DAOFactoryException ex) {
-            throw new DAOException("Impossible to get the coordinates for the passed primary key", ex);
+            throw new DAOException("Impossible to get the shops for the passed primary key", ex);
         }
         return shops;
     }
