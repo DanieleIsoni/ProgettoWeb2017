@@ -6,10 +6,12 @@
 package it.unitn.buyhub.servlet;
 
 import it.unitn.buyhub.dao.CoordinateDAO;
+import it.unitn.buyhub.dao.NotificationDAO;
 import it.unitn.buyhub.dao.ProductDAO;
 import it.unitn.buyhub.dao.ReviewDAO;
 import it.unitn.buyhub.dao.ShopDAO;
 import it.unitn.buyhub.dao.UserDAO;
+import it.unitn.buyhub.dao.entities.Notification;
 import it.unitn.buyhub.dao.entities.Product;
 import it.unitn.buyhub.dao.entities.Review;
 import it.unitn.buyhub.dao.entities.Shop;
@@ -31,26 +33,21 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Daniso
  */
-public class AddReviewServlet extends HttpServlet {
-
-    private ReviewDAO reviewDao;
-    private UserDAO userDao;
-    private ProductDAO productDAO;
-
+public class RemoveNotificationServlet extends HttpServlet {
+    
+    private NotificationDAO notificationDao;
     @Override
     public void init() throws ServletException {
         DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
         if (daoFactory == null) {
-            Log.error("Impossible to get dao factory for shop storage system");
+            Log.error("Impossible to get dao factory for notification storage system");
             throw new ServletException("Impossible to get dao factory for shop storage system");
         }
         try {
-            reviewDao = daoFactory.getDAO(ReviewDAO.class);
-            userDao = daoFactory.getDAO(UserDAO.class);
-            productDAO = daoFactory.getDAO(ProductDAO.class);
+            notificationDao = daoFactory.getDAO(NotificationDAO.class);
         } catch (DAOFactoryException ex) {
-            Log.error("Impossible to get dao factory for shop storage system");
-            throw new ServletException("Impossible to get dao factory for shop storage system", ex);
+            Log.error("Impossible to get dao factory for notification storage system");
+            throw new ServletException("Impossible to get dao factory for notification storage system", ex);
         }
         Log.info("CreateNewShopServlet init done");
     }
@@ -66,64 +63,28 @@ public class AddReviewServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
         response.setContentType("text/html;charset=UTF-8");
-        String description = (String) request.getParameter("description");
-        String total = (String) request.getParameter("total");
-
-        String productId = (String) request.getParameter("prod_id");
-        String quality = (String) request.getParameter("quality");
-        String service = (String) request.getParameter("service");
-        String money = (String) request.getParameter("money");
-        String title = (String) request.getParameter("title");
-        User owner = (User) request.getSession().getAttribute("authenticatedUser");
-
+        
+        String notificationId = (String) request.getParameter("id_notification");
+        
         String contextPath = getServletContext().getContextPath();
         if (!contextPath.endsWith("/")) {
             contextPath += "/";
         }
-
+        
         try {
-            if (productId != null) {
-                Product prod = productDAO.getByPrimaryKey(Integer.valueOf(productId));
-
-                if (title != null && !title.equals("") && owner != null && description != null && total != null && quality != null && service != null && money != null
-                        && !description.equals("") && !total.equals("") && !quality.equals("") && !service.equals("") && !money.equals("")) {
-
-                    Review review = new Review();
-                    review.setCreator(owner);
-                    review.setDateCreation(new Date());
-                    review.setDescription(description);
-                    review.setGlobalValue(Integer.valueOf(total));
-                    review.setProduct(prod);
-                    review.setQuality(Integer.valueOf(quality));
-                    review.setService(Integer.valueOf(service));
-                    review.setTitle(title);
-                    review.setValueForMoney(Integer.valueOf(money));
-                    Long id = 0l;
-                    try {
-                        id = reviewDao.insert(review);
-                    } catch (DAOException ex) {
-                        Log.warn("Error inserting review, maybe already in the db");
-                    }
-                    System.out.println(id + "TEST");
-                    if (id == 0) {
-                        response.sendRedirect(response.encodeRedirectURL(contextPath + "product?id=" + productId + "&error=1"));
-
-                        Log.error("Error adding review, already used");
-                    } else {
-                        response.sendRedirect(response.encodeRedirectURL(contextPath + "product?id=" + productId));
-                    }
-
-                } else {
-                    response.sendRedirect(response.encodeRedirectURL(contextPath + "product?id=" + productId));
-                }
-            } else {
-                response.sendRedirect(response.encodeRedirectURL(contextPath + "product?id=-1"));
+            if(notificationId!=null && !notificationId.equals("")){
+                Notification not = notificationDao.getByPrimaryKey(Integer.valueOf(notificationId));
+                not.setStatus(true);
+                notificationDao.update(not);
             }
+                
+            
         } catch (Exception ex) {
             Log.error("Error adding review" + ex.getMessage().toString());
         }
+        response.sendRedirect(request.getHeader("referer"));
     }
 
     /**
@@ -153,5 +114,5 @@ public class AddReviewServlet extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
     }
-
+    
 }

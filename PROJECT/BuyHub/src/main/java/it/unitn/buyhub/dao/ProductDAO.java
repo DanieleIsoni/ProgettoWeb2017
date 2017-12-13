@@ -111,6 +111,21 @@ public interface ProductDAO extends DAO<Product, Integer> {
      */
     @Override
     public List<Product> getAll() throws DAOException;
+    
+    /**
+     * Returns the list of all the valid {@link Product products} stored by the
+     * storage system.
+     *
+     * @return the list of all the valid {@code products}.
+     * 
+     * @param number max number of elements
+     * @throws DAOException if an error occurred during the information
+     * retrieving.
+     *
+     * @author Matteo Battilana
+     * @since 1.0.170425
+     */
+    public List<Product> getAllLimit(int number) throws DAOException;
 
     /**
      * Returns the list of all the valid {@link Product products} stored by the

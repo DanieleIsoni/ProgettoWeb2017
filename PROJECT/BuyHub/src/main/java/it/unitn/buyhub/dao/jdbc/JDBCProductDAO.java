@@ -49,7 +49,7 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
 
         FRIEND_DAOS.put(ShopDAO.class, new JDBCShopDAO(CON));
         FRIEND_DAOS.put(PictureDAO.class, new JDBCPictureDAO(CON));
-       // FRIEND_DAOS.put(ReviewDAO.class, new JDBCReviewDAO(CON));
+        // FRIEND_DAOS.put(ReviewDAO.class, new JDBCReviewDAO(CON));
     }
 
     /**
@@ -70,7 +70,6 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
             ps.setDouble(3, products.getPrice());
             ps.setInt(4, products.getShop().getId());
             ps.setInt(5, products.getCategory());
-            
 
             if (ps.executeUpdate() == 1) {
                 ResultSet generatedKeys = ps.getGeneratedKeys();
@@ -132,11 +131,10 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
                     ShopDAO shopDao = getDAO(ShopDAO.class);
                     product.setShop(shopDao.getByPrimaryKey(rs.getInt("id_shop")));
 
-                     PictureDAO pictureDao=getDAO(PictureDAO.class);
-                    List<Picture> pictures=pictureDao.getByProduct(product);
-                    product.setMainPicture(pictures.size()>0 ? pictures.get(0): Picture.NONE());
-                  
-                    
+                    PictureDAO pictureDao = getDAO(PictureDAO.class);
+                    List<Picture> pictures = pictureDao.getByProduct(product);
+                    product.setMainPicture(pictures.size() > 0 ? pictures.get(0) : Picture.NONE());
+
                     products.add(product);
                 }
 
@@ -199,24 +197,21 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
                 product.setId(primaryKey);
                 product.setName(rs.getString("name"));
                 product.setDescription(rs.getString("description"));
-                product.setPrice(rs.getDouble("price"));             
+                product.setPrice(rs.getDouble("price"));
                 product.setCategory(rs.getInt("category"));
                 //Get shop associate
                 ShopDAO shopDao = getDAO(ShopDAO.class);
                 product.setShop(shopDao.getByPrimaryKey(rs.getInt("id_shop")));
 
-                
-                
                 //get review infos
-                    Pair <Double,Integer> p=getAvgreview(product.getId());
-                    product.setAvgReview(p.Left);
-                    product.setReviewCount(p.Right);
-                  
-                  PictureDAO pictureDao=getDAO(PictureDAO.class);
-                  List<Picture> pictures=pictureDao.getByProduct(product);
-                  product.setMainPicture(pictures.size()>0 ? pictures.get(0): Picture.NONE());
-                     
-                    
+                Pair<Double, Integer> p = getAvgreview(product.getId());
+                product.setAvgReview(p.Left);
+                product.setReviewCount(p.Right);
+
+                PictureDAO pictureDao = getDAO(PictureDAO.class);
+                List<Picture> pictures = pictureDao.getByProduct(product);
+                product.setMainPicture(pictures.size() > 0 ? pictures.get(0) : Picture.NONE());
+
                 return product;
             }
         } catch (SQLException | DAOFactoryException ex) {
@@ -257,23 +252,21 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
                     product.setCategory(rs.getInt("category"));
                     //Get user associate
                     product.setShop(shop);
-                    
-                    
+
                     //get review infos
-                    Pair <Double,Integer> p=getAvgreview(product.getId());
+                    Pair<Double, Integer> p = getAvgreview(product.getId());
                     product.setAvgReview(p.Left);
                     product.setReviewCount(p.Right);
-                  
-                     PictureDAO pictureDao=getDAO(PictureDAO.class);
-                    List<Picture> pictures=pictureDao.getByProduct(product);
-                    product.setMainPicture(pictures.size()>0 ? pictures.get(0): Picture.NONE());
-                  
+
+                    PictureDAO pictureDao = getDAO(PictureDAO.class);
+                    List<Picture> pictures = pictureDao.getByProduct(product);
+                    product.setMainPicture(pictures.size() > 0 ? pictures.get(0) : Picture.NONE());
 
                     products.add(product);
                 }
 
             } catch (DAOFactoryException ex) {
-            throw new DAOException("Impossible to get the shops for the passed shop", ex);
+                throw new DAOException("Impossible to get the shops for the passed shop", ex);
             }
         } catch (SQLException ex) {
             throw new DAOException("Impossible to get the shops for the passed shop", ex);
@@ -294,7 +287,7 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
      */
     @Override
     public List<Product> getAll() throws DAOException {
-        
+
         List<Product> products = new ArrayList<>();
         try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM products ORDER BY name")) {
             try (ResultSet rs = stm.executeQuery()) {
@@ -305,23 +298,23 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
                     product.setName(rs.getString("name"));
                     product.setDescription(rs.getString("description"));
                     product.setPrice(rs.getDouble("price"));
-                    
+
                     product.setCategory(rs.getInt("category"));
                     //Get user associate
                     ShopDAO shopDao = getDAO(ShopDAO.class);
                     product.setShop(shopDao.getByPrimaryKey(rs.getInt("id_shop")));
-                    
+
                     //get review infos
-                    Pair <Double,Integer> p=getAvgreview(product.getId());
+                    Pair<Double, Integer> p = getAvgreview(product.getId());
                     product.setAvgReview(p.Left);
                     product.setReviewCount(p.Right);
-                    
-                    PictureDAO pictureDao=getDAO(PictureDAO.class);
-                    List<Picture> pictures=pictureDao.getByProduct(product);
-                    product.setMainPicture(pictures.size()>0 ? pictures.get(0): Picture.NONE());
-                  
-              //test di funzionamento
-           /*     Picture picture=new Picture(); 
+
+                    PictureDAO pictureDao = getDAO(PictureDAO.class);
+                    List<Picture> pictures = pictureDao.getByProduct(product);
+                    product.setMainPicture(pictures.size() > 0 ? pictures.get(0) : Picture.NONE());
+
+                    //test di funzionamento
+                    /*     Picture picture=new Picture(); 
                 picture.setPath("images/noimage.png");
                 product.setMainPicture(picture);*/
                     products.add(product);
@@ -330,6 +323,62 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
             }
         } catch (SQLException | DAOFactoryException ex) {
             throw new DAOException("Impossible to get the products for the passed primary key", ex);
+        }
+        return products;
+    }
+
+    /**
+     * Returns the list of all the valid {@link Product products} stored by the
+     * storage system.
+     *
+     * @return the list of all the valid {@code products}.
+     *
+     * @param number max number of elements
+     * @throws DAOException if an error occurred during the information
+     * retrieving.
+     *
+     * @author Matteo Battilana
+     * @since 1.0.170425
+     */
+    @Override
+    public List<Product> getAllLimit(int number) throws DAOException {
+
+        List<Product> products = new ArrayList<>();
+        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM products ORDER BY id DESC LIMIT ?")) {
+            stm.setInt(1, number);
+            try (ResultSet rs = stm.executeQuery()) {
+
+                while (rs.next()) {
+                    Product product = new Product();
+                    product.setId(rs.getInt("id"));
+                    product.setName(rs.getString("name"));
+                    product.setDescription(rs.getString("description"));
+                    product.setPrice(rs.getDouble("price"));
+
+                    product.setCategory(rs.getInt("category"));
+                    //Get user associate
+                    ShopDAO shopDao = getDAO(ShopDAO.class);
+                    product.setShop(shopDao.getByPrimaryKey(rs.getInt("id_shop")));
+
+                    //get review infos
+                    Pair<Double, Integer> p = getAvgreview(product.getId());
+                    product.setAvgReview(p.Left);
+                    product.setReviewCount(p.Right);
+
+                    PictureDAO pictureDao = getDAO(PictureDAO.class);
+                    List<Picture> pictures = pictureDao.getByProduct(product);
+                    product.setMainPicture(pictures.size() > 0 ? pictures.get(0) : Picture.NONE());
+
+                    //test di funzionamento
+                    /*     Picture picture=new Picture(); 
+                picture.setPath("images/noimage.png");
+                product.setMainPicture(picture);*/
+                    products.add(product);
+                }
+
+            }
+        } catch (SQLException | DAOFactoryException ex) {
+            throw new DAOException("Impossible to get the products", ex);
         }
         return products;
     }
@@ -361,22 +410,21 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
                     product.setName(rs.getString("name"));
                     product.setDescription(rs.getString("description"));
                     product.setPrice(rs.getDouble("price"));
-                    
+
                     product.setCategory(rs.getInt("category"));
                     //Get user associate
                     ShopDAO shopDao = getDAO(ShopDAO.class);
                     product.setShop(shopDao.getByPrimaryKey(rs.getInt("id_shop")));
 
                     //get review infos
-                    Pair <Double,Integer> p=getAvgreview(product.getId());
+                    Pair<Double, Integer> p = getAvgreview(product.getId());
                     product.setAvgReview(p.Left);
                     product.setReviewCount(p.Right);
-                    
-                    
+
                     PictureDAO pictureDao = getDAO(PictureDAO.class);
-                    List<Picture> pictures=pictureDao.getByProduct(product);
-                    product.setMainPicture(pictures.size()>0 ? pictures.get(0): Picture.NONE());
-                    
+                    List<Picture> pictures = pictureDao.getByProduct(product);
+                    product.setMainPicture(pictures.size() > 0 ? pictures.get(0) : Picture.NONE());
+
                     products.add(product);
                 }
 
@@ -407,10 +455,10 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
             std.setString(1, product.getName());
             std.setString(2, product.getDescription());
             std.setDouble(3, product.getPrice());
-            std.setInt(4,product.getCategory());
+            std.setInt(4, product.getCategory());
             std.setInt(5, product.getShop().getId());
             std.setInt(6, product.getId());
-            
+
             if (std.executeUpdate() == 1) {
                 return product;
             } else {
@@ -438,11 +486,11 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
         //MUST IMPLEMENT string-similarity -> https://github.com/tdebatty/java-string-similarity
         List<Product> all = getAll();
         List<Product> filtered = new ArrayList<>();
-        
-        if(name.equals(""))//carattere jolly
-            filtered=all;
-        else
+
+        if (name.equals(""))//carattere jolly
         {
+            filtered = all;
+        } else {
             //Start JaroWinkler filter
             JaroWinkler jw = new JaroWinkler();
             for (Product p : all) {
@@ -474,11 +522,10 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
         List<Product> all = getAllWithPriceRange(min, max);
         List<Product> filtered = new ArrayList<>();
 
-        
-        if(name.equals(""))//carattere jolly
-            filtered=all;
-        else
+        if (name.equals(""))//carattere jolly
         {
+            filtered = all;
+        } else {
             //Start JaroWinkler filter
             JaroWinkler jw = new JaroWinkler();
             for (Product p : all) {
@@ -489,7 +536,6 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
         }
         return filtered;
     }
-    
     public Pair getAvgreview(int id) throws DAOException
     {
         Pair<Double,Integer> p=null;
@@ -501,11 +547,11 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
                 "ON p.id=r.id_product " +
                 "WHERE p.id = ?")) {
             stm.setInt(1, id);
-            
+
             try (ResultSet rs = stm.executeQuery()) {
                 rs.next();
-                p=new Pair<>(rs.getDouble("avg"),rs.getInt("c"));
-                 
+                p = new Pair<>(rs.getDouble("avg"), rs.getInt("c"));
+
             }
         } catch (SQLException ex) {
             throw new DAOException("Impossible to get the reviews for the passed primary key", ex);
@@ -513,19 +559,18 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
         return p;
 
     }
-    
-    public void remove(Product product) throws DAOException{
-        try(PreparedStatement stm = CON.prepareStatement("DELETE FROM products WHERE products.id = ?")){
+
+    public void remove(Product product) throws DAOException {
+        try (PreparedStatement stm = CON.prepareStatement("DELETE FROM products WHERE products.id = ?")) {
             stm.setInt(1, product.getId());
-            if(stm.executeUpdate() == 1){
-                Log.info("Prod "+product.getId()+" deleted");
-            }else{
+            if (stm.executeUpdate() == 1) {
+                Log.info("Prod " + product.getId() + " deleted");
+            } else {
                 Log.error("Error in executing delete");
             }
-        } catch (SQLException ex){
-            throw new DAOException("Impossible to delete the product",ex);
+        } catch (SQLException ex) {
+            throw new DAOException("Impossible to delete the product", ex);
         }
     }
-
 
 }
