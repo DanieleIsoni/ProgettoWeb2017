@@ -98,6 +98,7 @@ public class PlaceOrderServlet extends HttpServlet {
             ArrayList<CartElement> cartElems= cartMap.get(s.getId());
             if(cartElems!= null && cartElems.size()!=0)
             {
+                double total=0;
                 for(CartElement ce: cartElems){
                     o.add(productDAO.getByPrimaryKey(ce.getId()),ce.getNumber());
                 }
@@ -106,23 +107,27 @@ public class PlaceOrderServlet extends HttpServlet {
                 o.setId(oid);
                 //INSERT PRODUCTS FROM HERE (ORDERDAO DOESN'T INSERT-> it generated errors) 
                 for (OrderedProduct op: o.getProducts()) {
+                    
                     orderedProductDAO.insert(op);
+                    total+=op.getQuantity()*op.getPrice();
                 }
 
+                total+=o.getShipment_cost();
+                
                 cart.removeIf(cartElems);
                 session.setAttribute("userCart", cart);
 
                 request.setAttribute("order", o);
                 
-                
-           
+                request.setAttribute("shipmentType",Integer.valueOf(request.getParameter("shipment")));
+                request.setAttribute("total",total);
                 request.getRequestDispatcher("../payment.jsp").forward(request, response);
-                //response.sendRedirect(response.encodeRedirectURL(contextPath + "restricted/payment.jsp?orderid="+oid));
             }
             else
                 throw  new Exception("Erorr: no product to buy");    
-        }           
-        response.sendRedirect(response.encodeRedirectURL(contextPath + "cart.jsp"));
+        }        
+        else
+            response.sendRedirect(response.encodeRedirectURL(contextPath + "cart.jsp"));
         }catch (Exception ex) {
             System.out.println(ex);
         

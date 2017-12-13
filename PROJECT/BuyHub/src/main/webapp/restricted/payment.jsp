@@ -20,14 +20,51 @@
             <div class="col-md-4">
                 
             <h1><fmt:message key="payment_title"/></h1>
-                OrderID: ${order.id}<br/>
-                ShopID:  ${order.shop.id}<br/>
-                ShopID:  ${order.shop.name}<br/>
-                Shipment: ${order.shipment}<br/>
-                Total:  &euro; ${total}
-                <br/>
-                <%-- Need to implemnent some security token/checks -> This is just a DEMO of the payment page--%>
-                <a class="btn btn-primary" href="./payed?orderid=${order.id}" role="button">Pay</a>
+            
+                
+                <div class="panel panel-default panel-footer">
+                <form method="POST" id="addProduct-form" action="./payed">
+                    <div class="form-group">
+                        <label for="productName">Order ID:</label>
+                        <input type="text" class="form-control" value="${order.id}" readonly="readonly">
+                    </div>
+                    <div class="form-group">
+                        <label for="productName">Shop Name:</label>
+                        <input type="text" class="form-control" value="${order.shop.name}" readonly="readonly">
+                    </div>
+                    <div class="form-group">
+                        <label for="productName">Total amount:</label>
+                        <input type="text" class="form-control" value="${requestScope.total}" readonly="readonly">
+                    </div>
+                    <div class="form-group">
+                        <label for="productName">Shipment:</label>
+                        <input type="text" class="form-control" value="${order.shipment}" readonly="readonly">
+                    </div>
+ 
+                    <c:if test="${requestScope.shipmentType eq -1}" >
+                    
+                    <div class="form-group">
+                        <label for="address">Address*:</label>
+                        <textarea name="address" required="required" class="form-control" id="address"></textarea>
+                    </div>
+                    </c:if>
+                    
+                    <div class="item_required">This is just a demo, it should be replaced by PayPal or similar gateway.</div>
+                    <input type="hidden" name="orderid" value="${order.id}"/>
+                    <button type="submit" class="btn btn-success"><fmt:message key="pay"/></button>
+
+                </form>
+                <br>
+            </div>
+                
+                
+                
+                
+                
+                
+                
+                
+                
             </div>
         </div>
     </body>

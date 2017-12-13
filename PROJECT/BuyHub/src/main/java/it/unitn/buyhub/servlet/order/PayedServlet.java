@@ -37,7 +37,7 @@ public class PayedServlet extends HttpServlet {
 
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
         String contextPath = getServletContext().getContextPath();
@@ -50,9 +50,14 @@ public class PayedServlet extends HttpServlet {
             if (session != null && request.getParameter("orderid")!=null ) {
                 Order o = orderDAO.getByPrimaryKey(Integer.valueOf(request.getParameter("orderid")));
                 
-                if(o.getUser().getId()!= ((User) request.getSession().getAttribute("authenticatedUser")).getId())
-                        throw new Exception("Wrong user");
+                if(o.getUser().getId()!= ((User) request.getSession().getAttribute("authenticatedUser")).getId() || o.isPaid())
+                        throw new Exception("Wrong user or payment already done");
+                
+                
                 o.setPaid(true);
+                if(request.getParameter("address")!= null &&request.getParameter("address").length()!=0)
+                    o.setShipment(o.getShipment()+" @ "+request.getParameter("address"));
+                
                 orderDAO.update(o);
                 User u=o.getUser();
                 
