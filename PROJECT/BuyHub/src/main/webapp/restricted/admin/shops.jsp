@@ -44,7 +44,7 @@
                                 <td>
                                     <c:choose>
                                         <c:when test="${shop.validity==0}">
-                                            <a href="<c:url value='EnableShop?id=${shop.id}&status=1'/>" role="button" class="btn_1 but btn btn-success">
+                                            <a href="<c:url value='/restricted/admin/enableshop?id=${shop.id}&status=1'/>" role="button" class="btn_1 but btn btn-success">
                                                 <fmt:message key="enable"/>
                                             </a>
                                         </c:when>

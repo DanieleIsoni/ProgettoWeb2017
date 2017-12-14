@@ -61,9 +61,9 @@
                             <c:when test="${authenticatedUser.capability eq 2}">
                                 <li><a href="myshop.jsp"><fmt:message key="myshop_page"/></a></li>
                             </c:when>
-                            <c:otherwise>
+                            <c:when test="${authenticatedUser.capability < 2}">
                                 <li><a href="createNewShop.jsp"><fmt:message key="create_shop"/></a></li>
-                            </c:otherwise>
+                            </c:when>
                         </c:choose>
                         <li> <a href="#"><fmt:message key="ask_refund"/></a> </li>
                     </ul>
