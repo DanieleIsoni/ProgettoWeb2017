@@ -67,6 +67,7 @@ public class CreateNewShopServlet extends HttpServlet {
         String description = (String) request.getParameter("description");
         String website = (String) request.getParameter("website");
         String shipment = (String) request.getParameter("shipment");
+        Double shipment_costs = Double.parseDouble(request.getParameter("shipment_costs"));
         User owner = (User) request.getSession().getAttribute("authenticatedUser");
         String address = (String) request.getParameter("autocomplete_address");
         String openingHours = (String) request.getParameter("opening_hours");
@@ -90,6 +91,7 @@ public class CreateNewShopServlet extends HttpServlet {
                 newShop.setWebsite(website);
                 newShop.setValidity(0);
                 newShop.setShipment(shipment);
+                newShop.setShipment_cost(shipment_costs);
                 Long shop_id = shopDao.insert(newShop);
                 if (shop_id == 0){
                     Log.warn("Shop name already used");
