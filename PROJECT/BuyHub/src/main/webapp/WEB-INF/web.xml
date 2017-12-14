@@ -79,6 +79,10 @@
         <servlet-class>it.unitn.buyhub.servlet.ShopServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>RemoveNotificationServlet</servlet-name>
+        <servlet-class>it.unitn.buyhub.servlet.RemoveNotificationServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>AvatarUploadServlet</servlet-name>
         <servlet-class>it.unitn.buyhub.servlet.user.AvatarUploadServlet</servlet-class>
     </servlet>
@@ -138,7 +142,6 @@
         <servlet-name>RequestPasswordChange</servlet-name>
         <servlet-class>it.unitn.buyhub.servlet.user.RequestPasswordChangeServlet</servlet-class>
     </servlet>
-
     <servlet>
         <servlet-name>AddProductServlet</servlet-name>
         <servlet-class>it.unitn.buyhub.servlet.user.AddProductServlet</servlet-class>
@@ -151,20 +154,33 @@
         <servlet-name>DeleteProductServlet</servlet-name>
         <servlet-class>it.unitn.buyhub.servlet.user.DeleteProductServlet</servlet-class>
     </servlet>
-
     <servlet>
         <servlet-name>EditShopServlet</servlet-name>
         <servlet-class>it.unitn.buyhub.servlet.user.EditShopServlet</servlet-class>
     </servlet>
-
+    <servlet>
+        <servlet-name>PlaceOrderServlet</servlet-name>
+        <servlet-class>it.unitn.buyhub.servlet.order.PlaceOrderServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PayedServlet</servlet-name>
+        <servlet-class>it.unitn.buyhub.servlet.order.PayedServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MyOrdersServlet</servlet-name>
+        <servlet-class>it.unitn.buyhub.servlet.user.MyOrdersServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RemoveReviewServlet</servlet-name>
         <url-pattern>/removereview</url-pattern>
     </servlet-mapping>
-
     <servlet-mapping>
         <servlet-name>ModifyCartItemNumberServlet</servlet-name>
         <url-pattern>/modifycartitemnumber</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RemoveNotificationServlet</servlet-name>
+        <url-pattern>/removenotification</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>RemoveFromCartServlet</servlet-name>
@@ -261,6 +277,19 @@
     <servlet-mapping>
         <servlet-name>EditShopServlet</servlet-name>
         <url-pattern>/EditShopServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PlaceOrderServlet</servlet-name>
+        <url-pattern>/restricted/order/PlaceOrder</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PayedServlet</servlet-name>
+        <url-pattern>/restricted/order/payed</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>MyOrdersServlet</servlet-name>
+        <url-pattern>/restricted/myorders</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

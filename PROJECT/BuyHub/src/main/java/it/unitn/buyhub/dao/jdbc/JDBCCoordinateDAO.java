@@ -34,6 +34,7 @@ public class JDBCCoordinateDAO extends JDBCDAO<Coordinate, Integer> implements C
 
     public JDBCCoordinateDAO(Connection con) {
         super(con);
+        FRIEND_DAOS.put(ShopDAO.class, new JDBCShopDAO(CON));
     }
 
     /**
@@ -93,9 +94,8 @@ public class JDBCCoordinateDAO extends JDBCDAO<Coordinate, Integer> implements C
                 
                 coordinate.setOpening_hours(rs.getString("opening_hours"));
                 ShopDAO shopDao = getDAO(ShopDAO.class);
-                coordinate.setShop(shopDao.getByPrimaryKey(rs.getInt("id_shop")));
-
-                
+                Shop s=shopDao.getByPrimaryKey(rs.getInt("id_shop"));
+                coordinate.setShop(s);
                 return coordinate;
             } catch (DAOFactoryException ex) {
             throw new DAOException("Impossible to get the coordinates for the passed primary key", ex);

@@ -20,6 +20,16 @@ public class Shop implements Serializable {
     private User owner;
     private String shipment;
     private int validity;
+    private double shipment_cost;
+
+    public double getShipment_cost() {
+        return shipment_cost;
+    }
+
+    public void setShipment_cost(double shipment_cost) {
+        this.shipment_cost = shipment_cost;
+    }
+    
 
     public int getValidity() {
         return validity;
@@ -76,4 +86,6 @@ public class Shop implements Serializable {
     public void setValidity(int validity) {
         this.validity = validity;
     }
+
+    
 }

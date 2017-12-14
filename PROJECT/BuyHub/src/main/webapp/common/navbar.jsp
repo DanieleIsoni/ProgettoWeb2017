@@ -37,8 +37,10 @@
 
                             </ul>
                         </li>
+                        
 
                     </ul>
+                                
 
                     <nv:userInformation />
 
@@ -61,7 +63,7 @@
                     <select id="width-tmp-select">
                         <option id="width-tmp-option"></option>
                     </select>
-                    <form  class="navbar-form" id="search" role="search" action="<c:url value="search.jsp"/>">
+                    <form  class="navbar-form" id="search" role="search" action="<c:url value="/search.jsp"/>">
                         <div class="input-group">
                             <div class="input-group-btn search-panel">
                                 <select name="c" class="btn btn-default dropdown-toggle search-btn" id="search_category" >
