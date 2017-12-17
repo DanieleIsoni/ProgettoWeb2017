@@ -28,7 +28,7 @@
 
     <div class="container">
         
-        <div class="row">
+        <div class="row product_title">
            
             <fmt:message key="myorders_title"/> 
 
