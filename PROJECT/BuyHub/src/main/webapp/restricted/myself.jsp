@@ -5,7 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-
+<%@taglib prefix="err" uri="/WEB-INF/tld/errors.tld" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -51,8 +51,7 @@
                         </form>
                     </div>
                 </div>
-
-                <div class="col-md-6">
+                        <div class="col-md-6">
                     <div class="row ">
                         <div class="link_box col-md-6 col-centered">
                             <ul class="list-unstyled ">
@@ -70,7 +69,11 @@
                         </div>
                     </div>
                 </div>
+            </div>
 
+            </div>
+            <div class="row">
+                <err:ErrorMessage page="myself"/>
             </div>
         </div>
     </div>

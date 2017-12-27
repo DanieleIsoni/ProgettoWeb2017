@@ -79,15 +79,17 @@ public class AddProductServlet extends HttpServlet {
                 newProduct.setShop(shopDAO.getByPrimaryKey(shopId));
                 newProduct.setPrice(price);
                 Long prod_id = productDAO.insert(newProduct);
+
                 if (prod_id == 0) {
-                    Log.warn("Shop " + shopId + " already has a product with this name");
-                    response.sendRedirect(response.encodeRedirectURL(contextPath + "addProduct.jsp?error=1"));
+                    Log.warn("Error inserting product in shop " + shopId);
+                    response.sendRedirect(response.encodeRedirectURL(contextPath + "restricted/addProduct.jsp?error=1&shopId=" + shopId));
+
                 } else {
                     Log.info("Product inserted correctly");
                     ((List<Product>) request.getSession().getAttribute("myproducts")).add(newProduct);
+                    response.sendRedirect(contextPath + "restricted/myshop.jsp");
                 }
 
-                response.sendRedirect(contextPath + "restricted/myshop.jsp");
             }
         } catch (DAOException ex) {
             Log.error("Error creating product, " + ex);

@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="err" uri="/WEB-INF/tld/errors.tld" %>
 
 <!DOCTYPE html>
 <html>
@@ -13,17 +14,18 @@
         <%@include file="../common/header.jsp" %>
         <title><fmt:message key="addProduct_title"/> - BuyHub</title>
     </head>
-    <body >
+    <body>
         <div class="text-center login">
             <%@include file="../common/navbar.jsp" %>
             <img src="../images/icon.png" alt="BuyHub logo" height="42" width="42">
             <h3><fmt:message key="addProduct_desc"/></h3>
             <br>
             <div class="panel panel-default panel-footer">
+                <err:ErrorMessage page="addProduct"/>
                 <form method="POST" id="addProduct-form" action="<c:url value="/AddProductServlet" />">
                     <div class="form-group">
                         <label for="productName"><fmt:message key="product_name"/>*:</label>
-                        <input type="text" name="productName" class="form-control" id="productName" >
+                        <input type="text" name="productName" class="form-control" id="productName" required>
                     </div>
 
                     <div class="form-group">
@@ -38,12 +40,12 @@
 
                     <div class="form-group">
                         <label for="price"><fmt:message key="add_price"/>*:</label>
-                        <input type="number" min="0.01" step="0.01" placeholder="e.g.: 25.99" name="price" class="form-control" id="price" >
+                        <input type="number" min="0.01" step="0.01" placeholder="e.g.: 25.99" name="price" class="form-control" id="price" required>
                     </div>
 
                     <div class="form-group">
                         <label for="description"><fmt:message key="description"/>*:</label>
-                        <textarea name="description" class="form-control" id="description" ></textarea>
+                        <textarea name="description" class="form-control" id="description" required></textarea>
                     </div>
 
                     <input type="hidden" name="shopId" id="shopId" value="${param.shopId}">

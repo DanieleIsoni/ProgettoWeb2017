@@ -60,7 +60,10 @@ public class CreateNewShopServlet extends HttpServlet {
         String description = (String) request.getParameter("description");
         String website = (String) request.getParameter("website");
         String shipment = (String) request.getParameter("shipment");
-        Double shipment_costs = Double.parseDouble(request.getParameter("shipment_costs"));
+        Double shipment_costs = 0.0;
+        if (request.getParameter("shipment_costs") != "") {
+            shipment_costs = Double.parseDouble(request.getParameter("shipment_costs"));
+        }
         User owner = (User) request.getSession().getAttribute("authenticatedUser");
         String address = (String) request.getParameter("autocomplete_address");
         String openingHours = (String) request.getParameter("opening_hours");
@@ -75,44 +78,63 @@ public class CreateNewShopServlet extends HttpServlet {
             if (name != null && !name.equals("")
                     && description != null && !description.equals("")
                     && website != null && !website.equals("")
-                    && shipment != null && !shipment.equals("")
                     && owner != null) {
+
                 Shop newShop = new Shop();
                 newShop.setDescription(description);
                 newShop.setName(name);
                 newShop.setOwner(owner);
                 newShop.setWebsite(website);
                 newShop.setValidity(0);
-                newShop.setShipment(shipment);
-                newShop.setShipment_cost(shipment_costs);
-                Long shop_id = shopDao.insert(newShop);
-                if (shop_id == 0) {
-                    Log.warn("Shop name already used");
-                    response.sendRedirect(response.encodeRedirectURL(contextPath + "createNewShop.jsp?error=1"));
-                } else {
-                    Log.info("Shop inserted correctly");
-                    newShop.setId(shop_id.intValue());
-                    if (address != null && !address.equals("")
-                            && openingHours != null && !openingHours.equals("")) {
-                        Coordinate newcoordinate = new Coordinate();
-                        newcoordinate.setAddress(address);
-                        newcoordinate.setOpening_hours(openingHours);
-                        newcoordinate.setShop(newShop);
-                        newcoordinate.setLatitude(Double.valueOf(latitude));
-                        newcoordinate.setLongitude(Double.valueOf(longitude));
-                        Long coordinate_id = coordinateDao.insert(newcoordinate);
-                        if (coordinate_id == 0) {
-                            Log.warn("Coordinate not inserted in Database");
+                if ((shipment != null && !shipment.equals("")) || (address != null && !address.equals(""))) {
+                    if (shipment != null && !shipment.equals("")) {
+                        newShop.setShipment(shipment);
+                        newShop.setShipment_cost(shipment_costs);
+                    }
+                    Long shop_id = shopDao.insert(newShop);
+                    if (shop_id == 0) {
+                        Log.warn("Error creating the shop");
+                        response.sendRedirect(response.encodeRedirectURL(contextPath + "restricted/createNewShop.jsp?error=1"));
+                    } else {
+                        Log.info("Shop inserted correctly");
+                        newShop.setId(shop_id.intValue());
+                        if (address != null && !address.equals("")
+                                && openingHours != null && !openingHours.equals("")) {
+                            Coordinate newcoordinate = new Coordinate();
+                            newcoordinate.setAddress(address);
+                            newcoordinate.setOpening_hours(openingHours);
+                            newcoordinate.setShop(newShop);
+                            newcoordinate.setLatitude(Double.valueOf(latitude));
+                            newcoordinate.setLongitude(Double.valueOf(longitude));
+                            Long coordinate_id = coordinateDao.insert(newcoordinate);
+                            if (coordinate_id == 0) {
+                                Log.warn("Coordinate not inserted in Database");
+                                String msg = "Dear admin,\n<br/> a new shop has been created and need to be validated";
+                                String linkMail = PropertyHandler.getInstance().getValue("baseUrl") + "restricted/admin/shops";
+                                Mailer.mailToAdmins(PropertyHandler.getInstance().getValue("noreplyMail"), "New shop created", msg, linkMail, "Go to Shops Manager", super.getServletContext());
+
+                                response.sendRedirect(response.encodeRedirectURL(contextPath + "restricted/myself.jsp?error=1"));
+                            } else {
+                                Log.info("Coordinates inserted correctly");
+                                String msg = "Dear admin,\n<br/> a new shop has been created and need to be validated";
+                                String linkMail = PropertyHandler.getInstance().getValue("baseUrl") + "restricted/admin/shops";
+                                Mailer.mailToAdmins(PropertyHandler.getInstance().getValue("noreplyMail"), "New shop created", msg, linkMail, "Go to Shops Manager", super.getServletContext());
+
+                                response.sendRedirect(contextPath + "restricted/myself.jsp");
+                            }
                         } else {
-                            Log.info("Coordinates inserted correctly");
+                            String msg = "Dear admin,\n<br/> a new shop has been created and need to be validated";
+                            String linkMail = PropertyHandler.getInstance().getValue("baseUrl") + "restricted/admin/shops";
+                            Mailer.mailToAdmins(PropertyHandler.getInstance().getValue("noreplyMail"), "New shop created", msg, linkMail, "Go to Shops Manager", super.getServletContext());
+
+                            response.sendRedirect(contextPath + "restricted/myself.jsp");
                         }
                     }
-                }
-                String msg = "Dear admin,\n<br/> a new shop has been created and need to be validated";
-                String linkMail = PropertyHandler.getInstance().getValue("baseUrl") + "restricted/admin/shops";
-                Mailer.mailToAdmins(PropertyHandler.getInstance().getValue("noreplyMail"), "New shop created", msg, linkMail, "Go to Shops Manager", super.getServletContext());
+                } else {
+                    Log.warn("Neither the shipment nor the address have been filled in the createNewShop form");
 
-                response.sendRedirect(contextPath + "restricted/myself.jsp");
+                    response.sendRedirect(response.encodeRedirectURL(contextPath + "restricted/createNewShop.jsp?error=2"));
+                }
             }
         } catch (DAOException ex) {
 

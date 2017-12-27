@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="err" uri="/WEB-INF/tld/errors.tld" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -19,6 +20,7 @@
             <h3><fmt:message key="createNewShop_desc"/></h3>
             <br>
             <div class="panel panel-default panel-footer">
+                <err:ErrorMessage page="createNewShop"/>
                 <form method="POST" id="newShop-form" action="<c:url value="/CreateNewShopServlet" />">
                     <div class="form-group">
                         <label for="shopName"><fmt:message key="shop_name"/>*:</label>
@@ -28,23 +30,24 @@
                         <label for="website"><fmt:message key="website"/>*:</label>
                         <input type="url" name="website" class="form-control" id="website" required>
                     </div>
-                    <div class="form-group">
-                        <label for="shipment"><fmt:message key="shipment_mode"/>:</label>
-                        <input type="text" name="shipment" class="form-control" id="shipment" >
-                    </div>
-
-                    <div class="form-group">
-                        <label for="shipment_costs"><fmt:message key="shipment_costs"/>*:</label>
-                        <input type="number" value="0.00" min="0.00" step="0.01" placeholder="e.g.: 25.99" name="shipment_costs" class="form-control" id="shipment_costs" >
-                    </div>
-
+                        
                     <div class="form-group">
                         <label for="description"><fmt:message key="description"/>*:</label>
                         <textarea name="description" class="form-control" id="description" required></textarea>
                     </div>
+                        
+                    <div class="form-group">
+                        <label for="shipment"><fmt:message key="shipment_mode"/>**:</label>
+                        <input type="text" name="shipment" class="form-control" id="shipment" >
+                    </div>
+                        
+                    <div class="form-group">
+                        <label for="shipment_costs"><fmt:message key="shipment_costs"/>:</label>
+                        <input type="number" min="0.00" step="0.01" placeholder="e.g.: 25.99" name="shipment_costs" class="form-control" id="shipment_costs" >
+                    </div>
 
                     <div class="form-group">
-                        <label for="autocomplete_address"><fmt:message key="autocomplete_address"/>:</label>
+                        <label for="autocomplete_address"><fmt:message key="autocomplete_address"/>**:</label>
                         <input type="text" name="autocomplete_address" class="form-control" id="autocomplete_address" placeholder="" onFocus="geolocate()" >
                     </div>
 
@@ -60,6 +63,8 @@
                 </form>
                 <br>
                 <div class="item_required"><fmt:message key="item_required"/></div>
+                <br>
+                <div class="item_required"><fmt:message key="item_required2"/></div>
             </div>
         </div>
         <script>

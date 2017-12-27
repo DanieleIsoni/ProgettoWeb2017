@@ -127,7 +127,7 @@ public class NavbarTagHandler extends SimpleTagSupport {
 
     private String generateUserList(User currentUser) {
         String dropdown = "<a href='" + Utility.getUrl(pageContext, "restricted/myself.jsp") + "' class='btn btn-primary user' role='button'>" + Utility.getLocalizedString(pageContext, "user_page") + "</a>";
-        if (currentUser.getCapability() >= Utility.CAPABILITY.SHOP.ordinal()) {
+        if (currentUser.getCapability() == Utility.CAPABILITY.SHOP.ordinal()) {
             dropdown += "<a href='" + Utility.getUrl(pageContext, "restricted/myshop.jsp") + "' class='btn btn-success user' role='button'>" + Utility.getLocalizedString(pageContext, "myshop_page") + "</a>";
         }
         if (currentUser.getCapability() >= Utility.CAPABILITY.ADMIN.ordinal()) {

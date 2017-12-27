@@ -69,7 +69,7 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
                     try {
                         CON.rollback();
                     } catch (SQLException ex) {
-                        //TODO: log the exception
+                        Log.error(ex);
                     }
                     throw new DAOException("Impossible to persist the new product");
                 }
@@ -77,7 +77,7 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
                 try {
                     CON.rollback();
                 } catch (SQLException ex) {
-                    //TODO: log the exception
+                    Log.error(ex);
                 }
                 throw new DAOException("Impossible to persist the new product");
             }
@@ -85,7 +85,7 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
             try {
                 CON.rollback();
             } catch (SQLException ex1) {
-                //TODO: log the exception
+                Log.error(ex1);
             }
             throw new DAOException("Impossible to persist the new notification", ex);
         }
