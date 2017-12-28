@@ -5,6 +5,7 @@
 --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="lastproduct" uri="/WEB-INF/tld/lastproduct.tld" %>
+<%@taglib prefix="sliderImages" uri="/WEB-INF/tld/gallery.tld" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -26,24 +27,9 @@
 
                 <!-- Wrapper for slides -->
                 <div class="carousel-inner">
-
-                    <div class="item active">
-                        <img src="<c:url value="/images/carousel2.jpg" />" alt="Los Angeles" style="width:100%;">
-                        <div class="carousel-caption">
-                        </div>
-                    </div>
-
-                    <div class="item">
-                        <img src="<c:url value="/images/carousel1.jpg" />" alt="Chicago" style="width:100%;">
-                        <div class="carousel-caption">
-                        </div>
-                    </div>
-
-                    <div class="item">
-                        <img src="<c:url value="/images/carousel3.jpg" />" alt="New York" style="width:100%;">
-                        <div class="carousel-caption">
-                        </div>
-                    </div>
+                    
+       <sliderImages:HomepageSlider></sliderImages:HomepageSlider>
+                   
 
                 </div>
 
@@ -57,10 +43,12 @@
                     <span class="sr-only">Next</span>
                 </a>
             </div>
+       <!--
             <div>
                 <h4>Testo a caso</h4>
                 <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</p>
-            </div>
+            </div> 
+       -->
         </div>
 
         <lastproduct:LastProduct />

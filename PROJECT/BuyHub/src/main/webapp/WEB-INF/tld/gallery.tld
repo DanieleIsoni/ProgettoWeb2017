@@ -8,4 +8,9 @@
     <tag-class>it.unitn.buyhub.tag.GalleryTagHandler</tag-class>
     <body-content>scriptless</body-content>
   </tag>
+  <tag>
+    <name>HomepageSlider</name>
+    <tag-class>it.unitn.buyhub.tag.HomepageSlider</tag-class>
+    <body-content>empty</body-content>
+  </tag>
 </taglib>
