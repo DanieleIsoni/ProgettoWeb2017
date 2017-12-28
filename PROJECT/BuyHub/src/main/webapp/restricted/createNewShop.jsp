@@ -32,7 +32,12 @@
                         <label for="shipment"><fmt:message key="shipment_mode"/>:</label>
                         <input type="text" name="shipment" class="form-control" id="shipment" >
                     </div>
-
+ 
+                    <div class="form-group">
+                        <label for="shipment_costs"><fmt:message key="shipment_costs"/>*:</label>
+                        <input type="number" value="0.00" min="0.00" step="0.01" placeholder="e.g.: 25.99" name="shipment_costs" class="form-control" id="shipment_costs" >
+                    </div>
+                    
                     <div class="form-group">
                         <label for="description"><fmt:message key="description"/>*:</label>
                         <textarea name="description" class="form-control" id="description" required></textarea>
