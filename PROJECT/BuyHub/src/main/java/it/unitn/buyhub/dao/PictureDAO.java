@@ -98,6 +98,7 @@ public interface PictureDAO extends DAO<Picture, Integer> {
     @Override
     public List<Picture> getAll() throws DAOException;
 
+    
     /**
      * Update the picture passed as parameter and returns it.
      *
@@ -110,6 +111,9 @@ public interface PictureDAO extends DAO<Picture, Integer> {
      */
     @Override
     public Picture update(Picture picture) throws DAOException;
+    
+    
+    public long insertProductPicture(Product pr, Picture p) throws DAOException;
     
     /**
      * Returns the list of the {@link Picture picture} with the product passed as

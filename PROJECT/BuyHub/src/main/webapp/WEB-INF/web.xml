@@ -170,6 +170,14 @@
         <servlet-name>MyOrdersServlet</servlet-name>
         <servlet-class>it.unitn.buyhub.servlet.user.MyOrdersServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>productPhotoServlet</servlet-name>
+        <servlet-class>it.unitn.buyhub.servlet.user.productPhotoServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>productPictureUploadServlet</servlet-name>
+        <servlet-class>it.unitn.buyhub.servlet.user.productPictureUploadServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RemoveReviewServlet</servlet-name>
         <url-pattern>/removereview</url-pattern>
@@ -286,10 +294,17 @@
         <servlet-name>PayedServlet</servlet-name>
         <url-pattern>/restricted/order/payed</url-pattern>
     </servlet-mapping>
-    
     <servlet-mapping>
         <servlet-name>MyOrdersServlet</servlet-name>
         <url-pattern>/restricted/myorders</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>productPhotoServlet</servlet-name>
+        <url-pattern>/restricted/productPhoto</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>productPictureUploadServlet</servlet-name>
+        <url-pattern>/restricted/productPictureUpload</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

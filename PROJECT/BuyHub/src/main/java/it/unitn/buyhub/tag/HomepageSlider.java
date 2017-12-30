@@ -34,7 +34,7 @@ public class HomepageSlider extends SimpleTagSupport {
         String lang = Utility.getLocalizedString(pageContext, "language");
         path+=lang+"/";
         File folder = new File(path);
-        System.out.println(path+" ->"+folder.getAbsolutePath());
+        //System.out.println(path+" ->"+folder.getAbsolutePath());
         File[] listOfFiles = folder.listFiles();
         boolean first=true;
         for (File file: listOfFiles) {

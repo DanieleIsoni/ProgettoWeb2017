@@ -367,7 +367,7 @@ public class JDBCPictureDAO extends JDBCDAO<Picture, Integer> implements Picture
      * @since 1.0.170425
      */
     public Long insert(Picture pictures) throws DAOException {
-        try (PreparedStatement ps = CON.prepareStatement("INSERT INTO pictures(name, description, description, id_owner) VALUES(?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement ps = CON.prepareStatement("INSERT INTO pictures(name, description, path, id_owner) VALUES(?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, pictures.getName());
             ps.setString(2, pictures.getDescription());
             ps.setString(3, pictures.getPath());
@@ -393,6 +393,49 @@ public class JDBCPictureDAO extends JDBCDAO<Picture, Integer> implements Picture
                 }
                 throw new DAOException("Impossible to persist the new pictures");
             }
+        } catch (SQLException ex) {
+            try {
+                CON.rollback();
+            } catch (SQLException ex1) {
+                //TODO: log the exception
+            }
+            throw new DAOException("Impossible to persist the new pictures", ex);
+        }
+    }
+
+    
+    @Override
+    public long insertProductPicture(Product pr, Picture picture) throws DAOException {
+        Long pictureId=insert(picture);
+        try (PreparedStatement ps = CON.prepareStatement("INSERT INTO pictures_products (id_product, id_picture) VALUES (?,?)", Statement.RETURN_GENERATED_KEYS)) {
+            ps.setLong(1, pr.getId());
+            ps.setLong(2, pictureId);
+            ps.executeUpdate();
+            return 0L;
+            //TODO: implement rollback and log
+            /*
+            if (ps.executeUpdate() == 1) {
+                ResultSet generatedKeys = ps.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    return generatedKeys.getLong(1);
+                } else {
+                    try {
+                        CON.rollback();
+                    } catch (SQLException ex) {
+                        //TODO: log the exception
+                    }
+                    System.out.println(generatedKeys.);
+                    throw new DAOException("Impossible to persist the new pictures");
+                }
+            } else {
+                try {
+                    CON.rollback();
+                } catch (SQLException ex) {
+                    //TODO: log the exception
+                }
+                throw new DAOException("Impossible to persist the new pictures");
+            }
+     */
         } catch (SQLException ex) {
             try {
                 CON.rollback();

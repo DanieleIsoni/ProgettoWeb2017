@@ -604,3 +604,23 @@ a.mybtn {
     max-width: 60%;
 }
     
+.productPhoto_box
+{
+    width: 250px; 
+    height: 250px;
+}
+.productPhoto_img{
+
+    object-fit: cover; 
+    height: 100%; 
+    width: 100% ;  
+}
+.productPhoto_btn
+{
+    width: 250px;
+}
+.product_photo_upload_box{}
+.productPhotoCol
+{
+    margin-bottom: 20px;
+}
