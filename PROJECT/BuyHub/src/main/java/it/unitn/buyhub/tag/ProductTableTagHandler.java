@@ -97,6 +97,9 @@ public class ProductTableTagHandler extends SimpleTagSupport {
 "                                <a href=\"../DeleteProductServlet?prodId="+product.getId()+"\" title=\""+Utility.getLocalizedString(pageContext, "delete_product")+"\" class=\"btn btn-danger a-btn-slide-text mybtn\" onclick=\"return confirm('Are you sure you want to continue')\">\n" +
 "                                    <span class=\"glyphicon myglyph glyphicon-remove\" aria-hidden=\"true\"></span>          \n" +
 "                                </a>\n" +
+"                                <a href=\"../productPhoto?id="+product.getId()+"\" title=\""+Utility.getLocalizedString(pageContext, "product_photo_title")+"\" class=\"btn btn-secondary a-btn-slide-text mybtn\">\n" +
+"                                    <span class=\"glyphicon myglyph glyphicon-camera\" aria-hidden=\"true\"></span>          \n" +
+"                                </a>\n" +
 "                            </td>\n");
                     }
                     out.println("</tr>");
