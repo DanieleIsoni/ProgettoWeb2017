@@ -185,6 +185,8 @@
     <servlet>
         <servlet-name>ChangeCapability</servlet-name>
         <servlet-class>it.unitn.buyhub.servlet.admin.ChangeCapability</servlet-class>
+        <servlet-name>AddCoordinateServlet</servlet-name>
+        <servlet-class>it.unitn.buyhub.servlet.user.AddCoordinateServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>RemoveReviewServlet</servlet-name>
@@ -329,6 +331,8 @@
     <servlet-mapping>
         <servlet-name>ChangeCapability</servlet-name>
         <url-pattern>/restricted/admin/ChangeCapability</url-pattern>
+        <servlet-name>AddCoordinateServlet</servlet-name>
+        <url-pattern>/AddCoordinateServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

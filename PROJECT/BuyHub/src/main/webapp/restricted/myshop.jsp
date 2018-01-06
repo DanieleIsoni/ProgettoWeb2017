@@ -9,6 +9,7 @@
 <%@taglib prefix="gallery" uri="../WEB-INF/tld/gallery.tld"%>
 <%@taglib prefix="pr" uri="../WEB-INF/tld/product.tld"%>
 <%@taglib prefix="shop" uri="../WEB-INF/tld/shop.tld" %>
+<%@taglib prefix="map" uri="/WEB-INF/tld/map.tld"%>
 
 <!DOCTYPE html>
 <html>
@@ -26,20 +27,20 @@
             <div class="row">
                 <div class="col-md-4 g">
                     <gallery:Gallery></gallery:Gallery>
-                    </div>
+                </div>
 
 
                     <div class="col-md-6">
                         <div class="shop_page_name">
-                        ${myshop.name}
-                        <fmt:message key="edit_shop_info" var="esi"/>
-                        <a href="editShop.jsp" title="${esi}" id="edit_shop_btn"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                    </div>
+                            ${myshop.name}
+                            <fmt:message key="edit_shop_info" var="esi"/>
+                            <a href="editShop.jsp" title="${esi}" id="edit_shop_btn"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                        </div>
 
-                    <div class="shop_description">
-                        ${myshop.description}
+                        <div class="shop_description">
+                            ${myshop.description}
+                        </div>
                     </div>
-                </div>
 
                 <div class="col-md-2">
 
@@ -54,7 +55,9 @@
 
                 </div>
             </div>
-
+            <div class="row">
+                <map:ShopMap shopId="${myshop.id}" owner="true"/>
+            </div>
             <hr>
             <div class="row">
                 <div class="row shop_page_shipment_info">
@@ -78,34 +81,34 @@
             <shop:OrdersTagHanlder shop_id="${myshop.id}" />
 
         </div>
-    </div>
-    <script src="http://i-like-robots.github.io/EasyZoom/dist/easyzoom.js"></script>
-    <script>
-        var $easyzoom = $('.easyzoom').easyZoom();
+        <script src="http://i-like-robots.github.io/EasyZoom/dist/easyzoom.js"></script>
+        <script>
+            var $easyzoom = $('.easyzoom').easyZoom();
 
-        // Setup thumbnails example
-        var api1 = $easyzoom.filter('.easyzoom--with-thumbnails').data('easyZoom');
+            // Setup thumbnails example
+            var api1 = $easyzoom.filter('.easyzoom--with-thumbnails').data('easyZoom');
 
-        $('.thumbnails').on('click', 'a', function (e) {
-            var $this = $(this);
+            $('.thumbnails').on('click', 'a', function (e) {
+                var $this = $(this);
 
-            e.preventDefault();
+                e.preventDefault();
 
-            // Use EasyZoom's `swap` method
-            api1.swap($this.data('standard'), $this.attr('href'));
-        });
-    </script>
+                // Use EasyZoom's `swap` method
+                api1.swap($this.data('standard'), $this.attr('href'));
+            });
+        </script>
 
-    <script>
-        /*Inizializzazione tabella*/
-        $(document).ready(function () {
-            $('#products_table').DataTable({
-                "language": {
+        <script>
+            /*Inizializzazione tabella*/
+            $(document).ready(function () {
+                $('#products_table').DataTable({
+                    "language": {
 
-                    /*Datatable localization*/
-        <fmt:message key="datatable_language"/>
+                        /*Datatable localization*/
+            <fmt:message key="datatable_language"/>
 
-                }
+                    }
+                });
             });
             $('#orders_table').DataTable({
                 "language": {
@@ -118,3 +121,4 @@
         });
     </script>
     <%@include file="../common/footer.jsp" %>
+    

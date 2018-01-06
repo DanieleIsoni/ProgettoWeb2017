@@ -65,7 +65,7 @@ public class ChangePasswordServlet extends HttpServlet {
         }
 
         try {
-            if (password != "" && password2 != "" && password.equals(password2) && token != "") {
+            if (!password.equals("") && !password2.equals("") && password.equals(password2) && !token.equals("")) {
 
                 Log.info("received " + token);
                 String key = URLDecoder.decode(token, "UTF-8").replace(" ", "+");

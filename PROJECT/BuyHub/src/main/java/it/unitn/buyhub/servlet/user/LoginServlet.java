@@ -102,6 +102,7 @@ public class LoginServlet extends HttpServlet {
                         request.getSession().setAttribute("mypictures", pictures);
                         request.getSession().setAttribute("mycoordinates", coordinates);
                         request.getSession().setAttribute("myproducts", products);
+                        
                     }
                 }
                 String target = contextPath + "home.jsp";

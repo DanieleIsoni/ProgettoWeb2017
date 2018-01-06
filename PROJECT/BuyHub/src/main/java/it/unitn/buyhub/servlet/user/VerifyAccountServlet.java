@@ -55,7 +55,7 @@ public class VerifyAccountServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            if (request.getParameter("key") != null && request.getParameter("key") != "") {
+            if (request.getParameter("key") != null && !request.getParameter("key").equals("")) {
                 //decode the URL, decode the BASE64 reppresentation and decrypt with AES
                 String encoded = (String) request.getParameter("key");
                 String key = URLDecoder.decode(encoded, "UTF-8").replace(" ", "+");
@@ -86,9 +86,7 @@ public class VerifyAccountServlet extends HttpServlet {
                 if (!contextPath.endsWith("/")) {
                     contextPath += "/";
                 }
-                response.sendRedirect(response.encodeRedirectURL(contextPath + "home.jsp"));
             }
-
         } catch (Exception ex) {
             Log.info("Error in verifing user: " + ex.toString());
             throw new ServletException("Error verifing user");

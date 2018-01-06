@@ -248,6 +248,10 @@ div.detailed_review_header {
     text-align: center;
 }
 
+#search-input{
+    display: flex;
+}
+
 @media (max-width: 1059px) and (min-width: 745px) {
     .navbar-form .input-group {
         display: flex;

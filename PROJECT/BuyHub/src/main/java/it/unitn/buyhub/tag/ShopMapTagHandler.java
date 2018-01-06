@@ -16,14 +16,29 @@ import javax.servlet.jsp.tagext.SimpleTagSupport;
  */
 public class ShopMapTagHandler extends SimpleTagSupport {
 
+    private int shopId;
+    private boolean owner = false;
+
+    public void setShopId(int shopId) {
+        this.shopId = shopId;
+    }
+
+    public void setOwner(boolean owner) {
+        this.owner = owner;
+    }
+
     @Override
     public void doTag() throws JspException {
         JspWriter out = getJspContext().getOut();
 
         PageContext pageContext = (PageContext) getJspContext();
         try {
-
-            List<Coordinate> coordinates = ((List<Coordinate>) pageContext.getAttribute("coordinates", PageContext.REQUEST_SCOPE));
+            List<Coordinate> coordinates;
+            if (owner) {
+                coordinates = ((List<Coordinate>) pageContext.getSession().getAttribute("mycoordinates"));
+            } else {
+                coordinates = ((List<Coordinate>) pageContext.getAttribute("coordinates", PageContext.REQUEST_SCOPE));
+            }
             String markers = "var markers=[";
             String details = "var details=[";
             if (coordinates != null && coordinates.size() != 0) {
@@ -31,27 +46,72 @@ public class ShopMapTagHandler extends SimpleTagSupport {
                 out.println("<div class=\"row where_we_are\">" + Utility.getLocalizedString(pageContext, "where_we_are") + "</div>");
 
                 out.println("<div class=\"row\">");
-                out.println("<div class=\" map-wrapper col-md-9\" >");
-                out.println("<div class=\" map col-md-9\" id=\"map\"></div>");
 
-                out.println("</div>");
-                out.println("<div class=\"col-md-3 shop_address\">");
+                if (owner) {
+                    out.println("<div class=\" map-wrapper \" >");
+                    out.println("<div class=\" map \" id=\"map\"></div>");
 
-                for (Coordinate coordinate : coordinates) {
+                    out.println("</div>");
+                    out.println("<div class=\"row\">\n"
+                            + "                <table class=\"table table-striped table-bordered\" id=\"coordinates_table\">\n"
+                            + "                    <thead>\n"
+                            + "                    <td> " + Utility.getLocalizedString(pageContext, "address") + "</td>\n"
+                            + "                    <td> " + Utility.getLocalizedString(pageContext, "opening_hours") + "</td>\n"
+                            + "                    <td> <a href=\"addCoordinate.jsp?shopId=" + shopId + "\" title=\"" + Utility.getLocalizedString(pageContext, "add") + "\" class=\"btn btn-primary a-btn-slide-text mybtn\">\n"
+                            + "                            <span class=\"glyphicon myglyph glyphicon-plus\" aria-hidden=\"true\"></span>          \n"
+                            + "                         </a>"
+                            + "</td>\n");
+                    out.println("</thead>");
+                    for (Coordinate coordinate : coordinates) {
+                        out.println("<tr>\n"
+                                + "                            <td>" + coordinate.getAddress().replace("\n", "\n<br/>\n") + "</td>\n"
+                                + "                            <td>");
+                        if (coordinate.getOpening_hours() != null && !coordinate.getOpening_hours().equals("")) {
+                            System.err.println("ciao");
+                            out.println(coordinate.getOpening_hours());
+                        } else {
+                            System.err.println("culo");
+                            out.println(Utility.getLocalizedString(pageContext, "no_opening_hours"));
+                        }
+                        out.println(" </td>\n");
+                        out.println("<td>\n"
+                                + "                                <a href=\"../EditCoordinateServlet?code=1&coordId=" + coordinate.getId() + "\" title=\"" + Utility.getLocalizedString(pageContext, "edit_coordinate") + "\" class=\"btn btn-primary a-btn-slide-text mybtn\">\n"
+                                + "                                    <span class=\"glyphicon myglyph glyphicon-edit\" aria-hidden=\"true\"></span>          \n"
+                                + "                                </a>\n"
+                                + "                                <a href=\"../DeleteCoordinateServlet?coordId=" + coordinate.getId() + "\" title=\"" + Utility.getLocalizedString(pageContext, "delete_coordinate") + "\" class=\"btn btn-danger a-btn-slide-text mybtn\" onclick=\"return confirm('Are you sure you want to continue')\">\n"
+                                + "                                    <span class=\"glyphicon myglyph glyphicon-remove\" aria-hidden=\"true\"></span>          \n"
+                                + "                                </a>\n"
+                                + "                            </td>\n");
 
-                    out.println("<div class=\"row\">");
-                    out.println(coordinate.getAddress().replace("\n", "\n<br/>\n"));
-                    if (coordinate.getOpening_hours() != null && coordinate.getOpening_hours() != "") {
-                        out.println("<br/><em>" + Utility.getLocalizedString(pageContext, "opening_hours") + "<br/>" + coordinate.getOpening_hours().replace("\n", "\n<br/>\n") + "</em>");
-
-                    } else {
-                        out.println("<br/><em>" + Utility.getLocalizedString(pageContext, "no_opening_hours") + "</em>");
+                        out.println("</tr>");
+                        markers += "[''," + coordinate.getLatitude() + "," + coordinate.getLongitude() + "],\n";
+                        details += "`" + coordinate.getAddress() + "`, ";
                     }
-                    out.println("</div><hr/>");
+                    out.println("</table></div>");
 
-                    markers += "[''," + coordinate.getLatitude() + "," + coordinate.getLongitude() + "],\n";
-                    details += "`" + coordinate.getAddress() + "`, ";
+                } else {
+                    out.println("<div class=\" map-wrapper col-md-9\" >");
+                    out.println("<div class=\" map col-md-9\" id=\"map\"></div>");
 
+                    out.println("</div>");
+                    out.println("<div class=\"col-md-3 shop_address\">");
+                    for (Coordinate coordinate : coordinates) {
+
+                        out.println("<div class=\"row\">");
+                        out.println(coordinate.getAddress().replace("\n", "\n<br/>\n"));
+                        if (coordinate.getOpening_hours() != null && !coordinate.getOpening_hours().equals("")) {
+                            out.println("<br/><em>" + Utility.getLocalizedString(pageContext, "opening_hours") + "<br/>" + coordinate.getOpening_hours().replace("\n", "\n<br/>\n") + "</em>");
+
+                        } else {
+                            out.println("<br/><em>" + Utility.getLocalizedString(pageContext, "no_opening_hours") + "</em>");
+                        }
+                        out.println("</div><hr/>");
+
+                        markers += "[''," + coordinate.getLatitude() + "," + coordinate.getLongitude() + "],\n";
+                        details += "`" + coordinate.getAddress() + "`, ";
+
+                    }
+                    out.println("</div>");
                 }
 
                 out.println("</div>");

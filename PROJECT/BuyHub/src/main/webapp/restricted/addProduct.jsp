@@ -50,7 +50,7 @@
 
                     <input type="hidden" name="shopId" id="shopId" value="${param.shopId}">
 
-                    <button type="submit" class="btn btn-success"><fmt:message key="add_product"/></button>
+                    <button type="submit" class="btn btn-success"><fmt:message key="add"/></button>
                 </form>
                 <br>
                 <div class="item_required"><fmt:message key="item_required"/></div>

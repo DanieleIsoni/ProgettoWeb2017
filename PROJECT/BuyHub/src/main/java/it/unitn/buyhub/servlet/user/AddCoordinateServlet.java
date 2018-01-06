@@ -1,7 +1,14 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package it.unitn.buyhub.servlet.user;
 
+import it.unitn.buyhub.dao.CoordinateDAO;
 import it.unitn.buyhub.dao.ProductDAO;
 import it.unitn.buyhub.dao.ShopDAO;
+import it.unitn.buyhub.dao.entities.Coordinate;
 import it.unitn.buyhub.dao.entities.Product;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
@@ -16,32 +23,31 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * This servlet allow the shop to add a new product
  *
  * @author Daniso
  */
-public class AddProductServlet extends HttpServlet {
+public class AddCoordinateServlet extends HttpServlet {
 
     private ShopDAO shopDAO;
-    private ProductDAO productDAO;
-
+    private CoordinateDAO coordinateDAO;
+    
     @Override
     public void init() throws ServletException {
         DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
         if (daoFactory == null) {
-            Log.error("Impossible to get dao factory for product storage system");
-            throw new ServletException("Impossible to get dao factory for product storage system");
+            Log.error("Impossible to get dao factory for coordinate storage system");
+            throw new ServletException("Impossible to get dao factory for coordinate storage system");
         }
         try {
             shopDAO = daoFactory.getDAO(ShopDAO.class);
-            productDAO = daoFactory.getDAO(ProductDAO.class);
+            coordinateDAO = daoFactory.getDAO(CoordinateDAO.class);
         } catch (DAOFactoryException ex) {
-            Log.error("Impossible to get dao factory for product storage system");
-            throw new ServletException("Impossible to get dao factory for product storage system", ex);
+            Log.error("Impossible to get dao factory for coordinate storage system");
+            throw new ServletException("Impossible to get dao factory for coordinate storage system", ex);
         }
-//        Log.info("AddProductServlet init done");
+        Log.info("AddCoordinateServlet init done");
     }
-
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -54,49 +60,48 @@ public class AddProductServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
-        String productName = (String) request.getParameter("productName");
-        int category = Integer.parseInt(request.getParameter("product_category"));
-        Double price = Double.parseDouble(request.getParameter("price"));
-        String description = (String) request.getParameter("description");
+        
+        String address = (String) request.getParameter("autocomplete_address");
+        String openingHours = (String) request.getParameter("opening_hours");
+        String longitude = (String) request.getParameter("longitude");
+        String latitude = (String) request.getParameter("latitude");
         int shopId = Integer.parseInt(request.getParameter("shopId"));
-
+        
         String contextPath = getServletContext().getContextPath();
         if (!contextPath.endsWith("/")) {
             contextPath += "/";
         }
-
+       
         try {
-            if (productName != null && !productName.equals("")
-                    && category >= 0 && category < Integer.parseInt(PropertyHandler.getInstance().getValue("categoriesNumber"))
-                    && price >= 0
-                    && description != null && !description.equals("")
-                    && shopId != 0) {
-                Product newProduct = new Product();
-                newProduct.setCategory(category);
-                newProduct.setDescription(description);
-                newProduct.setName(productName);
-                newProduct.setShop(shopDAO.getByPrimaryKey(shopId));
-                newProduct.setPrice(price);
-                Long prod_id = productDAO.insert(newProduct);
-
-                if (prod_id == 0) {
-                    Log.warn("Error inserting product in shop " + shopId);
-                    response.sendRedirect(response.encodeRedirectURL(contextPath + "restricted/addProduct.jsp?error=1&shopId=" + shopId));
-
+            if(address != null && !address.equals("")){
+                Coordinate newCoordinate = new Coordinate();
+                newCoordinate.setAddress(address);
+                if(openingHours != null){
+                    newCoordinate.setOpening_hours(openingHours);
                 } else {
-                    Log.info("Product inserted correctly");
-                    ((List<Product>) request.getSession().getAttribute("myproducts")).add(newProduct);
+                    newCoordinate.setOpening_hours("");
+                }
+                newCoordinate.setShop(shopDAO.getByPrimaryKey(shopId));
+                newCoordinate.setLatitude(Double.valueOf(latitude));
+                newCoordinate.setLongitude(Double.valueOf(longitude));
+                Long coordinate_id = coordinateDAO.insert(newCoordinate);
+                if (coordinate_id == 0){
+                    Log.warn("Error inserting coordinate for shop "+ shopId);
+                    response.sendRedirect(response.encodeRedirectURL(contextPath+"restricted/addCoordinate.jsp?error=1&shopId="+shopId));
+                } else {
+                    Log.info("Coordinate inserted correctly");
+                    ((List<Coordinate>) request.getSession().getAttribute("mycoordinates")).add(newCoordinate);
                     response.sendRedirect(contextPath + "restricted/myshop.jsp");
                 }
-
             }
         } catch (DAOException ex) {
-            Log.error("Error creating product, " + ex);
+            Log.error("Error creating coordinate, "+ex);
         }
-
+        
+        
     }
 
+    
     /**
      * Handles the HTTP <code>GET</code> method.
      *

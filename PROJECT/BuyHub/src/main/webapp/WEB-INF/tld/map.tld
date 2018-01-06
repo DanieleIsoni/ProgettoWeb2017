@@ -5,9 +5,23 @@
     <uri>/WEB-INF/tld/map</uri>
 
 
-    <tag>
-        <name>ShopMap</name>
-        <tag-class>it.unitn.buyhub.tag.ShopMapTagHandler</tag-class>
-        <body-content>empty</body-content>
-    </tag>
+
+  <tag>
+    <name>ShopMap</name>
+    <tag-class>it.unitn.buyhub.tag.ShopMapTagHandler</tag-class>
+    <body-content>empty</body-content>
+    <attribute>
+      <name>shopId</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>int</type>
+    </attribute>
+    <attribute>
+      <name>owner</name>
+      <required>false</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>boolean</type>
+    </attribute>
+  </tag>
+  
 </taglib>

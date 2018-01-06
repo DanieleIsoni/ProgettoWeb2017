@@ -61,7 +61,8 @@ public class CreateNewShopServlet extends HttpServlet {
         String website = (String) request.getParameter("website");
         String shipment = (String) request.getParameter("shipment");
         Double shipment_costs = 0.0;
-        if (request.getParameter("shipment_costs") != "") {
+        if (!request.getParameter("shipment_costs").equals("")) {
+
             shipment_costs = Double.parseDouble(request.getParameter("shipment_costs"));
         }
         User owner = (User) request.getSession().getAttribute("authenticatedUser");
@@ -98,15 +99,18 @@ public class CreateNewShopServlet extends HttpServlet {
                     } else {
                         Log.info("Shop inserted correctly");
                         newShop.setId(shop_id.intValue());
-                        if (address != null && !address.equals("")
-                                && openingHours != null && !openingHours.equals("")) {
-                            Coordinate newcoordinate = new Coordinate();
-                            newcoordinate.setAddress(address);
-                            newcoordinate.setOpening_hours(openingHours);
-                            newcoordinate.setShop(newShop);
-                            newcoordinate.setLatitude(Double.valueOf(latitude));
-                            newcoordinate.setLongitude(Double.valueOf(longitude));
-                            Long coordinate_id = coordinateDao.insert(newcoordinate);
+                        if (address != null && !address.equals("")) {
+                            Coordinate newCoordinate = new Coordinate();
+                            newCoordinate.setAddress(address);
+                            if (openingHours != null) {
+                                newCoordinate.setOpening_hours(openingHours);
+                            } else {
+                                newCoordinate.setOpening_hours("");
+                            }
+                            newCoordinate.setShop(newShop);
+                            newCoordinate.setLatitude(Double.valueOf(latitude));
+                            newCoordinate.setLongitude(Double.valueOf(longitude));
+                            Long coordinate_id = coordinateDao.insert(newCoordinate);
                             if (coordinate_id == 0) {
                                 Log.warn("Coordinate not inserted in Database");
                                 String msg = "Dear admin,\n<br/> a new shop has been created and need to be validated";
