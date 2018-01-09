@@ -91,6 +91,7 @@ public class ProductTableTagHandler extends SimpleTagSupport {
                                 + "                                    <span class=\"glyphicon myglyph glyphicon-camera\" aria-hidden=\"true\"></span>          \n"
                                 + "                                </a>\n"
                                 + "                            </td>\n");
+
                     }
                     out.println("</tr>");
                 }

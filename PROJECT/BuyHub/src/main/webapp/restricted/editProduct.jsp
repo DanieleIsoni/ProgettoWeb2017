@@ -27,7 +27,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="product_category"><fmt:message key="prod_categories"/>*:</label>
+                        <label for="product_category"><fmt:message key="prod_categories"/>:</label>
                         <div class="input-group-btn search-panel">
                             <select name="product_category" class="btn btn-default dropdown-toggle" id="product_category" >
                                 <option value="-1" selected="selected"><fmt:message key="all_categories"/></option>
@@ -51,8 +51,6 @@
 
                     <button type="submit" class="btn btn-success"><fmt:message key="save_changes"/></button>
                 </form>
-                <br>
-                <div class="item_required"><fmt:message key="item_required"/></div>
             </div>
         </div>
         <%@include file="../common/footer.jsp" %>

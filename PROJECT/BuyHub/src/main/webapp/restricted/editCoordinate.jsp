@@ -40,8 +40,9 @@
                     
                     <button type="submit" class="btn btn-success"><fmt:message key="save_changes"/></button>
                 </form>
-                <br>
+              <br>
                 <div class="item_required"><fmt:message key="item_required"/></div>
+
             </div>
         </div>
         <script>
