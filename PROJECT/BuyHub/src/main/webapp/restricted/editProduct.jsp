@@ -16,7 +16,7 @@
     <body >
         <div class="text-center login">
             <%@include file="../common/navbar.jsp" %>
-            <img src="../images/icon.png" alt="BuyHub logo" height="42" width="42">
+            <img src="images/icon.png" alt="BuyHub logo" height="42" width="42">
             <h3><fmt:message key="editProduct_desc"/></h3>
             <br>
             <div class="panel panel-default panel-footer">

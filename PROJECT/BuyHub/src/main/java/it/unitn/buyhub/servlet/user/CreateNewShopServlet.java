@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet to allow the creation of new shops
  *
- * @author Daniso
+ * @author Daniele Isoni
  */
 public class CreateNewShopServlet extends HttpServlet {
 

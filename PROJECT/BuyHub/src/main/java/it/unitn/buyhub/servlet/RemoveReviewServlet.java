@@ -18,7 +18,10 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet to remove a review from a product (if exist).
  *
+ *
  * @author Matteo Battilana
+ *
+ *
  */
 public class RemoveReviewServlet extends HttpServlet {
 

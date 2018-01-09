@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Daniso
+ * @author Daniele Isoni
  */
 public class AddCoordinateServlet extends HttpServlet {
 

@@ -1,7 +1,12 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package it.unitn.buyhub.servlet.user;
 
-import it.unitn.buyhub.dao.ProductDAO;
-import it.unitn.buyhub.dao.entities.Product;
+import it.unitn.buyhub.dao.CoordinateDAO;
+import it.unitn.buyhub.dao.entities.Coordinate;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.factories.DAOFactory;
@@ -14,15 +19,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Shops use this servlet to edit products: invoked both before and after the
- * modifications.
  *
  * @author Daniele Isoni
  */
-public class EditProductServlet extends HttpServlet {
+public class EditCoordinateServlet extends HttpServlet {
 
-    private ProductDAO productDAO;
-
+    private CoordinateDAO coordinateDAO;
+    
     public void init() throws ServletException {
         DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
         if (daoFactory == null) {
@@ -30,14 +33,14 @@ public class EditProductServlet extends HttpServlet {
             throw new ServletException("Impossible to get dao factory for shop storage system");
         }
         try {
-            productDAO = daoFactory.getDAO(ProductDAO.class);
+            coordinateDAO = daoFactory.getDAO(CoordinateDAO.class);
         } catch (DAOFactoryException ex) {
             Log.error("Impossible to get dao factory for shop storage system");
             throw new ServletException("Impossible to get dao factory for shop storage system", ex);
         }
-//        Log.info("EditProductServlet init done");
+        Log.info("EditCoordinateServlet init done");
     }
-
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -51,49 +54,46 @@ public class EditProductServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         int code = Integer.parseInt(request.getParameter("code"));
-        int prodId = Integer.parseInt(request.getParameter("prodId"));
-
+        int coordinateId = Integer.parseInt(request.getParameter("coordinateId"));
+        
         String contextPath = getServletContext().getContextPath();
         if (!contextPath.endsWith("/")) {
             contextPath += "/";
         }
         try {
-            Product product = productDAO.getByPrimaryKey(prodId);
-            if (code == 1) {
-                request.setAttribute("product", product);
-                request.getRequestDispatcher("restricted/editProduct.jsp").forward(request, response);
-            } else if (code == 2) {
-                String productName = request.getParameter("productName");
-                int category = Integer.parseInt(request.getParameter("product_category"));
-                double price = Double.parseDouble(request.getParameter("price"));
-                String description = request.getParameter("description");
-                if (productName != null && !productName.equals("")
-                        && category != -1
-                        && price != 0
-                        && description != null && !description.equals("")) {
-                    if (!productName.equals(product.getName())) {
-                        product.setName(productName);
-                    }
-                    if (category != product.getCategory()) {
-                        product.setCategory(category);
-                    }
-                    if (price != product.getPrice()) {
-                        product.setPrice(price);
-                    }
-                    if (!description.equals(product.getDescription())) {
-                        product.setDescription(description);
-                    }
-                    productDAO.update(product);
-                    List<Product> products = productDAO.getByShop(product.getShop());
-                    request.getSession().setAttribute("myproducts", products);
+            Coordinate coordinate = coordinateDAO.getByPrimaryKey(coordinateId);
+            if(code == 1){
+                Log.info("sono qui");
+                request.setAttribute("coordinate", coordinate);
+                request.getRequestDispatcher("restricted/editCoordinate.jsp").forward(request, response);
+            } else if (code == 2){
+                String address = (String) request.getParameter("autocomplete_address");
+                String openingHours = (String) request.getParameter("opening_hours");
+                String longitude = (String) request.getParameter("longitude");
+                String latitude = (String) request.getParameter("latitude");
+                if (address != null && !address.equals("") &&
+                        openingHours != null && !openingHours.equals("") &&
+                        longitude != null && !longitude.equals("") &&
+                        latitude != null && !latitude.equals("")){
+                    if(!address.equals(coordinate.getAddress()))
+                        coordinate.setAddress(address);
+                    if(!openingHours.equals(coordinate.getOpening_hours()))
+                        coordinate.setOpening_hours(openingHours);
+                    if(Double.valueOf(longitude) != coordinate.getLongitude())
+                        coordinate.setLongitude(Double.valueOf(longitude));
+                    if(Double.valueOf(latitude) != coordinate.getLatitude())
+                        coordinate.setLatitude(Double.valueOf(latitude));
+                    coordinateDAO.update(coordinate);
+                    List<Coordinate> coordinates=coordinateDAO.getByShop(coordinate.getShop());
+                    request.getSession().setAttribute("mycoordinates", coordinates);
                     response.sendRedirect(response.encodeRedirectURL(contextPath + "restricted/myshop.jsp"));
                 }
             }
-        } catch (DAOException ex) {
-            Log.error("Error editing product, " + ex);
+        } catch (DAOException ex){
+            Log.error("Error editing coordinate, "+ex);
         }
     }
-
+    
     /**
      * Handles the HTTP <code>GET</code> method.
      *

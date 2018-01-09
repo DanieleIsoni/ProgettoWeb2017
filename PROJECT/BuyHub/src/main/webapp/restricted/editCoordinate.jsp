@@ -1,31 +1,30 @@
 <%-- 
-    Document   : addProduct
-    Created on : Oct 23, 2017, 9:47:27 AM
+    Document   : editCoordinate
+    Created on : Jan 6, 2018, 12:24:27 PM
     Author     : Daniele Isoni
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="err" uri="/WEB-INF/tld/errors.tld" %>
-
+<jsp:useBean id="coordinate" class="it.unitn.buyhub.dao.entities.Coordinate" scope="request"/>
 <!DOCTYPE html>
 <html>
     <head>
 
         <%@include file="../common/header.jsp" %>
-        <title><fmt:message key="addCoordinate_title"/> - BuyHub</title>
+        <title><fmt:message key="editCoordinate_title"/> - BuyHub</title>
     </head>
-    <body>
+    <body >
         <div class="text-center login">
             <%@include file="../common/navbar.jsp" %>
-            <img src="../images/icon.png" alt="BuyHub logo" height="42" width="42">
-            <h3><fmt:message key="addCoordinate_desc"/></h3>
+            <img src="images/icon.png" alt="BuyHub logo" height="42" width="42">
+            <h3><fmt:message key="editCoordinate_desc"/></h3>
             <br>
             <div class="panel panel-default panel-footer">
-                <err:ErrorMessage page="addCoordinate"/>
-                <form method="POST" id="addCoordinate-form" action="<c:url value="/AddCoordinateServlet" />">
+                <form method="POST" id="editCoordinate-form" action="<c:url value="/EditCoordinateServlet?code=2" />">
+                    
                     <div class="form-group">
-                        <label for="autocomplete_address"><fmt:message key="autocomplete_address"/>*:</label>
-                        <input type="text" name="autocomplete_address" class="form-control" id="autocomplete_address" placeholder="" onFocus="geolocate()" >
+                        <label for="autocomplete_address"><fmt:message key="autocomplete_address"/>:</label>
+                        <input type="text" name="autocomplete_address" class="form-control" id="autocomplete_address" placeholder="" onFocus="geolocate()" value="${coordinate.address}" >
                     </div>
 
                     <input type="hidden" name="latitude" id="latitude">
@@ -33,12 +32,13 @@
                         
                     <div class="form-group">
                         <label for="opening_hours"><fmt:message key="opening_hours"/></label>
-                        <input type="text" name="opening_hours" class="form-control" id="opening_hours">
+                        <input type="text" name="opening_hours" class="form-control" id="opening_hours" value="${coordinate.opening_hours}">
                     </div>
-
-                    <input type="hidden" name="shopId" id="shopId" value="${param.shopId}">
-
-                    <button type="submit" class="btn btn-success"><fmt:message key="add"/></button>
+                    
+                    <input type="hidden" name="shopId" id="shopId" value="${coordinate.shop.id}">
+                    <input type="hidden" name="coordinateId" id="coordinateId" value="${coordinate.id}">
+                    
+                    <button type="submit" class="btn btn-success"><fmt:message key="save_changes"/></button>
                 </form>
                 <br>
                 <div class="item_required"><fmt:message key="item_required"/></div>
@@ -87,3 +87,4 @@
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjVcIi8WUN_UNmyn8JG1FncjBQUn6qk_g&libraries=places&callback=initAutocomplete"
         async defer></script>
         <%@include file="../common/footer.jsp" %>
+

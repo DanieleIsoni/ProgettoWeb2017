@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet to update the shop's informations
  *
- * @author Daniso
+ * @author Daniele Isoni
  */
 public class EditShopServlet extends HttpServlet {
 

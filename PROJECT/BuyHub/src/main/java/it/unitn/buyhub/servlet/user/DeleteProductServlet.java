@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * With this the shops can remove products
  *
- * @author Daniso
+ * @author Daniele Isoni
  */
 public class DeleteProductServlet extends HttpServlet {
 
@@ -24,14 +24,14 @@ public class DeleteProductServlet extends HttpServlet {
     public void init() throws ServletException {
         DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
         if (daoFactory == null) {
-            Log.error("Impossible to get dao factory for shop storage system");
-            throw new ServletException("Impossible to get dao factory for shop storage system");
+            Log.error("Impossible to get dao factory for product storage system");
+            throw new ServletException("Impossible to get dao factory for product storage system");
         }
         try {
             productDAO = daoFactory.getDAO(ProductDAO.class);
         } catch (DAOFactoryException ex) {
-            Log.error("Impossible to get dao factory for shop storage system");
-            throw new ServletException("Impossible to get dao factory for shop storage system", ex);
+            Log.error("Impossible to get dao factory for product storage system");
+            throw new ServletException("Impossible to get dao factory for product storage system", ex);
         }
 //        Log.info("DeleteProductServlet init done");
     }

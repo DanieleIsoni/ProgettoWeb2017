@@ -18,7 +18,7 @@ import javax.servlet.jsp.tagext.SimpleTagSupport;
 /**
  * Tag to prunt the product table into the shop page
  *
- * @author Daniso
+ * @author Daniele Isoni
  */
 public class ProductTableTagHandler extends SimpleTagSupport {
 

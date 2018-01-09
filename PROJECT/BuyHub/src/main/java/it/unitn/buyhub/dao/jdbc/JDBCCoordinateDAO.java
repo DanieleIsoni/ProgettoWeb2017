@@ -305,8 +305,9 @@ public class JDBCCoordinateDAO extends JDBCDAO<Coordinate, Integer> implements C
             std.setDouble(1, coordinate.getLatitude());
             std.setDouble(2, coordinate.getLongitude());
             std.setString(3, coordinate.getAddress());
-            std.setInt(4, coordinate.getId());
-            std.setString(5, coordinate.getOpening_hours());
+
+            std.setString(4, coordinate.getOpening_hours());
+            std.setInt(5, coordinate.getId());
 
             if (std.executeUpdate() == 1) {
                 return coordinate;
@@ -347,7 +348,7 @@ public class JDBCCoordinateDAO extends JDBCDAO<Coordinate, Integer> implements C
                     try {
                         CON.rollback();
                     } catch (SQLException ex) {
-                        //TODO: log the exception
+                        Log.error(ex);
                     }
                     throw new DAOException("Impossible to persist the new coordinate");
                 }
@@ -355,7 +356,7 @@ public class JDBCCoordinateDAO extends JDBCDAO<Coordinate, Integer> implements C
                 try {
                     CON.rollback();
                 } catch (SQLException ex) {
-                    //TODO: log the exception
+                    Log.error(ex);
                 }
                 throw new DAOException("Impossible to persist the new coordinate");
             }
@@ -363,9 +364,22 @@ public class JDBCCoordinateDAO extends JDBCDAO<Coordinate, Integer> implements C
             try {
                 CON.rollback();
             } catch (SQLException ex1) {
-                //TODO: log the exception
+                Log.error(ex1);
             }
             throw new DAOException("Impossible to persist the new coordinate", ex);
+        }
+    }
+
+    public void remove(Coordinate coordinate) throws DAOException {
+        try (PreparedStatement stm = CON.prepareStatement("DELETE FROM coordinates WHERE coordinates.id = ?")) {
+            stm.setInt(1, coordinate.getId());
+            if (stm.executeUpdate() == 1) {
+                Log.info("Coordinate " + coordinate.getId() + " deleted");
+            } else {
+                Log.error("Error in executing delete");
+            }
+        } catch (SQLException ex) {
+            throw new DAOException("Impossible to delete the coordinate", ex);
         }
     }
 }
