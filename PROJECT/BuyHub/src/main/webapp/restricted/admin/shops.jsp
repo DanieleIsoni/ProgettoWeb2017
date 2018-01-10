@@ -49,7 +49,8 @@
                                             </a>
                                         </c:when>
                                         <c:otherwise>
-                                            <a href="<c:url value='enableshop?id=${shop.id}&status=0'/>" role="button" class="btn_1 but btn btn-danger">
+                                            <a href="<c:url value='/restricted/admin/enableshop?id=${shop.id}&status=0'/>" role="button" class="btn_1 but btn btn-danger">
+
                                                 <fmt:message key="disable"/>
                                             </a>
                                         </c:otherwise>    
