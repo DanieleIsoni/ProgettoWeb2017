@@ -1,10 +1,55 @@
 \input{header}
 \chapter{Tecnologie utilizzate}
-\lipsum
+
+Il progetto è stato realizzato con Java in versione 7, coadiuvato dalle librerie per lo sviluppo Web tra cui JSP e JSTL.
+
+L'interfaccia Web è stata sviluppata attraverso Twitter Bootstrap 3, con JQuery e HTML5.
+
+Il database scelto è stato MySQL, data la grande affidabilità. Rappresenta il giusto compromesso tra flessibilità e velocità.
+
+All'interno dell'applicazione sono integrate altre librerie JavaScript, tutte liberamente scaricabili, e alcune chiamate alle API di Google Maps, in particolare per l'autocompletamento dei campi e per la visualizzazione della mappa.
+
+Il sito è responsive e supporta la localizzazione mediante le tecnologie offerte da Java Web (resourceBundle e Format Library).
+
+La maggior parte delle pagine sono realizzate mediante una coppia servlet-JSP, soluzione che permette di separare il codice dalla struttura visiva e ottimizza l'uso delle risorse. Sono inoltre presenti alcuni filtri per poter controllare l'accesso a determinate pagine.
+
+
+
+
+\chapter{Installazione}
+Per poter installare l'applicazione è necessario seguire i seguenti passi:
+\begin{enumerate}
+
+\item Ripristinare il database e i dati presenti nella cartella \texttt{DB/DBUtils/}.
+\item Copiare la cartella \texttt{DB/DBUtils/UploadedContent da copiare} nella cartella \\\texttt{\textbf{catalina.base}/UploadedContent}.
+La posizione della cartella \texttt{\textbf{catalina.base}} varia da installazione a installazione e, solitamente, si trova nel percorso \texttt{/opt/tomcat/bin/} (Linux e Mac) o analoghi.
+\item Definire quindi le proprie impostazioni nel file \\\texttt{PROJECT/BuyHub/src/main/resources/config.properties}.
+\item Modificare le impostazioni per il proprio server di posta elettronica nel file\\ \texttt{PROJECT/BuyHub/src/main/java/it/unitn/buyhub/utils/Mailer.java}. In particolare, togliere il commento dalla riga 67 per abilitare l'invio e immetere le proprie credenziali nelle righe 109-126. Per avere i dettagli su come configurare il client email, contattare il provider del servizio.
+\item \E quindi possibile eserguire l'applicazione all'interno di Apache TomCat o GlassFish.
+\end{enumerate}
+
 \chapter{Database}
 
 Il database scelto è stato MariaDB, una variante di MySQL. Abbiamo scelto questa distribuzione grazie alla semplice installazione realizzata mediante XAMPP, con il quale viene installato anche PHPMyAdmin, una comoda interfaccia di gestione del database. Un altro punto a favore di questo DBMS è la totale compatibilità con MySQL (tutte le query funzionano anche su un normale database MySQL) e la velocità, oltre alla stabilità e la diffusione pressochè globale.
 
+\section{Popolazione di test}
+Il DataBase di test (\texttt{DB/DBUtils/data.sql}) è così formato:
+\begin{itemize}
+
+  \item 62 punti vendita associati a 31 negozi (almeno un punto vendita a negozio)
+  \item 336 prodotti totali inseriti, distribuiti equamente in tutti i negozi (almeno un prodotto per negozio)
+  \item 327 fotografie (di cui 302 associate a prodotti)
+  \item 122 utenti
+  \item 2298 recensioni, almeno una per prodotto e 7 in media per prodotto
+
+\end{itemize}
+
+Tutti i campi utilizzati nella nostra applicazione sono stati riempiti con valori verosimili, prelevati dal Web mediante degli script Python, alcuni dei quali presenti nella cartella \texttt{DB/DBUtils/scripts}, pertanto non rispettano assolutamente il nostro pensiero e non ci assumiamo nessuna responsabilità del contenuto degli stessi.
+
+I punti vendita sono stati distribuiti casualmente attorno a 6 città (Vicenza, Trento, Bologna, Milano, Udine, Verona). La loro distribuzione è riassunta nell'immagine seguente:
+\begin{center}
+  \includegraphics[width=10cm]{heatmap}
+\end{center}
 
 
 \chapter{Autocompletamento}
@@ -45,6 +90,7 @@ I log vengono salvati nella cartella \texttt{\$CATALINA\_HOME/logs} in file test
 La cartella \texttt{\$CATALINA\_HOME} è in genere la cartella di installazione di TomCat o GlassFish, ma potrebbe variare in base alla configurazione del sistema.
 
 \chapter{Dettagli implementativi}
+
 \section{Orari di apertura e negozi solo online}
 Per semplificare la struttura del DB abbiamo deciso di implementare i vari punti vendita dei negozi come una relazione uno a molti tra \texttt{shop} e \texttt{coordinate}. All'interno della tabella \texttt{coordinate} abbiamo inserito il campo \texttt{opening\_hours} che contiene gli orari del punto vendita, nel caso in cui per il cliente sia disponibile il ritiro in negozio. Nel caso di negozi che effettuano soltanto vendita online questo campo resta vuoto e viene sostituito all'interno della pagina web con un messaggio che specifica le modalità di vendita solo online del negozio.
 
@@ -78,7 +124,7 @@ Questo codice è poi cifrato mediante AES128 secondo una chiave segreta presente
 \]
 
 \chapter{Homepage}
-Nella homepage vengono visualizzati gli ultimi 10 prodotti inseriti nel database, sulla base dell'ID. Sopra agli ultimi prodotti è presente uno slider con alcune immagini, contenute nella cartella \texttt{images/slider_images}. Lo slider supporta la localizzazione: carica, mediante un taghandler, tutti i file presenti nella cartella corrispondente alla lingua selezionata. Ad esempio, se la lingua è italiano, caricherà tutte le immagini presenti nella cartella \texttt{images/slider_images/it/}.
+Nella homepage vengono visualizzati gli ultimi 10 prodotti inseriti nel database, sulla base dell'ID. Sopra agli ultimi prodotti è presente uno slider con alcune immagini, contenute nella cartella \texttt{images/slider\_images}. Lo slider supporta la localizzazione: carica, mediante un taghandler, tutti i file presenti nella cartella corrispondente alla lingua selezionata. Ad esempio, se la lingua è italiano, caricherà tutte le immagini presenti nella cartella \texttt{images/slider\_images/it/}.
 
 
 
