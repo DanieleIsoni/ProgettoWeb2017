@@ -170,7 +170,7 @@ public class NavbarTagHandler extends SimpleTagSupport {
                     + "                        <img src='" + Utility.getUrl(pageContext, "images/icon.png") + "' />\n"
                     + "                    </th>\n"
                     + "                    <th>" + n.getDescription() + "</th>\n"
-                    + "                    <th><a class='glyphicon glyphicon-remove' id='logIcon' href = 'removenotification?id_notification="+n.getId()+"'></a></th>"
+                    + "                    <th><a class='glyphicon glyphicon-remove' id='logIcon' href = '" + Utility.getUrl(pageContext, "restricted/removenotification") + "?id_notification=" + n.getId() + "'></a></th>"
                     + "                </tr>\n"
                     + "                <tr>\n"
                     + "                    <td>" + dateFormat.format(n.getDateCreation()) + "</td>\n"
@@ -178,6 +178,7 @@ public class NavbarTagHandler extends SimpleTagSupport {
                     + "            </table>\n"
                     + "        </div>";
         }
+        out += "<div class='center'><a href='" + Utility.getUrl(pageContext, "restricted/notifications.jsp") + "'>" + Utility.getLocalizedString(pageContext, "notification_center") + "</a> </div>";
         return out;
     }
 
