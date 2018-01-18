@@ -15,67 +15,41 @@ import java.util.Date;
 public class Message implements Serializable {
 
     private int id;
-    private Review review;
+    private Ticket ticket;
     private User owner;
-    private Date date;
-    private Date validationDate;
-    private User validation;
-    private String description;
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setReview(Review review) {
-        this.review = review;
-    }
-
-    public void setOwner(User owner) {
-        this.owner = owner;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public void setValidationDate(Date validationDate) {
-        this.validationDate = validationDate;
-    }
-
-    public void setValidation(User validation) {
-        this.validation = validation;
-    }
+    private String content;
 
     public int getId() {
         return id;
     }
 
-    public Review getReview() {
-        return review;
+    public Ticket getTicket() {
+        return ticket;
     }
 
     public User getOwner() {
         return owner;
     }
 
-    public Date getDate() {
-        return date;
+    public String getContent() {
+        return content;
     }
 
-    public Date getValidationDate() {
-        return validationDate;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public User getValidation() {
-        return validation;
+    public void setTicket(Ticket ticket) {
+        this.ticket = ticket;
     }
 
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    
 }

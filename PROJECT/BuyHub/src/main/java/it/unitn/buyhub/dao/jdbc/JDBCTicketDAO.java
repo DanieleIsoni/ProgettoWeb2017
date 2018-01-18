@@ -8,6 +8,7 @@ package it.unitn.buyhub.dao.jdbc;
 import it.unitn.buyhub.dao.*;
 import it.unitn.buyhub.dao.entities.Coordinate;
 import it.unitn.buyhub.dao.entities.Message;
+import it.unitn.buyhub.dao.entities.Order;
 import it.unitn.buyhub.dao.entities.Review;
 import it.unitn.buyhub.dao.entities.Ticket;
 import it.unitn.buyhub.dao.entities.User;
@@ -32,9 +33,9 @@ import java.util.List;
  * @author Matteo Battilana
  * @since 2017.04.25
  */
-public class JDBCMessageDAO extends JDBCDAO<Message, Integer> implements MessageDAO {
+public class JDBCTicketDAO extends JDBCDAO<Ticket, Integer> implements TicketDAO {
 
-    public JDBCMessageDAO(Connection con) {
+    public JDBCTicketDAO(Connection con) {
         super(con);
         FRIEND_DAOS.put(UserDAO.class, new JDBCUserDAO(CON));
         FRIEND_DAOS.put(ReviewDAO.class, new JDBCReviewDAO(CON));
@@ -52,7 +53,7 @@ public class JDBCMessageDAO extends JDBCDAO<Message, Integer> implements Message
      */
     @Override
     public Long getCount() throws DAOException {
-        try (PreparedStatement stmt = CON.prepareStatement("SELECT COUNT(*) FROM messages");) {
+        try (PreparedStatement stmt = CON.prepareStatement("SELECT COUNT(*) FROM tickets");) {
             ResultSet counter = stmt.executeQuery();
             if (counter.next()) {
                 return counter.getLong(1);
@@ -79,75 +80,33 @@ public class JDBCMessageDAO extends JDBCDAO<Message, Integer> implements Message
      * @since 1.0.170425
      */
     @Override
-    public Message getByPrimaryKey(Integer primaryKey) throws DAOException {
+    public Ticket getByPrimaryKey(Integer primaryKey) throws DAOException {
         if (primaryKey == null) {
             throw new DAOException("primaryKey is null");
         }
-        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM messages WHERE id = ?")) {
+        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM tickets WHERE id = ?")) {
             stm.setInt(1, primaryKey);
             try (ResultSet rs = stm.executeQuery()) {
-
+                
+                Ticket tick = new Ticket();
                 rs.next();
-                Message message = new Message();
-                message.setId(rs.getInt("id"));
+                tick.setId(rs.getInt("id"));
 
-                //Get owner associate
-                UserDAO userDao = getDAO(UserDAO.class);
-                message.setOwner(userDao.getByPrimaryKey(rs.getInt("user_id")));
+                //Get orderDAO associate
+                OrderDAO orderDAO = getDAO(OrderDAO.class);
+                tick.setOrder(orderDAO.getByPrimaryKey(rs.getInt("order_id")));
 
-                //Get review
-                TicketDAO ticketDao = getDAO(TicketDAO.class);
-                message.setTicket(ticketDao.getByPrimaryKey(rs.getInt("ticket_id")));
-
-                return message;
+               
+                return tick;
             }
         } catch (SQLException | DAOFactoryException ex) {
             throw new DAOException("Impossible to get the coordinates for the passed primary key", ex);
         }
     }
 
-    /**
-     * Returns the list of the {@link Message message} with the owner the one
-     * passed as parameter.
-     *
-     * @param owner the {@code owner} of the {@code messages} to get.
-     * @return the {@code message}the list of the {@link Message message} with
-     * the owner the one passed as parameter.
-     * @throws DAOException if an error occurred during the information
-     * retrieving.
-     *
-     * @author Matteo Battilana
-     * @since 1.0.170425
-     */
-    public List<Message> getByOwner(User owner) throws DAOException {
-        List<Message> messages = new ArrayList<>();
-        if (owner == null) {
-            throw new DAOException("owner is null");
-        }
-        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM messages WHERE user_id = ?")) {
-            stm.setInt(1, owner.getId());
-            try (ResultSet rs = stm.executeQuery()) {
+    
 
-                while (rs.next()) {
-                    rs.next();
-                    Message message = new Message();
-                    message.setId(rs.getInt("id"));
-
-                    //Get owner associate
-                    UserDAO userDao = getDAO(UserDAO.class);
-                    message.setOwner(userDao.getByPrimaryKey(rs.getInt("user_id")));
-
-                    //Get review
-                    TicketDAO ticketDao = getDAO(TicketDAO.class);
-                    message.setTicket(ticketDao.getByPrimaryKey(rs.getInt("ticket_id")));
-                    messages.add(message);
-                }
-            }
-        } catch (SQLException | DAOFactoryException ex) {
-            throw new DAOException("Impossible to get the coordinates for the passed owner", ex);
-        }
-        return messages;
-    }
+   
 
     /**
      * Returns the list of all the valid {@link Message messages} stored by the
@@ -161,23 +120,23 @@ public class JDBCMessageDAO extends JDBCDAO<Message, Integer> implements Message
      * @since 1.0.170425
      */
     @Override
-    public List<Message> getAll() throws DAOException {
-        List<Message> messages = new ArrayList<>();
-        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM messages")) {
+    public List<Ticket> getAll() throws DAOException {
+        List<Ticket> messages = new ArrayList<>();
+        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM tickets")) {
             try (ResultSet rs = stm.executeQuery()) {
 
-               rs.next();
-                    Message message = new Message();
-                    message.setId(rs.getInt("id"));
+                rs.next();
+                Ticket tick = new Ticket();
+                rs.next();
+                tick.setId(rs.getInt("id"));
 
-                    //Get owner associate
-                    UserDAO userDao = getDAO(UserDAO.class);
-                    message.setOwner(userDao.getByPrimaryKey(rs.getInt("user_id")));
+                //Get orderDAO associate
+                OrderDAO orderDAO = getDAO(OrderDAO.class);
+                tick.setOrder(orderDAO.getByPrimaryKey(rs.getInt("order_id")));
 
-                    //Get review
-                    TicketDAO ticketDao = getDAO(TicketDAO.class);
-                    message.setTicket(ticketDao.getByPrimaryKey(rs.getInt("ticket_id")));
-                    messages.add(message);
+               
+
+                messages.add(tick);
             }
         } catch (SQLException | DAOFactoryException ex) {
             throw new DAOException("Impossible to get the coordinates for the passed primary key", ex);
@@ -196,8 +155,8 @@ public class JDBCMessageDAO extends JDBCDAO<Message, Integer> implements Message
      * @since 1.0.170425
      */
     @Override
-    public Message update(Message message) throws DAOException {
-        if (message == null) {
+    public Ticket update(Ticket ticket) throws DAOException {
+        if (ticket == null) {
             throw new DAOException("parameter not valid", new IllegalArgumentException("The passed message is null"));
         }
 
@@ -216,13 +175,10 @@ public class JDBCMessageDAO extends JDBCDAO<Message, Integer> implements Message
      * @author Stefano Chirico
      * @since 1.0.170425
      */
-    public Long insert(Message message) throws DAOException {
-        try (PreparedStatement ps = CON.prepareStatement("INSERT INTO messages(ticket_id, user_id, content) VALUES(?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
+    public Long insert(Ticket tick) throws DAOException {
+        try (PreparedStatement ps = CON.prepareStatement("INSERT INTO tickets(order_id) VALUES(?)", Statement.RETURN_GENERATED_KEYS)) {
 
-            ps.setInt(1, message.getTicket().getId());
-            ps.setInt(2, message.getOwner().getId());
-            ps.setString(3,message.getContent());
-            
+            ps.setInt(1, tick.getOrder().getId());
 
             if (ps.executeUpdate() == 1) {
                 ResultSet generatedKeys = ps.getGeneratedKeys();
@@ -254,35 +210,30 @@ public class JDBCMessageDAO extends JDBCDAO<Message, Integer> implements Message
         }
     }
 
+
     @Override
-    public List<Message> getByTicket(Ticket ticket) throws DAOException {
-         List<Message> messages = new ArrayList<>();
-        if (ticket == null) {
-            throw new DAOException("owner is null");
+    public Ticket getByOrder(Order order) throws DAOException {
+         if (order == null) {
+            throw new DAOException("order is null");
         }
-        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM messages WHERE ticket_id = ?")) {
-            stm.setInt(1, ticket.getId());
+        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM tickets WHERE order_id = ?")) {
+            stm.setInt(1, order.getId());
             try (ResultSet rs = stm.executeQuery()) {
+                
+                Ticket tick = new Ticket();
+                rs.next();
+                tick.setId(rs.getInt("id"));
 
-                while (rs.next()) {
-                    rs.next();
-                    Message message = new Message();
-                    message.setId(rs.getInt("id"));
+                //Get orderDAO associate
+                OrderDAO orderDAO = getDAO(OrderDAO.class);
+                tick.setOrder(orderDAO.getByPrimaryKey(rs.getInt("order_id")));
 
-                    //Get owner associate
-                    UserDAO userDao = getDAO(UserDAO.class);
-                    message.setOwner(userDao.getByPrimaryKey(rs.getInt("user_id")));
-
-                    //Get review
-                    TicketDAO ticketDao = getDAO(TicketDAO.class);
-                    message.setTicket(ticketDao.getByPrimaryKey(rs.getInt("ticket_id")));
-                    messages.add(message);
-                }
+               
+                return tick;
             }
         } catch (SQLException | DAOFactoryException ex) {
-            throw new DAOException("Impossible to get the coordinates for the passed owner", ex);
+            throw new DAOException("Impossible to get the coordinates for the passed primary key", ex);
         }
-        return messages;
     }
 
 }

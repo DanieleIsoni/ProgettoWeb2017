@@ -6,7 +6,7 @@
 package it.unitn.buyhub.dao;
 
 import it.unitn.buyhub.dao.entities.Coordinate;
-import it.unitn.buyhub.dao.entities.Message;
+import it.unitn.buyhub.dao.entities.Order;
 import it.unitn.buyhub.dao.entities.Review;
 import it.unitn.buyhub.dao.entities.Ticket;
 import it.unitn.buyhub.dao.entities.User;
@@ -21,9 +21,8 @@ import java.util.List;
  * @author Matteo Battilana
  * @since 2017.04.25
  */
-public interface MessageDAO extends DAO<Message, Integer> {
-
-    /**
+public interface TicketDAO extends DAO<Ticket, Integer> {
+ /**
      * Returns the number of {@link Message messages} stored on the persistence
      * system of the application.
      *
@@ -47,7 +46,7 @@ public interface MessageDAO extends DAO<Message, Integer> {
      * @author Stefano Chirico
      * @since 1.0.170425
      */
-    public Long insert(Message message) throws DAOException;
+    public Long insert(Ticket message) throws DAOException;
 
     /**
      * Returns the {@link Message message} with the primary key equals to the
@@ -64,7 +63,7 @@ public interface MessageDAO extends DAO<Message, Integer> {
      * @since 1.0.170425
      */
     @Override
-    public Message getByPrimaryKey(Integer primaryKey) throws DAOException;
+    public Ticket getByPrimaryKey(Integer primaryKey) throws DAOException;
 
     /**
      * Returns the list of the {@link Message message} with the owner the one
@@ -79,13 +78,10 @@ public interface MessageDAO extends DAO<Message, Integer> {
      * @author Matteo Battilana
      * @since 1.0.170425
      */
-    public List<Message> getByOwner(User owner) throws DAOException;
-    
-    public List<Message> getByTicket(Ticket ticket) throws DAOException;
+    public Ticket getByOrder(Order order) throws DAOException;
 
-   
     @Override
-    public List<Message> getAll() throws DAOException;
+    public List<Ticket> getAll() throws DAOException;
 
     /**
      * Update the message passed as parameter and returns it.
@@ -98,5 +94,6 @@ public interface MessageDAO extends DAO<Message, Integer> {
      * @since 1.0.170425
      */
     @Override
-    public Message update(Message message) throws DAOException;
+    public Ticket update(Ticket message) throws DAOException;
+   
 }
