@@ -93,20 +93,20 @@ public class NotificationTagHandler extends SimpleTagSupport {
             out += "<div class='no-notification'>" + Utility.getLocalizedString(pageContext, "no_notification") + "</div>";
         }
         for (Notification n : notifications) {
-            out += "<hr><div class='notification-element' style='word-break:break-all;'>\n"
-                    + "            <table  align='center'>\n"
-                    + "                <tr>\n"
+            out +="<tr><td><hr><div class='notification-element' style='word-break:break-all;'>\n"
+                    + "            <table >\n"
+                    + "                <tr >\n"
                     + "                    <th id='image' rowspan='2'>\n"
                     + "                        <img src='" + Utility.getUrl(pageContext, "images/icon.png") + "' />\n"
                     + "                    </th>\n"
                     + "                    <th>" + n.getDescription() + "</th>\n"
-                    + (!(n.isStatus())?"                    <th><a class='glyphicon glyphicon-remove' id='logIcon' href = '"+Utility.getUrl(pageContext, "restricted/removenotification")+"?id_notification="+n.getId()+"'></a></th>":"")
+                    + (!(n.isStatus())?"                    <th><a class='glyphicon glyphicon-remove' id='logIcon' href = '"+Utility.getUrl(pageContext, "removenotification")+"?id_notification="+n.getId()+"'></a></th>":"")
                     + "                </tr>\n"
-                    + "                <tr>\n"
-                    + "                    <td>" + dateFormat.format(n.getDateCreation()) + "</td>\n"
+                    + "                <tr >\n"
+                    + "                    <td style=\" text-align: left; \">" + dateFormat.format(n.getDateCreation()) + "</td>\n"
                     + "                </tr>\n"
                     + "            </table>\n"
-                    + "        </div>";
+                    + "        </div></td></tr>";
         }
         return out;
     }
