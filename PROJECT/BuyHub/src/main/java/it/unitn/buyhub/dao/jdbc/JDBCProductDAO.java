@@ -494,7 +494,7 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
             //Start JaroWinkler filter
             JaroWinkler jw = new JaroWinkler();
             for (Product p : all) {
-                if (jw.similarity(name, p.getName()) > 0.5) {
+                if (jw.similarity(name, p.getName()) > 0.6) {
                     filtered.add(p);
                 }
             }
@@ -529,9 +529,8 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
             //Start JaroWinkler filter
             JaroWinkler jw = new JaroWinkler();
             for (Product p : all) {
-                if (jw.similarity(name, p.getName()) > 0.5) {
-                    filtered.add(p);
-                }
+                if (jw.similarity(name, p.getName()) > 0.6) {
+                    filtered.add(p);                }
             }
         }
         return filtered;

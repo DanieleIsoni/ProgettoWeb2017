@@ -139,10 +139,11 @@ function cerca_pagina(p)
             }
             else
             {
-                var i=(msg.pages-3) > 1 ? (msg.pages-3) : 1;
+                var i=(msg.p-3) > 1 ? (msg.p-3) : 1;
                 i+=1;
-                var f= (msg.pages+3) < msg.pages ? (msg.pages-3) : msg.pages;
+                var f= (msg.p+3) >  msg.pages ? msg.pages :(msg.p+3);
 
+                console.log(i +","+f)
                 //stampo il primo
                 if(1!=msg.p)
                     s+="<button type='button' class='btn btn-secondary'>"+1+"</button>";
@@ -151,26 +152,26 @@ function cerca_pagina(p)
 
                 if(i!=2)
                     s+="...";
-
-                for(;i<f;i++)
+                    
+                for(;i<f;i++){
                     if(i!=msg.p)
                         s+="<button type='button' class='btn btn-secondary' onclick=\"cerca_pagina("+i+")\">"+i+"</button>";
                     else
                         s+="<button type='button' class='btn btn-primary' disabled>"+i+"</button>";
-
+                }
                 //non ho stampato il penultimo ma uno prima
-                if(i!=f-1)
-                    s+="...";
-
+                
                 //se non l'ho stampato
-                if(f<msg.pages)
+                if(f-1 <msg.pages)
+                {
+                    if(f < msg.pages)
+                            s+="...";
+
                     if(msg.pages!=msg.p)
                         s+="<button type='button' class='btn btn-secondary' onclick=\"cerca_pagina("+msg.pages+")\">"+msg.pages+"</button>";
                     else
                         s+="<button type='button' class='btn btn-primary' disabled>"+msg.pages+"</button>";
-
-
-
+                }
 
             products.append(s);
             /*

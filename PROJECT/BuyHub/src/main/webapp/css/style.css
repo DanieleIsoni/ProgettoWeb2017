@@ -666,3 +666,7 @@ div.box
     padding: 10px;
     overflow:auto;
 }
+
+.row.pages button {
+    margin: 2px;
+}
