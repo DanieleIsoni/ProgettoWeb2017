@@ -65,7 +65,7 @@
                                 <li><a href="createNewShop.jsp"><fmt:message key="create_shop"/></a></li>
                             </c:when>
                         </c:choose>
-                        <li> <a href="#"><fmt:message key="ask_refund"/></a> </li>
+                        <li> <a href="myorders"><fmt:message key="myorders_title"/></a> </li>
                     </ul>
                 </div>
             </div>

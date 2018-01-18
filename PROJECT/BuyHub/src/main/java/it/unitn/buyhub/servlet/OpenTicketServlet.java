@@ -135,7 +135,7 @@ public class OpenTicketServlet extends HttpServlet {
                 response.sendRedirect(request.getHeader("referer"));
             }
         } catch (Exception ex) {
-            Log.error("Error adding review" + ex.getMessage().toString());
+            Log.error("Error adding ticket" + ex.getMessage().toString());
         }
 
     }

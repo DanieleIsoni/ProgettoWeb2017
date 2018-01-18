@@ -82,7 +82,7 @@ public class RemoveNotificationServlet extends HttpServlet {
                 
             
         } catch (Exception ex) {
-            Log.error("Error adding review" + ex.getMessage().toString());
+            Log.error("Error remove notification" + ex.getMessage().toString());
         }
         response.sendRedirect(request.getHeader("referer"));
     }
