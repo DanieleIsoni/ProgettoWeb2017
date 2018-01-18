@@ -187,6 +187,14 @@
         <servlet-name>RemoveReviewServlet</servlet-name>
         <url-pattern>/removereview</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>sendMessageServlet</servlet-name>
+        <servlet-class>it.unitn.buyhub.servlet.sendMessageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>sendMessageServlet</servlet-name>
+        <url-pattern>/restricted/sendmessage</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ModifyCartItemNumberServlet</servlet-name>
         <url-pattern>/modifycartitemnumber</url-pattern>

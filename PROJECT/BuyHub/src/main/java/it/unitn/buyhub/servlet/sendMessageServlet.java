@@ -45,12 +45,10 @@ import javax.servlet.http.HttpSession;
  *
  * @author Daniso
  */
-public class OpenTicketServlet extends HttpServlet {
+public class sendMessageServlet extends HttpServlet {
 
     private UserDAO userDao;
-    private OrderDAO orderDao;
     private TicketDAO ticketDao;
-    private NotificationDAO notificationDao;
     private MessageDAO messageDao;
 
     @Override
@@ -63,10 +61,8 @@ public class OpenTicketServlet extends HttpServlet {
         try {
             ticketDao = daoFactory.getDAO(TicketDAO.class);
             userDao = daoFactory.getDAO(UserDAO.class);
-            orderDao = daoFactory.getDAO(OrderDAO.class);
-            notificationDao = daoFactory.getDAO(NotificationDAO.class);
-            
             messageDao = daoFactory.getDAO(MessageDAO.class);
+
         } catch (DAOFactoryException ex) {
             Log.error("Impossible to get dao factory for shop storage system");
             throw new ServletException("Impossible to get dao factory for shop storage system", ex);
@@ -88,7 +84,9 @@ public class OpenTicketServlet extends HttpServlet {
 
         response.setContentType("text/html;charset=UTF-8");
 
-        String productId = (String) request.getParameter("id_order");
+        String textMessage = (String) request.getParameter("text");
+
+        String ticketId = (String) request.getParameter("ticket_id");
         User owner = (User) request.getSession().getAttribute("authenticatedUser");
 
         String contextPath = getServletContext().getContextPath();
@@ -97,47 +95,19 @@ public class OpenTicketServlet extends HttpServlet {
         }
 
         try {
-            if (owner != null && productId != null && !productId.equals("")) {
-                Order order = orderDao.getByPrimaryKey(Integer.valueOf(productId));
-                if (order.getUser() == owner || owner.getCapability() == 3 || order.getShop().getOwner() == owner) {
-                    Ticket tnew;
-                    try {
-                        tnew = ticketDao.getByOrder(order);
-                    } catch (Exception ex2) {
-                        //MUST CREATE NEW
-                        tnew = new Ticket();
-                        tnew.setOrder(order);
-                        ticketDao.insert(tnew);
-                        
-                        
+            if (owner != null && textMessage != null && !textMessage.equals("") && ticketId != null && !ticketId.equals("")) {
+                Ticket t = ticketDao.getByPrimaryKey(Integer.valueOf(ticketId));
+                Message newMessage = new Message();
+                newMessage.setContent(textMessage);
+                newMessage.setOwner(owner);
+                newMessage.setTicket(t);
+                messageDao.insert(newMessage);
 
-                        //SEND MAIL NEW TICKET
-                        PropertyHandler ph = PropertyHandler.getInstance();
-                        Mailer.mail(ph.getValue("noreplyMail"), owner.getEmail(), "Opened ticket", "Opened ticket", "http://localhost:8080/BuyHub/restricted/ticket.jsp?id=" + tnew.getId(), "Take a look on BuyHub");
-                        Mailer.mail(ph.getValue("noreplyMail"), order.getShop().getOwner().getEmail(), "Opened ticket", "Opened ticket", "http://localhost:8080/BuyHub/restricted/ticket.jsp?id=" + tnew.getId(), "Take a look on BuyHub");
-                        Mailer.mailToAdmins(ph.getValue("noreplyMail"), "Opened ticket", "Opened ticket", "http://localhost:8080/BuyHub/restricted/ticket.jsp?id=" + tnew.getId(), "Take a look on BuyHub", getServletContext());
-                        //ADD notification to shop
-
-                        Notification not = new Notification();
-                        not.setUser(owner);
-                        not.setStatus(false);
-                        not.setDateCreation(new Date());
-                        not.setDescription("Opened new ticket, check your email");
-                        notificationDao.insert(not);
-                        not.setUser(order.getShop().getOwner());
-                        notificationDao.insert(not);
-
-                    }
-                    
-                
-                    response.sendRedirect(response.encodeRedirectURL(contextPath + "restricted/ticket.jsp?id="+tnew.getId()));
-                }
-                response.sendRedirect(request.getHeader("referer"));
             }
         } catch (Exception ex) {
             Log.error("Error adding review" + ex.getMessage().toString());
         }
-
+        response.sendRedirect(request.getHeader("referer"));
     }
 
     /**

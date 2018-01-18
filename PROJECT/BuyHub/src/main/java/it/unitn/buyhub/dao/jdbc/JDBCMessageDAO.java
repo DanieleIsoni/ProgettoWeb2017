@@ -37,7 +37,7 @@ public class JDBCMessageDAO extends JDBCDAO<Message, Integer> implements Message
     public JDBCMessageDAO(Connection con) {
         super(con);
         FRIEND_DAOS.put(UserDAO.class, new JDBCUserDAO(CON));
-        FRIEND_DAOS.put(ReviewDAO.class, new JDBCReviewDAO(CON));
+        FRIEND_DAOS.put(TicketDAO.class, new JDBCTicketDAO(CON));
     }
 
     /**
@@ -166,9 +166,10 @@ public class JDBCMessageDAO extends JDBCDAO<Message, Integer> implements Message
         try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM messages")) {
             try (ResultSet rs = stm.executeQuery()) {
 
-               rs.next();
+                while (rs.next()) {
                     Message message = new Message();
                     message.setId(rs.getInt("id"));
+                    message.setContent(rs.getString("content"));
 
                     //Get owner associate
                     UserDAO userDao = getDAO(UserDAO.class);
@@ -178,6 +179,7 @@ public class JDBCMessageDAO extends JDBCDAO<Message, Integer> implements Message
                     TicketDAO ticketDao = getDAO(TicketDAO.class);
                     message.setTicket(ticketDao.getByPrimaryKey(rs.getInt("ticket_id")));
                     messages.add(message);
+                }
             }
         } catch (SQLException | DAOFactoryException ex) {
             throw new DAOException("Impossible to get the coordinates for the passed primary key", ex);
@@ -221,8 +223,7 @@ public class JDBCMessageDAO extends JDBCDAO<Message, Integer> implements Message
 
             ps.setInt(1, message.getTicket().getId());
             ps.setInt(2, message.getOwner().getId());
-            ps.setString(3,message.getContent());
-            
+            ps.setString(3, message.getContent());
 
             if (ps.executeUpdate() == 1) {
                 ResultSet generatedKeys = ps.getGeneratedKeys();
@@ -256,7 +257,7 @@ public class JDBCMessageDAO extends JDBCDAO<Message, Integer> implements Message
 
     @Override
     public List<Message> getByTicket(Ticket ticket) throws DAOException {
-         List<Message> messages = new ArrayList<>();
+        List<Message> messages = new ArrayList<>();
         if (ticket == null) {
             throw new DAOException("owner is null");
         }
@@ -265,9 +266,9 @@ public class JDBCMessageDAO extends JDBCDAO<Message, Integer> implements Message
             try (ResultSet rs = stm.executeQuery()) {
 
                 while (rs.next()) {
-                    rs.next();
                     Message message = new Message();
                     message.setId(rs.getInt("id"));
+                    message.setContent(rs.getString("content"));
 
                     //Get owner associate
                     UserDAO userDao = getDAO(UserDAO.class);
