@@ -38,6 +38,7 @@ public class JDBCTicketDAO extends JDBCDAO<Ticket, Integer> implements TicketDAO
     public JDBCTicketDAO(Connection con) {
         super(con);
         FRIEND_DAOS.put(UserDAO.class, new JDBCUserDAO(CON));
+        FRIEND_DAOS.put(OrderDAO.class, new JDBCOrderDAO(CON));
         FRIEND_DAOS.put(ReviewDAO.class, new JDBCReviewDAO(CON));
     }
 

@@ -52,7 +52,7 @@
               <td>${order.shipment}</td>
               <td>&euro; <fmt:formatNumber minFractionDigits="2" maxFractionDigits="2">${total}</fmt:formatNumber></td>
               <td>
-                   <a href="<c:url value='.'/>" role="button" class="btn_1 but btn btn-info"><fmt:message key="ticket"/>
+                   <a href="<c:url value="openticket"/>?id_order=${order.id}" role="button" class="btn_1 but btn btn-info"><fmt:message key="ticket"/>
                    </a>
               </td>
 
