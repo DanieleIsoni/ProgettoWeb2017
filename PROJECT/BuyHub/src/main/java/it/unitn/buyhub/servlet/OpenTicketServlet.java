@@ -107,8 +107,8 @@ public class OpenTicketServlet extends HttpServlet {
                         //MUST CREATE NEW
                         tnew = new Ticket();
                         tnew.setOrder(order);
-                        ticketDao.insert(tnew);
-                        
+                        Long id2 = ticketDao.insert(tnew);
+                        tnew.setId(id2.intValue());
                         
 
                         //SEND MAIL NEW TICKET
