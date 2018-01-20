@@ -39,6 +39,29 @@ Per ogni entità presente che necessita di interazioni con il Database è stato 
 \includegraphics[width=0.3\linewidth]{img/dao}
 \end{center}
 
+\section{Struttura del database}
+
+Il database è stato strutturato per essere il più semplice possibile nell'utilizzo. \E stato strutturato secondo le principali regole di design relazionale, utilizzando chiavi esterne e indici. Sono state inoltre incluse alcune tabelle e alcuni campi superflui, utili per un'implementazione futura. Di seguito una rapida descrizione delle tabelle:
+\begin{itemize}
+  \item \textbf{users}: questa è la tabella principale del database, attorno alla quale è costruito tutto il resto. Descrive ogni singolo utente e ne determina anche i privilegi (con un campo intero: 0 se l'utente è disabilitato, 1 se è un utente normale, 2 se è un utente abilitato alla gestione di un negozio, 3 se è un amministratore). Per scelta implementativa un amministratore non può avere un negozio e un negozio può avere solo un utente ad esso collegato.
+  \item \textbf{shops}: questa tabella contiene i dati dei singoli negozi. Il campo \texttt{validity} descrive l'abilitazione o meno del negozio, mentre i campi \texttt{shipment} e \texttt{shipment\_costs} determinano se la spedizione è disponibile (se il primo campo è vuoto significa che non lo è) e il costo della stessa.
+  \item \textbf{coordinates}: in questa tabella sono inseriti i singoli punti vendita. Ogni negozio può infatti avere più punti vendita sul territorio, ognuno con un proprio indirizzo e un poprio orario di apertura
+  \item \textbf{products}: questa tabella contiene tutti i dati dei prodotti in vendita. La categoria è determinata con un ID numerico, che viene poi convertito in testo attraverso il codice Java. Una descrizione delle categorie si trova nei file della lingua e come appendice a questo documento.
+  \item \textbf{pictures}: questa tabella contiene i dati delle foto caricate attraverso il sito. Nell'implementazione attuale solo i campi \texttt{id}, \texttt{name} e \texttt{path} sono utilizzati, gli altri sono pensati per una futura implementazione.
+  \item \textbf{pictures\_products} e \textbf{pictures\_shops} : mediante questa relazione possiamo collegare le foto ai prodotti e ai negozi.
+  \item \textbf{reviews}: questa tabella contiene i dati delle recensioni dei prodotti. Per scelta  implementativa è presente un indice sulla coppia \texttt{(id\_product, id\_creator)} che impedisce ad un utente la creazione di più di una recensione sullo stesso oggetto.
+  \item \textbf{pictures\_reviews}: questa tabella non è al momento utilizzata. Servirebbe per implementare la possibilità di allegare foto  alle recensioni.
+  \item \textbf{orders}: in questa tabella vengono salvati i dati di tutti gli ordini. Viene salvato anche il metodo e il costo di spedizione, dato che nel tempo potrebbero variare (ma un ordine fatto nel passato non deve essere influenzato da questi cambiamenti).
+  \item \textbf{orders\_products}: mediante questa tabella possiamo salvare i prodotti associati ad un ordine. Oltre alla quantità viene salvato anche il prezzo perchè, come per i costi di spedizione, potrebbero variare nel tempo.
+  \item \textbf{tickets}: un ticket è una segnalazione ad un negozio relativa ad un ordine. In questa tabella vengono salvati i ticket aperti in modo tale da sapere se a un dato ordine è associato un ticket.
+  \item \textbf{messages}: all'interno di questa relazione sono salvati tutti i messagi associati a un ticket.
+  \item \textbf{notifications}: questa entità contiene i dati delle notifiche che vengono inviate agli utenti. Queste sono generate da degli eventi (segnalazione ticket, apertura negozio, ...) e sono mostrate agli utenti nella barra principale.
+\end{itemize}
+
+\begin{center}
+\includegraphics[width= \linewidth]{er}
+\end{center}
+
 
 \section{Popolazione di test}
 Il DataBase di test (\texttt{DB/DBUtils/data.sql}) è così formato:
@@ -47,7 +70,7 @@ Il DataBase di test (\texttt{DB/DBUtils/data.sql}) è così formato:
   \item 62 punti vendita associati a 31 negozi (almeno un punto vendita a negozio)
   \item 336 prodotti totali inseriti, distribuiti equamente in tutti i negozi (almeno un prodotto per negozio)
   \item 327 fotografie (di cui 302 associate a prodotti)
-  \item 122 utenti
+  \item 122 utenti, ognuno con il proprio avatar
   \item 2298 recensioni, almeno una per prodotto e 7 in media per prodotto
 
 \end{itemize}
@@ -140,7 +163,58 @@ Nella homepage vengono visualizzati gli ultimi 10 prodotti inseriti nel database
 
 
 
-
 \chapter{Altri capitoli}
 \chapter{Conclusioni}
+
+\chapter{Appendice}
+\section{Categorie prodotti}
+
+
+\begin{itemize}
+
+\item \textbf{0:} Abbigliamento e accessori
+\item \textbf{1:} Alimentari e cura della casa
+\item \textbf{2:} Arte e antiquariato
+\item \textbf{3:} Auto, moto e altri veicoli
+\item \textbf{4:} Bellezza e salute
+\item \textbf{5:} Biglietti ed eventi
+\item \textbf{6:} Cancelleria e prodotti per ufficio
+\item \textbf{7:} Casa, arredamento e bricolage
+\item \textbf{8:} Collezionismo
+\item \textbf{9:} Commercio e Industria
+\item \textbf{10:} Elettrodomestici
+\item \textbf{11:} Elettronica
+\item \textbf{12:} Film e DVD
+\item \textbf{13:} Fotografia e video
+\item \textbf{14:} Francobolli
+\item \textbf{15:} Fumetti
+\item \textbf{16:} Giardino e arredamento esterni
+\item \textbf{17:} Giocattoli e modellismo
+\item \textbf{18:} Gioielli
+\item \textbf{19:} Handmade
+\item \textbf{20:} Illuminazione
+\item \textbf{21:} Infanzia e premaman
+\item \textbf{22:} Informatica
+\item \textbf{23:} Libri e riviste
+\item \textbf{24:} Monete e banconote
+\item \textbf{25:} Musica, CD e vinili
+\item \textbf{26:} Nautica e imbarcazioni
+\item \textbf{27:} Orologi
+\item \textbf{28:} Orologi e gioielli
+\item \textbf{29:} Prima infanzia
+\item \textbf{30:} Prodotti per animali domestici
+\item \textbf{31:} Salute e cura della persona
+\item \textbf{32:} Sport e tempo libero
+\item \textbf{33:} Sport e viaggi
+\item \textbf{34:} Strumenti musicali e DJ
+\item \textbf{35:} Telefonia fissa e mobile
+\item \textbf{36:} TV, audio e video
+\item \textbf{37:} Valigeria
+\item \textbf{38:} Veicoli: ricambi e accessori
+\item \textbf{39:} Videogiochi
+\item \textbf{40:} Videogiochi e console
+\item \textbf{41:} Vini, caffè e gastronomia
+\end{itemize}
+
+
 \end{document}
