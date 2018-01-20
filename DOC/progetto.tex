@@ -32,6 +32,14 @@ La posizione della cartella \texttt{\textbf{catalina.base}} varia da installazio
 
 Il database scelto è stato MariaDB, una variante di MySQL. Abbiamo scelto questa distribuzione grazie alla semplice installazione realizzata mediante XAMPP, con il quale viene installato anche PHPMyAdmin, una comoda interfaccia di gestione del database. Un altro punto a favore di questo DBMS è la totale compatibilità con MySQL (tutte le query funzionano anche su un normale database MySQL) e la velocità, oltre alla stabilità e la diffusione pressochè globale.
 
+\section{Entities DAO - Data Access Object}
+Per ogni entità presente che necessita di interazioni con il Database è stato creato il relativo DAO per permetterne una corretta interazione. Il DAO (Data Access Object) è un pattern architetturale che ha come scopo quello di separare le logiche di business da quelle di accesso ai dati. L’idea alla base di questo pattern è quello di descrivere le operazioni necessarie per la persistenza del modello in un’interfaccia e di implementare la logica specifica di accesso ai dati in apposite classi. (Fonte: html.it)
+
+\begin{center}
+\includegraphics[width=0.3\linewidth]{img/dao}
+\end{center}
+
+
 \section{Popolazione di test}
 Il DataBase di test (\texttt{DB/DBUtils/data.sql}) è così formato:
 \begin{itemize}
@@ -94,6 +102,9 @@ La cartella \texttt{\$CATALINA\_HOME} è in genere la cartella di installazione 
 \section{Orari di apertura e negozi solo online}
 Per semplificare la struttura del DB abbiamo deciso di implementare i vari punti vendita dei negozi come una relazione uno a molti tra \texttt{shop} e \texttt{coordinate}. All'interno della tabella \texttt{coordinate} abbiamo inserito il campo \texttt{opening\_hours} che contiene gli orari del punto vendita, nel caso in cui per il cliente sia disponibile il ritiro in negozio. Nel caso di negozi che effettuano soltanto vendita online questo campo resta vuoto e viene sostituito all'interno della pagina web con un messaggio che specifica le modalità di vendita solo online del negozio.
 
+\section{Carrello}
+Il carrello utente, visto come contenitore temporaneo di prodotti da acquistare è stato implementato a livello di \textit{sessione}; questo significa che i prodotti aggiunti in una sessione non saranno salvati sul database e quindi in un futuro login il carrello sarà vuoto.
+
 \chapter{Upload/Download}
 
 L'upload dei file è stato gestito mediante la libreria \texttt{com.oreilly.servlet}, mentre il salvataggio dei file è gestito da alcuni metodi all'interno della classe \texttt{Utility}.
@@ -125,6 +136,7 @@ Questo codice è poi cifrato mediante AES128 secondo una chiave segreta presente
 
 \chapter{Homepage}
 Nella homepage vengono visualizzati gli ultimi 10 prodotti inseriti nel database, sulla base dell'ID. Sopra agli ultimi prodotti è presente uno slider con alcune immagini, contenute nella cartella \texttt{images/slider\_images}. Lo slider supporta la localizzazione: carica, mediante un taghandler, tutti i file presenti nella cartella corrispondente alla lingua selezionata. Ad esempio, se la lingua è italiano, caricherà tutte le immagini presenti nella cartella \texttt{images/slider\_images/it/}.
+
 
 
 
