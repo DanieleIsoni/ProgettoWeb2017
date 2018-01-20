@@ -14,6 +14,10 @@ Il sito è responsive e supporta la localizzazione mediante le tecnologie offert
 La maggior parte delle pagine sono realizzate mediante una coppia servlet-JSP, soluzione che permette di separare il codice dalla struttura visiva e ottimizza l'uso delle risorse. Sono inoltre presenti alcuni filtri per poter controllare l'accesso a determinate pagine.
 
 
+Lo sviluppo dell'applicazione è stato gestito facendo uso di Git e GitHub, i quali ci hanno concesso di sviluppare autonomamente diverse parti del progetto, er poi unirle insieme, oltre a mantenere la ``storia'' delle modifiche e fornire un repository centralizzato per il codice.
+Abbiamo utilizzato un workflow a branch: ogni componente del gruppo sviluppava su un branch diverso e, al termine delle modifiche, questo veniva unito al master mediante \texttt{merge}.
+
+
 
 
 \chapter{Installazione}
@@ -99,7 +103,7 @@ L'algoritmo di Jaro-Winkler è utilizzato anche durante la scansione del databas
 L'autocompletamento presente nel form di creazione di un nuovo negozio per l'indirizzo è stato utilizzato mediante la libreria JavaScript \textbf{Google Maps API}. Queste API permettono tramite chiamate asincrone di ricevere i suggerimenti i quali vengono mostrati mediante un dropdown. Una volta fatta la scelta vengono riempiti i campi del bean con indirizzo completo, e coordinate (latitudine e longitudine).
 
 \chapter{Risultati della ricerca}
-la ricerca tra i prodotti è realizzata mediante una servlet che elabora la richiesta e restituisce la lista dei prodotti sottoforma di JSON. L'unico parametro obbligatorio è \texttt{q} che rappresenta la query di ricerca.
+La ricerca tra i prodotti è realizzata mediante una servlet che elabora la richiesta e restituisce la lista dei prodotti sottoforma di JSON. L'unico parametro obbligatorio è \texttt{q} che rappresenta la query di ricerca.
 I parametri opzionali sono:
 \begin{itemize}
   \item \texttt{p}: la pagina desiderata (nel caso di  una ricerca multipagina)
@@ -159,6 +163,22 @@ Questo codice è poi cifrato mediante AES128 secondo una chiave segreta presente
 
 \chapter{Homepage}
 Nella homepage vengono visualizzati gli ultimi 10 prodotti inseriti nel database, sulla base dell'ID. Sopra agli ultimi prodotti è presente uno slider con alcune immagini, contenute nella cartella \texttt{images/slider\_images}. Lo slider supporta la localizzazione: carica, mediante un taghandler, tutti i file presenti nella cartella corrispondente alla lingua selezionata. Ad esempio, se la lingua è italiano, caricherà tutte le immagini presenti nella cartella \texttt{images/slider\_images/it/}.
+
+
+\chapter{Mail}
+Il sito consente l'invio automatico di email. Queste vengono inviate facendo uso della classe \\\texttt{it.unitn.buyhub.utils.Mailer}.
+All'interno di questa classe sono implemntati diversi componenti:
+\begin{itemize}
+  \item La sottoclasse \texttt{RunnableMailer}, che implementa l'interfaccia \texttt{Runnable}. Questa classe permette di inviare una mail in maniera asincrona e multithread. Questo significa che durante l'invio della mail l'applicazione non deve attendere ma può eseguire altre operazione (ad esempio renderizzare la pagina di avvenuto pagamento).
+  \item Il metodo \texttt{mail} che invoca \texttt{RunnableMailer}, inviando l'email, e aggiunge al log le informazioni della mail.
+  \item Il metodo \texttt{mailToAdmins} che invoca il già noto metodo \texttt{mail} per ogni amministratore presente nel database.
+  \item Il metodo \texttt{sendMail} che esegue l'invio vero e proprio. Questo metodo è anche chiamato all'interno di \texttt{RunnableMailer}.
+  \item \texttt{BuildMail}, un metodo che ``costruisce'' la mail in formato HTML. Viene chiamato all'interno di \texttt{sendMail}.
+\end{itemize}
+
+L'invio della mail è effettuato mediante la classe \texttt{javax.mail}, che effettua un collegamento \texttt{SMTP} e consegna il messaggio al server. Le credenziali di accesso al server sono ``hardcoded'' all'interno della classe, perciò è richiesto modificarle prima di eseguire l'applicazione.
+
+Abbiamo scelto di salvare le credenziali in questo modo in quanto ogni provider di posta utilizza parametri diversi per l'invio e realizzare un codice funzionante per ogni provider avrebbe causato problemi di sicurezza (ad esempio la connessione cifrata non è supportata da tutti i provider, sarebbe stato quindi necessario disabilitarla).
 
 
 
