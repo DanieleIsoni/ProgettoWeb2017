@@ -47,6 +47,11 @@ public class JDBCOrderDAO extends JDBCDAO<Order,  Integer> implements OrderDAO{
         FRIEND_DAOS.put(UserDAO.class, new JDBCUserDAO(CON));
     }
 
+    
+    /**
+     Get number of orders stored in DB
+     */
+     
     @Override
     public Long getCount() throws DAOException {
          try (PreparedStatement stmt = CON.prepareStatement("SELECT COUNT(*) FROM orders");) {
@@ -60,6 +65,12 @@ public class JDBCOrderDAO extends JDBCDAO<Order,  Integer> implements OrderDAO{
 
         return 0L; }
 
+    
+    
+    /**
+     Get a order by primary key
+     */
+     
     @Override
     public Order getByPrimaryKey(Integer primaryKey) throws DAOException {
             if (primaryKey == null) {
@@ -96,6 +107,12 @@ public class JDBCOrderDAO extends JDBCDAO<Order,  Integer> implements OrderDAO{
         }
        
     }
+    
+    
+    /**
+     Get all orders in DB
+     */
+     
 
     @Override
     public List<Order> getAll() throws DAOException {
@@ -132,6 +149,12 @@ public class JDBCOrderDAO extends JDBCDAO<Order,  Integer> implements OrderDAO{
         return orders;  
     }
 
+    
+    
+    /**
+     Update existing order
+     */
+     
     @Override
     public Order update(Order o) throws DAOException {
     if (o == null) {
@@ -157,6 +180,11 @@ public class JDBCOrderDAO extends JDBCDAO<Order,  Integer> implements OrderDAO{
            }    
     }
 
+    
+    /**
+     Insert new order
+     */
+     
     @Override
     public Long insert(Order order) throws DAOException {
          try (PreparedStatement ps = CON.prepareStatement("INSERT INTO orders(user_id,shipment,shipment_costs,paid,shop_id) VALUES(?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS)) {
@@ -213,11 +241,57 @@ public class JDBCOrderDAO extends JDBCDAO<Order,  Integer> implements OrderDAO{
         }
         
     }
+    
+    
+    /**
+     Get orders by user
+     */
+     
 
     @Override
     public List<Order> getByUser(Integer primaryKey) throws DAOException {
         List<Order> orders = new ArrayList<>();
         try (PreparedStatement stm = CON.prepareStatement("SELECT *  FROM orders o WHERE user_id=? ORDER BY id ")) {
+            stm.setInt(1, primaryKey);
+            try (ResultSet rs = stm.executeQuery()) {
+
+                while (rs.next()) {
+                    
+                    Order o=new Order();
+                    o.setId(rs.getInt("id"));
+                    o.setPaid(rs.getBoolean("paid"));
+                    UserDAO userdao=getDAO(UserDAO.class); 
+                    o.setUser(userdao.getByPrimaryKey(rs.getInt("user_id")));
+                    o.setShipment(rs.getString("shipment"));
+                    o.setShipment_cost(rs.getDouble("shipment_costs"));
+                    ShopDAO s=getDAO(ShopDAO.class);
+                    o.setShop(s.getByPrimaryKey(rs.getInt("shop_id")));
+
+                  /*  OrderedProductDAO orderedproductDao=getDAO(OrderedProductDAO.class);
+                    List<OrderedProduct> products = orderedproductDao.getByOrder(o.getId());
+                    for (OrderedProduct product : products) {
+                        o.add(product);
+                    }
+*/
+                        orders.add(o);
+                    }
+
+            }
+        } catch (SQLException | DAOFactoryException ex) {
+           // Logger.getLogger("test").log(Level.SEVERE, null, ex);
+            throw new DAOException("Impossible to get the orders for the passed user", ex);
+        }
+        return orders;  
+    }
+    
+    
+    /**
+     Get orders by shop
+     */
+        @Override
+    public List<Order> getByShop(Integer primaryKey) throws DAOException {
+        List<Order> orders = new ArrayList<>();
+        try (PreparedStatement stm = CON.prepareStatement("SELECT *  FROM orders o WHERE shop_id=? ORDER BY id ")) {
             stm.setInt(1, primaryKey);
             try (ResultSet rs = stm.executeQuery()) {
 

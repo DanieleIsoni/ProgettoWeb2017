@@ -114,4 +114,22 @@ public interface OrderDAO extends DAO<Order, Integer> {
     @Override
     public Order update(Order order) throws DAOException;
     
+    
+    
+        /**
+     * Returns the {@link Order order} with the shop equals to the one
+     * passed as parameter.
+     *
+     * @param primaryKey the {@code id} of the {@shop shop} to get.
+     * @return the {@code order} with the id equals to the one passed as
+     * parameter or {@code null} if no entities with that id is not present into
+     * the storage system.
+     * @throws DAOException if an error occurred during the information
+     * retrieving.
+     *
+     * @author Massimo Girondi
+     * 
+     */
+    public List<Order> getByShop(Integer primaryKey) throws DAOException;
+            
 }
