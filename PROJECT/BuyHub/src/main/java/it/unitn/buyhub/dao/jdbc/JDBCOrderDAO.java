@@ -291,7 +291,7 @@ public class JDBCOrderDAO extends JDBCDAO<Order,  Integer> implements OrderDAO{
         @Override
     public List<Order> getByShop(Integer primaryKey) throws DAOException {
         List<Order> orders = new ArrayList<>();
-        try (PreparedStatement stm = CON.prepareStatement("SELECT *  FROM orders o WHERE shop_id=? ORDER BY id ")) {
+        try (PreparedStatement stm = CON.prepareStatement("SELECT *  FROM orders o WHERE shop_id=? ORDER BY id DESC")) {
             stm.setInt(1, primaryKey);
             try (ResultSet rs = stm.executeQuery()) {
 

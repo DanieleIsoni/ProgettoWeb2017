@@ -75,6 +75,7 @@
             </div>
             
             <shop:ProductTableTagHandler shopId="${myshop.id}" owner="true"/>
+            <shop:OrdersTagHanlder shop_id="${myshop.id}" />
 
         </div>
     </div>
@@ -99,6 +100,14 @@
         /*Inizializzazione tabella*/
         $(document).ready(function () {
             $('#products_table').DataTable({
+                "language": {
+
+                    /*Datatable localization*/
+        <fmt:message key="datatable_language"/>
+
+                }
+            });
+            $('#orders_table').DataTable({
                 "language": {
 
                     /*Datatable localization*/
