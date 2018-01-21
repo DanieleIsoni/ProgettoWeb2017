@@ -532,9 +532,11 @@ a.mybtn {
 
 
 .slick-slide img {
-  width: 100%;
-  height: auto;
-  padding: 7px;
+    height: auto;
+    width: auto;
+    max-width: 270px;
+    max-height: 270px;
+    padding: 7px;
 }
 
 
