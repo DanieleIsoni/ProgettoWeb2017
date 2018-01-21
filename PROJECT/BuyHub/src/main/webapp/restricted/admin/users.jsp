@@ -11,6 +11,7 @@
         <%@include file="/common/header.jsp" %>
         <%@page import="it.unitn.buyhub.dao.entities.User"%>
         <jsp:useBean id="users" type="java.util.List<User>" scope="request"></jsp:useBean>
+        <%@taglib uri="/WEB-INF/tld/User.tld" prefix="user" %>
         <title><fmt:message key="userspage_title"/> - BuyHub</title>
         <link href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css" type="text/css"/>
         <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js" ></script>
@@ -32,7 +33,7 @@
             <td> <fmt:message key="username"/></td>
             <td> <fmt:message key="full_name"/></td>
             <td> <fmt:message key="capability"/></td>
-            <td> <fmt:message key="actions"/></td>
+            <td></td>
 
 
           </thead>
@@ -46,9 +47,7 @@
                   <fmt:message key="capability_${user.capability}"/>
               </td>
               <td>
-                   <a href="<c:url value='EditUser?id=${user.id}'/>" role="button" class="btn_1 but btn btn-info">
-                              <fmt:message key="edit"/>
-                   </a>
+                  <user:ChangeCapabilityModal id="${user.id}"/>
                    
                    
               </td>

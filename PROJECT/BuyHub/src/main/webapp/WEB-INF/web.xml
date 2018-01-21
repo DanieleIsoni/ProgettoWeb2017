@@ -54,8 +54,7 @@
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>it.unitn.buyhub.servlet.user.LoginServlet</servlet-class>
     </servlet>
-    
-        <servlet>
+    <servlet>
         <servlet-name>OpenTicketServlet</servlet-name>
         <servlet-class>it.unitn.buyhub.servlet.OpenTicketServlet</servlet-class>
     </servlet>
@@ -182,6 +181,10 @@
     <servlet>
         <servlet-name>productPictureUploadServlet</servlet-name>
         <servlet-class>it.unitn.buyhub.servlet.user.productPictureUploadServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChangeCapability</servlet-name>
+        <servlet-class>it.unitn.buyhub.servlet.admin.ChangeCapability</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>RemoveReviewServlet</servlet-name>
@@ -322,6 +325,10 @@
     <servlet-mapping>
         <servlet-name>productPictureUploadServlet</servlet-name>
         <url-pattern>/restricted/productPictureUpload</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangeCapability</servlet-name>
+        <url-pattern>/restricted/admin/ChangeCapability</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -672,3 +672,10 @@ div.box
 .row.pages button {
     margin: 2px;
 }
+
+
+.capability_modal > .btn
+{
+    margin: 2px;
+    width: 150px;
+}
