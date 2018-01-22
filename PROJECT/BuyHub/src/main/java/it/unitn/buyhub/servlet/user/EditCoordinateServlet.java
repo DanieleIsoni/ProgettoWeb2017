@@ -62,8 +62,8 @@ public class EditCoordinateServlet extends HttpServlet {
         }
         try {
             Coordinate coordinate = coordinateDAO.getByPrimaryKey(coordinateId);
+
             if (code == 1) {
-                Log.info("sono qui");
                 request.setAttribute("coordinate", coordinate);
                 request.getRequestDispatcher("restricted/editCoordinate.jsp").forward(request, response);
             } else if (code == 2) {

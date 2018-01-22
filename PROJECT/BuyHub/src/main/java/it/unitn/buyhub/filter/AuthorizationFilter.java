@@ -5,8 +5,10 @@
  */
 package it.unitn.buyhub.filter;
 
+import it.unitn.buyhub.dao.CoordinateDAO;
 import it.unitn.buyhub.dao.ProductDAO;
 import it.unitn.buyhub.dao.ShopDAO;
+import it.unitn.buyhub.dao.entities.Coordinate;
 import it.unitn.buyhub.dao.entities.Product;
 import it.unitn.buyhub.dao.entities.User;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
@@ -67,67 +69,99 @@ public class AuthorizationFilter implements Filter {
             }
             ShopDAO shopDAO;
             ProductDAO productDAO;
+            CoordinateDAO coordinateDAO;
             try {
                 shopDAO = daoFactory.getDAO(ShopDAO.class);
                 productDAO = daoFactory.getDAO(ProductDAO.class);
+                coordinateDAO = daoFactory.getDAO(CoordinateDAO.class);
             } catch (DAOFactoryException ex) {
                 Log.error("Impossible to get dao factory for product storage system");
                 throw new ServletException("Impossible to get dao factory for product storage system", ex);
             }
-            if(link.equals("/BuyHub/restricted/addProduct.jsp")){
-                int shopId = Integer.parseInt(request.getParameter("shopId"));
-                User shopOwner = null;
-                try {
-                    shopOwner = shopDAO.getByPrimaryKey(shopId).getOwner();
-                } catch (DAOException ex) {
-                    Logger.getLogger(AuthorizationFilter.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                if(shopOwner != null && user != null && user.getId() != shopOwner.getId()){
-                    String contextPath = servletContext.getContextPath();
-                    if (!contextPath.endsWith("/")) {
-                        contextPath += "/";
+            
+            User shopOwner = null;
+            int shopId = -1;
+            int prodId = -1;
+            int coordinateId = -1;
+            switch(link){
+                case "/BuyHub/restricted/addProduct.jsp":
+                case "/BuyHub/restricted/addCoordinate.jsp":
+                    shopId = Integer.parseInt(request.getParameter("shopId"));
+                    try {
+                        shopOwner = shopDAO.getByPrimaryKey(shopId).getOwner();
+                    } catch (DAOException ex) {
+                        Logger.getLogger(AuthorizationFilter.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    ((HttpServletResponse) response).sendRedirect(contextPath + "common/error.jsp");
-                    return false;
-                }
-            } else if(link.equals("/BuyHub/EditProductServlet") || link.equals("/BuyHub/restricted/editProduct.jsp") || link.equals("/BuyHub/DeleteProductServlet")){
-                int prodId = Integer.parseInt(request.getParameter("prodId"));
-                User shopOwner = null;
-                try {
-                    Product product = productDAO.getByPrimaryKey(prodId);
-                    if(product != null){
-                        shopOwner = product.getShop().getOwner();
+                    if(shopOwner != null && user != null && user.getId() != shopOwner.getId()){
+                        String contextPath = servletContext.getContextPath();
+                        if (!contextPath.endsWith("/")) {
+                            contextPath += "/";
+                        }
+                        ((HttpServletResponse) response).sendRedirect(contextPath + "common/error.jsp");
+                        return false;
                     }
-                } catch (DAOException ex) {
-                    Logger.getLogger(AuthorizationFilter.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                if(shopOwner != null && user != null && user.getId() != shopOwner.getId()){
-                    String contextPath = servletContext.getContextPath();
-                    if (!contextPath.endsWith("/")) {
-                        contextPath += "/";
+                    break;
+                case "/BuyHub/EditProductServlet":
+                case "/BuyHub/restricted/editProduct.jsp":
+                case "/BuyHub/DeleteProductServlet":
+                    prodId = Integer.parseInt(request.getParameter("prodId"));
+                    try {
+                        Product product = productDAO.getByPrimaryKey(prodId);
+                        if(product != null){
+                            shopOwner = product.getShop().getOwner();
+                        }
+                    } catch (DAOException ex) {
+                        Logger.getLogger(AuthorizationFilter.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    ((HttpServletResponse) response).sendRedirect(contextPath + "common/error.jsp");
-                    return false;
-                }
-            } else if (link.equals("/BuyHub/restricted/productPhoto")){
-                int prodId = Integer.parseInt(request.getParameter("id"));
-                User shopOwner = null;
-                try {
-                    Product product = productDAO.getByPrimaryKey(prodId);
-                    if(product != null){
-                        shopOwner = product.getShop().getOwner();
+                    if(shopOwner != null && user != null && user.getId() != shopOwner.getId()){
+                        String contextPath = servletContext.getContextPath();
+                        if (!contextPath.endsWith("/")) {
+                            contextPath += "/";
+                        }
+                        ((HttpServletResponse) response).sendRedirect(contextPath + "common/error.jsp");
+                        return false;
                     }
-                } catch (DAOException ex) {
-                    Logger.getLogger(AuthorizationFilter.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                if(shopOwner != null && user != null && user.getId() != shopOwner.getId()){
-                    String contextPath = servletContext.getContextPath();
-                    if (!contextPath.endsWith("/")) {
-                        contextPath += "/";
+                    break;
+                case "/BuyHub/restricted/productPhoto":
+                    prodId = Integer.parseInt(request.getParameter("id"));
+                    try {
+                        Product product = productDAO.getByPrimaryKey(prodId);
+                        if(product != null){
+                            shopOwner = product.getShop().getOwner();
+                        }
+                    } catch (DAOException ex) {
+                        Logger.getLogger(AuthorizationFilter.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    ((HttpServletResponse) response).sendRedirect(contextPath + "common/error.jsp");
-                    return false;
-                }
+                    if(shopOwner != null && user != null && user.getId() != shopOwner.getId()){
+                        String contextPath = servletContext.getContextPath();
+                        if (!contextPath.endsWith("/")) {
+                            contextPath += "/";
+                        }
+                        ((HttpServletResponse) response).sendRedirect(contextPath + "common/error.jsp");
+                        return false;
+                    }
+                    break;
+                case "/BuyHub/EditCoordinateServlet":
+                case "/BuyHub/restricted/editCoordinate.jsp":
+                case "/BuyHub/DeleteCoordinateServlet":
+                    coordinateId = Integer.parseInt(request.getParameter("coordinateId"));
+                    try {
+                        Coordinate coordinate = coordinateDAO.getByPrimaryKey(coordinateId);
+                        if(coordinate != null){
+                            shopOwner = coordinate.getShop().getOwner();
+                        }
+                    } catch (DAOException ex) {
+                        Logger.getLogger(AuthorizationFilter.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    if(shopOwner != null && user != null && user.getId() != shopOwner.getId()){
+                        String contextPath = servletContext.getContextPath();
+                        if (!contextPath.endsWith("/")) {
+                            contextPath += "/";
+                        }
+                        ((HttpServletResponse) response).sendRedirect(contextPath + "common/error.jsp");
+                        return false;
+                    }
+                    break;
             }
                 
         }

@@ -40,9 +40,13 @@
         <filter-name>AuthorizationFilter</filter-name>
         <url-pattern>/restricted/addProduct.jsp</url-pattern>
         <url-pattern>/restricted/editProduct.jsp</url-pattern>
-        <url-pattern>/DeleteProductServlet</url-pattern>
         <url-pattern>/EditProductServlet</url-pattern>
+        <url-pattern>/DeleteProductServlet</url-pattern>
         <url-pattern>/restricted/productPhoto</url-pattern>
+        <url-pattern>/restricted/addCoordinate.jsp</url-pattern>
+        <url-pattern>/restricted/editCoordinate.jsp</url-pattern>
+        <url-pattern>/EditCoordinateServlet</url-pattern>
+        <url-pattern>/DeleteCoordinateServlet</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>AuthenticationFilter</filter-name>
