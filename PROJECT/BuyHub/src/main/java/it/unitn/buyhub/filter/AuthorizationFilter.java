@@ -38,7 +38,7 @@ import javax.servlet.http.HttpSession;
  */
 public class AuthorizationFilter implements Filter {
     
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     // The filter configuration object we are associated with.  If
     // this value is null, this filter instance is not currently
