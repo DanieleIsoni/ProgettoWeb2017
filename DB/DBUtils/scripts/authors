@@ -1,0 +1,7 @@
+
+#@author Massimo Girondi
+find * -type f -print0 | xargs -0 sed -i 's/Author     : Matteo Battilana/Author     : Matteo Battilana/g'
+find * -type f -print0 | xargs -0 sed -i 's/Author     : Matteo Battilana5/Author     : Matteo Battilana/g'
+find * -type f -print0 | xargs -0 sed -i 's/Author     : Massimo Girondi/Author     : Massimo Girondi/g'
+find * -type f -print0 | xargs -0 sed -i 's/Author     : Matteo Battilana/Author     : Matteo Battilana/g'
+
