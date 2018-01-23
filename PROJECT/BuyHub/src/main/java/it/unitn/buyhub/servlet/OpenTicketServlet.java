@@ -112,10 +112,12 @@ public class OpenTicketServlet extends HttpServlet {
                         
 
                         //SEND MAIL NEW TICKET
+                        
                         PropertyHandler ph = PropertyHandler.getInstance();
-                        Mailer.mail(ph.getValue("noreplyMail"), owner.getEmail(), "Opened ticket", "Opened ticket", "http://localhost:8080/BuyHub/restricted/ticket.jsp?id=" + tnew.getId(), "Take a look on BuyHub");
-                        Mailer.mail(ph.getValue("noreplyMail"), order.getShop().getOwner().getEmail(), "Opened ticket", "Opened ticket", "http://localhost:8080/BuyHub/restricted/ticket.jsp?id=" + tnew.getId(), "Take a look on BuyHub");
-                        Mailer.mailToAdmins(ph.getValue("noreplyMail"), "Opened ticket", "Opened ticket", "http://localhost:8080/BuyHub/restricted/ticket.jsp?id=" + tnew.getId(), "Take a look on BuyHub", getServletContext());
+                        String baseUrl= ph.getValue("baseUrl");
+                        Mailer.mail(ph.getValue("noreplyMail"), owner.getEmail(), "Opened ticket", "Opened ticket", baseUrl+"restricted/ticket.jsp?id=" + tnew.getId(), "Take a look on BuyHub");
+                        Mailer.mail(ph.getValue("noreplyMail"), order.getShop().getOwner().getEmail(), "Opened ticket", "Opened ticket", baseUrl+"restricted/ticket.jsp?id=" + tnew.getId(), "Take a look on BuyHub");
+                        Mailer.mailToAdmins(ph.getValue("noreplyMail"), "Opened ticket", "Opened ticket", baseUrl+"restricted/ticket.jsp?id=" + tnew.getId(), "Take a look on BuyHub", getServletContext());
                         //ADD notification to shop
 
                         Notification not = new Notification();

@@ -6,10 +6,12 @@
 package it.unitn.buyhub.servlet.order;
 
 import it.unitn.buyhub.dao.CoordinateDAO;
+import it.unitn.buyhub.dao.NotificationDAO;
 import it.unitn.buyhub.dao.OrderDAO;
 import it.unitn.buyhub.dao.OrderedProductDAO;
 import it.unitn.buyhub.dao.ProductDAO;
 import it.unitn.buyhub.dao.ShopDAO;
+import it.unitn.buyhub.dao.entities.Notification;
 import it.unitn.buyhub.dao.entities.Order;
 import it.unitn.buyhub.dao.entities.User;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
@@ -19,6 +21,7 @@ import it.unitn.buyhub.utils.Mailer;
 import it.unitn.buyhub.utils.PropertyHandler;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -34,6 +37,7 @@ import javax.servlet.http.HttpSession;
 public class PayedServlet extends HttpServlet {
 
     private OrderDAO orderDAO;
+    private NotificationDAO notificationDAO;
 
 
     @Override
@@ -67,6 +71,27 @@ public class PayedServlet extends HttpServlet {
                         + " Your order #"+o.getId()+" has been payed succesfully to "+o.getShop().getName()+"!"
                         + " You will receive an email when your order will be shipped or it's ready for pickup.";
                 Mailer.mail(ph.getValue("noreplyMail"), u.getEmail(), "Your order has been payed", text,ph.getValue("baseUrl"),"Take a look on BuyHub");
+                
+                text="Hi "+o.getShop().getOwner().getFirstName()+",\n<br/>"
+                        + " A new order has been placed on your shop. The order ID is #"+o.getId()+" and it has been payed succesfully by "+u.getFirstName()+" "+u.getLastName()+" (#"+u.getId()+")."
+                        + "";
+                
+                Mailer.mail(ph.getValue("noreplyMail"), o.getShop().getOwner().getEmail(), "A new order placed for your shop", text,ph.getValue("baseUrl"),"Take a look on BuyHub");
+                
+                
+                 //ADD notification to shop
+
+                Notification not = new Notification();
+                not.setUser(o.getShop().getOwner());
+                not.setStatus(false);
+                not.setDateCreation(new Date());
+                not.setDescription("New order placed: ID #"+o.getId());
+                notificationDAO.insert(not);
+
+                
+                
+                
+                
                 response.sendRedirect(response.encodeRedirectURL(contextPath + "restricted/myorders"));
             }
             else
@@ -103,6 +128,7 @@ public class PayedServlet extends HttpServlet {
         try {
      
             orderDAO=daoFactory.getDAO(OrderDAO.class);
+            notificationDAO=daoFactory.getDAO(NotificationDAO.class);
              } catch (DAOFactoryException ex) {
             Log.error("Impossible to get dao factory for order storage system");
             throw new ServletException("Impossible to get dao factory for order storage system", ex);
