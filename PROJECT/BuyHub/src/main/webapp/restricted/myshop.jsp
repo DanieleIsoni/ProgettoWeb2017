@@ -105,20 +105,19 @@
                     "language": {
 
                         /*Datatable localization*/
-            <fmt:message key="datatable_language"/>
+                        <fmt:message key="datatable_language"/>
 
                     }
                 });
-            });
-            $('#orders_table').DataTable({
-                "language": {
+                $('#orders_table').DataTable({
+                    "language": {
 
-                    /*Datatable localization*/
-        <fmt:message key="datatable_language"/>
 
-                }
+                        /*Datatable localization*/
+                        <fmt:message key="datatable_language"/>
+                    }
+                });
             });
-        });
     </script>
     <%@include file="../common/footer.jsp" %>
     

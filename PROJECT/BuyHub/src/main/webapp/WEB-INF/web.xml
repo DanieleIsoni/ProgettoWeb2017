@@ -55,6 +55,7 @@
         <url-pattern>/EditCoordinateServlet</url-pattern>
         <url-pattern>/ProductTableTagHandler</url-pattern>
         <url-pattern>/DeleteProductServlet</url-pattern>
+        <url-pattern>/DeleteCoordinateServlet</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>AdminFilter</filter-name>
