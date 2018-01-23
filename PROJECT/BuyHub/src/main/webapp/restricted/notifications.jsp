@@ -1,7 +1,7 @@
 <%-- 
     Document   : myorders.jsp
     Created on : 13-dic-2017, 18.12.44
-    Author     : massimo
+    Author     : Massimo Girondi
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -64,7 +64,7 @@
             </div>
         </div>
 
-        
+
     </div>
     <script>
 

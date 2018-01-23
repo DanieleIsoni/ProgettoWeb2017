@@ -5,11 +5,8 @@
  */
 package it.unitn.buyhub.dao;
 
-import it.unitn.buyhub.dao.entities.Coordinate;
 import it.unitn.buyhub.dao.entities.Order;
-import it.unitn.buyhub.dao.entities.Review;
 import it.unitn.buyhub.dao.entities.Ticket;
-import it.unitn.buyhub.dao.entities.User;
 import it.unitn.buyhub.dao.persistence.DAO;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import java.util.List;
@@ -22,7 +19,8 @@ import java.util.List;
  * @since 2017.04.25
  */
 public interface TicketDAO extends DAO<Ticket, Integer> {
- /**
+
+    /**
      * Returns the number of {@link Message messages} stored on the persistence
      * system of the application.
      *
@@ -95,5 +93,5 @@ public interface TicketDAO extends DAO<Ticket, Integer> {
      */
     @Override
     public Ticket update(Ticket message) throws DAOException;
-   
+
 }

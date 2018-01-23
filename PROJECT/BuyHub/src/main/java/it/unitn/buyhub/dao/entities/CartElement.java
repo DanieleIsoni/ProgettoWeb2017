@@ -9,9 +9,9 @@ import java.io.Serializable;
 
 /**
  *
- * @author matteo
+ * @author Matteo Battilana
  */
-public class CartElement implements Serializable{
+public class CartElement implements Serializable {
 
     private int id, number;
 

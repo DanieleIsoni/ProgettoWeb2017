@@ -3,40 +3,33 @@ package it.unitn.buyhub.tag;
 import it.unitn.buyhub.dao.CoordinateDAO;
 import it.unitn.buyhub.dao.PictureDAO;
 import it.unitn.buyhub.dao.ProductDAO;
-import it.unitn.buyhub.dao.ReviewDAO;
 import it.unitn.buyhub.dao.ShopDAO;
 import it.unitn.buyhub.dao.entities.Cart;
 import it.unitn.buyhub.dao.entities.CartElement;
 import it.unitn.buyhub.dao.entities.Coordinate;
 import it.unitn.buyhub.dao.entities.Product;
 import it.unitn.buyhub.dao.entities.Shop;
-import it.unitn.buyhub.dao.jdbc.JDBCProductDAO;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.factories.DAOFactory;
 import it.unitn.buyhub.utils.Log;
-import it.unitn.buyhub.utils.Pair;
 import it.unitn.buyhub.utils.Utility;
-import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
-import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
-import javax.servlet.jsp.tagext.JspFragment;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 
 /**
  * Tag to handle the cart page
- * @author massimo
+ *
+ * @author Massimo Girondi
  */
 public class CartTagHandler extends SimpleTagSupport {
 
@@ -117,22 +110,19 @@ public class CartTagHandler extends SimpleTagSupport {
 
                 }
 
-
-                String select="";
+                String select = "";
 
                 List<Coordinate> coordinates = coordinateDAO.getByShop(shop);
 
-                if(shop.getShipment()!=null && shop.getShipment().length()!=0)
-                {
-                    select+="<option id='-1' >"+format.format(shop.getShipment_cost())+" - "+shop.getShipment()+"</option>\n";
+                if (shop.getShipment() != null && shop.getShipment().length() != 0) {
+                    select += "<option id='-1' >" + format.format(shop.getShipment_cost()) + " - " + shop.getShipment() + "</option>\n";
                 }
 
                 for (Coordinate coordinate : coordinates) {
-                    String opening=coordinate.getOpening_hours();
-                    if(opening!="")
-                    {
-                        select+="\n<option id="+coordinate.getId()+" >";
-                        select+=format.format(0)+" - "+Utility.getLocalizedString(pageContext, "pickup_in_store")+" ("+coordinate.getAddress()+")</option>";
+                    String opening = coordinate.getOpening_hours();
+                    if (opening != "") {
+                        select += "\n<option id=" + coordinate.getId() + " >";
+                        select += format.format(0) + " - " + Utility.getLocalizedString(pageContext, "pickup_in_store") + " (" + coordinate.getAddress() + ")</option>";
 
                     }
                 }
@@ -145,19 +135,19 @@ public class CartTagHandler extends SimpleTagSupport {
                         + "             <h2 class=\"media-body\">" + Utility.getLocalizedString(pageContext, "cart_total") + "</h2>"
                         + "         </th>\n"
                         + "         <th>\n"
-                        + "            <p class=\"total-element-cart\" id=total"+shop.getId()+">" + format.format(total) + "</p>\n"
+                        + "            <p class=\"total-element-cart\" id=total" + shop.getId() + ">" + format.format(total) + "</p>\n"
                         + "         </th>\n"
                         + "      </tr>\n"
                         + "   </tbody>\n"
                         + "</table>"
                         + "<div class=\"to-right-cart\">"
-                        + "   <div id=\"cart-shipment\" >"+Utility.getLocalizedString(pageContext, "shipment_mode_singular")+": </span> <select id=\"shipment"+shop.getId()+"\" onchange=changeShipment("+shop.getId()+") class=\"btn btn-default dropdown-toggle\">"+select+"</select></div>"
+                        + "   <div id=\"cart-shipment\" >" + Utility.getLocalizedString(pageContext, "shipment_mode_singular") + ": </span> <select id=\"shipment" + shop.getId() + "\" onchange=changeShipment(" + shop.getId() + ") class=\"btn btn-default dropdown-toggle\">" + select + "</select></div>"
                         + "   <button type=\"button\" class=\"btn btn-info\" onclick=\"location.href = 'cart.jsp'\">" + Utility.getLocalizedString(pageContext, "recalculate_cart") + "</button>"
-                        + "   <button type=\"button\" class=\"btn btn-success\" onclick=\"placeOrderCart("+shop.getId()+")\">" + Utility.getLocalizedString(pageContext, "pay") + "</button>"
+                        + "   <button type=\"button\" class=\"btn btn-success\" onclick=\"placeOrderCart(" + shop.getId() + ")\">" + Utility.getLocalizedString(pageContext, "pay") + "</button>"
                         + "</div>");
-                out.println("<input type=\"hidden\" id=\"shipment_cost"+shop.getId()+"\" value=\""+shop.getShipment_cost()+"\">");
-                out.println("<input type=\"hidden\" id=\"originalTotal"+shop.getId()+"\" value=\""+total+"\">");
-                out.println("<script> changeShipment("+shop.getId()+")</script>");
+                out.println("<input type=\"hidden\" id=\"shipment_cost" + shop.getId() + "\" value=\"" + shop.getShipment_cost() + "\">");
+                out.println("<input type=\"hidden\" id=\"originalTotal" + shop.getId() + "\" value=\"" + total + "\">");
+                out.println("<script> changeShipment(" + shop.getId() + ")</script>");
             }
 
             out.println("</div>");
@@ -177,7 +167,7 @@ public class CartTagHandler extends SimpleTagSupport {
             productDAO = daoFactory.getDAO(ProductDAO.class);
             pictureDAO = daoFactory.getDAO(PictureDAO.class);
             shopDAO = daoFactory.getDAO(ShopDAO.class);
-            coordinateDAO=daoFactory.getDAO(CoordinateDAO.class);
+            coordinateDAO = daoFactory.getDAO(CoordinateDAO.class);
         } catch (DAOFactoryException ex) {
             throw new ServletException("Impossible to get dao factory for product storage system", ex);
         }

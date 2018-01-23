@@ -15,10 +15,8 @@ import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.factories.DAOFactory;
 import it.unitn.buyhub.utils.Log;
 import it.unitn.buyhub.utils.MD5;
-import static it.unitn.buyhub.utils.MD5.getMD5Hex;
 import it.unitn.buyhub.utils.Utility.CAPABILITY;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -26,10 +24,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet to login.
- * If successful set authenticatedUser session attribute,
- * if it is a shop user also set myshop, myPictures and mycoordinates
- * @author matteo
+ * Servlet to login. If successful set authenticatedUser session attribute, if
+ * it is a shop user also set myshop, myPictures and mycoordinates
+ *
+ * @author Matteo Battilana
  */
 public class LoginServlet extends HttpServlet {
 
@@ -49,9 +47,9 @@ public class LoginServlet extends HttpServlet {
         try {
             userDao = daoFactory.getDAO(UserDAO.class);
             shopDao = daoFactory.getDAO(ShopDAO.class);
-            coordinateDAO=daoFactory.getDAO(CoordinateDAO.class);
-            pictureDAO=daoFactory.getDAO(PictureDAO.class);
-            productDAO=daoFactory.getDAO(ProductDAO.class);
+            coordinateDAO = daoFactory.getDAO(CoordinateDAO.class);
+            pictureDAO = daoFactory.getDAO(PictureDAO.class);
+            productDAO = daoFactory.getDAO(ProductDAO.class);
         } catch (DAOFactoryException ex) {
             Log.error("Impossible to get dao factory for user storage system");
             throw new ServletException("Impossible to get dao factory for user storage system", ex);
@@ -98,9 +96,9 @@ public class LoginServlet extends HttpServlet {
                     Shop shop = (Shop) shopDao.getByOwner(user);
                     if (shop != null) {
                         request.getSession().setAttribute("myshop", shop);
-                        List<Picture> pictures=pictureDAO.getByShop(shop);
-                        List<Coordinate> coordinates=coordinateDAO.getByShop(shop);
-                        List<Product> products=productDAO.getByShop(shop);
+                        List<Picture> pictures = pictureDAO.getByShop(shop);
+                        List<Coordinate> coordinates = coordinateDAO.getByShop(shop);
+                        List<Product> products = productDAO.getByShop(shop);
                         request.getSession().setAttribute("mypictures", pictures);
                         request.getSession().setAttribute("mycoordinates", coordinates);
                         request.getSession().setAttribute("myproducts", products);

@@ -1,21 +1,15 @@
 package it.unitn.buyhub.servlet.user;
 
-import it.unitn.buyhub.dao.CoordinateDAO;
-import it.unitn.buyhub.dao.PictureDAO;
 import it.unitn.buyhub.dao.ProductDAO;
 import it.unitn.buyhub.dao.ShopDAO;
 import it.unitn.buyhub.dao.entities.Product;
-import it.unitn.buyhub.dao.entities.Shop;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.factories.DAOFactory;
 import it.unitn.buyhub.utils.Log;
 import it.unitn.buyhub.utils.PropertyHandler;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * This servlet allow the shop to add a new product
+ *
  * @author Daniso
  */
 public class AddProductServlet extends HttpServlet {
@@ -72,11 +67,11 @@ public class AddProductServlet extends HttpServlet {
         }
 
         try {
-            if(productName != null && !productName.equals("") &&
-                    category >= 0 && category < Integer.parseInt(PropertyHandler.getInstance().getValue("categoriesNumber")) &&
-                    price >= 0 &&
-                    description != null && !description.equals("") &&
-                    shopId != 0){
+            if (productName != null && !productName.equals("")
+                    && category >= 0 && category < Integer.parseInt(PropertyHandler.getInstance().getValue("categoriesNumber"))
+                    && price >= 0
+                    && description != null && !description.equals("")
+                    && shopId != 0) {
                 Product newProduct = new Product();
                 newProduct.setCategory(category);
                 newProduct.setDescription(description);
@@ -84,7 +79,7 @@ public class AddProductServlet extends HttpServlet {
                 newProduct.setShop(shopDAO.getByPrimaryKey(shopId));
                 newProduct.setPrice(price);
                 Long prod_id = productDAO.insert(newProduct);
-                if(prod_id == 0){
+                if (prod_id == 0) {
                     Log.warn("Shop " + shopId + " already has a product with this name");
                     response.sendRedirect(response.encodeRedirectURL(contextPath + "addProduct.jsp?error=1"));
                 } else {
@@ -95,12 +90,10 @@ public class AddProductServlet extends HttpServlet {
                 response.sendRedirect(contextPath + "restricted/myshop.jsp");
             }
         } catch (DAOException ex) {
-            Log.error("Error creating product, "+ex);
+            Log.error("Error creating product, " + ex);
         }
 
-
     }
-
 
     /**
      * Handles the HTTP <code>GET</code> method.

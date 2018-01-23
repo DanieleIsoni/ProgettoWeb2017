@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author matteo
+ * @author Matteo Battilana
  */
 public class Product implements Serializable {
 
@@ -30,7 +30,6 @@ public class Product implements Serializable {
     public void setMainPicture(Picture mainPicture) {
         this.mainPicture = mainPicture;
     }
-    
 
     public int getReviewCount() {
         return reviewCount;
@@ -39,7 +38,7 @@ public class Product implements Serializable {
     public void setReviewCount(int reviewCount) {
         this.reviewCount = reviewCount;
     }
-    
+
     public int getCategory() {
         return category;
     }
@@ -47,7 +46,6 @@ public class Product implements Serializable {
     public void setCategory(int category) {
         this.category = category;
     }
-    
 
     public int getId() {
         return id;
@@ -96,8 +94,5 @@ public class Product implements Serializable {
     public void setAvgReview(double avgReview) {
         this.avgReview = avgReview;
     }
-    
-    
-    
 
 }

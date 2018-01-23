@@ -73,7 +73,7 @@
                     ${myshop.shipment}
                 </div>
             </div>
-            
+
             <shop:ProductTableTagHandler shopId="${myshop.id}" owner="true"/>
             <shop:OrdersTagHanlder shop_id="${myshop.id}" />
 

@@ -1,37 +1,30 @@
 package it.unitn.buyhub.tag;
 
-import it.unitn.buyhub.dao.CoordinateDAO;
 import it.unitn.buyhub.dao.PictureDAO;
 import it.unitn.buyhub.dao.ProductDAO;
 import it.unitn.buyhub.dao.ReviewDAO;
-import it.unitn.buyhub.dao.entities.Cart;
-import it.unitn.buyhub.dao.entities.CartElement;
-import it.unitn.buyhub.dao.entities.Picture;
 import it.unitn.buyhub.dao.entities.Product;
 import it.unitn.buyhub.dao.entities.Review;
-import it.unitn.buyhub.dao.jdbc.JDBCProductDAO;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.factories.DAOFactory;
 import it.unitn.buyhub.utils.Log;
 import it.unitn.buyhub.utils.Utility;
 import java.io.IOException;
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
-import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
-import javax.servlet.jsp.tagext.JspFragment;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 
 /**
  * Tag to render a review into product page
- * @author massimo
+ *
+ * @author Massimo Girondi
  */
 public class ReviewsTagHandler extends SimpleTagSupport {
 

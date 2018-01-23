@@ -1,7 +1,7 @@
 <%-- 
     Document   : addProduct
     Created on : Oct 23, 2017, 9:47:27 AM
-    Author     : Daniso
+    Author     : Daniele Isoni
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

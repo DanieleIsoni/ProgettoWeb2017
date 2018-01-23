@@ -1,19 +1,16 @@
 package it.unitn.buyhub.tag;
 
 import it.unitn.buyhub.dao.entities.Product;
-import it.unitn.buyhub.utils.Log;
 import it.unitn.buyhub.utils.Utility;
-import static java.lang.System.out;
-import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
-import javax.servlet.jsp.tagext.JspFragment;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
-import javax.servlet.jsp.tagext.Tag;
 
 /**
  * Tag to print the cateogry of wich a product belongs
- * @author massimo
+ *
+ * @author Massimo Girondi
  */
 public class CategoryTaghandler extends SimpleTagSupport {
 
@@ -21,15 +18,16 @@ public class CategoryTaghandler extends SimpleTagSupport {
     public void doTag() throws JspException {
 
         JspWriter out = getJspContext().getOut();
-        PageContext pageContext= (PageContext) getJspContext();
-        try{
-            int category=0;
-            if(this.category!=-1)
-                category=this.category;
-            else
-                category=((Product)pageContext.getAttribute("product",PageContext.REQUEST_SCOPE)).getCategory();
-            out.println("<a href=\""+Utility.getUrl(pageContext, "search.jsp?c="+category)+"&q=\">");
-            out.println(Utility.getCategory(pageContext,category));
+        PageContext pageContext = (PageContext) getJspContext();
+        try {
+            int category = 0;
+            if (this.category != -1) {
+                category = this.category;
+            } else {
+                category = ((Product) pageContext.getAttribute("product", PageContext.REQUEST_SCOPE)).getCategory();
+            }
+            out.println("<a href=\"" + Utility.getUrl(pageContext, "search.jsp?c=" + category) + "&q=\">");
+            out.println(Utility.getCategory(pageContext, category));
             out.println("</a>");
 
         } catch (java.io.IOException ex) {
@@ -45,6 +43,6 @@ public class CategoryTaghandler extends SimpleTagSupport {
         //Log.info(category);
         this.category = category;
     }
-    private int category=-1;
+    private int category = -1;
 
 }

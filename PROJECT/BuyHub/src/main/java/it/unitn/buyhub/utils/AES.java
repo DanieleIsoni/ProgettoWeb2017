@@ -1,37 +1,26 @@
 package it.unitn.buyhub.utils;
 
-import java.security.InvalidKeyException;
 import java.security.Key;
-import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
-import javax.crypto.spec.SecretKeySpec;
-
 /**
  * This is a class to work with the AES crypt/decrypt
- * @author massimo
+ *
+ * @author Massimo Girondi
  */
 public class AES {
 
     private static final String ALGO = "AES";
     private Key key;
 
-
-    public AES(String key)
-    {
-        this.key=new SecretKeySpec(key.getBytes(), ALGO);
+    public AES(String key) {
+        this.key = new SecretKeySpec(key.getBytes(), ALGO);
 
     }
+
     /**
      * Encrypt a string with AES algorithm.
      *
@@ -58,6 +47,5 @@ public class AES {
         byte[] decValue = c.doFinal(decordedValue);
         return new String(decValue);
     }
-
 
 }

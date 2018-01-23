@@ -6,26 +6,18 @@
 package it.unitn.buyhub.dao.jdbc;
 
 import it.unitn.buyhub.dao.*;
-import it.unitn.buyhub.dao.*;
-import it.unitn.buyhub.dao.entities.Coordinate;
-import it.unitn.buyhub.dao.entities.Notification;
 import it.unitn.buyhub.dao.entities.Shop;
 import it.unitn.buyhub.dao.entities.User;
-import it.unitn.buyhub.dao.persistence.DAO;
-import it.unitn.buyhub.dao.persistence.DAO;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.jdbc.JDBCDAO;
 import it.unitn.buyhub.utils.Log;
-import it.unitn.buyhub.utils.Pair;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,7 +32,7 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
     public JDBCShopDAO(Connection con) {
         super(con);
         FRIEND_DAOS.put(UserDAO.class, new JDBCUserDAO(CON));
-       // FRIEND_DAOS.put(CoordinateDAO.class, new JDBCCoordinateDAO(CON));
+        // FRIEND_DAOS.put(CoordinateDAO.class, new JDBCCoordinateDAO(CON));
     }
 
     /**
@@ -154,7 +146,6 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
                 UserDAO userDao = getDAO(UserDAO.class);
                 shop.setOwner(userDao.getByPrimaryKey(rs.getInt("id_owner")));
 
-                
                 return shop;
             }
         } catch (SQLException | DAOFactoryException ex) {
@@ -196,7 +187,6 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
                 shop.setShipment_cost(rs.getDouble("shipment_costs"));
                 shop.setOwner(owner);
 
-                
                 return shop;
             }
         } catch (SQLException ex) {
@@ -233,7 +223,7 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
                     shop.setDescription(rs.getString("description"));
                     shop.setWebsite(rs.getString("website"));
                     shop.setName(rs.getString("name"));
-                    
+
                     shop.setShipment_cost(rs.getDouble("shipment_costs"));
                     shop.setShipment(rs.getString("shipment"));
                     shop.setValidity(rs.getInt("validity"));
@@ -242,7 +232,6 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
                     UserDAO userDao = getDAO(UserDAO.class);
                     shop.setOwner(userDao.getByPrimaryKey(rs.getInt("id_owner")));
 
-                    
                     shops.add(shop);
                 }
 
@@ -278,14 +267,13 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
                     shop.setWebsite(rs.getString("website"));
                     shop.setShipment(rs.getString("shipment"));
                     shop.setValidity(rs.getInt("validity"));
-                    
+
                     shop.setShipment_cost(rs.getDouble("shipment_costs"));
-                    
+
                     //Get owner associate
                     UserDAO userDao = getDAO(UserDAO.class);
                     shop.setOwner(userDao.getByPrimaryKey(rs.getInt("id_owner")));
 
-                    
                     shops.add(shop);
 
                 }
@@ -320,10 +308,9 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
             std.setInt(4, shop.getOwner().getId());
             std.setString(5, shop.getShipment());
             std.setInt(6, shop.getValidity());
-            std.setDouble(7,shop.getShipment_cost());
+            std.setDouble(7, shop.getShipment_cost());
             std.setInt(8, shop.getId());
-            
-            
+
             if (std.executeUpdate() == 1) {
                 return shop;
             } else {
@@ -370,15 +357,13 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
                     shop.setWebsite(rs.getString("website"));
                     shop.setShipment(rs.getString("shipment"));
                     shop.setValidity(rs.getInt("validity"));
-                    
+
                     shop.setShipment_cost(rs.getDouble("shipment_costs"));
-                    
 
                     //Get owner associate
                     UserDAO userDao = getDAO(UserDAO.class);
                     shop.setOwner(userDao.getByPrimaryKey(rs.getInt("id_owner")));
 
-                    
                     shops.add(shop);
 
                 }
@@ -389,6 +374,5 @@ public class JDBCShopDAO extends JDBCDAO<Shop, Integer> implements ShopDAO {
         }
         return shops;
     }
-    
-    
+
 }

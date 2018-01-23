@@ -1,34 +1,22 @@
 package it.unitn.buyhub.servlet.admin;
 
-import it.unitn.buyhub.dao.CoordinateDAO;
-import it.unitn.buyhub.dao.PictureDAO;
-import it.unitn.buyhub.dao.ProductDAO;
-import it.unitn.buyhub.dao.ReviewDAO;
 import it.unitn.buyhub.dao.ShopDAO;
-import it.unitn.buyhub.dao.UserDAO;
-import it.unitn.buyhub.dao.entities.Coordinate;
-import it.unitn.buyhub.dao.entities.Picture;
-import it.unitn.buyhub.dao.entities.Product;
-import it.unitn.buyhub.dao.entities.Review;
 import it.unitn.buyhub.dao.entities.Shop;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.factories.DAOFactory;
 import it.unitn.buyhub.utils.Log;
-import it.unitn.buyhub.utils.Mailer;
-import it.unitn.buyhub.utils.Utility;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.jsp.PageContext;
+
 /**
  * Servlet that retrieves the data for the administrative shops page
- * @author massimo
+ *
+ * @author Massimo Girondi
  */
 public class ShopsServlet extends HttpServlet {
 
@@ -46,10 +34,8 @@ public class ShopsServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-
-
-
     }
+
     public void init() throws ServletException {
         DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
         if (daoFactory == null) {
@@ -63,9 +49,8 @@ public class ShopsServlet extends HttpServlet {
             Log.error("Impossible to get dao factory for shop storage system");
             throw new ServletException("Impossible to get dao factory for shop storage system", ex);
         }
-      //  Log.info("ShopsServlet init done");
+        //  Log.info("ShopsServlet init done");
     }
-
 
     protected void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -74,28 +59,27 @@ public class ShopsServlet extends HttpServlet {
             contextPath += "/";
         }
 
-
         try {
 
-           List<Shop> shops=shopDAO.getAll();
-           request.setAttribute("shops", shops);
+            List<Shop> shops = shopDAO.getAll();
+            request.setAttribute("shops", shops);
 
-           request.getRequestDispatcher("shops.jsp").forward(request, response);
+            request.getRequestDispatcher("shops.jsp").forward(request, response);
 
         } catch (DAOException ex) {
-            Log.error("Error getting product "+ ex.toString());
+            Log.error("Error getting product " + ex.toString());
             response.sendRedirect(response.encodeRedirectURL(contextPath + "../../common/error.jsp"));
         }
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-      process(req,resp);
+        process(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-      process(req,resp);
+        process(req, resp);
     }
 
 }

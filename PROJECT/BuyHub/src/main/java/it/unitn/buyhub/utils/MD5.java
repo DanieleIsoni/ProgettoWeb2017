@@ -1,8 +1,9 @@
 package it.unitn.buyhub.utils;
 
 /**
- *  Class to handle MD5 conversions
- * @author matteo
+ * Class to handle MD5 conversions
+ *
+ * @author Matteo Battilana
  */
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

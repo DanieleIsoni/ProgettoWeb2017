@@ -1,7 +1,7 @@
 <%-- 
     Document   : editProduct
     Created on : Oct 24, 2017, 4:46:44 PM
-    Author     : Daniso
+    Author     : Daniele Isoni
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -48,7 +48,7 @@
 
                     <input type="hidden" name="shopId" id="shopId" value="${product.shop.id}">
                     <input type="hidden" name="prodId" id="prodId" value="${product.id}">
-                    
+
                     <button type="submit" class="btn btn-success"><fmt:message key="save_changes"/></button>
                 </form>
                 <br>

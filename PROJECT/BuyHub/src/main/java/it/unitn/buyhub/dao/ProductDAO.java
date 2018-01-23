@@ -5,13 +5,8 @@
  */
 package it.unitn.buyhub.dao;
 
-import it.unitn.buyhub.dao.*;
-import it.unitn.buyhub.dao.entities.Picture;
 import it.unitn.buyhub.dao.entities.Product;
-import it.unitn.buyhub.dao.entities.Review;
 import it.unitn.buyhub.dao.entities.Shop;
-import it.unitn.buyhub.dao.entities.User;
-import it.unitn.buyhub.dao.persistence.DAO;
 import it.unitn.buyhub.dao.persistence.DAO;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import java.util.List;
@@ -84,8 +79,8 @@ public interface ProductDAO extends DAO<Product, Integer> {
     public List<Product> getByShop(Shop shop) throws DAOException;
 
     /**
-     * Returns the list of the {@link Product product} with the category passed as
-     * parameter.
+     * Returns the list of the {@link Product product} with the category passed
+     * as parameter.
      *
      * @param categoryId the {@code category id} of the {@code products} to get.
      * @return the list of the {@link Product product} with the category the one
@@ -111,13 +106,13 @@ public interface ProductDAO extends DAO<Product, Integer> {
      */
     @Override
     public List<Product> getAll() throws DAOException;
-    
+
     /**
      * Returns the list of all the valid {@link Product products} stored by the
      * storage system.
      *
      * @return the list of all the valid {@code products}.
-     * 
+     *
      * @param number max number of elements
      * @throws DAOException if an error occurred during the information
      * retrieving.
@@ -186,6 +181,6 @@ public interface ProductDAO extends DAO<Product, Integer> {
      * @since 1.0.170425
      */
     public List<Product> getByNameAndPriceRange(String name, double min, double max) throws DAOException;
-    
+
     public void remove(Product product) throws DAOException;
 }

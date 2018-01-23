@@ -1,10 +1,7 @@
 package it.unitn.buyhub.servlet.cart;
 
 import it.unitn.buyhub.dao.entities.Cart;
-import it.unitn.buyhub.dao.entities.User;
-import it.unitn.buyhub.utils.Log;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,8 +9,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * This servlet remove a product from the session cart. Invoked by a button in the cart page
- * @author matteo
+ * This servlet remove a product from the session cart. Invoked by a button in
+ * the cart page
+ *
+ * @author Matteo Battilana
  */
 public class RemoveFromCartServlet extends HttpServlet {
 
@@ -28,12 +27,11 @@ public class RemoveFromCartServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-          response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
 
         HttpSession session = request.getSession(false);
 
-
-        if (session != null && request.getParameter("id")!=null) {
+        if (session != null && request.getParameter("id") != null) {
             int id = Integer.valueOf(request.getParameter("id"));
             Cart cart = (Cart) session.getAttribute("userCart");
             cart.removeProduct(id);
@@ -43,7 +41,6 @@ public class RemoveFromCartServlet extends HttpServlet {
         if (!contextPath.endsWith("/")) {
             contextPath += "/";
         }
-
 
         response.sendRedirect(response.encodeRedirectURL(contextPath + "cart.jsp"));
     }

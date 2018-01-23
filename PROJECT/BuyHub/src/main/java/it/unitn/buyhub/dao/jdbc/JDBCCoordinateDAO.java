@@ -8,7 +8,6 @@ package it.unitn.buyhub.dao.jdbc;
 import it.unitn.buyhub.dao.*;
 import it.unitn.buyhub.dao.entities.Coordinate;
 import it.unitn.buyhub.dao.entities.Shop;
-import it.unitn.buyhub.dao.persistence.DAO;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.jdbc.JDBCDAO;
@@ -20,8 +19,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * All concrete DAO must implement this interface to handle the persistence
@@ -91,58 +88,56 @@ public class JDBCCoordinateDAO extends JDBCDAO<Coordinate, Integer> implements C
                 coordinate.setLatitude(rs.getDouble("latitude"));
                 coordinate.setLongitude(rs.getDouble("longitude"));
                 coordinate.setAddress(rs.getString("address"));
-                
+
                 coordinate.setOpening_hours(rs.getString("opening_hours"));
                 ShopDAO shopDao = getDAO(ShopDAO.class);
-                Shop s=shopDao.getByPrimaryKey(rs.getInt("id_shop"));
+                Shop s = shopDao.getByPrimaryKey(rs.getInt("id_shop"));
                 coordinate.setShop(s);
                 return coordinate;
             } catch (DAOFactoryException ex) {
-            throw new DAOException("Impossible to get the coordinates for the passed primary key", ex);
+                throw new DAOException("Impossible to get the coordinates for the passed primary key", ex);
             }
         } catch (SQLException ex) {
             throw new DAOException("Impossible to get the coordinates for the passed primary key", ex);
         }
     }
-    
-    
-        /**
-     * Returns the {@link Coordinate coordinate} with the shop key equals to
-     * the one passed as parameter.
+
+    /**
+     * Returns the {@link Coordinate coordinate} with the shop key equals to the
+     * one passed as parameter.
      *
      * @param s the {@code id} of the {@code shop}'s coordinates to get.
-     * @return the {@code coordinate} with the shop id equals to the one passed as
-     * parameter or {@code null} if no entities with that shop's id is not present into
-     * the storage system.
+     * @return the {@code coordinate} with the shop id equals to the one passed
+     * as parameter or {@code null} if no entities with that shop's id is not
+     * present into the storage system.
      * @throws DAOException if an error occurred during the information
      * retrieving.
      *
      * @author Massimo Girondi
      * @since 1.0.170714
      */
-     @Override
+    @Override
     public List<Coordinate> getByShop(Shop s) throws DAOException {
-        
-        if (s== null) {
+
+        if (s == null) {
             throw new DAOException("primaryKey is null");
         }
-         List<Coordinate> coordinates = new ArrayList<>();
+        List<Coordinate> coordinates = new ArrayList<>();
 
         try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM coordinates c WHERE c.id_shop = ?")) {
-           
+
             stm.setInt(1, s.getId());
             try (ResultSet rs = stm.executeQuery()) {
 
-                while(rs.next())
-                {
+                while (rs.next()) {
                     //rs.getInt("id"),rs.getInt("latitude"),rs.getInt("longitude"),rs.getString("address")
                     Coordinate coordinate = new Coordinate();
                     coordinate.setId(rs.getInt("id"));
                     coordinate.setLatitude(rs.getDouble("latitude"));
                     coordinate.setLongitude(rs.getDouble("longitude"));
                     coordinate.setAddress(rs.getString("address"));
-                    
-                coordinate.setOpening_hours(rs.getString("opening_hours"));
+
+                    coordinate.setOpening_hours(rs.getString("opening_hours"));
                     ShopDAO shopDao = getDAO(ShopDAO.class);
                     coordinate.setShop(s);
 
@@ -150,15 +145,14 @@ public class JDBCCoordinateDAO extends JDBCDAO<Coordinate, Integer> implements C
                 }
                 return coordinates;
             } catch (DAOFactoryException ex) {
-            throw new DAOException("Impossible to get the coordinates for the passed shop", ex);
+                throw new DAOException("Impossible to get the coordinates for the passed shop", ex);
             }
         } catch (SQLException ex) {
-            
+
             throw new DAOException("Impossible to get the coordinates for the passed shop", ex);
         }
     }
-    
-    
+
     /**
      * Returns the {@link Coordinate coordinate} with the address that contains
      * the one passed as parameter.
@@ -194,8 +188,8 @@ public class JDBCCoordinateDAO extends JDBCDAO<Coordinate, Integer> implements C
 
                 return coordinate;
             } catch (DAOFactoryException ex) {
-             throw new DAOException("Impossible to get the coordinates for the passed address", ex);
-      }
+                throw new DAOException("Impossible to get the coordinates for the passed address", ex);
+            }
         } catch (SQLException ex) {
             throw new DAOException("Impossible to get the coordinates for the passed address", ex);
         }
@@ -243,8 +237,8 @@ public class JDBCCoordinateDAO extends JDBCDAO<Coordinate, Integer> implements C
                 }
 
             } catch (DAOFactoryException ex) {
-           throw new DAOException("Impossible to get the coordinates for the passed range", ex);
-     }
+                throw new DAOException("Impossible to get the coordinates for the passed range", ex);
+            }
         } catch (SQLException ex) {
             throw new DAOException("Impossible to get the coordinates for the passed range", ex);
         }
@@ -313,7 +307,7 @@ public class JDBCCoordinateDAO extends JDBCDAO<Coordinate, Integer> implements C
             std.setString(3, coordinate.getAddress());
             std.setInt(4, coordinate.getId());
             std.setString(5, coordinate.getOpening_hours());
-            
+
             if (std.executeUpdate() == 1) {
                 return coordinate;
             } else {

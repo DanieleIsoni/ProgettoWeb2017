@@ -1,10 +1,7 @@
 package it.unitn.buyhub.servlet.cart;
 
 import it.unitn.buyhub.dao.entities.Cart;
-import it.unitn.buyhub.dao.entities.User;
-import it.unitn.buyhub.utils.Log;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,8 +9,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * This servlet Modify the number of products in the session cart. It is invoked by a button in cart page
- * @author matteo
+ * This servlet Modify the number of products in the session cart. It is invoked
+ * by a button in cart page
+ *
+ * @author Matteo Battilana
  */
 public class ModifyCartItemNumberServlet extends HttpServlet {
 

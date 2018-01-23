@@ -6,11 +6,10 @@
 package it.unitn.buyhub.dao.entities;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  *
- * @author matteo
+ * @author Matteo Battilana
  */
 public class Ticket implements Serializable {
 
@@ -32,7 +31,5 @@ public class Ticket implements Serializable {
     public void setOrder(Order order) {
         this.order = order;
     }
-
-    
 
 }

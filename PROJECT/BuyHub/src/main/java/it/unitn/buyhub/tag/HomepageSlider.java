@@ -5,46 +5,43 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.ServletContext;
-import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
-import javax.servlet.jsp.tagext.JspFragment;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 
 /**
- * This tag provide the images for the slider homepage,
- * listing the images under images/slider_images folder
- * @author massimo
+ * This tag provide the images for the slider homepage, listing the images under
+ * images/slider_images folder
+ *
+ * @author Massimo Girondi
  */
 public class HomepageSlider extends SimpleTagSupport {
 
-
     @Override
     public void doTag() throws JspException {
-        PageContext pageContext = (PageContext)getJspContext();
+        PageContext pageContext = (PageContext) getJspContext();
 
         JspWriter out = getJspContext().getOut();
-        String path=pageContext.getServletContext().getRealPath("/images/slider_images")+"/";
+        String path = pageContext.getServletContext().getRealPath("/images/slider_images") + "/";
         String lang = Utility.getLocalizedString(pageContext, "language");
-        path+=lang+"/";
+        path += lang + "/";
         File folder = new File(path);
         //System.out.println(path+" ->"+folder.getAbsolutePath());
         File[] listOfFiles = folder.listFiles();
-        boolean first=true;
-        for (File file: listOfFiles) {
+        boolean first = true;
+        for (File file : listOfFiles) {
             try {
                 out.print("<div class=\"item");
-                if(first)
-                {
-                    first=false;
+                if (first) {
+                    first = false;
                     out.print(" active");
                 }
-                out.println("\">\n" +
-                        "                        <img src=\"images/slider_images/"+lang+"/"+file.getName()+"\" alt=\"SliderImage\" style=\"width:100%;\">\n</img>" +
-                        "                        <div class=\"carousel-caption\">\n" +
-                        "                        </div>\n" +
-                        "                    </div>");
+                out.println("\">\n"
+                        + "                        <img src=\"images/slider_images/" + lang + "/" + file.getName() + "\" alt=\"SliderImage\" style=\"width:100%;\">\n</img>"
+                        + "                        <div class=\"carousel-caption\">\n"
+                        + "                        </div>\n"
+                        + "                    </div>");
             } catch (IOException ex) {
                 Logger.getLogger(HomepageSlider.class.getName()).log(Level.SEVERE, null, ex);
             }

@@ -1,7 +1,7 @@
 <%-- 
     Document   : error
     Created on : 3-lug-2017, 18.43.35
-    Author     : matteo
+    Author     : Matteo Battilana
 
 <%@include file="header.jsp" %>
        

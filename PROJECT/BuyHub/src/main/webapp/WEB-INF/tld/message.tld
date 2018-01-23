@@ -24,7 +24,7 @@
         <name>MessageList</name>
         <tag-class>it.unitn.buyhub.tag.MessagesTagHandler</tag-class>
         <body-content>empty</body-content>
-<!--
+        <!--
         <attribute>
             <name>id</name>
             <required>true</required>

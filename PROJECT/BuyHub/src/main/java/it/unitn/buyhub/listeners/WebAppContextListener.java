@@ -12,41 +12,33 @@ import it.unitn.buyhub.dao.persistence.factories.jdbc.JDBCDAOFactory;
 import it.unitn.buyhub.servlet.AutoCompleteServlet;
 import it.unitn.buyhub.utils.Log;
 import it.unitn.buyhub.utils.PropertyHandler;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 /**
  * Web application lifecycle listener.
  *
- * @author matteo
+ * @author Matteo Battilana
  */
 public class WebAppContextListener implements ServletContextListener {
 
-    
-    
     //Componenti runnable per l'esecuzione automatica dei servizi di aggiornamento del DB dei termini di ricerca
     private volatile ScheduledExecutorService executor;
 
-    
     final Runnable autoCompleteUpdate = new Runnable() {
-        public void run() { 
-               try {
-               new AutoCompleteServlet().rigenera();
-                } catch (DAOException ex) {
-                    Log.error("Error rigenerating autocomplete cache: "+ex);
-                }
-           // System.out.println("EXECUTION");
+        public void run() {
+            try {
+                new AutoCompleteServlet().rigenera();
+            } catch (DAOException ex) {
+                Log.error("Error rigenerating autocomplete cache: " + ex);
+            }
+            // System.out.println("EXECUTION");
         }
     };
+
     /**
      * The serlvet container call this method when initializes the application
      * for the first time.
@@ -60,25 +52,24 @@ public class WebAppContextListener implements ServletContextListener {
         //String dburl = sce.getServletContext().getInitParameter("dburl");
 
         try {
-            PropertyHandler prop=PropertyHandler.getInstance();
-            String dbuser=prop.getValue("dbUser");
-            String dbpassword=prop.getValue("dbPassword");
-            String dbUrl=prop.getValue("dbUrl");
+            PropertyHandler prop = PropertyHandler.getInstance();
+            String dbuser = prop.getValue("dbUser");
+            String dbpassword = prop.getValue("dbPassword");
+            String dbUrl = prop.getValue("dbUrl");
             //JDBCDAOFactory.configure(dburl,"root","");
-            JDBCDAOFactory.configure(dbUrl,dbuser,dbpassword);
+            JDBCDAOFactory.configure(dbUrl, dbuser, dbpassword);
 
             DAOFactory daoFactory = JDBCDAOFactory.getInstance();
             sce.getServletContext().setAttribute("daoFactory", daoFactory);
-
 
             //Inizializzo un esecutore automatico ogni 30 minuti per aggiornare il DB dei termini di ricerca
             executor = Executors.newScheduledThreadPool(2);
             executor.scheduleAtFixedRate(autoCompleteUpdate, 0, 20, TimeUnit.MINUTES);
 
-            } catch (DAOFactoryException ex) {
-                Log.error("Error initizializing DAOs: "+ex.getMessage());
-                throw new RuntimeException(ex);
-            }
+        } catch (DAOFactoryException ex) {
+            Log.error("Error initizializing DAOs: " + ex.getMessage());
+            throw new RuntimeException(ex);
+        }
     }
 
     /**
@@ -95,12 +86,10 @@ public class WebAppContextListener implements ServletContextListener {
             daoFactory.shutdown();
         }
         daoFactory = null;
-        
-        
+
         final ScheduledExecutorService executor = this.executor;
 
-        if (executor != null)
-        {
+        if (executor != null) {
             executor.shutdown();
             this.executor = null;
         }

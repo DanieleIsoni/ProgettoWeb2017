@@ -1,17 +1,7 @@
 package it.unitn.buyhub.servlet.user;
 
-import it.unitn.buyhub.servlet.admin.*;
-import it.unitn.buyhub.dao.CoordinateDAO;
-import it.unitn.buyhub.dao.PictureDAO;
-import it.unitn.buyhub.dao.ProductDAO;
-import it.unitn.buyhub.dao.ReviewDAO;
-import it.unitn.buyhub.dao.OrderDAO;
 import it.unitn.buyhub.dao.OrderDAO;
 import it.unitn.buyhub.dao.OrderedProductDAO;
-import it.unitn.buyhub.dao.entities.Coordinate;
-import it.unitn.buyhub.dao.entities.Picture;
-import it.unitn.buyhub.dao.entities.Product;
-import it.unitn.buyhub.dao.entities.Review;
 import it.unitn.buyhub.dao.entities.Order;
 import it.unitn.buyhub.dao.entities.OrderedProduct;
 import it.unitn.buyhub.dao.entities.User;
@@ -19,24 +9,18 @@ import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.factories.DAOFactory;
 import it.unitn.buyhub.utils.Log;
-import it.unitn.buyhub.utils.Mailer;
-import it.unitn.buyhub.utils.Utility;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.servlet.jsp.PageContext;
+
 /**
  * This servlet display the orders placed by a user
- * @author massimo
+ *
+ * @author Massimo Girondi
  */
 public class MyOrdersServlet extends HttpServlet {
 
@@ -55,10 +39,8 @@ public class MyOrdersServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-
-
-
     }
+
     public void init() throws ServletException {
         DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
         if (daoFactory == null) {
@@ -76,7 +58,6 @@ public class MyOrdersServlet extends HttpServlet {
 //        Log.info("OrdersServlet init done");
     }
 
-
     protected void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String contextPath = getServletContext().getContextPath();
@@ -84,42 +65,40 @@ public class MyOrdersServlet extends HttpServlet {
             contextPath += "/";
         }
 
-
         try {
 
-           User u=(User) request.getSession().getAttribute("authenticatedUser");
+            User u = (User) request.getSession().getAttribute("authenticatedUser");
 
-           List<Order> orders=orderDAO.getByUser(u.getId());
+            List<Order> orders = orderDAO.getByUser(u.getId());
 
-           request.setAttribute("orders", orders);
-           List<Double> totals=new  ArrayList<Double>();
-           for(Order o: orders)
-           {
-               List<OrderedProduct> byOrder = orderedProductDAO.getByOrder(o.getId());
-               double sum=o.getShipment_cost();
-               for (OrderedProduct orderedProduct : byOrder) {
-                   sum+=orderedProduct.getQuantity()*orderedProduct.getPrice();
-               }
-               totals.add(sum);
-           }
-           request.setAttribute("totals", totals);
+            request.setAttribute("orders", orders);
+            List<Double> totals = new ArrayList<Double>();
+            for (Order o : orders) {
+                List<OrderedProduct> byOrder = orderedProductDAO.getByOrder(o.getId());
+                double sum = o.getShipment_cost();
+                for (OrderedProduct orderedProduct : byOrder) {
+                    sum += orderedProduct.getQuantity() * orderedProduct.getPrice();
+                }
+                totals.add(sum);
+            }
+            request.setAttribute("totals", totals);
 
-           request.getRequestDispatcher("myorders.jsp").forward(request, response);
+            request.getRequestDispatcher("myorders.jsp").forward(request, response);
 
         } catch (DAOException ex) {
-            Log.error("Error getting orders: "+ ex.toString());
+            Log.error("Error getting orders: " + ex.toString());
             response.sendRedirect(response.encodeRedirectURL(contextPath + "../../common/error.jsp"));
         }
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-      process(req,resp);
+        process(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-      process(req,resp);
+        process(req, resp);
     }
 
 }

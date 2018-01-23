@@ -1,12 +1,10 @@
 package it.unitn.buyhub.servlet.user;
 
-
 import it.unitn.buyhub.dao.PictureDAO;
 import it.unitn.buyhub.dao.ProductDAO;
 import it.unitn.buyhub.dao.entities.Picture;
 import it.unitn.buyhub.dao.entities.Product;
 import it.unitn.buyhub.dao.entities.User;
-import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.factories.DAOFactory;
 import it.unitn.buyhub.utils.Log;
@@ -28,13 +26,13 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 /**
  * This servlet allow the upload of a picture related to a product.
- * @author maxgiro96
+ *
+ * @author Massimo Girondi
  */
 public class productPictureUploadServlet extends HttpServlet {
 
     private PictureDAO pictureDao;
     private ProductDAO productDao;
-
 
     @Override
     public void init() throws ServletException {
@@ -54,16 +52,13 @@ public class productPictureUploadServlet extends HttpServlet {
 //        Log.info("AvatUploadServlet init done");
     }
 
-
-
-
-        // location to store file uploaded
+    // location to store file uploaded
     private static final String UPLOAD_DIRECTORY = "upload";
 
     // upload settings
-    private static final int MEMORY_THRESHOLD   = 1024 * 1024 * 3;  // 3MB
-    private static final int MAX_FILE_SIZE      = 1024 * 1024 * 40; // 40MB
-    private static final int MAX_REQUEST_SIZE   = 1024 * 1024 * 50; // 50MB
+    private static final int MEMORY_THRESHOLD = 1024 * 1024 * 3;  // 3MB
+    private static final int MAX_FILE_SIZE = 1024 * 1024 * 40; // 40MB
+    private static final int MAX_REQUEST_SIZE = 1024 * 1024 * 50; // 50MB
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -76,7 +71,6 @@ public class productPictureUploadServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
 
         User user = (User) request.getSession().getAttribute("authenticatedUser");
         String contextPath = getServletContext().getContextPath();
@@ -96,7 +90,6 @@ public class productPictureUploadServlet extends HttpServlet {
 
         }
 
-
         // configures upload settings
         DiskFileItemFactory factory = new DiskFileItemFactory();
         // sets memory threshold - beyond which files are stored in disk
@@ -112,8 +105,7 @@ public class productPictureUploadServlet extends HttpServlet {
         // sets maximum size of request (include file + form data)
         upload.setSizeMax(MAX_REQUEST_SIZE);
 
-
-        Product product=null;
+        Product product = null;
         try {
             List<FileItem> formItems = upload.parseRequest(request);
             if (formItems != null && formItems.size() > 0) {
@@ -121,58 +113,52 @@ public class productPictureUploadServlet extends HttpServlet {
                 //use iterator version with flag to avoid remove just submitted productPicture (user press remove and upload at same time)
                 //for (FileItem item : formItems) {
 
-
-
-                boolean done=false;
+                boolean done = false;
 
                 for (Iterator<FileItem> iterator = formItems.iterator(); iterator.hasNext() && !done;) {
                     FileItem item = iterator.next();
-                    if(item.isFormField() && item.getFieldName().equals("product") && item.getSize()>0)
-                    {
-                        int id= Integer.parseInt(item.getString());
+                    if (item.isFormField() && item.getFieldName().equals("product") && item.getSize() > 0) {
+                        int id = Integer.parseInt(item.getString());
 
-                        product=productDao.getByPrimaryKey(id);
-                        done=true;
+                        product = productDao.getByPrimaryKey(id);
+                        done = true;
                     }
                 }
-                done=false;
-                if(product ==null)
+                done = false;
+                if (product == null) {
                     throw new Exception("Missing product id!");
+                }
 
                 for (Iterator<FileItem> iterator = formItems.iterator(); iterator.hasNext() && !done;) {
                     FileItem item = iterator.next();
                     // processes only fields that are not form fields
-                    if (!item.isFormField() && item.getFieldName().equals("picture") && item.getSize()>0) {
+                    if (!item.isFormField() && item.getFieldName().equals("picture") && item.getSize() > 0) {
                         String fileName = new File(item.getName()).getName();
 
                         String name = Utility.saveJPEG(item.getInputStream());
-                        Picture p=new Picture();
+                        Picture p = new Picture();
                         p.setDescription(product.getName());
                         p.setName(product.getName());
                         p.setOwner(user);
-                        p.setPath("UploadedContent/"+name);
-                        pictureDao.insertProductPicture(product,p);
+                        p.setPath("UploadedContent/" + name);
+                        pictureDao.insertProductPicture(product, p);
 
-                        Log.info("User "+user.getUsername()+" uploaded product image for product #"+product.getId());
-                        done=true;
-                        response.sendRedirect(response.encodeRedirectURL(contextPath + "restricted/productPhoto?id="+product.getId()));
+                        Log.info("User " + user.getUsername() + " uploaded product image for product #" + product.getId());
+                        done = true;
+                        response.sendRedirect(response.encodeRedirectURL(contextPath + "restricted/productPhoto?id=" + product.getId()));
 
                     }
                 }
             }
 
             //response.sendRedirect(response.encodeRedirectURL(contextPath + "productPhoto?id="+product.getId())));
-
-
         } catch (Exception ex) {
-           Log.error("Error in productPicture upload:"+ ex.getMessage());
-           Logger.getLogger(productPictureUploadServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Log.error("Error in productPicture upload:" + ex.getMessage());
+            Logger.getLogger(productPictureUploadServlet.class.getName()).log(Level.SEVERE, null, ex);
 
-           response.sendRedirect(response.encodeRedirectURL("../common/error.jsp"));
-
+            response.sendRedirect(response.encodeRedirectURL("../common/error.jsp"));
 
         }
-
 
     }
 

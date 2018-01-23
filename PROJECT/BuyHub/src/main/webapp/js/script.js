@@ -60,7 +60,7 @@ var getUrlParameter = function getUrlParameter(sParam) {
 function changeItemNumber(id, value) {
     //modifycartitemnumber?id=33&count=12
     var xhttp = new XMLHttpRequest();
-    xhttp.open("GET", "modifycartitemnumber?id="+id+"&count="+value, true);
+    xhttp.open("GET", "modifycartitemnumber?id=" + id + "&count=" + value, true);
     xhttp.send();
 
 }
@@ -68,30 +68,31 @@ function changeItemNumber(id, value) {
 
 
 
-function setCharAt(str,index,chr) {
-    if(index > str.length-1) return str;
-    return str.substr(0,index) + chr + str.substr(index+1);
+function setCharAt(str, index, chr) {
+    if (index > str.length - 1)
+        return str;
+    return str.substr(0, index) + chr + str.substr(index + 1);
 }
 
 
 function changeShipment(shopid)
 {
-    var total=parseFloat($("#originalTotal"+shopid).val());
-    
-    var cost=parseFloat($("#shipment_cost"+shopid).val());
-    if($("#shipment"+shopid).find('option:selected').attr('id')==-1)
-        total+=cost;
-    total=total.toFixed(2);
+    var total = parseFloat($("#originalTotal" + shopid).val());
+
+    var cost = parseFloat($("#shipment_cost" + shopid).val());
+    if ($("#shipment" + shopid).find('option:selected').attr('id') == -1)
+        total += cost;
+    total = total.toFixed(2);
     var i = total.lastIndexOf('.');
-    total=setCharAt(total,i,',');
-    
-    $("#total"+shopid).html("&euro; "+total);
-    
+    total = setCharAt(total, i, ',');
+
+    $("#total" + shopid).html("&euro; " + total);
+
 }
 
 function placeOrderCart(shopid)
 {
-    var data="?shopid="+shopid;
-    data+="&shipment="+$("#shipment"+shopid).find('option:selected').attr('id');
-    location.href="restricted/order/PlaceOrder"+data;
+    var data = "?shopid=" + shopid;
+    data += "&shipment=" + $("#shipment" + shopid).find('option:selected').attr('id');
+    location.href = "restricted/order/PlaceOrder" + data;
 }

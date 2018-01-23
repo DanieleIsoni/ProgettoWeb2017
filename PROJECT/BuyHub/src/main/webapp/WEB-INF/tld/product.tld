@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <taglib version="2.1" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd">
-  <tlib-version>1.0</tlib-version>
-  <short-name>pr</short-name>
-  <uri>/tlds/product</uri>
-  <!-- A validator verifies that the tags are used correctly at JSP
+    <tlib-version>1.0</tlib-version>
+    <short-name>pr</short-name>
+    <uri>/tlds/product</uri>
+    <!-- A validator verifies that the tags are used correctly at JSP
           translation time. Validator entries look like this: 
        <validator>
            <validator-class>com.mycompany.TagLibValidator</validator-class>
@@ -13,45 +13,45 @@
            </init-param>
        </validator>
     -->
-  <!-- A tag library can register Servlet Context event listeners in
+    <!-- A tag library can register Servlet Context event listeners in
          case it needs to react to such events. Listener entries look
          like this: 
       <listener>
           <listener-class>com.mycompany.TagLibListener</listener-class> 
       </listener>
     -->
-  <tag>
-    <name>category</name>
-    <tag-class>it.unitn.buyhub.tag.CategoryTaghandler</tag-class>
-    <body-content>empty</body-content>
-    <attribute>
+    <tag>
         <name>category</name>
-        <required>false</required>
-        <type>java.lang.int</type>
-     <rtexprvalue>true</rtexprvalue>    
-    </attribute>
-  </tag>
-  <tag>
-    <name>ReviewStars</name>
-    <tag-class>it.unitn.buyhub.tag.ReviewStarsTagHandler</tag-class>
-    <body-content>empty</body-content>
-    <attribute>
-      <name>value</name>
-      <required>true</required>
-      <rtexprvalue>true</rtexprvalue>
-      <type>java.lang.double</type>
-    </attribute>
-    <attribute>
-      <name>count</name>
-      <required>false</required>
-      <rtexprvalue>true</rtexprvalue>
-      <type>java.lang.int</type>
-    </attribute>
-    <attribute>
-      <name>label</name>
-      <required>false</required>
-      <rtexprvalue>true</rtexprvalue>
-      <type>java.lang.boolean</type>
-    </attribute>
-  </tag>
+        <tag-class>it.unitn.buyhub.tag.CategoryTaghandler</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>category</name>
+            <required>false</required>
+            <type>java.lang.int</type>
+            <rtexprvalue>true</rtexprvalue>    
+        </attribute>
+    </tag>
+    <tag>
+        <name>ReviewStars</name>
+        <tag-class>it.unitn.buyhub.tag.ReviewStarsTagHandler</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>value</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.double</type>
+        </attribute>
+        <attribute>
+            <name>count</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.int</type>
+        </attribute>
+        <attribute>
+            <name>label</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.boolean</type>
+        </attribute>
+    </tag>
 </taglib>

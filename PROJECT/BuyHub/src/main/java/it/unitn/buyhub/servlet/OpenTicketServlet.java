@@ -1,43 +1,29 @@
 package it.unitn.buyhub.servlet;
 
-import it.unitn.buyhub.dao.CoordinateDAO;
 import it.unitn.buyhub.dao.MessageDAO;
 import it.unitn.buyhub.dao.NotificationDAO;
 import it.unitn.buyhub.dao.OrderDAO;
-import it.unitn.buyhub.dao.ProductDAO;
-import it.unitn.buyhub.dao.ReviewDAO;
-import it.unitn.buyhub.dao.ShopDAO;
 import it.unitn.buyhub.dao.TicketDAO;
 import it.unitn.buyhub.dao.UserDAO;
-import it.unitn.buyhub.dao.entities.Message;
 import it.unitn.buyhub.dao.entities.Notification;
 import it.unitn.buyhub.dao.entities.Order;
-import it.unitn.buyhub.dao.entities.Product;
-import it.unitn.buyhub.dao.entities.Review;
-import it.unitn.buyhub.dao.entities.Shop;
 import it.unitn.buyhub.dao.entities.Ticket;
 import it.unitn.buyhub.dao.entities.User;
-import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.factories.DAOFactory;
 import it.unitn.buyhub.utils.Log;
 import it.unitn.buyhub.utils.Mailer;
 import it.unitn.buyhub.utils.PropertyHandler;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import javax.mail.Session;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  * Allow a user to open a ticket on a order
+ *
  * @author Matteo Battilana
  */
 public class OpenTicketServlet extends HttpServlet {
@@ -105,14 +91,12 @@ public class OpenTicketServlet extends HttpServlet {
                         Long id2 = ticketDao.insert(tnew);
                         tnew.setId(id2.intValue());
 
-
                         //SEND MAIL NEW TICKET
-
                         PropertyHandler ph = PropertyHandler.getInstance();
-                        String baseUrl= ph.getValue("baseUrl");
-                        Mailer.mail(ph.getValue("noreplyMail"), owner.getEmail(), "Opened ticket", "Opened ticket", baseUrl+"restricted/ticket.jsp?id=" + tnew.getId(), "Take a look on BuyHub");
-                        Mailer.mail(ph.getValue("noreplyMail"), order.getShop().getOwner().getEmail(), "Opened ticket", "Opened ticket", baseUrl+"restricted/ticket.jsp?id=" + tnew.getId(), "Take a look on BuyHub");
-                        Mailer.mailToAdmins(ph.getValue("noreplyMail"), "Opened ticket", "Opened ticket", baseUrl+"restricted/ticket.jsp?id=" + tnew.getId(), "Take a look on BuyHub", getServletContext());
+                        String baseUrl = ph.getValue("baseUrl");
+                        Mailer.mail(ph.getValue("noreplyMail"), owner.getEmail(), "Opened ticket", "Opened ticket", baseUrl + "restricted/ticket.jsp?id=" + tnew.getId(), "Take a look on BuyHub");
+                        Mailer.mail(ph.getValue("noreplyMail"), order.getShop().getOwner().getEmail(), "Opened ticket", "Opened ticket", baseUrl + "restricted/ticket.jsp?id=" + tnew.getId(), "Take a look on BuyHub");
+                        Mailer.mailToAdmins(ph.getValue("noreplyMail"), "Opened ticket", "Opened ticket", baseUrl + "restricted/ticket.jsp?id=" + tnew.getId(), "Take a look on BuyHub", getServletContext());
                         //ADD notification to shop
 
                         Notification not = new Notification();
@@ -126,8 +110,7 @@ public class OpenTicketServlet extends HttpServlet {
 
                     }
 
-
-                    response.sendRedirect(response.encodeRedirectURL(contextPath + "restricted/ticket.jsp?id="+tnew.getId()));
+                    response.sendRedirect(response.encodeRedirectURL(contextPath + "restricted/ticket.jsp?id=" + tnew.getId()));
                 }
                 response.sendRedirect(request.getHeader("referer"));
             }

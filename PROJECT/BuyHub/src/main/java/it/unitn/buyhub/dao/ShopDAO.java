@@ -5,11 +5,8 @@
  */
 package it.unitn.buyhub.dao;
 
-import it.unitn.buyhub.dao.*;
-import it.unitn.buyhub.dao.entities.Review;
 import it.unitn.buyhub.dao.entities.Shop;
 import it.unitn.buyhub.dao.entities.User;
-import it.unitn.buyhub.dao.persistence.DAO;
 import it.unitn.buyhub.dao.persistence.DAO;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import java.util.List;
@@ -37,8 +34,8 @@ public interface ShopDAO extends DAO<Shop, Integer> {
     public Long getCount() throws DAOException;
 
     /**
-     * Persists the new {@link Shop shops} passed as parameter to the
-     * storage system.
+     * Persists the new {@link Shop shops} passed as parameter to the storage
+     * system.
      *
      * @param shops the new {@code shops} to persist.
      * @return the id of the new persisted record.

@@ -1,22 +1,17 @@
 package it.unitn.buyhub.servlet;
 
-import it.unitn.buyhub.dao.CoordinateDAO;
 import it.unitn.buyhub.dao.ProductDAO;
 import it.unitn.buyhub.dao.ReviewDAO;
-import it.unitn.buyhub.dao.ShopDAO;
 import it.unitn.buyhub.dao.UserDAO;
 import it.unitn.buyhub.dao.entities.Product;
 import it.unitn.buyhub.dao.entities.Review;
-import it.unitn.buyhub.dao.entities.Shop;
 import it.unitn.buyhub.dao.entities.User;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.factories.DAOFactory;
 import it.unitn.buyhub.utils.Log;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Date;
-import javax.mail.Session;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Allow a user to send a review
+ *
  * @author Matteo Battilana
  */
 public class AddReviewServlet extends HttpServlet {

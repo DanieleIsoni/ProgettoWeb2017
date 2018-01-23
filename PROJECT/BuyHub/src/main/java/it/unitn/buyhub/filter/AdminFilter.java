@@ -24,8 +24,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * This filter allow only administrators to see the pages under restricted/admin directory
- * Redirect to login page if the user isn't administrator
+ * This filter allow only administrators to see the pages under restricted/admin
+ * directory Redirect to login page if the user isn't administrator
+ *
  * @author Massimo Girondi
  */
 public class AdminFilter implements Filter {
@@ -34,7 +35,7 @@ public class AdminFilter implements Filter {
 
     // The filter configuration object we are associated with.  If
     // this value is null, this filter instance is not currently
-    // configured. 
+    // configured.
     private FilterConfig filterConfig = null;
 
     public AdminFilter() {
@@ -53,7 +54,7 @@ public class AdminFilter implements Filter {
             if (session != null) {
                 user = (User) session.getAttribute("authenticatedUser");
             }
-            if (user == null || user.getCapability()<Utility.CAPABILITY.ADMIN.ordinal()) {
+            if (user == null || user.getCapability() < Utility.CAPABILITY.ADMIN.ordinal()) {
                 String contextPath = servletContext.getContextPath();
                 if (!contextPath.endsWith("/")) {
                     contextPath += "/";
@@ -241,6 +242,6 @@ public class AdminFilter implements Filter {
 
     public void log(String msg, Throwable throwable) {
         filterConfig.getServletContext().log(msg, throwable);
-        Log.error(msg+":"+throwable.getMessage());
+        Log.error(msg + ":" + throwable.getMessage());
     }
 }

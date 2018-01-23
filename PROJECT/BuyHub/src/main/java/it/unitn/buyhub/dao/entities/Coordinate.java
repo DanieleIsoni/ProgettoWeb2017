@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author matteo
+ * @author Matteo Battilana
  */
 public class Coordinate implements Serializable {
 
@@ -35,7 +35,6 @@ public class Coordinate implements Serializable {
     public void setShop(Shop shop) {
         this.shop = shop;
     }
-    
 
     public int getId() {
         return id;

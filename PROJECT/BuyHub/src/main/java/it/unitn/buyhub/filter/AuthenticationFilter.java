@@ -24,7 +24,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author matteo
+ * @author Matteo Battilana
  */
 public class AuthenticationFilter implements Filter {
 
@@ -32,7 +32,7 @@ public class AuthenticationFilter implements Filter {
 
     // The filter configuration object we are associated with.  If
     // this value is null, this filter instance is not currently
-    // configured. 
+    // configured.
     private FilterConfig filterConfig = null;
 
     public AuthenticationFilter() {
@@ -56,13 +56,14 @@ public class AuthenticationFilter implements Filter {
                 if (!contextPath.endsWith("/")) {
                     contextPath += "/";
                 }
-                
+
                 //Save the target url to redirect after login
-                HttpServletRequest req=((HttpServletRequest) request);
-                String qs="";
-                if(req.getQueryString()!=null)
-                    qs="?"+ req.getQueryString();
-                req.getSession().setAttribute("origin", req.getRequestURI()+qs);
+                HttpServletRequest req = ((HttpServletRequest) request);
+                String qs = "";
+                if (req.getQueryString() != null) {
+                    qs = "?" + req.getQueryString();
+                }
+                req.getSession().setAttribute("origin", req.getRequestURI() + qs);
                 //Log.info(((HttpServletRequest) request).getRequestURI());
                 ((HttpServletResponse) response).sendRedirect(((HttpServletResponse) response).encodeRedirectURL(contextPath + "login.jsp"));
                 return false;
@@ -247,6 +248,6 @@ public class AuthenticationFilter implements Filter {
 
     public void log(String msg, Throwable throwable) {
         filterConfig.getServletContext().log(msg, throwable);
-        Log.error(msg+":"+throwable.getMessage());
+        Log.error(msg + ":" + throwable.getMessage());
     }
 }

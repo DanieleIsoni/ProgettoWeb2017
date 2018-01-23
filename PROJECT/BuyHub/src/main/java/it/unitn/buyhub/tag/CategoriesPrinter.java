@@ -2,15 +2,15 @@ package it.unitn.buyhub.tag;
 
 import it.unitn.buyhub.utils.PropertyHandler;
 import it.unitn.buyhub.utils.Utility;
-import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
-import javax.servlet.jsp.tagext.JspFragment;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 
 /**
  * Tag to print the categories select dropdown
- * @author massimo
+ *
+ * @author Massimo Girondi
  */
 public class CategoriesPrinter extends SimpleTagSupport {
 
@@ -28,7 +28,7 @@ public class CategoriesPrinter extends SimpleTagSupport {
                 switch (style) {
 
                     case "select":
-                        if(selected == i){
+                        if (selected == i) {
                             out.println("<option value=\"" + i + "\" selected=\"selected\">" + Utility.getCategory(pageContext, i) + "</option>");
                         } else {
                             out.println("<option value=\"" + i + "\">" + Utility.getCategory(pageContext, i) + "</option>");

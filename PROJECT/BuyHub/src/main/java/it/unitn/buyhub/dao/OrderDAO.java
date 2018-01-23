@@ -5,12 +5,7 @@
  */
 package it.unitn.buyhub.dao;
 
-import it.unitn.buyhub.dao.*;
 import it.unitn.buyhub.dao.entities.Order;
-import it.unitn.buyhub.dao.entities.Shop;
-import it.unitn.buyhub.dao.entities.Order;
-import it.unitn.buyhub.dao.entities.Order;
-import it.unitn.buyhub.dao.persistence.DAO;
 import it.unitn.buyhub.dao.persistence.DAO;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import java.util.List;
@@ -25,8 +20,8 @@ import java.util.List;
 public interface OrderDAO extends DAO<Order, Integer> {
 
     /**
-     * Returns the number of {@link Order orders} stored on the persistence system
-     * of the application.
+     * Returns the number of {@link Order orders} stored on the persistence
+     * system of the application.
      *
      * @return the number of records present into the storage system.
      * @throws DAOException if an error occurred during the information
@@ -46,7 +41,7 @@ public interface OrderDAO extends DAO<Order, Integer> {
      * @throws DAOException if an error occurred during the persist action.
      *
      * @author Massimo Girondi
-     * 
+     *
      */
     public Long insert(Order order) throws DAOException;
 
@@ -62,16 +57,17 @@ public interface OrderDAO extends DAO<Order, Integer> {
      * retrieving.
      *
      * @author Massimo Girondi
-     * 
+     *
      */
     @Override
     public Order getByPrimaryKey(Integer primaryKey) throws DAOException;
 
-        /**
-     * Returns the {@link Order order} with the user equals to the one
-     * passed as parameter.
+    /**
+     * Returns the {@link Order order} with the user equals to the one passed as
+     * parameter.
      *
-     * @param primaryKey the {@code id} of the {@user  user} to get.
+     * @param primaryKey the {@code id} of the {
+     * @user user} to get.
      * @return the {@code order} with the id equals to the one passed as
      * parameter or {@code null} if no entities with that id is not present into
      * the storage system.
@@ -79,12 +75,9 @@ public interface OrderDAO extends DAO<Order, Integer> {
      * retrieving.
      *
      * @author Massimo Girondi
-     * 
+     *
      */
-    
     public List<Order> getByUser(Integer primaryKey) throws DAOException;
-
-
 
     /**
      * Returns the list of all the valid {@link Order orders} stored by the
@@ -95,11 +88,10 @@ public interface OrderDAO extends DAO<Order, Integer> {
      * retrieving.
      *
      * @author Massimo Girondi
-     * 
+     *
      */
     @Override
     public List<Order> getAll() throws DAOException;
-
 
     /**
      * Update the order passed as parameter and returns it.
@@ -109,18 +101,17 @@ public interface OrderDAO extends DAO<Order, Integer> {
      * @throws DAOException if an error occurred during the action.
      *
      * @author Massimo Girondi
-     * 
+     *
      */
     @Override
     public Order update(Order order) throws DAOException;
-    
-    
-    
-        /**
-     * Returns the {@link Order order} with the shop equals to the one
-     * passed as parameter.
+
+    /**
+     * Returns the {@link Order order} with the shop equals to the one passed as
+     * parameter.
      *
-     * @param primaryKey the {@code id} of the {@shop shop} to get.
+     * @param primaryKey the {@code id} of the {
+     * @shop shop} to get.
      * @return the {@code order} with the id equals to the one passed as
      * parameter or {@code null} if no entities with that id is not present into
      * the storage system.
@@ -128,8 +119,8 @@ public interface OrderDAO extends DAO<Order, Integer> {
      * retrieving.
      *
      * @author Massimo Girondi
-     * 
+     *
      */
     public List<Order> getByShop(Integer primaryKey) throws DAOException;
-            
+
 }

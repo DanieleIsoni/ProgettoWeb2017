@@ -2,7 +2,6 @@ package it.unitn.buyhub.servlet.user;
 
 import it.unitn.buyhub.dao.CoordinateDAO;
 import it.unitn.buyhub.dao.ShopDAO;
-import it.unitn.buyhub.dao.UserDAO;
 import it.unitn.buyhub.dao.entities.Coordinate;
 import it.unitn.buyhub.dao.entities.Shop;
 import it.unitn.buyhub.dao.entities.User;
@@ -13,8 +12,6 @@ import it.unitn.buyhub.utils.Log;
 import it.unitn.buyhub.utils.Mailer;
 import it.unitn.buyhub.utils.PropertyHandler;
 import java.io.IOException;
-import java.io.PrintWriter;
-import javax.mail.Session;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Servlet to allow the creation of new shops
+ *
  * @author Daniso
  */
 public class CreateNewShopServlet extends HttpServlet {
@@ -74,11 +72,11 @@ public class CreateNewShopServlet extends HttpServlet {
         }
 
         try {
-            if(name != null && !name.equals("") &&
-                    description != null && !description.equals("") &&
-                    website != null && !website.equals("") &&
-                    shipment != null && !shipment.equals("") &&
-                    owner != null ){
+            if (name != null && !name.equals("")
+                    && description != null && !description.equals("")
+                    && website != null && !website.equals("")
+                    && shipment != null && !shipment.equals("")
+                    && owner != null) {
                 Shop newShop = new Shop();
                 newShop.setDescription(description);
                 newShop.setName(name);
@@ -88,14 +86,14 @@ public class CreateNewShopServlet extends HttpServlet {
                 newShop.setShipment(shipment);
                 newShop.setShipment_cost(shipment_costs);
                 Long shop_id = shopDao.insert(newShop);
-                if (shop_id == 0){
+                if (shop_id == 0) {
                     Log.warn("Shop name already used");
                     response.sendRedirect(response.encodeRedirectURL(contextPath + "createNewShop.jsp?error=1"));
                 } else {
                     Log.info("Shop inserted correctly");
                     newShop.setId(shop_id.intValue());
-                    if(address != null && !address.equals("") &&
-                            openingHours != null && !openingHours.equals("")){
+                    if (address != null && !address.equals("")
+                            && openingHours != null && !openingHours.equals("")) {
                         Coordinate newcoordinate = new Coordinate();
                         newcoordinate.setAddress(address);
                         newcoordinate.setOpening_hours(openingHours);
@@ -103,25 +101,24 @@ public class CreateNewShopServlet extends HttpServlet {
                         newcoordinate.setLatitude(Double.valueOf(latitude));
                         newcoordinate.setLongitude(Double.valueOf(longitude));
                         Long coordinate_id = coordinateDao.insert(newcoordinate);
-                        if (coordinate_id == 0){
+                        if (coordinate_id == 0) {
                             Log.warn("Coordinate not inserted in Database");
                         } else {
                             Log.info("Coordinates inserted correctly");
                         }
                     }
                 }
-                String msg="Dear admin,\n<br/> a new shop has been created and need to be validated";
-                String linkMail = PropertyHandler.getInstance().getValue("baseUrl")+"restricted/admin/shops";
-                Mailer.mailToAdmins(PropertyHandler.getInstance().getValue("noreplyMail"), "New shop created", msg, linkMail,"Go to Shops Manager", super.getServletContext());
+                String msg = "Dear admin,\n<br/> a new shop has been created and need to be validated";
+                String linkMail = PropertyHandler.getInstance().getValue("baseUrl") + "restricted/admin/shops";
+                Mailer.mailToAdmins(PropertyHandler.getInstance().getValue("noreplyMail"), "New shop created", msg, linkMail, "Go to Shops Manager", super.getServletContext());
 
                 response.sendRedirect(contextPath + "restricted/myself.jsp");
             }
         } catch (DAOException ex) {
 
-            Log.error("Error creating shop "+ ex);
+            Log.error("Error creating shop " + ex);
         }
     }
-
 
     /**
      * Handles the HTTP <code>GET</code> method.

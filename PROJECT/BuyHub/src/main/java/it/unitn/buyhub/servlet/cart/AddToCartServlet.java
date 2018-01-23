@@ -1,10 +1,7 @@
 package it.unitn.buyhub.servlet.cart;
 
 import it.unitn.buyhub.dao.entities.Cart;
-import it.unitn.buyhub.dao.entities.User;
-import it.unitn.buyhub.utils.Log;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,9 +9,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * THis servlet add a product to session cart
- * It is connected to a button from the cart page
- * @author matteo
+ * THis servlet add a product to session cart It is connected to a button from
+ * the cart page
+ *
+ * @author Matteo Battilana
  */
 public class AddToCartServlet extends HttpServlet {
 

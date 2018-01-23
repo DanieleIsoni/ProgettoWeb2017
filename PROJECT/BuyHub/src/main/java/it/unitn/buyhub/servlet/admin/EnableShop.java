@@ -1,36 +1,25 @@
 package it.unitn.buyhub.servlet.admin;
 
-import it.unitn.buyhub.dao.CoordinateDAO;
-import it.unitn.buyhub.dao.PictureDAO;
-import it.unitn.buyhub.dao.ProductDAO;
-import it.unitn.buyhub.dao.ReviewDAO;
 import it.unitn.buyhub.dao.ShopDAO;
 import it.unitn.buyhub.dao.UserDAO;
-import it.unitn.buyhub.dao.entities.Coordinate;
-import it.unitn.buyhub.dao.entities.Picture;
-import it.unitn.buyhub.dao.entities.Product;
-import it.unitn.buyhub.dao.entities.Review;
 import it.unitn.buyhub.dao.entities.Shop;
 import it.unitn.buyhub.dao.entities.User;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.factories.DAOFactory;
 import it.unitn.buyhub.utils.Log;
-import it.unitn.buyhub.utils.Mailer;
 import it.unitn.buyhub.utils.Utility;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.List;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.jsp.PageContext;
+
 /**
- * This servlet changes the status of a shop from enabled to disable and viceversa
- * It changes also the capability of the associated user
- * @author massimo
+ * This servlet changes the status of a shop from enabled to disable and
+ * viceversa It changes also the capability of the associated user
+ *
+ * @author Massimo Girondi
  */
 public class EnableShop extends HttpServlet {
 
@@ -49,10 +38,8 @@ public class EnableShop extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-
-
-
     }
+
     public void init() throws ServletException {
         DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
         if (daoFactory == null) {
@@ -70,7 +57,6 @@ public class EnableShop extends HttpServlet {
         //Log.info("EnableShop init done");
     }
 
-
     protected void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String contextPath = getServletContext().getContextPath();
@@ -79,45 +65,41 @@ public class EnableShop extends HttpServlet {
         }
         try {
 
-            if(request.getParameter("id")!=null && request.getParameter("status")!=null)
-            {
-                int id=Integer.parseInt(request.getParameter("id"));
-                char status=request.getParameter("status").charAt(0);
-
+            if (request.getParameter("id") != null && request.getParameter("status") != null) {
+                int id = Integer.parseInt(request.getParameter("id"));
+                char status = request.getParameter("status").charAt(0);
 
                 Shop shop = shopDAO.getByPrimaryKey(id);
-                shop.setValidity(status=='1'? 1 : 0);//if not 1 is false-> don't enable shop
+                shop.setValidity(status == '1' ? 1 : 0);//if not 1 is false-> don't enable shop
 
-                if(status=='1' && shop.getOwner().getCapability()<Utility.CAPABILITY.SHOP.ordinal())
-                {
-                    User u=shop.getOwner();
+                if (status == '1' && shop.getOwner().getCapability() < Utility.CAPABILITY.SHOP.ordinal()) {
+                    User u = shop.getOwner();
                     u.setCapability(Utility.CAPABILITY.SHOP.ordinal());
                     userDAO.update(u);
-                    Log.info("User "+id+" promoted to shop user ");
+                    Log.info("User " + id + " promoted to shop user ");
 
                 }
 
                 shopDAO.update(shop);
-                Log.info("Shop "+id+": validity set to "+status);
+                Log.info("Shop " + id + ": validity set to " + status);
 
                 response.sendRedirect(response.encodeRedirectURL("shops"));
             }
 
-
         } catch (DAOException ex) {
-            Log.error("Error getting product "+ ex.toString());
+            Log.error("Error getting product " + ex.toString());
             response.sendRedirect(response.encodeRedirectURL(contextPath + "../../common/error.jsp"));
         }
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-      process(req,resp);
+        process(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-      process(req,resp);
+        process(req, resp);
     }
 
 }

@@ -6,11 +6,10 @@
 package it.unitn.buyhub.dao.entities;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  *
- * @author matteo
+ * @author Matteo Battilana
  */
 public class Message implements Serializable {
 
@@ -51,5 +50,4 @@ public class Message implements Serializable {
         this.content = content;
     }
 
-    
 }

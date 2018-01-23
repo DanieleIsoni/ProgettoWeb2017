@@ -5,11 +5,9 @@
  */
 package it.unitn.buyhub.dao;
 
-import it.unitn.buyhub.dao.*;
 import it.unitn.buyhub.dao.entities.Product;
 import it.unitn.buyhub.dao.entities.Review;
 import it.unitn.buyhub.dao.entities.User;
-import it.unitn.buyhub.dao.persistence.DAO;
 import it.unitn.buyhub.dao.persistence.DAO;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import java.util.List;

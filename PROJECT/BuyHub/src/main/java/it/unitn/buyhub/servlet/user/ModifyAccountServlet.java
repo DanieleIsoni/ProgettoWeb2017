@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Allow the modification of user's password
+ *
  * @author Daniele Isoni
  */
 public class ModifyAccountServlet extends HttpServlet {
@@ -66,12 +67,12 @@ public class ModifyAccountServlet extends HttpServlet {
             user.setPassword(MD5.getMD5Hex(newPassword));
             try {
                 userDao.update(user);
-                Log.info("User "+ user.getId() + " updated");
+                Log.info("User " + user.getId() + " updated");
                 response.sendRedirect(response.encodeRedirectURL(contextPath + "restricted/myself.jsp"));
             } catch (DAOException ex) {
                 Log.error("Error updating user");
             }
-        } else if (newPassword!=null && newPassword2!=null && !newPassword.equals(newPassword2)) {
+        } else if (newPassword != null && newPassword2 != null && !newPassword.equals(newPassword2)) {
             //Wrong new password
             response.sendRedirect(response.encodeRedirectURL(contextPath + "restricted/modifyAccount.jsp?error=1"));
 

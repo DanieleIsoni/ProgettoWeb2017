@@ -6,10 +6,8 @@
 package it.unitn.buyhub.dao.jdbc;
 
 import it.unitn.buyhub.dao.*;
-import it.unitn.buyhub.dao.entities.Message;
 import it.unitn.buyhub.dao.entities.Notification;
 import it.unitn.buyhub.dao.entities.User;
-import it.unitn.buyhub.dao.persistence.DAO;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.jdbc.JDBCDAO;

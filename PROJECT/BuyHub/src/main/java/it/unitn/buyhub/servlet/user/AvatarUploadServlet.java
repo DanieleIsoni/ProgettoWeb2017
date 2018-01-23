@@ -1,6 +1,5 @@
 package it.unitn.buyhub.servlet.user;
 
-
 import it.unitn.buyhub.dao.UserDAO;
 import it.unitn.buyhub.dao.entities.User;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
@@ -23,7 +22,8 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 /**
  * With this servlet a user can upload his avatar picture
- * @author maxgiro96
+ *
+ * @author Massimo Girondi
  */
 public class AvatarUploadServlet extends HttpServlet {
 
@@ -46,16 +46,13 @@ public class AvatarUploadServlet extends HttpServlet {
 //        Log.info("AvatUploadServlet init done");
     }
 
-
-
-
-        // location to store file uploaded
+    // location to store file uploaded
     private static final String UPLOAD_DIRECTORY = "upload";
 
     // upload settings
-    private static final int MEMORY_THRESHOLD   = 1024 * 1024 * 3;  // 3MB
-    private static final int MAX_FILE_SIZE      = 1024 * 1024 * 40; // 40MB
-    private static final int MAX_REQUEST_SIZE   = 1024 * 1024 * 50; // 50MB
+    private static final int MEMORY_THRESHOLD = 1024 * 1024 * 3;  // 3MB
+    private static final int MAX_FILE_SIZE = 1024 * 1024 * 40; // 40MB
+    private static final int MAX_REQUEST_SIZE = 1024 * 1024 * 50; // 50MB
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -68,7 +65,6 @@ public class AvatarUploadServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
 
         User user = (User) request.getSession().getAttribute("authenticatedUser");
         String contextPath = getServletContext().getContextPath();
@@ -87,7 +83,6 @@ public class AvatarUploadServlet extends HttpServlet {
             return;
 
         }
-
 
         // configures upload settings
         DiskFileItemFactory factory = new DiskFileItemFactory();
@@ -110,37 +105,34 @@ public class AvatarUploadServlet extends HttpServlet {
                 // iterates over form's fields
                 //use iterator version with flag to avoid remove just submitted avatar (user press remove and upload at same time)
                 //for (FileItem item : formItems) {
-                boolean done=false;
+                boolean done = false;
                 for (Iterator<FileItem> iterator = formItems.iterator(); iterator.hasNext() && !done;) {
                     FileItem item = iterator.next();
                     // processes only fields that are not form fields
-                    if (!item.isFormField() && item.getFieldName().equals("avatar") && item.getSize()>0) {
+                    if (!item.isFormField() && item.getFieldName().equals("avatar") && item.getSize() > 0) {
                         String fileName = new File(item.getName()).getName();
 
-                        Utility.saveJPEG(item.getInputStream(),"avatars/"+user.getUsername());
-                        user.setAvatar("UploadedContent/avatars/"+user.getUsername()+".jpg");
+                        Utility.saveJPEG(item.getInputStream(), "avatars/" + user.getUsername());
+                        user.setAvatar("UploadedContent/avatars/" + user.getUsername() + ".jpg");
                         userDao.update(user);
-                        Log.info("User "+user.getUsername()+" changed avatar image");
-                        done=true;
+                        Log.info("User " + user.getUsername() + " changed avatar image");
+                        done = true;
                         response.sendRedirect(response.encodeRedirectURL(contextPath + "restricted/myself.jsp"));
 
-                    }
-                    else  if(item.isFormField() && item.getFieldName().equals("remove"))
-                    {
+                    } else if (item.isFormField() && item.getFieldName().equals("remove")) {
                         //RIMOZIONE AVATAR
                         user.setAvatar("images/noimage.png");
                         try {
                             userDao.update(user);
                         } catch (DAOException ex) {
 
-                        Log.error("User "+user.getUsername()+" error removing avatar "+ex.getMessage());
-                        response.sendRedirect(response.encodeRedirectURL(contextPath + "common/error.jsp"));
+                            Log.error("User " + user.getUsername() + " error removing avatar " + ex.getMessage());
+                            response.sendRedirect(response.encodeRedirectURL(contextPath + "common/error.jsp"));
 
                         }
-                        Log.info("User "+user.getUsername()+" removed avatar");
-                        done=true;
+                        Log.info("User " + user.getUsername() + " removed avatar");
+                        done = true;
                         response.sendRedirect(response.encodeRedirectURL(contextPath + "restricted/myself.jsp"));
-
 
                     }
                 }
@@ -148,9 +140,8 @@ public class AvatarUploadServlet extends HttpServlet {
 
             response.sendRedirect(response.encodeRedirectURL(contextPath + "restricted/myself.jsp"));
 
-
         } catch (Exception ex) {
-           Log.error("Error in avatar upload:"+ ex.getMessage());
+            Log.error("Error in avatar upload:" + ex.getMessage());
 
         }
 

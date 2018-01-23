@@ -1,7 +1,7 @@
 <%--
     Document   : product
     Created on : 10-lug-2017, 09.56.05
-    Author     : massimo
+    Author     : Massimo Girondi
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

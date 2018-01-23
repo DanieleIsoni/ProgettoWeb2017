@@ -6,13 +6,9 @@
 package it.unitn.buyhub.dao.jdbc;
 
 import it.unitn.buyhub.dao.*;
-import it.unitn.buyhub.dao.entities.Coordinate;
 import it.unitn.buyhub.dao.entities.Message;
 import it.unitn.buyhub.dao.entities.Order;
-import it.unitn.buyhub.dao.entities.Review;
 import it.unitn.buyhub.dao.entities.Ticket;
-import it.unitn.buyhub.dao.entities.User;
-import it.unitn.buyhub.dao.persistence.DAO;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.jdbc.JDBCDAO;
@@ -21,9 +17,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -88,7 +82,7 @@ public class JDBCTicketDAO extends JDBCDAO<Ticket, Integer> implements TicketDAO
         try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM tickets WHERE id = ?")) {
             stm.setInt(1, primaryKey);
             try (ResultSet rs = stm.executeQuery()) {
-                
+
                 Ticket tick = new Ticket();
                 rs.next();
                 tick.setId(rs.getInt("id"));
@@ -97,17 +91,12 @@ public class JDBCTicketDAO extends JDBCDAO<Ticket, Integer> implements TicketDAO
                 OrderDAO orderDAO = getDAO(OrderDAO.class);
                 tick.setOrder(orderDAO.getByPrimaryKey(rs.getInt("order_id")));
 
-               
                 return tick;
             }
         } catch (SQLException | DAOFactoryException ex) {
             throw new DAOException("Impossible to get the coordinates for the passed primary key", ex);
         }
     }
-
-    
-
-   
 
     /**
      * Returns the list of all the valid {@link Message messages} stored by the
@@ -134,8 +123,6 @@ public class JDBCTicketDAO extends JDBCDAO<Ticket, Integer> implements TicketDAO
                 //Get orderDAO associate
                 OrderDAO orderDAO = getDAO(OrderDAO.class);
                 tick.setOrder(orderDAO.getByPrimaryKey(rs.getInt("order_id")));
-
-               
 
                 messages.add(tick);
             }
@@ -211,16 +198,15 @@ public class JDBCTicketDAO extends JDBCDAO<Ticket, Integer> implements TicketDAO
         }
     }
 
-
     @Override
     public Ticket getByOrder(Order order) throws DAOException {
-         if (order == null) {
+        if (order == null) {
             throw new DAOException("order is null");
         }
         try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM tickets WHERE order_id = ?")) {
             stm.setInt(1, order.getId());
             try (ResultSet rs = stm.executeQuery()) {
-                
+
                 Ticket tick = new Ticket();
                 rs.next();
                 tick.setId(rs.getInt("id"));
@@ -229,7 +215,6 @@ public class JDBCTicketDAO extends JDBCDAO<Ticket, Integer> implements TicketDAO
                 OrderDAO orderDAO = getDAO(OrderDAO.class);
                 tick.setOrder(orderDAO.getByPrimaryKey(rs.getInt("order_id")));
 
-               
                 return tick;
             }
         } catch (SQLException | DAOFactoryException ex) {

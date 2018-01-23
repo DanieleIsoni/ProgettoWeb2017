@@ -1,44 +1,28 @@
 package it.unitn.buyhub.tag;
 
 import it.unitn.buyhub.dao.NotificationDAO;
-import it.unitn.buyhub.dao.UserDAO;
 import it.unitn.buyhub.dao.entities.Cart;
 import it.unitn.buyhub.dao.entities.Notification;
 import it.unitn.buyhub.dao.entities.User;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.factories.DAOFactory;
+import it.unitn.buyhub.utils.Utility;
 import java.io.IOException;
-import java.io.StringWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspTagException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
-import javax.servlet.jsp.jstl.fmt.LocaleSupport;
-import javax.servlet.jsp.jstl.fmt.LocalizationContext;
-import javax.servlet.jsp.tagext.JspFragment;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
-import static javax.servlet.jsp.tagext.Tag.EVAL_PAGE;
-import org.apache.taglibs.standard.tag.common.fmt.BundleSupport;
-import it.unitn.buyhub.utils.Utility;
-
 
 /**
-* Tag used to render the navigation bar
-* @author Matteo Battilana
-*/
+ * Tag used to render the navigation bar
+ *
+ * @author Matteo Battilana
+ */
 public class NavbarTagHandler extends SimpleTagSupport {
 
     PageContext pageContext;
@@ -96,7 +80,8 @@ public class NavbarTagHandler extends SimpleTagSupport {
 
             }
         } catch (IOException es) {
-            es.printStackTrace();
+            throw new JspException("There was an error during taghandler");
+            //es.printStackTrace();
         }
 
     }

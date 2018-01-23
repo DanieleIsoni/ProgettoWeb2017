@@ -5,11 +5,7 @@
  */
 package it.unitn.buyhub.dao;
 
-import it.unitn.buyhub.dao.*;
-import it.unitn.buyhub.dao.entities.Shop;
 import it.unitn.buyhub.dao.entities.User;
-import it.unitn.buyhub.dao.entities.User;
-import it.unitn.buyhub.dao.persistence.DAO;
 import it.unitn.buyhub.dao.persistence.DAO;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import java.util.List;
@@ -96,7 +92,7 @@ public interface UserDAO extends DAO<User, Integer> {
     @Override
     public List<User> getAll() throws DAOException;
 
-        /**
+    /**
      * Returns the list of all the valid {@link User users} stored by the
      * storage system that have admin privileges.
      *
@@ -108,6 +104,7 @@ public interface UserDAO extends DAO<User, Integer> {
      * @since 1.0.171001
      */
     public List<User> getAdmins() throws DAOException;
+
     /**
      * Update the user passed as parameter and returns it.
      *
@@ -120,8 +117,8 @@ public interface UserDAO extends DAO<User, Integer> {
      */
     @Override
     public User update(User user) throws DAOException;
-    
-        /**
+
+    /**
      * Returns the {@link User user} with the mail given (if present)
      *
      * @param mail the {@code mail} of the {@code user} to get.
@@ -134,7 +131,6 @@ public interface UserDAO extends DAO<User, Integer> {
      * @author Massimo Girondi
      * @since 1.0.171018
      */
-    
     public User getByEmail(String mail) throws DAOException;
 
 }

@@ -5,9 +5,7 @@
  */
 package it.unitn.buyhub.dao;
 
-import it.unitn.buyhub.dao.entities.Coordinate;
 import it.unitn.buyhub.dao.entities.Message;
-import it.unitn.buyhub.dao.entities.Review;
 import it.unitn.buyhub.dao.entities.Ticket;
 import it.unitn.buyhub.dao.entities.User;
 import it.unitn.buyhub.dao.persistence.DAO;
@@ -80,10 +78,9 @@ public interface MessageDAO extends DAO<Message, Integer> {
      * @since 1.0.170425
      */
     public List<Message> getByOwner(User owner) throws DAOException;
-    
+
     public List<Message> getByTicket(Ticket ticket) throws DAOException;
 
-   
     @Override
     public List<Message> getAll() throws DAOException;
 

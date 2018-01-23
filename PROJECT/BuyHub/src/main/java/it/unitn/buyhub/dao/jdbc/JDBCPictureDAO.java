@@ -6,15 +6,11 @@
 package it.unitn.buyhub.dao.jdbc;
 
 import it.unitn.buyhub.dao.*;
-import it.unitn.buyhub.dao.*;
-import it.unitn.buyhub.dao.entities.Notification;
 import it.unitn.buyhub.dao.entities.Picture;
 import it.unitn.buyhub.dao.entities.Product;
 import it.unitn.buyhub.dao.entities.Review;
 import it.unitn.buyhub.dao.entities.Shop;
 import it.unitn.buyhub.dao.entities.User;
-import it.unitn.buyhub.dao.persistence.DAO;
-import it.unitn.buyhub.dao.persistence.DAO;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.jdbc.JDBCDAO;
@@ -23,9 +19,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -256,7 +250,7 @@ public class JDBCPictureDAO extends JDBCDAO<Picture, Integer> implements Picture
                     //Get user associate
                     UserDAO userDao = getDAO(UserDAO.class);
                     picture.setOwner(userDao.getByPrimaryKey(rs.getInt("id_owner")));
-                     
+
                     pictures.add(picture);
                 }
 
@@ -264,9 +258,9 @@ public class JDBCPictureDAO extends JDBCDAO<Picture, Integer> implements Picture
         } catch (SQLException | DAOFactoryException ex) {
             System.out.println(ex.toString());
             throw new DAOException("Impossible to get the pictures from product", ex);
-            
+
         }
-            
+
         return pictures;
     }
 
@@ -331,7 +325,7 @@ public class JDBCPictureDAO extends JDBCDAO<Picture, Integer> implements Picture
             throw new DAOException("shop is null");
         }
         try (PreparedStatement stm = CON.prepareStatement("SELECT pi.* FROM pictures pi, pictures_shops pp WHERE pi.id = pp.id_picture AND pp.id_shop = ?")) {
-      
+
             stm.setInt(1, shop.getId());
             try (ResultSet rs = stm.executeQuery()) {
                 while (rs.next()) {
@@ -403,10 +397,9 @@ public class JDBCPictureDAO extends JDBCDAO<Picture, Integer> implements Picture
         }
     }
 
-    
     @Override
     public long insertProductPicture(Product pr, Picture picture) throws DAOException {
-        Long pictureId=insert(picture);
+        Long pictureId = insert(picture);
         try (PreparedStatement ps = CON.prepareStatement("INSERT INTO pictures_products (id_product, id_picture) VALUES (?,?)", Statement.RETURN_GENERATED_KEYS)) {
             ps.setLong(1, pr.getId());
             ps.setLong(2, pictureId);
@@ -435,7 +428,7 @@ public class JDBCPictureDAO extends JDBCDAO<Picture, Integer> implements Picture
                 }
                 throw new DAOException("Impossible to persist the new pictures");
             }
-     */
+             */
         } catch (SQLException ex) {
             try {
                 CON.rollback();

@@ -5,7 +5,6 @@
  */
 package it.unitn.buyhub.dao;
 
-import it.unitn.buyhub.dao.entities.Message;
 import it.unitn.buyhub.dao.entities.Notification;
 import it.unitn.buyhub.dao.entities.User;
 import it.unitn.buyhub.dao.persistence.DAO;

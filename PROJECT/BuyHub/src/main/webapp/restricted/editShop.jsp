@@ -1,14 +1,14 @@
 <%-- 
     Document   : editShop
     Created on : Nov 6, 2017, 12:03:47 PM
-    Author     : Daniso
+    Author     : Daniele Isoni
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
-         <%@include file="../common/header.jsp" %>
+        <%@include file="../common/header.jsp" %>
         <title><fmt:message key="editShop_title"/> - BuyHub</title>
     </head>
     <body>

@@ -5,32 +5,22 @@
  */
 package it.unitn.buyhub.dao.jdbc;
 
-import com.mysql.cj.core.conf.url.ConnectionUrlParser;
 import info.debatty.java.stringsimilarity.JaroWinkler;
 import it.unitn.buyhub.dao.*;
-import it.unitn.buyhub.dao.*;
-import it.unitn.buyhub.dao.entities.Notification;
 import it.unitn.buyhub.dao.entities.Picture;
 import it.unitn.buyhub.dao.entities.Product;
-import it.unitn.buyhub.dao.entities.Review;
 import it.unitn.buyhub.dao.entities.Shop;
-import it.unitn.buyhub.dao.entities.User;
-import it.unitn.buyhub.dao.persistence.DAO;
-import it.unitn.buyhub.dao.persistence.DAO;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.jdbc.JDBCDAO;
 import it.unitn.buyhub.utils.Log;
 import it.unitn.buyhub.utils.Pair;
-import it.unitn.buyhub.utils.Utility;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -215,8 +205,8 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
                 return product;
             }
         } catch (SQLException | DAOFactoryException ex) {
-             Logger.getLogger("test").log(Level.SEVERE, null, ex);
-            
+            Logger.getLogger("test").log(Level.SEVERE, null, ex);
+
             throw new DAOException("Impossible to get the product for the passed primary key", ex);
         }
     }
@@ -314,7 +304,7 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
                     product.setMainPicture(pictures.size() > 0 ? pictures.get(0) : Picture.NONE());
 
                     //test di funzionamento
-                    /*     Picture picture=new Picture(); 
+                    /*     Picture picture=new Picture();
                 picture.setPath("images/noimage.png");
                 product.setMainPicture(picture);*/
                     products.add(product);
@@ -370,7 +360,7 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
                     product.setMainPicture(pictures.size() > 0 ? pictures.get(0) : Picture.NONE());
 
                     //test di funzionamento
-                    /*     Picture picture=new Picture(); 
+                    /*     Picture picture=new Picture();
                 picture.setPath("images/noimage.png");
                 product.setMainPicture(picture);*/
                     products.add(product);
@@ -530,21 +520,21 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
             JaroWinkler jw = new JaroWinkler();
             for (Product p : all) {
                 if (jw.similarity(name, p.getName()) > 0.6) {
-                    filtered.add(p);                }
+                    filtered.add(p);
+                }
             }
         }
         return filtered;
     }
-    public Pair getAvgreview(int id) throws DAOException
-    {
-        Pair<Double,Integer> p=null;
-        try (PreparedStatement stm = CON.prepareStatement
-                (//"SELECT AVG((r.global_value+r.quality+r.service+r.value_for_money)/4) AS avg, COUNT(r.id) AS c " +
-                "SELECT AVG(r.global_value) AS avg, COUNT(r.id) AS c "+
-                "FROM reviews r " +
-                "JOIN products p " +
-                "ON p.id=r.id_product " +
-                "WHERE p.id = ?")) {
+
+    public Pair getAvgreview(int id) throws DAOException {
+        Pair<Double, Integer> p = null;
+        try (PreparedStatement stm = CON.prepareStatement(//"SELECT AVG((r.global_value+r.quality+r.service+r.value_for_money)/4) AS avg, COUNT(r.id) AS c " +
+                "SELECT AVG(r.global_value) AS avg, COUNT(r.id) AS c "
+                + "FROM reviews r "
+                + "JOIN products p "
+                + "ON p.id=r.id_product "
+                + "WHERE p.id = ?")) {
             stm.setInt(1, id);
 
             try (ResultSet rs = stm.executeQuery()) {

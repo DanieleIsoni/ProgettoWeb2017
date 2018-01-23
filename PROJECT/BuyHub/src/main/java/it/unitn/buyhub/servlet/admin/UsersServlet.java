@@ -1,36 +1,24 @@
 package it.unitn.buyhub.servlet.admin;
 
-import it.unitn.buyhub.dao.CoordinateDAO;
-import it.unitn.buyhub.dao.PictureDAO;
-import it.unitn.buyhub.dao.ProductDAO;
-import it.unitn.buyhub.dao.ReviewDAO;
 import it.unitn.buyhub.dao.UserDAO;
-import it.unitn.buyhub.dao.UserDAO;
-import it.unitn.buyhub.dao.entities.Coordinate;
-import it.unitn.buyhub.dao.entities.Picture;
-import it.unitn.buyhub.dao.entities.Product;
-import it.unitn.buyhub.dao.entities.Review;
 import it.unitn.buyhub.dao.entities.User;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.factories.DAOFactory;
 import it.unitn.buyhub.utils.Log;
-import it.unitn.buyhub.utils.Mailer;
-import it.unitn.buyhub.utils.Utility;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.jsp.PageContext;
+
 /**
  *
-
-  * Servlet that retrieves the data for the administrative users page
- * @author massimo
+ *
+ * Servlet that retrieves the data for the administrative users page
+ *
+ * @author Massimo Girondi
  */
 public class UsersServlet extends HttpServlet {
 
@@ -48,10 +36,8 @@ public class UsersServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-
-
-
     }
+
     public void init() throws ServletException {
         DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
         if (daoFactory == null) {
@@ -68,7 +54,6 @@ public class UsersServlet extends HttpServlet {
 //        Log.info("UsersServlet init done");
     }
 
-
     protected void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String contextPath = getServletContext().getContextPath();
@@ -76,28 +61,27 @@ public class UsersServlet extends HttpServlet {
             contextPath += "/";
         }
 
-
         try {
 
-           List<User> users=userDAO.getAll();
-           request.setAttribute("users", users);
+            List<User> users = userDAO.getAll();
+            request.setAttribute("users", users);
 
-           request.getRequestDispatcher("users.jsp").forward(request, response);
+            request.getRequestDispatcher("users.jsp").forward(request, response);
 
         } catch (DAOException ex) {
-            Log.error("Error getting product "+ ex.toString());
+            Log.error("Error getting product " + ex.toString());
             response.sendRedirect(response.encodeRedirectURL(contextPath + "../../common/error.jsp"));
         }
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-      process(req,resp);
+        process(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-      process(req,resp);
+        process(req, resp);
     }
 
 }

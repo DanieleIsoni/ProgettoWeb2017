@@ -6,12 +6,7 @@
 package it.unitn.buyhub.dao.jdbc;
 
 import it.unitn.buyhub.dao.*;
-import it.unitn.buyhub.dao.*;
-import it.unitn.buyhub.dao.entities.Coordinate;
 import it.unitn.buyhub.dao.entities.User;
-import it.unitn.buyhub.dao.entities.User;
-import it.unitn.buyhub.dao.persistence.DAO;
-import it.unitn.buyhub.dao.persistence.DAO;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.jdbc.JDBCDAO;
 import it.unitn.buyhub.utils.Utility;
@@ -56,7 +51,7 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
             ps.setString(4, user.getLastName());
             ps.setString(5, user.getEmail());
             ps.setInt(6, user.getCapability());
-            ps.setString(7,user.getAvatar());
+            ps.setString(7, user.getAvatar());
 
             if (ps.executeUpdate() == 1) {
                 ResultSet generatedKeys = ps.getGeneratedKeys();
@@ -145,10 +140,11 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
                 user.setEmail(rs.getString("email"));
                 user.setCapability(rs.getInt("capability"));
                 user.setUsername(rs.getString("username"));
-                    String avatar= rs.getString("avatar");
-                    if(avatar==null)
-                        avatar="images/noimage.png";
-                    user.setAvatar(avatar);
+                String avatar = rs.getString("avatar");
+                if (avatar == null) {
+                    avatar = "images/noimage.png";
+                }
+                user.setAvatar(avatar);
 
                 return user;
             }
@@ -195,9 +191,10 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
                     user.setLastName(rs.getString("last_name"));
                     user.setEmail(rs.getString("email"));
                     user.setCapability(rs.getInt("capability"));
-                    String avatar= rs.getString("avatar");
-                    if(avatar==null)
-                        avatar="images/noimage.png";
+                    String avatar = rs.getString("avatar");
+                    if (avatar == null) {
+                        avatar = "images/noimage.png";
+                    }
                     user.setAvatar(avatar);
 
                     return user;
@@ -210,8 +207,6 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
         }
     }
 
-    
-    
     /**
      * Returns the list of all the valid admin {@link User users} stored by the
      * storage system.
@@ -223,8 +218,6 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
      * @author Matteo Battilana
      * @since 1.0.170425
      */
-    
-    
     @Override
     public List<User> getAdmins() throws DAOException {
         List<User> users = new ArrayList<>();
@@ -242,11 +235,12 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
                     user.setLastName(rs.getString("last_name"));
                     user.setEmail(rs.getString("email"));
                     user.setCapability(rs.getInt("capability"));
-                    String avatar= rs.getString("avatar");
-                    if(avatar==null)
-                        avatar="images/noimage.png";
+                    String avatar = rs.getString("avatar");
+                    if (avatar == null) {
+                        avatar = "images/noimage.png";
+                    }
                     user.setAvatar(avatar);
-                    
+
                     users.add(user);
                 }
             }
@@ -257,8 +251,6 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
         return users;
     }
 
-    
-    
     /**
      * Returns the list of all the valid {@link User users} stored by the
      * storage system.
@@ -286,11 +278,12 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
                     user.setLastName(rs.getString("last_name"));
                     user.setEmail(rs.getString("email"));
                     user.setCapability(rs.getInt("capability"));
-                    String avatar= rs.getString("avatar");
-                    if(avatar==null)
-                        avatar="images/noimage.png";
+                    String avatar = rs.getString("avatar");
+                    if (avatar == null) {
+                        avatar = "images/noimage.png";
+                    }
                     user.setAvatar(avatar);
-                    
+
                     users.add(user);
                 }
             }
@@ -300,8 +293,7 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
 
         return users;
     }
-    
-    
+
     /**
      * Update the user passed as parameter and returns it.
      *
@@ -326,7 +318,7 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
             std.setString(5, user.getEmail());
             std.setInt(6, user.getCapability());
             std.setInt(8, user.getId());
-            
+
             std.setString(7, user.getAvatar());
             if (std.executeUpdate() == 1) {
                 return user;
@@ -334,13 +326,13 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
                 throw new DAOException("Impossible to update the user");
             }
         } catch (SQLException ex) {
-            throw new DAOException("Impossible to update the user: "+ ex.toString());
+            throw new DAOException("Impossible to update the user: " + ex.toString());
         }
     }
 
     @Override
     public User getByEmail(String mail) throws DAOException {
-         if (mail == null) {
+        if (mail == null) {
             throw new DAOException("mail is null");
         }
         try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM users WHERE email = ?")) {
@@ -357,18 +349,18 @@ public class JDBCUserDAO extends JDBCDAO<User, Integer> implements UserDAO {
                 user.setEmail(rs.getString("email"));
                 user.setCapability(rs.getInt("capability"));
                 user.setUsername(rs.getString("username"));
-                    String avatar= rs.getString("avatar");
-                    if(avatar==null)
-                        avatar="images/noimage.png";
-                    user.setAvatar(avatar);
+                String avatar = rs.getString("avatar");
+                if (avatar == null) {
+                    avatar = "images/noimage.png";
+                }
+                user.setAvatar(avatar);
 
                 return user;
             }
         } catch (SQLException ex) {
             throw new DAOException("Impossible to get the user for the passed email", ex);
         }
-        
+
     }
 
-    
 }

@@ -1,36 +1,22 @@
 package it.unitn.buyhub.servlet.admin;
 
-import it.unitn.buyhub.dao.CoordinateDAO;
-import it.unitn.buyhub.dao.PictureDAO;
-import it.unitn.buyhub.dao.ProductDAO;
-import it.unitn.buyhub.dao.ReviewDAO;
 import it.unitn.buyhub.dao.ShopDAO;
 import it.unitn.buyhub.dao.UserDAO;
-import it.unitn.buyhub.dao.UserDAO;
-import it.unitn.buyhub.dao.entities.Coordinate;
-import it.unitn.buyhub.dao.entities.Picture;
-import it.unitn.buyhub.dao.entities.Product;
-import it.unitn.buyhub.dao.entities.Review;
-import it.unitn.buyhub.dao.entities.Shop;
 import it.unitn.buyhub.dao.entities.User;
-import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.factories.DAOFactory;
 import it.unitn.buyhub.utils.Log;
-import it.unitn.buyhub.utils.Mailer;
 import it.unitn.buyhub.utils.Utility;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.List;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.jsp.PageContext;
+
 /**
  * This servlet is used to change users capability by admins
- * @author massimo
+ *
+ * @author Massimo Girondi
  */
 public class ChangeCapability extends HttpServlet {
 
@@ -49,10 +35,8 @@ public class ChangeCapability extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-
-
-
     }
+
     public void init() throws ServletException {
         DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
         if (daoFactory == null) {
@@ -70,7 +54,6 @@ public class ChangeCapability extends HttpServlet {
         //Log.info("UsersServlet init done");
     }
 
-
     protected void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String contextPath = getServletContext().getContextPath();
@@ -78,20 +61,16 @@ public class ChangeCapability extends HttpServlet {
             contextPath += "/";
         }
 
-
         try {
 
-            if(request.getParameter("id")!=null && request.getParameter("capability")!=null
-               && Integer.parseInt(request.getParameter("id"))>0
-               && Integer.parseInt(request.getParameter("capability")) > 0
-               && Integer.parseInt(request.getParameter("capability")) < Utility.CAPABILITY.values().length)
-            {
+            if (request.getParameter("id") != null && request.getParameter("capability") != null
+                    && Integer.parseInt(request.getParameter("id")) > 0
+                    && Integer.parseInt(request.getParameter("capability")) > 0
+                    && Integer.parseInt(request.getParameter("capability")) < Utility.CAPABILITY.values().length) {
 
-                User u=userDAO.getByPrimaryKey(Integer.parseInt(request.getParameter("id")));
-                if(u.getId()!= ((User)request.getSession().getAttribute("authenticatedUser")).getId())
-                {
-                    if(u.getCapability() == Utility.CAPABILITY.SHOP.ordinal() && shopDAO.getByOwner(u) != null)
-                    {
+                User u = userDAO.getByPrimaryKey(Integer.parseInt(request.getParameter("id")));
+                if (u.getId() != ((User) request.getSession().getAttribute("authenticatedUser")).getId()) {
+                    if (u.getCapability() == Utility.CAPABILITY.SHOP.ordinal() && shopDAO.getByOwner(u) != null) {
                         throw new Exception("User has shops!");
                     }
 
@@ -101,27 +80,24 @@ public class ChangeCapability extends HttpServlet {
 
                 response.sendRedirect(response.encodeRedirectURL("./users"));
 
-            }
-            else
-            {
+            } else {
                 throw new Exception("Error parameter");
             }
 
-
         } catch (Exception ex) {
-            Log.error("Error changing user permission"+ ex.toString());
+            Log.error("Error changing user permission" + ex.toString());
             response.sendRedirect(response.encodeRedirectURL(contextPath + "../../common/error.jsp"));
         }
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-      process(req,resp);
+        process(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-      process(req,resp);
+        process(req, resp);
     }
 
 }

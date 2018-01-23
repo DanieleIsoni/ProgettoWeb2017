@@ -7,22 +7,19 @@ package it.unitn.buyhub.dao.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  *
- * @author massimo
+ * @author Massimo Girondi
  */
 public class Order implements Serializable {
 
-   ArrayList<OrderedProduct> products=new ArrayList<>();
-   int id;
-   boolean paid;
-   String shipment;
-   User user;
-   Shop shop;
+    ArrayList<OrderedProduct> products = new ArrayList<>();
+    int id;
+    boolean paid;
+    String shipment;
+    User user;
+    Shop shop;
 
     public Shop getShop() {
         return shop;
@@ -40,8 +37,7 @@ public class Order implements Serializable {
         this.user = user;
     }
 
-   
-   double shipment_cost;
+    double shipment_cost;
 
     public boolean isPaid() {
         return paid;
@@ -66,28 +62,27 @@ public class Order implements Serializable {
     public void setShipment_cost(double shipment_cost) {
         this.shipment_cost = shipment_cost;
     }
-   
-   
-   public void add(Product p, int quantity)
-   {
-       OrderedProduct op=new OrderedProduct(p,quantity,this);
-       products.add(op);
-   }
-   public void add(OrderedProduct p)
-   {
-       products.add(p);
-   }
-   public double sum()
-   {
-       double s=0;
-       for(OrderedProduct o : products)
-           s+=o.getPrice()*o.getQuantity();
-       return s;
-   }
-   public int count()
-   {
-       return products.size();
-   }
+
+    public void add(Product p, int quantity) {
+        OrderedProduct op = new OrderedProduct(p, quantity, this);
+        products.add(op);
+    }
+
+    public void add(OrderedProduct p) {
+        products.add(p);
+    }
+
+    public double sum() {
+        double s = 0;
+        for (OrderedProduct o : products) {
+            s += o.getPrice() * o.getQuantity();
+        }
+        return s;
+    }
+
+    public int count() {
+        return products.size();
+    }
 
     public int getId() {
         return id;
@@ -104,6 +99,5 @@ public class Order implements Serializable {
     public void setProducts(ArrayList<OrderedProduct> products) {
         this.products = products;
     }
-   
 
 }

@@ -1,6 +1,5 @@
 package it.unitn.buyhub.servlet.user;
 
-import it.unitn.buyhub.dao.CoordinateDAO;
 import it.unitn.buyhub.dao.ShopDAO;
 import it.unitn.buyhub.dao.entities.Shop;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
@@ -8,7 +7,6 @@ import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.factories.DAOFactory;
 import it.unitn.buyhub.utils.Log;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Servlet to update the shop's informations
+ *
  * @author Daniso
  */
 public class EditShopServlet extends HttpServlet {
@@ -61,29 +60,31 @@ public class EditShopServlet extends HttpServlet {
         String shipment = request.getParameter("shipment");
         String description = request.getParameter("description");
 
-        try{
+        try {
             Shop shop = (Shop) request.getSession().getAttribute("myshop");
-            if(shop!=null){
-                if (shopName != null && !shopName.equals(""))
+            if (shop != null) {
+                if (shopName != null && !shopName.equals("")) {
                     shop.setName(shopName);
-                if (website != null && !website.equals(""))
+                }
+                if (website != null && !website.equals("")) {
                     shop.setWebsite(website);
-                if (shipment != null && !shipment.equals(""))
+                }
+                if (shipment != null && !shipment.equals("")) {
                     shop.setShipment(shipment);
-                if (description != null && !description.equals(""))
+                }
+                if (description != null && !description.equals("")) {
                     shop.setDescription(description);
+                }
                 shopDao.update(shop);
-            }else{
+            } else {
                 Log.error("Shop is null");
             }
             response.sendRedirect(response.encodeRedirectURL(contextPath + "restricted/myshop.jsp"));
-        }catch(DAOException ex){
-            Log.error("Error editing shop, "+ex);
+        } catch (DAOException ex) {
+            Log.error("Error editing shop, " + ex);
         }
 
-
     }
-
 
     /**
      * Handles the HTTP <code>GET</code> method.

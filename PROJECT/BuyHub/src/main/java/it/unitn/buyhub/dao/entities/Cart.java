@@ -14,7 +14,7 @@ import java.util.Map;
 
 /**
  *
- * @author matteo
+ * @author Matteo Battilana
  */
 public class Cart implements Serializable {
 
@@ -89,11 +89,11 @@ public class Cart implements Serializable {
 
         Iterator<CartElement> iter = list.iterator();
         while (iter.hasNext()) {
-            
+
             CartElement cartElement = iter.next();
-            System.out.println(cartElement.getId()+"asd\n\n\n");
+            //           System.out.println(cartElement.getId()+"\n\n\n");
             removeProduct(cartElement);
-            
+
         }
 
     }

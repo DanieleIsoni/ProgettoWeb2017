@@ -7,9 +7,6 @@ import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.factories.DAOFactory;
 import it.unitn.buyhub.utils.Log;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * With this the shops can remove products
+ *
  * @author Daniso
  */
 public class DeleteProductServlet extends HttpServlet {
@@ -60,7 +58,7 @@ public class DeleteProductServlet extends HttpServlet {
             productDAO.remove(product);
             response.sendRedirect(response.encodeRedirectURL(contextPath + "restricted/myshop.jsp"));
         } catch (DAOException ex) {
-            Log.error("Error deleting product, "+ex);
+            Log.error("Error deleting product, " + ex);
         }
     }
 

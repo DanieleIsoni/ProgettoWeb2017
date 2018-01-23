@@ -5,14 +5,11 @@
  */
 package it.unitn.buyhub.dao;
 
-import it.unitn.buyhub.dao.*;
-import it.unitn.buyhub.dao.entities.Notification;
 import it.unitn.buyhub.dao.entities.Picture;
 import it.unitn.buyhub.dao.entities.Product;
 import it.unitn.buyhub.dao.entities.Review;
 import it.unitn.buyhub.dao.entities.Shop;
 import it.unitn.buyhub.dao.entities.User;
-import it.unitn.buyhub.dao.persistence.DAO;
 import it.unitn.buyhub.dao.persistence.DAO;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import java.util.List;
@@ -38,7 +35,7 @@ public interface PictureDAO extends DAO<Picture, Integer> {
      */
     @Override
     public Long getCount() throws DAOException;
-    
+
     /**
      * Persists the new {@link Picture pictures} passed as parameter to the
      * storage system.
@@ -98,7 +95,6 @@ public interface PictureDAO extends DAO<Picture, Integer> {
     @Override
     public List<Picture> getAll() throws DAOException;
 
-    
     /**
      * Update the picture passed as parameter and returns it.
      *
@@ -111,13 +107,12 @@ public interface PictureDAO extends DAO<Picture, Integer> {
      */
     @Override
     public Picture update(Picture picture) throws DAOException;
-    
-    
+
     public long insertProductPicture(Product pr, Picture p) throws DAOException;
-    
+
     /**
-     * Returns the list of the {@link Picture picture} with the product passed as
-     * parameter.
+     * Returns the list of the {@link Picture picture} with the product passed
+     * as parameter.
      *
      * @param product the {@code product} of the {@code pictures} to get.
      * @return the list of the {@code pictures} with the product passed as
@@ -129,8 +124,8 @@ public interface PictureDAO extends DAO<Picture, Integer> {
      * @since 1.0.170425
      */
     public List<Picture> getByProduct(Product product) throws DAOException;
-    
-        /**
+
+    /**
      * Returns the list of the {@link Picture picture} with the review passed as
      * parameter.
      *
@@ -144,8 +139,8 @@ public interface PictureDAO extends DAO<Picture, Integer> {
      * @since 1.0.170425
      */
     public List<Picture> getByReview(Review review) throws DAOException;
-    
-        /**
+
+    /**
      * Returns the list of the {@link Picture picture} with the shop passed as
      * parameter.
      *

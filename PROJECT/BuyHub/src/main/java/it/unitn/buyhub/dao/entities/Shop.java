@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author matteo
+ * @author Matteo Battilana
  */
 public class Shop implements Serializable {
 
@@ -29,7 +29,6 @@ public class Shop implements Serializable {
     public void setShipment_cost(double shipment_cost) {
         this.shipment_cost = shipment_cost;
     }
-    
 
     public int getValidity() {
         return validity;
@@ -87,5 +86,4 @@ public class Shop implements Serializable {
         this.validity = validity;
     }
 
-    
 }

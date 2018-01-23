@@ -7,12 +7,12 @@ package it.unitn.buyhub.dao.entities;
 
 /**
  *
- * @author massimo
+ * @author Massimo Girondi
  */
-public class OrderedProduct extends Product{
-    int quantity=1;
-    Order order;
+public class OrderedProduct extends Product {
 
+    int quantity = 1;
+    Order order;
 
     public int getQuantity() {
         return quantity;
@@ -22,8 +22,7 @@ public class OrderedProduct extends Product{
         this.quantity = quantity;
     }
 
-    public OrderedProduct(Product p, int q, Order o)
-    {
+    public OrderedProduct(Product p, int q, Order o) {
         this.setAvgReview(p.getAvgReview());
         this.setCategory(p.getCategory());
         this.setDescription(p.getDescription());
@@ -35,9 +34,11 @@ public class OrderedProduct extends Product{
         this.setPrice(p.getPrice());
         this.setQuantity(q);
         this.setOrder(o);
-        
+
     }
-    public OrderedProduct(){}
+
+    public OrderedProduct() {
+    }
 
     public Order getOrder() {
         return order;

@@ -1,15 +1,12 @@
 package it.unitn.buyhub.servlet.user;
 
 import it.unitn.buyhub.dao.ProductDAO;
-import it.unitn.buyhub.dao.ShopDAO;
 import it.unitn.buyhub.dao.entities.Product;
-import it.unitn.buyhub.dao.entities.Shop;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.factories.DAOFactory;
 import it.unitn.buyhub.utils.Log;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,7 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Shops use this servlet to edit products: invoked both before and after the modifications.
+ * Shops use this servlet to edit products: invoked both before and after the
+ * modifications.
+ *
  * @author Daniso
  */
 public class EditProductServlet extends HttpServlet {
@@ -60,34 +59,38 @@ public class EditProductServlet extends HttpServlet {
         }
         try {
             Product product = productDAO.getByPrimaryKey(prodId);
-            if(code == 1){
+            if (code == 1) {
                 request.setAttribute("product", product);
                 request.getRequestDispatcher("restricted/editProduct.jsp").forward(request, response);
-            } else if (code == 2){
+            } else if (code == 2) {
                 String productName = request.getParameter("productName");
                 int category = Integer.parseInt(request.getParameter("product_category"));
                 double price = Double.parseDouble(request.getParameter("price"));
                 String description = request.getParameter("description");
-                if (productName != null && !productName.equals("") &&
-                        category != -1 &&
-                        price != 0 &&
-                        description != null && !description.equals("")){
-                    if(!productName.equals(product.getName()))
+                if (productName != null && !productName.equals("")
+                        && category != -1
+                        && price != 0
+                        && description != null && !description.equals("")) {
+                    if (!productName.equals(product.getName())) {
                         product.setName(productName);
-                    if(category != product.getCategory())
+                    }
+                    if (category != product.getCategory()) {
                         product.setCategory(category);
-                    if(price != product.getPrice())
+                    }
+                    if (price != product.getPrice()) {
                         product.setPrice(price);
-                    if(!description.equals(product.getDescription()))
+                    }
+                    if (!description.equals(product.getDescription())) {
                         product.setDescription(description);
+                    }
                     productDAO.update(product);
-                    List<Product> products=productDAO.getByShop(product.getShop());
+                    List<Product> products = productDAO.getByShop(product.getShop());
                     request.getSession().setAttribute("myproducts", products);
                     response.sendRedirect(response.encodeRedirectURL(contextPath + "restricted/myshop.jsp"));
                 }
             }
-        } catch (DAOException ex){
-            Log.error("Error editing product, "+ex);
+        } catch (DAOException ex) {
+            Log.error("Error editing product, " + ex);
         }
     }
 

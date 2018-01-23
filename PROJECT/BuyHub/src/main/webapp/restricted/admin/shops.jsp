@@ -1,7 +1,7 @@
 <%--
     Document   : shops
     Created on : 14-ott-2017, 15.04.02
-    Author     : massimo
+    Author     : Massimo Girondi
 --%>
 
 <!DOCTYPE html>

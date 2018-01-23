@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author matteo
+ * @author Matteo Battilana
  */
 public class User implements Serializable {
 
@@ -20,7 +20,7 @@ public class User implements Serializable {
     private String firstName;
     private String lastName;
     private String email;
-    private int capability=Utility.CAPABILITY.INVALID.ordinal();
+    private int capability = Utility.CAPABILITY.INVALID.ordinal();
     private String avatar;
 
     public String getAvatar() {
@@ -30,8 +30,7 @@ public class User implements Serializable {
     public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
-    
-    
+
     public int getId() {
         return id;
     }

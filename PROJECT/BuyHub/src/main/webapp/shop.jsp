@@ -1,7 +1,7 @@
 <%--
     Document   : product
     Created on : 10-lug-2017, 09.56.05
-    Author     : massimo
+    Author     : Massimo Girondi
 --%>
 
 <%@page import="it.unitn.buyhub.dao.entities.Product"%>
@@ -83,7 +83,7 @@
                     ${shop.shipment}
                 </div>
             </div>
-            
+
             <shop:ProductTableTagHandler shopId="${shop.id}" owner="false"/>
 
         </div>

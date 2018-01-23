@@ -32,14 +32,15 @@ public interface CoordinateDAO extends DAO<Coordinate, Integer> {
      */
     @Override
     public Long getCount() throws DAOException;
-    
-     /**
-     * Persists the new {@link Coordinate coordinate} passed as parameter to the 
+
+    /**
+     * Persists the new {@link Coordinate coordinate} passed as parameter to the
      * storage system.
+     *
      * @param coordinate the new {@code coordinate} to persist.
-     * @return the id of the new persisted record. 
+     * @return the id of the new persisted record.
      * @throws DAOException if an error occurred during the persist action.
-     * 
+     *
      * @author Stefano Chirico
      * @since 1.0.170425
      */
@@ -68,7 +69,7 @@ public interface CoordinateDAO extends DAO<Coordinate, Integer> {
      *
      * @param address the {@code address} of the {@code coordinate} to get.
      * @return the {@code coordinate} with the address that contains the one
-     * passed as parameter or {@code null} if no entities with that id is not 
+     * passed as parameter or {@code null} if no entities with that id is not
      * present into the storage system.
      * @throws DAOException if an error occurred during the information
      * retrieving.
@@ -77,16 +78,16 @@ public interface CoordinateDAO extends DAO<Coordinate, Integer> {
      * @since 1.0.170425
      */
     public Coordinate getByAddress(String address) throws DAOException;
-    
-     /**
+
+    /**
      * Returns the {@link Coordinate coordinate} with the distance from me less
      * or equals than the one passed as parameter.
      *
      * @param myLatitude the current latitude
      * @param myLongitude the current longitude
      * @param range search range
-     * @return the {@code coordinate} with the distance from me less
-     * or equals than the one passed as parameter.
+     * @return the {@code coordinate} with the distance from me less or equals
+     * than the one passed as parameter.
      * @throws DAOException if an error occurred during the information
      * retrieving.
      *
@@ -96,8 +97,8 @@ public interface CoordinateDAO extends DAO<Coordinate, Integer> {
     public List<Coordinate> getByRange(double myLatitude, double myLongitude, int range) throws DAOException;
 
     /**
-     * Returns the list of all the valid {@link Coordinate coordinates} stored by the
-     * storage system.
+     * Returns the list of all the valid {@link Coordinate coordinates} stored
+     * by the storage system.
      *
      * @return the list of all the valid {@code coordinates}.
      * @throws DAOException if an error occurred during the information
@@ -121,16 +122,15 @@ public interface CoordinateDAO extends DAO<Coordinate, Integer> {
      */
     @Override
     public Coordinate update(Coordinate coordinate) throws DAOException;
-    
-    
-            /**
-     * Returns the {@link Coordinate coordinate} with the shop key equals to
-     * the one passed as parameter.
+
+    /**
+     * Returns the {@link Coordinate coordinate} with the shop key equals to the
+     * one passed as parameter.
      *
      * @param s the {@code id} of the {@code shop}'s coordinates to get.
-     * @return the list of {@code coordinate} with the shop id equals to the one passed as
-     * parameter or {@code null} if no entities with that shop's id is not present into
-     * the storage system.
+     * @return the list of {@code coordinate} with the shop id equals to the one
+     * passed as parameter or {@code null} if no entities with that shop's id is
+     * not present into the storage system.
      * @throws DAOException if an error occurred during the information
      * retrieving.
      *

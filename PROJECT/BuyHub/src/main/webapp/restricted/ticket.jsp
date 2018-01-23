@@ -1,7 +1,7 @@
 <%-- 
     Document   : ticket
     Created on : 18-gen-2018, 12.07.17
-    Author     : matteo
+    Author     : Matteo Battilana
 --%>
 
 
@@ -26,7 +26,7 @@
                 <message:MessageList />
 
 
-               
+
 
 
             </div>
@@ -38,7 +38,7 @@
                     <span class="input-group-btn">
                         <input type="submit" class="btn btn-default"><fmt:message key="send"/></button>
                     </span>
-                     
+
                 </div>
             </form>
 

@@ -5,14 +5,8 @@
  */
 package it.unitn.buyhub.dao;
 
-import it.unitn.buyhub.dao.*;
 import it.unitn.buyhub.dao.entities.OrderedProduct;
-import it.unitn.buyhub.dao.entities.Picture;
 import it.unitn.buyhub.dao.entities.Product;
-import it.unitn.buyhub.dao.entities.Review;
-import it.unitn.buyhub.dao.entities.Shop;
-import it.unitn.buyhub.dao.entities.User;
-import it.unitn.buyhub.dao.persistence.DAO;
 import it.unitn.buyhub.dao.persistence.DAO;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.utils.Pair;
@@ -25,7 +19,7 @@ import java.util.List;
  * @author Massimo Girondi
  * @since 2017.04.25
  */
-public interface OrderedProductDAO extends DAO<OrderedProduct, Pair<Integer,Integer>> {
+public interface OrderedProductDAO extends DAO<OrderedProduct, Pair<Integer, Integer>> {
 
     /**
      * Returns the number of {@link Product products} stored on the persistence
@@ -68,7 +62,7 @@ public interface OrderedProductDAO extends DAO<OrderedProduct, Pair<Integer,Inte
      * @since 1.0.170425
      */
     @Override
-    public OrderedProduct getByPrimaryKey( Pair<Integer,Integer> primaryKey) throws DAOException;
+    public OrderedProduct getByPrimaryKey(Pair<Integer, Integer> primaryKey) throws DAOException;
 
     public List<OrderedProduct> getByOrder(int orderId) throws DAOException;
 
@@ -86,7 +80,6 @@ public interface OrderedProductDAO extends DAO<OrderedProduct, Pair<Integer,Inte
     @Override
     public List<OrderedProduct> getAll() throws DAOException;
 
-    
     /**
      * Update the product passed as parameter and returns it.
      *

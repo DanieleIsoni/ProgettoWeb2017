@@ -10,7 +10,7 @@ import java.util.Date;
 
 /**
  *
- * @author matteo
+ * @author Matteo Battilana
  */
 public class Notification implements Serializable {
 

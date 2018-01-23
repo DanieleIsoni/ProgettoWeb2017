@@ -63,13 +63,14 @@ public interface DAO<ENTITY_CLASS, PRIMARY_KEY> {
      * @since 1.0.170417
      */
     public List<ENTITY_CLASS> getAll() throws DAOException;
-    
+
     /**
      * Update the entity passed as parameter and returns it.
+     *
      * @param entity the entity used to update the persistence system.
      * @return the updated entity.
      * @throws DAOException if an error occurred during the action.
-     * 
+     *
      * @author Stefano Chirico
      * @since 1.0.170418
      */

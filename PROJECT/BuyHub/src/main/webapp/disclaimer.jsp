@@ -1,7 +1,7 @@
 <%--
     Document   : disclaimer
     Created on : 15-ott-2017, 16.18.29
-    Author     : massimo
+    Author     : Massimo Girondi
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -22,10 +22,10 @@
     <body >
         <%@include file="common/navbar.jsp" %>
 
-    <div class="container header">
+        <div class="container header">
 
             <div class="row">
-              <h2><fmt:message key="disclaimer_title"/></h2>
+                <h2><fmt:message key="disclaimer_title"/></h2>
             </div>
             <div class="row">
                 <pre id="disclaimer">
@@ -126,9 +126,9 @@ If you would like to: access, correct, amend or delete any personal information 
 [Via Roma,1 , Trento, 32, 38121, Italy]
 
 ----
-</pre>
-</div>
-</div>
+                </pre>
+            </div>
+        </div>
 
 
-<%@include file="/common/footer.jsp" %>
+        <%@include file="/common/footer.jsp" %>

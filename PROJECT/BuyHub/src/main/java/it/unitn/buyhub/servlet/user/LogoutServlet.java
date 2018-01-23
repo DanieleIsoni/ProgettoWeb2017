@@ -3,7 +3,6 @@ package it.unitn.buyhub.servlet.user;
 import it.unitn.buyhub.dao.entities.User;
 import it.unitn.buyhub.utils.Log;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,7 +11,8 @@ import javax.servlet.http.HttpSession;
 
 /**
  * Logout the user: destroy the session and delete the data from the cookies.
- * @author matteo
+ *
+ * @author Matteo Battilana
  */
 public class LogoutServlet extends HttpServlet {
 
@@ -27,7 +27,7 @@ public class LogoutServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-          response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
 
         HttpSession session = request.getSession(false);
         if (session != null) {
@@ -35,7 +35,7 @@ public class LogoutServlet extends HttpServlet {
             if (user != null) {
                 session.setAttribute("authenticatedUser", null);
                 session.invalidate();
-                    Log.info("User "+user.getId()+" logged out");
+                Log.info("User " + user.getId() + " logged out");
 
                 user = null;
             }
@@ -45,7 +45,6 @@ public class LogoutServlet extends HttpServlet {
         if (!contextPath.endsWith("/")) {
             contextPath += "/";
         }
-
 
         response.sendRedirect(response.encodeRedirectURL(contextPath + "login.jsp"));
     }

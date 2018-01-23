@@ -1,16 +1,13 @@
 package it.unitn.buyhub.tag;
 
 import it.unitn.buyhub.dao.MessageDAO;
-import it.unitn.buyhub.dao.NotificationDAO;
 import it.unitn.buyhub.dao.TicketDAO;
 import it.unitn.buyhub.dao.entities.Message;
 import it.unitn.buyhub.dao.entities.Ticket;
 import it.unitn.buyhub.dao.entities.User;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.factories.DAOFactory;
-import it.unitn.buyhub.utils.Log;
 import it.unitn.buyhub.utils.Utility;
-import java.io.IOException;
 import java.util.List;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspTagException;
@@ -20,7 +17,8 @@ import javax.servlet.jsp.tagext.SimpleTagSupport;
 
 /**
  * Tag used in ticket page to print messages
- * @author matteo
+ *
+ * @author Matteo Battilana
  */
 public class MessagesTagHandler extends SimpleTagSupport {
 
@@ -52,24 +50,24 @@ public class MessagesTagHandler extends SimpleTagSupport {
             //GET messages
             try {
                 Ticket t = ticketDao.getByPrimaryKey(id);
-                System.out.println(t.getOrder().getShop().getOwner().getId() +" -> "+user.getId()+ " diverso da "+t.getOrder().getUser().getId());
+                System.out.println(t.getOrder().getShop().getOwner().getId() + " -> " + user.getId() + " diverso da " + t.getOrder().getUser().getId());
 
                 if (t.getOrder().getUser() == user || user.getCapability() == 3 || t.getOrder().getShop().getOwner().getId() == user.getId()) {
-                   System.out.println("IDA");
+                    System.out.println("IDA");
                     List<Message> messages = messageDao.getByTicket(t);
-                    System.out.println("ID"+messages.size());
+                    System.out.println("ID" + messages.size());
                     String list = "";
 
-
                     for (Message m : messages) {
-                        list += "  <div class=\"container-chat "+((m.getOwner().getId()==user.getId())?"darker-chat":"")+"\">\n"
-                                + "                    <img src=\""+Utility.getUrl(pageContext, m.getOwner().getAvatar()) +"\" alt=\"Avatar\" "+((m.getOwner().getId()==user.getId())?"class=\"right\"":"")+" style=\"width:100%;\">\n"
-                                + "                    <p>"+m.getContent()+"</p>\n"
+                        list += "  <div class=\"container-chat " + ((m.getOwner().getId() == user.getId()) ? "darker-chat" : "") + "\">\n"
+                                + "                    <img src=\"" + Utility.getUrl(pageContext, m.getOwner().getAvatar()) + "\" alt=\"Avatar\" " + ((m.getOwner().getId() == user.getId()) ? "class=\"right\"" : "") + " style=\"width:100%;\">\n"
+                                + "                    <p>" + m.getContent() + "</p>\n"
                                 + "                </div>";
                     }
                     out.println(list);
-                    if (messages.size()==0)
+                    if (messages.size() == 0) {
                         out.println(Utility.getLocalizedString(pageContext, "ask"));
+                    }
                 } else {
                     //NESSUN PERMESSO
                     out.println(Utility.getLocalizedString(pageContext, "not_permission"));
@@ -79,6 +77,5 @@ public class MessagesTagHandler extends SimpleTagSupport {
         }
 
     }
-
 
 }

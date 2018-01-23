@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author matteo
+ * @author Matteo Battilana
  */
 public class Picture implements Serializable {
 
@@ -59,9 +59,8 @@ public class Picture implements Serializable {
         return owner;
     }
 
-    public static Picture NONE()
-    {
-        Picture P=new Picture();
+    public static Picture NONE() {
+        Picture P = new Picture();
         P.setId(-1);
         P.setName("No picture");
         P.setPath("images/noimage.png");
