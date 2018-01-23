@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.buyhub.servlet.user;
 
 import it.unitn.buyhub.dao.CoordinateDAO;
@@ -31,7 +26,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
+ * Servlet to login.
+ * If successful set authenticatedUser session attribute,
+ * if it is a shop user also set myshop, myPictures and mycoordinates
  * @author matteo
  */
 public class LoginServlet extends HttpServlet {

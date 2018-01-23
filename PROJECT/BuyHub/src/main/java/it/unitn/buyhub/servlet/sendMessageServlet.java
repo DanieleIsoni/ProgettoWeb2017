@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.buyhub.servlet;
 
 import it.unitn.buyhub.dao.CoordinateDAO;
@@ -42,8 +37,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- *
- * @author Daniso
+ * Servlet to send a message inside a ticket.
+ * @author Matteo Battilana
  */
 public class sendMessageServlet extends HttpServlet {
 

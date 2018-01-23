@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.buyhub.tag;
 
 import it.unitn.buyhub.dao.MessageDAO;
@@ -24,7 +19,7 @@ import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 
 /**
- *
+ * Tag used in ticket page to print messages
  * @author matteo
  */
 public class MessagesTagHandler extends SimpleTagSupport {
@@ -42,7 +37,7 @@ public class MessagesTagHandler extends SimpleTagSupport {
             User user = null;
             user = (User) getJspContext().getAttribute("authenticatedUser", PageContext.SESSION_SCOPE);
             int id = (Integer.parseInt(pageContext.getRequest().getParameter("id").toString()));
-            
+
             DAOFactory daoFactory = (DAOFactory) getJspContext().getAttribute("daoFactory", PageContext.APPLICATION_SCOPE);
             if (daoFactory == null) {
                 throw new JspTagException("Impossible to get dao factory for user storage system");
@@ -50,7 +45,7 @@ public class MessagesTagHandler extends SimpleTagSupport {
             try {
                 messageDao = daoFactory.getDAO(MessageDAO.class);
                 ticketDao = daoFactory.getDAO(TicketDAO.class);
-                 
+
             } catch (DAOFactoryException ex) {
                 throw new JspTagException("Impossible to get notificationDao for user storage system", ex);
             }
@@ -58,14 +53,14 @@ public class MessagesTagHandler extends SimpleTagSupport {
             try {
                 Ticket t = ticketDao.getByPrimaryKey(id);
                 System.out.println(t.getOrder().getShop().getOwner().getId() +" -> "+user.getId()+ " diverso da "+t.getOrder().getUser().getId());
-               
+
                 if (t.getOrder().getUser() == user || user.getCapability() == 3 || t.getOrder().getShop().getOwner().getId() == user.getId()) {
                    System.out.println("IDA");
                     List<Message> messages = messageDao.getByTicket(t);
                     System.out.println("ID"+messages.size());
                     String list = "";
-                    
-                    
+
+
                     for (Message m : messages) {
                         list += "  <div class=\"container-chat "+((m.getOwner().getId()==user.getId())?"darker-chat":"")+"\">\n"
                                 + "                    <img src=\""+Utility.getUrl(pageContext, m.getOwner().getAvatar()) +"\" alt=\"Avatar\" "+((m.getOwner().getId()==user.getId())?"class=\"right\"":"")+" style=\"width:100%;\">\n"

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.buyhub.tag;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,11 +22,11 @@ public class LanguageLinkTagHandler extends SimpleTagSupport {
         PageContext pageContext=(PageContext) getJspContext();
         try {
             HttpServletRequest req = (HttpServletRequest)pageContext.getRequest();
-            
+
             out.println(changeLanguageParam(req.getQueryString(), lang));
-            
-            
-            
+
+
+
         } catch (java.io.IOException ex) {
             throw new JspException("Error in LanguageLinkTagHandler tag", ex);
         }
@@ -40,8 +35,8 @@ public class LanguageLinkTagHandler extends SimpleTagSupport {
     public void setLang(String lang) {
         this.lang = lang;
     }
-    
-    
+
+
     private String changeLanguageParam (String queryString, String newlang)
     {
         queryString="?"+queryString;
@@ -56,6 +51,6 @@ public class LanguageLinkTagHandler extends SimpleTagSupport {
             queryString+="language="+newlang;
         }
         return queryString;
-    
+
     }
 }

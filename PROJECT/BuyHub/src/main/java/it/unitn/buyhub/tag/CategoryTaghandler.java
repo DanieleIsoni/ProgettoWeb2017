@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.buyhub.tag;
 
 import it.unitn.buyhub.dao.entities.Product;
@@ -17,14 +12,14 @@ import javax.servlet.jsp.tagext.SimpleTagSupport;
 import javax.servlet.jsp.tagext.Tag;
 
 /**
- *
+ * Tag to print the cateogry of wich a product belongs
  * @author massimo
  */
 public class CategoryTaghandler extends SimpleTagSupport {
 
     @Override
     public void doTag() throws JspException {
-        
+
         JspWriter out = getJspContext().getOut();
         PageContext pageContext= (PageContext) getJspContext();
         try{
@@ -36,7 +31,7 @@ public class CategoryTaghandler extends SimpleTagSupport {
             out.println("<a href=\""+Utility.getUrl(pageContext, "search.jsp?c="+category)+"&q=\">");
             out.println(Utility.getCategory(pageContext,category));
             out.println("</a>");
-            
+
         } catch (java.io.IOException ex) {
             throw new JspException("Error in categoryTaghandler tag", ex);
         }
@@ -51,5 +46,5 @@ public class CategoryTaghandler extends SimpleTagSupport {
         this.category = category;
     }
     private int category=-1;
-    
+
 }

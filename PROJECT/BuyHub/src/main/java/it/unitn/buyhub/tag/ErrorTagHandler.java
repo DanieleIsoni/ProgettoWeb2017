@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.buyhub.tag;
 
 import it.unitn.buyhub.utils.Log;
@@ -17,22 +12,22 @@ import javax.servlet.jsp.tagext.JspFragment;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 
 /**
- *
+ * Tag to print an error message (used in forms around the site)
  * @author maxgiro96
  */
 public class ErrorTagHandler extends SimpleTagSupport {
 
-    
+
     @Override
     public void doTag() {
-        
+
         JspWriter out = getJspContext().getOut();
-          
+
         PageContext pageContext= (PageContext) getJspContext();
         //System.out.println(pageContext.getRequest().getParameter("error"));
         if(pageContext.getRequest().getParameter("error")!=null)
         {
-            
+
            setCode(Integer.parseInt(pageContext.getRequest().getParameter("error").toString()));
            if(code!=0)
            {
@@ -50,8 +45,8 @@ public class ErrorTagHandler extends SimpleTagSupport {
                    }
             }
         }
-        
-        
+
+
     }
     private String page;
     private int code;
@@ -71,6 +66,6 @@ public class ErrorTagHandler extends SimpleTagSupport {
     public void setCode(int code) {
         this.code = code;
     }
-    
-    
+
+
 }

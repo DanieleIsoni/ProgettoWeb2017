@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.buyhub.tag;
 
 import it.unitn.buyhub.dao.CoordinateDAO;
@@ -28,7 +23,7 @@ import javax.servlet.jsp.tagext.JspFragment;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 
 /**
- *
+ * Tag to prunt the product table into the shop page
  * @author Daniso
  */
 public class ProductTableTagHandler extends SimpleTagSupport {
@@ -40,7 +35,7 @@ public class ProductTableTagHandler extends SimpleTagSupport {
     private ShopDAO shopDAO;
     private ProductDAO productDAO;
     List<Product> products;
-    
+
     /**
      * Called by the container to invoke this tag. The implementation of this
      * method is provided by the tag library developer, and handles all tag
@@ -48,7 +43,7 @@ public class ProductTableTagHandler extends SimpleTagSupport {
      */
     @Override
     public void doTag() throws JspException {
-        
+
         JspWriter out = getJspContext().getOut();
         pageContext = (PageContext) getJspContext();
         try{
@@ -56,14 +51,14 @@ public class ProductTableTagHandler extends SimpleTagSupport {
         } catch(Exception e){
             Log.error(e);
         }
-        
+
         try {
            try {
                products = productDAO.getByShop(shopDAO.getByPrimaryKey(shopId));
             } catch (DAOException ex) {
                 Log.error(ex);
-            } 
-           
+            }
+
             out.println("<div class=\"row\">\n" +
 "                <div class=\"row shop_page_shipment_info\">\n" +
                         Utility.getLocalizedString(pageContext,"all_products_shop")+
@@ -115,11 +110,11 @@ public class ProductTableTagHandler extends SimpleTagSupport {
     public void setShopId(int shopId) {
         this.shopId = shopId;
     }
-    
+
     public void setOwner(boolean owner) {
         this.owner = owner;
     }
-    
+
     private void init() throws ServletException {
         DAOFactory daoFactory = (DAOFactory) pageContext.getAttribute("daoFactory", PageContext.APPLICATION_SCOPE);
         if (daoFactory == null) {
@@ -132,5 +127,5 @@ public class ProductTableTagHandler extends SimpleTagSupport {
             throw new ServletException("Impossible to get dao factory for product table printer", ex);
         }
     }
-    
+
 }

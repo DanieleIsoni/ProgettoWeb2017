@@ -28,7 +28,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * This is a webservice, implemented witha servlet
+ * This is a webservice, implemented with a servlet.
+ * It is used by the search page to load the results async.
  * @author massimo
  */
 @WebServlet(name = "SearchServlet", urlPatterns = {"/search"})
@@ -58,7 +59,7 @@ public class SearchServlet extends HttpServlet {
                     || (request.getParameter("q").equals("") && (!request.getParameter("q").equals("")
                                                                  ||!request.getParameter("min").equals("")
                                                                  ||!request.getParameter("max").equals("")
-                                                                 ||!request.getParameter("minRev").equals("")        
+                                                                 ||!request.getParameter("minRev").equals("")
                     )))
             {
                 String q=request.getParameter("q");
@@ -107,7 +108,7 @@ public class SearchServlet extends HttpServlet {
                 try {
                     if(min!=0 || max!= Double.MAX_VALUE)
                         products = productDAO.getByNameAndPriceRange(q, min, max);
-                    else 
+                    else
                         products = productDAO.getByName(q);
 
                     //rimozioni non voluti
@@ -123,8 +124,8 @@ public class SearchServlet extends HttpServlet {
                     throw new ServletException("Error on retreving products: "+ex.toString());
                 }
 
-                
-                
+
+
 
                 int count = products.size();
 
@@ -141,7 +142,7 @@ public class SearchServlet extends HttpServlet {
                     productComparator comp=new productComparator(s);
                     products.sort(comp);
                 }
-                
+
                 List<Product> p2=null;
                 if(Integer.parseInt(request.getParameter("s"))!=2)
                 {
@@ -160,15 +161,15 @@ public class SearchServlet extends HttpServlet {
                     maxPrice=(int) p2.get(p2.size()-1).getPrice();
                 }
                 */
-                
-                
+
+
 
                 //paginazione
                 if(request.getParameter("p")!=null && Integer.parseInt(request.getParameter("p"))>0)
                 {
                     p=Integer.parseInt(request.getParameter("p"));
                 }
-                
+
                 int from = Math.max(0,(p-1)*ProductsPerPage);
                 int to = Math.min(products.size(),(p)*ProductsPerPage);
 
@@ -348,7 +349,7 @@ public class SearchServlet extends HttpServlet {
               for (Iterator<Coordinate> iterator = c.iterator(); iterator.hasNext() ;){    // && test;) {
                   Coordinate coordinate = iterator.next();
                   test= test || distance(coordinate.getLatitude(), coordinate.getLongitude(), lat, lng)< dist;
-               
+
               }
 
 
@@ -366,7 +367,7 @@ public class SearchServlet extends HttpServlet {
         * Calculate distance between two points in latitude and longitude.
         * Uses Haversine method as its base.
         *
-        * 
+        *
         * @returns Distance in KiloMeters
         */
 
@@ -384,8 +385,8 @@ public class SearchServlet extends HttpServlet {
             return dist;
         }
 
-       
-       
+
+
     }
 
 }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.buyhub.servlet;
 
 import it.unitn.buyhub.dao.CoordinateDAO;
@@ -42,8 +37,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- *
- * @author Daniso
+ * Allow a user to open a ticket on a order
+ * @author Matteo Battilana
  */
 public class OpenTicketServlet extends HttpServlet {
 
@@ -65,7 +60,7 @@ public class OpenTicketServlet extends HttpServlet {
             userDao = daoFactory.getDAO(UserDAO.class);
             orderDao = daoFactory.getDAO(OrderDAO.class);
             notificationDao = daoFactory.getDAO(NotificationDAO.class);
-            
+
             messageDao = daoFactory.getDAO(MessageDAO.class);
         } catch (DAOFactoryException ex) {
             Log.error("Impossible to get dao factory for shop storage system");
@@ -109,10 +104,10 @@ public class OpenTicketServlet extends HttpServlet {
                         tnew.setOrder(order);
                         Long id2 = ticketDao.insert(tnew);
                         tnew.setId(id2.intValue());
-                        
+
 
                         //SEND MAIL NEW TICKET
-                        
+
                         PropertyHandler ph = PropertyHandler.getInstance();
                         String baseUrl= ph.getValue("baseUrl");
                         Mailer.mail(ph.getValue("noreplyMail"), owner.getEmail(), "Opened ticket", "Opened ticket", baseUrl+"restricted/ticket.jsp?id=" + tnew.getId(), "Take a look on BuyHub");
@@ -130,8 +125,8 @@ public class OpenTicketServlet extends HttpServlet {
                         notificationDao.insert(not);
 
                     }
-                    
-                
+
+
                     response.sendRedirect(response.encodeRedirectURL(contextPath + "restricted/ticket.jsp?id="+tnew.getId()));
                 }
                 response.sendRedirect(request.getHeader("referer"));

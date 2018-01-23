@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.buyhub.servlet;
 
 import it.unitn.buyhub.dao.CoordinateDAO;
@@ -31,7 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 /**
- *
+ * Servlet to load data for the shop.jsp page
  * @author massimo
  */
 public class ShopServlet extends HttpServlet {
@@ -51,10 +46,10 @@ public class ShopServlet extends HttpServlet {
     private CoordinateDAO coordinateDAO;
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-         
-        
-        
+
+
+
+
     }
     public void init() throws ServletException {
         DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
@@ -67,45 +62,45 @@ public class ShopServlet extends HttpServlet {
             coordinateDAO=daoFactory.getDAO(CoordinateDAO.class);
             pictureDAO=daoFactory.getDAO(PictureDAO.class);
             productDAO=daoFactory.getDAO(ProductDAO.class);
-            
+
         } catch (DAOFactoryException ex) {
             Log.error("Impossible to get dao factory for shop storage system");
             throw new ServletException("Impossible to get dao factory for shop storage system", ex);
         }
-        
+
         Log.info("ShopServlet init done");
     }
-    
-    
+
+
     protected void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
-       
-       
+
+
+
         String contextPath = getServletContext().getContextPath();
         if (!contextPath.endsWith("/")) {
             contextPath += "/";
         }
-        
-        
+
+
         try {
-            
+
             int id = Integer.parseInt(request.getParameter("id"));
             Shop shop=shopDAO.getByPrimaryKey(id);
             if (shop == null) {
                 response.sendRedirect(response.encodeRedirectURL(contextPath + "home.jsp"));
             } else {
                 request.setAttribute("shop", shop);
-                
+
                 List<Picture> pictures=pictureDAO.getByShop(shop);
                 List<Coordinate> coordinates=coordinateDAO.getByShop(shop);
                 List<Product> products=productDAO.getByShop(shop);
                 request.setAttribute("pictures", pictures);
                 request.setAttribute("coordinates", coordinates);
                 request.setAttribute("products", products);
-                
-                
-               
-                                   
+
+
+
+
                 request.getRequestDispatcher("shop.jsp").forward(request, response);
                 Log.info("Shop" + shop.getId() + "loaded");
             }
@@ -119,10 +114,10 @@ public class ShopServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
       process(req,resp);
     }
-    
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
       process(req,resp);
     }
-    
+
 }

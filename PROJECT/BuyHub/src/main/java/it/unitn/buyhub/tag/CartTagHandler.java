@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.buyhub.tag;
 
 import it.unitn.buyhub.dao.CoordinateDAO;
@@ -40,7 +35,7 @@ import javax.servlet.jsp.tagext.JspFragment;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 
 /**
- *
+ * Tag to handle the cart page
  * @author massimo
  */
 public class CartTagHandler extends SimpleTagSupport {
@@ -122,9 +117,9 @@ public class CartTagHandler extends SimpleTagSupport {
 
                 }
 
-                
+
                 String select="";
-                
+
                 List<Coordinate> coordinates = coordinateDAO.getByShop(shop);
 
                 if(shop.getShipment()!=null && shop.getShipment().length()!=0)
@@ -138,7 +133,7 @@ public class CartTagHandler extends SimpleTagSupport {
                     {
                         select+="\n<option id="+coordinate.getId()+" >";
                         select+=format.format(0)+" - "+Utility.getLocalizedString(pageContext, "pickup_in_store")+" ("+coordinate.getAddress()+")</option>";
-                        
+
                     }
                 }
 
@@ -164,7 +159,7 @@ public class CartTagHandler extends SimpleTagSupport {
                 out.println("<input type=\"hidden\" id=\"originalTotal"+shop.getId()+"\" value=\""+total+"\">");
                 out.println("<script> changeShipment("+shop.getId()+")</script>");
             }
-            
+
             out.println("</div>");
 
         } catch (Exception ec) {

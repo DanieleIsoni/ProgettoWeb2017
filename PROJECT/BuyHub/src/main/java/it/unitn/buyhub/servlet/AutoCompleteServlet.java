@@ -49,7 +49,8 @@ public class AutoCompleteServlet extends HttpServlet {
             Log.error("Error in autocomplete generation");
            throw new ServletException("Error in autocomplete generation");
         }
-        Log.info("AutoCompleteServlet init done");
+	
+        //Log.info("AutoCompleteServlet init done");
         
     }
 

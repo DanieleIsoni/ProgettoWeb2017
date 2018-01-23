@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.buyhub.servlet;
 
 import it.unitn.buyhub.dao.CoordinateDAO;
@@ -30,7 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 /**
- *
+ * Servlet to load the data used by product.jsp
  * @author massimo
  */
 public class ProductServlet extends HttpServlet {
@@ -75,7 +70,7 @@ public class ProductServlet extends HttpServlet {
 
 
     protected void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-      
+
         String contextPath = getServletContext().getContextPath();
         if (!contextPath.endsWith("/")) {
             contextPath += "/";

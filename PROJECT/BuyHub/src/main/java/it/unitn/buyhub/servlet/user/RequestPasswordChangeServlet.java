@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.buyhub.servlet.user;
 
 import it.unitn.buyhub.dao.UserDAO;
@@ -35,7 +30,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class RequestPasswordChangeServlet extends HttpServlet {
 
-    
+
     private UserDAO userDao;
 
     @Override
@@ -66,11 +61,11 @@ public class RequestPasswordChangeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        
+
+
         String email = request.getParameter("email");
-                
-        
+
+
         String contextPath = getServletContext().getContextPath();
         if (!contextPath.endsWith("/")) {
             contextPath += "/";
@@ -84,29 +79,29 @@ public class RequestPasswordChangeServlet extends HttpServlet {
                          Log.warn("User is not present in DB");
                          response.sendRedirect(response.encodeRedirectURL(contextPath + "requestpassword.jsp?error=1"));
                     }
-                    
+
                     /*
                     Send a mail to the user to activate the account with a link composed of:
-                    Encrypted id$MD5(password) with AES, 
+                    Encrypted id$MD5(password) with AES,
                     then encoded  to reppresent it in url
                     */
                     PropertyHandler ph=PropertyHandler.getInstance();
 
                     String linkMail=ph.getValue("baseUrl")+"changepassword.jsp?token=";
-                    
+
                     //create the key with aes, Base64 and URLencode
                     AES aes=new AES(ph.getValue("encodeKey"));
                     String crypt=aes.encrypt(user.getId()+"$"+user.getPassword());
                     linkMail+= Base64.getUrlEncoder().encodeToString(crypt.getBytes());
-                    
+
                     //build the message
                     String msg="Hi "+user.getFirstName()+",\n<br/>";
                     msg+="if you have required a password change, click on the button below.\n<br>";
                     msg+="or click on this link: \n<br>";
                     msg+="<a href='"+linkMail+"'>"+linkMail+"</a><br/>\n";
                     msg+="If you have not requested a password change, just ignore this mail.\n<br>";
-                    
-                    
+
+
                     //send the message
                     Mailer.mail(ph.getValue("noreplyMail"),email,"Change your password on BuyHub",msg,linkMail,"Change your password");
                     //Log.info("LINK: "+linkMail);
@@ -114,13 +109,13 @@ public class RequestPasswordChangeServlet extends HttpServlet {
                     response.sendRedirect(response.encodeRedirectURL(contextPath + "passwordchangerequested.jsp"));
                 }
             } catch (Exception ex) {
-                
+
                 Log.error("Error changepassword: "+ex.getMessage());
                 response.sendRedirect(response.encodeRedirectURL(contextPath + "requestpassword.jsp?error=2"));
             }
     }
     /**
-    
+
     /**
      * Returns a short description of the servlet.
      *

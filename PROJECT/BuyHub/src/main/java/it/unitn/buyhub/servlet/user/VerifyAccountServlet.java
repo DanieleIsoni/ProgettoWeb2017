@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.buyhub.servlet.user;
 import it.unitn.buyhub.dao.UserDAO;
 import it.unitn.buyhub.dao.entities.User;
@@ -24,7 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * This is the servlet where the user come pressing the link in the verification mail
- * 
+ * The link is decrypted, if everything is correct than the user is enabled.
+ *
  * @author massimo
  */
 public class VerifyAccountServlet extends HttpServlet {
@@ -47,8 +43,8 @@ public class VerifyAccountServlet extends HttpServlet {
         }
         Log.info("VerifyAccountServlet init done");
     }
-    
-    
+
+
     /** Handles the HTTP <code>GET</code> method.
      *
      * @param request servlet request
@@ -67,27 +63,27 @@ public class VerifyAccountServlet extends HttpServlet {
             String key=URLDecoder.decode(encoded, "UTF-8").replace(" ", "+");
             AES aes=new AES(PropertyHandler.getInstance().getValue("encodeKey"));
             key=aes.decrypt(new String(Base64.getUrlDecoder().decode(key)));
-            
-            
+
+
             String[] params=key.split("\\$");//split on `$` (this symbol is a special char for regex, so I escape it before)
-            
-            
+
+
             int id=Integer.parseInt(params[0]);
             String password=params[1];
-            
+
             //check if the credentials are correct
             User u= userDao.getByPrimaryKey(id);
             if(u==null || u.getPassword().compareTo(password)!=0)
                 throw new Exception("Error retrieving user");
-            
+
             //allow the user to login
             u.setCapability(Utility.CAPABILITY.USER.ordinal());
             userDao.update(u);
             Log.info("User "+u.getId()+" successfully verified: ");
-            
+
             //authenticate the user
             request.getSession().setAttribute("authenticatedUser", u);
-            
+
             //forward request to homepage
             String contextPath = getServletContext().getContextPath();
             if (!contextPath.endsWith("/")) {
@@ -95,14 +91,14 @@ public class VerifyAccountServlet extends HttpServlet {
             }
             response.sendRedirect(response.encodeRedirectURL(contextPath + "home.jsp"));
         }
-       
+
         } catch (Exception ex) {
             Log.info("Error in verifing user: "+ex.toString());
             throw new ServletException("Error verifing user");
         }
-                
-                
-                
+
+
+
     }
 
     @Override

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.buyhub.utils;
 
 import java.io.FileNotFoundException;
@@ -28,7 +23,7 @@ public class PropertyHandler{
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
 
         if (inputStream != null) {
-            try{  
+            try{
                 props.load(inputStream);
             }
             catch(IOException ex)
@@ -37,7 +32,7 @@ public class PropertyHandler{
 
             }
         } else {
-              
+
             Log.error("Error reading properties file!");
 
         }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.buyhub.servlet.admin;
 
 import it.unitn.buyhub.dao.CoordinateDAO;
@@ -33,6 +28,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 /**
  *
+
+  * Servlet that retrieves the data for the administrative users page
  * @author massimo
  */
 public class UsersServlet extends HttpServlet {
@@ -47,7 +44,7 @@ public class UsersServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     private UserDAO userDAO;
-    
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -63,7 +60,7 @@ public class UsersServlet extends HttpServlet {
         }
         try {
             userDAO = daoFactory.getDAO(UserDAO.class);
-            
+
         } catch (DAOFactoryException ex) {
             Log.error("Impossible to get dao factory for user storage system");
             throw new ServletException("Impossible to get dao factory for user storage system", ex);
@@ -73,7 +70,7 @@ public class UsersServlet extends HttpServlet {
 
 
     protected void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-      
+
         String contextPath = getServletContext().getContextPath();
         if (!contextPath.endsWith("/")) {
             contextPath += "/";
@@ -84,9 +81,9 @@ public class UsersServlet extends HttpServlet {
 
            List<User> users=userDAO.getAll();
            request.setAttribute("users", users);
-           
+
            request.getRequestDispatcher("users.jsp").forward(request, response);
-            
+
         } catch (DAOException ex) {
             Log.error("Error getting product "+ ex.toString());
             response.sendRedirect(response.encodeRedirectURL(contextPath + "../../common/error.jsp"));

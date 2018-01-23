@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.buyhub.servlet.admin;
 
 import it.unitn.buyhub.dao.CoordinateDAO;
@@ -32,7 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 /**
- *
+ * Servlet that retrieves the data for the administrative shops page
  * @author massimo
  */
 public class ShopsServlet extends HttpServlet {
@@ -47,7 +42,7 @@ public class ShopsServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     private ShopDAO shopDAO;
-    
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -63,17 +58,17 @@ public class ShopsServlet extends HttpServlet {
         }
         try {
             shopDAO = daoFactory.getDAO(ShopDAO.class);
-            
+
         } catch (DAOFactoryException ex) {
             Log.error("Impossible to get dao factory for shop storage system");
             throw new ServletException("Impossible to get dao factory for shop storage system", ex);
         }
-        Log.info("ShopsServlet init done");
+      //  Log.info("ShopsServlet init done");
     }
 
 
     protected void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-      
+
         String contextPath = getServletContext().getContextPath();
         if (!contextPath.endsWith("/")) {
             contextPath += "/";
@@ -84,9 +79,9 @@ public class ShopsServlet extends HttpServlet {
 
            List<Shop> shops=shopDAO.getAll();
            request.setAttribute("shops", shops);
-           
+
            request.getRequestDispatcher("shops.jsp").forward(request, response);
-            
+
         } catch (DAOException ex) {
             Log.error("Error getting product "+ ex.toString());
             response.sendRedirect(response.encodeRedirectURL(contextPath + "../../common/error.jsp"));

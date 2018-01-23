@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.buyhub.tag;
 
 import it.unitn.buyhub.dao.NotificationDAO;
@@ -39,6 +34,10 @@ import static javax.servlet.jsp.tagext.Tag.EVAL_PAGE;
 import org.apache.taglibs.standard.tag.common.fmt.BundleSupport;
 import it.unitn.buyhub.utils.Utility;
 
+/**
+* Tag to print the notification menu
+* @author Matteo Battilana
+*/
 public class NotificationTagHandler extends SimpleTagSupport {
 
     PageContext pageContext;

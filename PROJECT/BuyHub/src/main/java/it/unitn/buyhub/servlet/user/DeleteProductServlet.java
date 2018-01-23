@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.buyhub.servlet.user;
 
 import it.unitn.buyhub.dao.ProductDAO;
@@ -21,13 +16,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
+ * With this the shops can remove products
  * @author Daniso
  */
 public class DeleteProductServlet extends HttpServlet {
-    
+
     private ProductDAO productDAO;
-    
+
     public void init() throws ServletException {
         DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
         if (daoFactory == null) {

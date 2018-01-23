@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.buyhub.tag;
 
 import it.unitn.buyhub.dao.entities.Picture;
@@ -17,7 +12,7 @@ import javax.servlet.jsp.tagext.JspFragment;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 
 /**
- *
+ * Tag to prunt the images gallery for a product or a shop
  * @author massimo
  */
 public class GalleryTagHandler extends SimpleTagSupport {
@@ -53,7 +48,7 @@ public class GalleryTagHandler extends SimpleTagSupport {
     private String noImage() {
             return "<img class=\"noimage productMainPicture\" src="+Utility.getUrl(pageContext,"/images/noimage.png")+" alt=\""+Utility.getLocalizedString(pageContext, "no_image")+"\"></img>";
     }
-    
+
 
     private String printMain(Picture p)
     {
@@ -73,8 +68,8 @@ public class GalleryTagHandler extends SimpleTagSupport {
         s+=" alt=\""+p.getDescription()+"\"";
         s+=" title=\""+p.getName()+"\" class=\"productThumbPicture\"";;
         s+="/></a></li>";
-        
-                
+
+
         return s;
     }
 }

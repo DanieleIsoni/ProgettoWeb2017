@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.buyhub.servlet.cart;
 
 import it.unitn.buyhub.dao.entities.Cart;
@@ -17,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- *
+ * This servlet empty the cart. It is invoked by a button on the cart page.
  * @author matteo
  */
 public class EmptyCartServlet extends HttpServlet {
@@ -46,7 +41,7 @@ public class EmptyCartServlet extends HttpServlet {
             contextPath += "/";
         }
 
-        
+
         response.sendRedirect(response.encodeRedirectURL(contextPath + "cart.jsp"));
     }
 

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.buyhub.servlet.user;
 
 import it.unitn.buyhub.dao.CoordinateDAO;
@@ -26,14 +21,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
+ * Servlet to allow the creation of new shops
  * @author Daniso
  */
 public class CreateNewShopServlet extends HttpServlet {
-    
+
     private ShopDAO shopDao;
     private CoordinateDAO coordinateDao;
-    
+
     @Override
     public void init() throws ServletException {
         DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
@@ -50,7 +45,7 @@ public class CreateNewShopServlet extends HttpServlet {
         }
         Log.info("CreateNewShopServlet init done");
     }
-    
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -77,9 +72,9 @@ public class CreateNewShopServlet extends HttpServlet {
         if (!contextPath.endsWith("/")) {
             contextPath += "/";
         }
-        
+
         try {
-            if(name != null && !name.equals("") && 
+            if(name != null && !name.equals("") &&
                     description != null && !description.equals("") &&
                     website != null && !website.equals("") &&
                     shipment != null && !shipment.equals("") &&
@@ -118,16 +113,16 @@ public class CreateNewShopServlet extends HttpServlet {
                 String msg="Dear admin,\n<br/> a new shop has been created and need to be validated";
                 String linkMail = PropertyHandler.getInstance().getValue("baseUrl")+"restricted/admin/shops";
                 Mailer.mailToAdmins(PropertyHandler.getInstance().getValue("noreplyMail"), "New shop created", msg, linkMail,"Go to Shops Manager", super.getServletContext());
-                
+
                 response.sendRedirect(contextPath + "restricted/myself.jsp");
             }
         } catch (DAOException ex) {
-            
+
             Log.error("Error creating shop "+ ex);
         }
     }
 
-    
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -154,6 +149,6 @@ public class CreateNewShopServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-    }    
+    }
 
 }

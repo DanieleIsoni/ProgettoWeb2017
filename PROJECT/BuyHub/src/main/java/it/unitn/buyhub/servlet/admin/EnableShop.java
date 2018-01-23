@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.buyhub.servlet.admin;
 
 import it.unitn.buyhub.dao.CoordinateDAO;
@@ -33,7 +28,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 /**
- *
+ * This servlet changes the status of a shop from enabled to disable and viceversa
+ * It changes also the capability of the associated user
  * @author massimo
  */
 public class EnableShop extends HttpServlet {
@@ -49,7 +45,7 @@ public class EnableShop extends HttpServlet {
      */
     private ShopDAO shopDAO;
     private UserDAO userDAO;
-    
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -66,48 +62,48 @@ public class EnableShop extends HttpServlet {
         try {
             shopDAO = daoFactory.getDAO(ShopDAO.class);
             userDAO = daoFactory.getDAO(UserDAO.class);
-            
+
         } catch (DAOFactoryException ex) {
             Log.error("Impossible to get dao factory for shop storage system");
             throw new ServletException("Impossible to get dao factory for shop storage system", ex);
         }
-        Log.info("EnableShop init done");
+        //Log.info("EnableShop init done");
     }
 
 
     protected void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-      
+
         String contextPath = getServletContext().getContextPath();
         if (!contextPath.endsWith("/")) {
             contextPath += "/";
         }
         try {
-        
+
             if(request.getParameter("id")!=null && request.getParameter("status")!=null)
             {
                 int id=Integer.parseInt(request.getParameter("id"));
                 char status=request.getParameter("status").charAt(0);
 
-            
+
                 Shop shop = shopDAO.getByPrimaryKey(id);
                 shop.setValidity(status=='1'? 1 : 0);//if not 1 is false-> don't enable shop
-                
+
                 if(status=='1' && shop.getOwner().getCapability()<Utility.CAPABILITY.SHOP.ordinal())
                 {
                     User u=shop.getOwner();
                     u.setCapability(Utility.CAPABILITY.SHOP.ordinal());
                     userDAO.update(u);
                     Log.info("User "+id+" promoted to shop user ");
-                
+
                 }
-                    
+
                 shopDAO.update(shop);
                 Log.info("Shop "+id+": validity set to "+status);
-                
+
                 response.sendRedirect(response.encodeRedirectURL("shops"));
             }
-         
-            
+
+
         } catch (DAOException ex) {
             Log.error("Error getting product "+ ex.toString());
             response.sendRedirect(response.encodeRedirectURL(contextPath + "../../common/error.jsp"));

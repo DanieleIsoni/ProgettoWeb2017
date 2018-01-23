@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.buyhub.servlet.user;
 
 import it.unitn.buyhub.dao.OrderDAO;
@@ -24,12 +19,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
+ * Sertvlet that allow a shop to upload product's photos.
+ * This creates the data used by productPhoto.jsp
  * @author massimo
  */
 public class productPhotoServlet extends HttpServlet {
 
-    
+
     private ProductDAO productDAO;
     private PictureDAO pictureDAO;
      public void init() throws ServletException {
@@ -48,15 +44,15 @@ public class productPhotoServlet extends HttpServlet {
         }
         Log.info("EditProductServlet init done");
     }
-     
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        
+
+
         response.setContentType("text/html;charset=UTF-8");
             try {
-       
+
                 if(request.getParameter("id")==null)
                     throw new Exception("Missing id");
 
@@ -69,15 +65,15 @@ public class productPhotoServlet extends HttpServlet {
                     Product product = productDAO.getByPrimaryKey(id);
                     request.setAttribute("product", product);
                     List<Picture> pictures = pictureDAO.getByProduct(product);
-                    
+
                     request.setAttribute("pictures", pictures);
                     request.getRequestDispatcher("productPhoto.jsp").forward(request, response);
-                    
-        
+
+
         } catch (Exception ex) {
             Logger.getLogger(productPhotoServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
 

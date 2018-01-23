@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.buyhub.servlet.order;
 
 import it.unitn.buyhub.dao.CoordinateDAO;
@@ -37,13 +32,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- *
+ * This servlet place the order and redirect the user to the payment page
  * @author massimo
  */
 public class PlaceOrderServlet extends HttpServlet {
 
-    
-    
+
+
     private ProductDAO productDAO;
     private CoordinateDAO coordinateDAO;
     private ShopDAO shopDAO;
@@ -62,20 +57,20 @@ public class PlaceOrderServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        
+
         String contextPath = getServletContext().getContextPath();
         if (!contextPath.endsWith("/")) {
             contextPath += "/";
         }
         try{
-        
+
         HttpSession session = request.getSession(false);
         if (session != null && request.getParameter("shopid")!=null && request.getParameter("shipment")!=null ) {
-            
+
             Order o=new Order();
             o.setPaid(false);
             o.setUser( (User) request.getSession().getAttribute("authenticatedUser"));
-            
+
             Shop s= shopDAO.getByPrimaryKey(Integer.valueOf(request.getParameter("shopid")));
             if(Integer.valueOf(request.getParameter("shipment"))==-1 && s.getShipment().length()>0)
             {
@@ -93,7 +88,7 @@ public class PlaceOrderServlet extends HttpServlet {
             }
             o.setShop(s);
             Cart cart = (Cart) session.getAttribute("userCart");
-            
+
             HashMap<Integer, ArrayList<CartElement>> cartMap = cart.getProducts();
             ArrayList<CartElement> cartElems= cartMap.get(s.getId());
             if(cartElems!= null && cartElems.size()!=0)
@@ -105,37 +100,37 @@ public class PlaceOrderServlet extends HttpServlet {
 
                 int oid = orderDAO.insert(o).intValue();
                 o.setId(oid);
-                //INSERT PRODUCTS FROM HERE (ORDERDAO DOESN'T INSERT-> it generated errors) 
+                //INSERT PRODUCTS FROM HERE (ORDERDAO DOESN'T INSERT-> it generated errors)
                 for (OrderedProduct op: o.getProducts()) {
-                    
+
                     orderedProductDAO.insert(op);
                     total+=op.getQuantity()*op.getPrice();
                 }
 
                 total+=o.getShipment_cost();
-                
+
                 cart.removeIf(cartElems);
                 session.setAttribute("userCart", cart);
 
                 request.setAttribute("order", o);
-                
+
                 request.setAttribute("shipmentType",Integer.valueOf(request.getParameter("shipment")));
                 request.setAttribute("total",total);
                 request.getRequestDispatcher("../payment.jsp").forward(request, response);
             }
             else
-                throw  new Exception("Erorr: no product to buy");    
-        }        
+                throw  new Exception("Erorr: no product to buy");
+        }
         else
             response.sendRedirect(response.encodeRedirectURL(contextPath + "cart.jsp"));
         }catch (Exception ex) {
             System.out.println(ex);
-        
+
             //Logger.getLogger(PlaceOrderServlet.class.getName()).log(Level.SEVERE, null, ex);
             Log.error("Error placing order: "+ex);
         }
     }
-    
+
     /**
      * Returns a short description of the servlet.
      *
@@ -145,8 +140,8 @@ public class PlaceOrderServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>// </editor-fold>// </editor-fold>// </editor-fold>
-    
-    
+
+
     public void init() throws ServletException {
       DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
         if (daoFactory == null) {
@@ -163,6 +158,6 @@ public class PlaceOrderServlet extends HttpServlet {
             Log.error("Impossible to get dao factory for order storage system");
             throw new ServletException("Impossible to get dao factory for order storage system", ex);
         }
-        
+
     }
 }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.buyhub.tag;
 
 import it.unitn.buyhub.utils.PropertyHandler;
@@ -14,7 +9,7 @@ import javax.servlet.jsp.tagext.JspFragment;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 
 /**
- *
+ * Tag to print the categories select dropdown
  * @author massimo
  */
 public class CategoriesPrinter extends SimpleTagSupport {
@@ -53,7 +48,7 @@ public class CategoriesPrinter extends SimpleTagSupport {
     public void setStyle(String style) {
         this.style = style;
     }
-    
+
     public void setSelected(int selected) {
         this.selected = selected;
     }

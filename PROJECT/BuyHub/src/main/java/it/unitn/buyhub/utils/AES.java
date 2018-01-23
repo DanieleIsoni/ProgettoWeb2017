@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.buyhub.utils;
 
 import java.security.InvalidKeyException;
@@ -27,11 +22,11 @@ import javax.crypto.spec.SecretKeySpec;
  * @author massimo
  */
 public class AES {
-   
+
     private static final String ALGO = "AES";
     private Key key;
-    
-    
+
+
     public AES(String key)
     {
         this.key=new SecretKeySpec(key.getBytes(), ALGO);
@@ -63,6 +58,6 @@ public class AES {
         byte[] decValue = c.doFinal(decordedValue);
         return new String(decValue);
     }
-    
-    
+
+
 }

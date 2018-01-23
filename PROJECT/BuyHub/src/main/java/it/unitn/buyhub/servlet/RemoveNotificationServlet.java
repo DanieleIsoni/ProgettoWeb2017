@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package it.unitn.buyhub.servlet;
 
 import it.unitn.buyhub.dao.CoordinateDAO;
@@ -30,11 +26,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
- * @author Daniso
+ * Allow the user to delete a notification (invoked by the X on any notification)
+ * @author Matteo Battilana
  */
 public class RemoveNotificationServlet extends HttpServlet {
-    
+
     private NotificationDAO notificationDao;
     @Override
     public void init() throws ServletException {
@@ -63,24 +59,24 @@ public class RemoveNotificationServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         response.setContentType("text/html;charset=UTF-8");
-        
+
         String notificationId = (String) request.getParameter("id_notification");
-        
+
         String contextPath = getServletContext().getContextPath();
         if (!contextPath.endsWith("/")) {
             contextPath += "/";
         }
-        
+
         try {
             if(notificationId!=null && !notificationId.equals("")){
                 Notification not = notificationDao.getByPrimaryKey(Integer.valueOf(notificationId));
                 not.setStatus(true);
                 notificationDao.update(not);
             }
-                
-            
+
+
         } catch (Exception ex) {
             Log.error("Error remove notification" + ex.getMessage().toString());
         }
@@ -114,5 +110,5 @@ public class RemoveNotificationServlet extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
     }
-    
+
 }

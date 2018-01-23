@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.buyhub.servlet.user;
 
 import it.unitn.buyhub.dao.CoordinateDAO;
@@ -20,13 +15,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
+ * Servlet to update the shop's informations
  * @author Daniso
  */
 public class EditShopServlet extends HttpServlet {
 
     private ShopDAO shopDao;
-    
+
     @Override
     public void init() throws ServletException {
         DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
@@ -42,7 +37,7 @@ public class EditShopServlet extends HttpServlet {
         }
         Log.info("EditShopServlet init done");
     }
-    
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -55,17 +50,17 @@ public class EditShopServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
         String contextPath = getServletContext().getContextPath();
         if (!contextPath.endsWith("/")) {
             contextPath += "/";
         }
-        
+
         String shopName = request.getParameter("shopName");
         String website = request.getParameter("website");
         String shipment = request.getParameter("shipment");
         String description = request.getParameter("description");
-        
+
         try{
             Shop shop = (Shop) request.getSession().getAttribute("myshop");
             if(shop!=null){
@@ -85,11 +80,11 @@ public class EditShopServlet extends HttpServlet {
         }catch(DAOException ex){
             Log.error("Error editing shop, "+ex);
         }
-        
-        
+
+
     }
 
-    
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *

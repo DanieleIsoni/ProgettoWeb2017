@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.buyhub.servlet.user;
 
 import it.unitn.buyhub.dao.CoordinateDAO;
@@ -27,14 +22,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
+ * This servlet allow the shop to add a new product
  * @author Daniso
  */
 public class AddProductServlet extends HttpServlet {
-    
+
     private ShopDAO shopDAO;
     private ProductDAO productDAO;
-    
+
     @Override
     public void init() throws ServletException {
         DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
@@ -51,7 +46,7 @@ public class AddProductServlet extends HttpServlet {
         }
         Log.info("AddProductServlet init done");
     }
-    
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -64,18 +59,18 @@ public class AddProductServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
         String productName = (String) request.getParameter("productName");
         int category = Integer.parseInt(request.getParameter("product_category"));
         Double price = Double.parseDouble(request.getParameter("price"));
         String description = (String) request.getParameter("description");
         int shopId = Integer.parseInt(request.getParameter("shopId"));
-        
+
         String contextPath = getServletContext().getContextPath();
         if (!contextPath.endsWith("/")) {
             contextPath += "/";
         }
-       
+
         try {
             if(productName != null && !productName.equals("") &&
                     category >= 0 && category < Integer.parseInt(PropertyHandler.getInstance().getValue("categoriesNumber")) &&
@@ -96,17 +91,17 @@ public class AddProductServlet extends HttpServlet {
                     Log.info("Product inserted correctly");
                     ((List<Product>) request.getSession().getAttribute("myproducts")).add(newProduct);
                 }
-                
+
                 response.sendRedirect(contextPath + "restricted/myshop.jsp");
             }
         } catch (DAOException ex) {
             Log.error("Error creating product, "+ex);
         }
-        
-        
+
+
     }
 
-    
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *

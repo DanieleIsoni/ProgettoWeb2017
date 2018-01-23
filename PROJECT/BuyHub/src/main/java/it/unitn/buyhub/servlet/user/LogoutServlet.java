@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.buyhub.servlet.user;
 
 import it.unitn.buyhub.dao.entities.User;
@@ -16,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- *
+ * Logout the user: destroy the session and delete the data from the cookies.
  * @author matteo
  */
 public class LogoutServlet extends HttpServlet {
@@ -41,7 +36,7 @@ public class LogoutServlet extends HttpServlet {
                 session.setAttribute("authenticatedUser", null);
                 session.invalidate();
                     Log.info("User "+user.getId()+" logged out");
-            
+
                 user = null;
             }
         }
@@ -51,7 +46,7 @@ public class LogoutServlet extends HttpServlet {
             contextPath += "/";
         }
 
-        
+
         response.sendRedirect(response.encodeRedirectURL(contextPath + "login.jsp"));
     }
 

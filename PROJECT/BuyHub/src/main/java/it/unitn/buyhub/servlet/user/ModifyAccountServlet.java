@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.buyhub.servlet.user;
 
 import it.unitn.buyhub.dao.UserDAO;
@@ -19,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
+ * Allow the modification of user's password
  * @author Daniele Isoni
  */
 public class ModifyAccountServlet extends HttpServlet {
@@ -39,7 +34,7 @@ public class ModifyAccountServlet extends HttpServlet {
             Log.error("Impossible to get dao factory for user storage system");
             throw new ServletException("Impossible to get dao factory for user storage system", ex);
         }
-        
+
         Log.info("ModifyAccountServlet init done");
     }
 
@@ -59,7 +54,7 @@ public class ModifyAccountServlet extends HttpServlet {
         String oldPassword = request.getParameter("old_password");
         String newPassword = request.getParameter("new_password");
         String newPassword2 = request.getParameter("new_password2");
-       
+
         String contextPath = getServletContext().getContextPath();
         if (!contextPath.endsWith("/")) {
             contextPath += "/";

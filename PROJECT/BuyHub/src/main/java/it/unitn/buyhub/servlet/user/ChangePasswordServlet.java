@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.buyhub.servlet.user;
 
 import it.unitn.buyhub.dao.UserDAO;
@@ -66,12 +61,12 @@ public class ChangePasswordServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
-        
+
+
         String password = request.getParameter("password");
         String password2 = request.getParameter("password2");
         String token = request.getParameter("token");
-        
+
         String contextPath = getServletContext().getContextPath();
         if (!contextPath.endsWith("/")) {
             contextPath += "/";
@@ -96,9 +91,9 @@ public class ChangePasswordServlet extends HttpServlet {
                     u.setPassword(MD5.getMD5Hex(password));
                     try{
                         userDao.update(u);
-                        
+
                         Log.info("User "+id+" successfully changed password");
-                        
+
                         response.sendRedirect(response.encodeRedirectURL(contextPath + "login.jsp"));
                     }
                     catch(Exception ex)
@@ -124,7 +119,7 @@ public class ChangePasswordServlet extends HttpServlet {
 
             }
         } catch (Exception ex) {
-            
+
             Log.error("Error changepassword: "+ex.getMessage());
             response.sendRedirect(response.encodeRedirectURL(contextPath + "changepassword.jsp?error=2&token="+token));
         }

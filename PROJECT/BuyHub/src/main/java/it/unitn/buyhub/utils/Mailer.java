@@ -1,12 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.buyhub.utils;
 
 /**
- *
+ * This servlet is used to send a mail to a given address.
+ * The mail is sent in  async mode  with a HTML body.
+ * See the documentation in pdf to find more information.
  * @author maxgiro96
  */
 import it.unitn.buyhub.dao.UserDAO;
@@ -85,9 +82,9 @@ public class Mailer {
                 Log.error("Impossible to get dao factory for user storage system");
                 throw new ServletException("Impossible to get dao factory for user storage system", ex);
             }
-            
+
             List<User> admins= userDao.getAdmins();
-            
+
             //For each admin in the list, send an email
             for (User admin : admins) {
                 mail(from, admin.getEmail(), subject, body, url, button_txt);
@@ -98,7 +95,7 @@ public class Mailer {
             Log.warn("Error sending mail to admins: "+ex.getMessage());
         }
    }
-    
+
 
 
     /**
@@ -114,7 +111,7 @@ public class Mailer {
 
 
         //MODIFY WITH YOUR CREDENTIALS
-        
+
         props.put("mail.smtp.auth", "true");
 //        props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", "srv-hp1.netsons.net");

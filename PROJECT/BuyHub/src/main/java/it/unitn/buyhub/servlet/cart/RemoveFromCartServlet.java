@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.buyhub.servlet.cart;
 
 import it.unitn.buyhub.dao.entities.Cart;
@@ -17,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- *
+ * This servlet remove a product from the session cart. Invoked by a button in the cart page
  * @author matteo
  */
 public class RemoveFromCartServlet extends HttpServlet {
@@ -36,8 +31,8 @@ public class RemoveFromCartServlet extends HttpServlet {
           response.setContentType("text/html;charset=UTF-8");
 
         HttpSession session = request.getSession(false);
-        
-        
+
+
         if (session != null && request.getParameter("id")!=null) {
             int id = Integer.valueOf(request.getParameter("id"));
             Cart cart = (Cart) session.getAttribute("userCart");
@@ -49,7 +44,7 @@ public class RemoveFromCartServlet extends HttpServlet {
             contextPath += "/";
         }
 
-        
+
         response.sendRedirect(response.encodeRedirectURL(contextPath + "cart.jsp"));
     }
 

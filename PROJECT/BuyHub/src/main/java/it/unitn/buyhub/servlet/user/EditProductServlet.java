@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.buyhub.servlet.user;
 
 import it.unitn.buyhub.dao.ProductDAO;
@@ -22,13 +17,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
+ * Shops use this servlet to edit products: invoked both before and after the modifications.
  * @author Daniso
  */
 public class EditProductServlet extends HttpServlet {
-    
+
     private ProductDAO productDAO;
-    
+
     public void init() throws ServletException {
         DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
         if (daoFactory == null) {
@@ -43,7 +38,7 @@ public class EditProductServlet extends HttpServlet {
         }
         Log.info("EditProductServlet init done");
     }
-    
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -58,7 +53,7 @@ public class EditProductServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         int code = Integer.parseInt(request.getParameter("code"));
         int prodId = Integer.parseInt(request.getParameter("prodId"));
-        
+
         String contextPath = getServletContext().getContextPath();
         if (!contextPath.endsWith("/")) {
             contextPath += "/";
@@ -95,7 +90,7 @@ public class EditProductServlet extends HttpServlet {
             Log.error("Error editing product, "+ex);
         }
     }
-    
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *

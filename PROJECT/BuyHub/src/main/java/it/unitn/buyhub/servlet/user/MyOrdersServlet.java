@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.buyhub.servlet.user;
 
 import it.unitn.buyhub.servlet.admin.*;
@@ -40,7 +35,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.PageContext;
 /**
- *
+ * This servlet display the orders placed by a user
  * @author massimo
  */
 public class MyOrdersServlet extends HttpServlet {
@@ -56,7 +51,7 @@ public class MyOrdersServlet extends HttpServlet {
      */
     private OrderDAO orderDAO;
     private OrderedProductDAO orderedProductDAO;
-    
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -73,7 +68,7 @@ public class MyOrdersServlet extends HttpServlet {
         try {
             orderDAO = daoFactory.getDAO(OrderDAO.class);
             orderedProductDAO = daoFactory.getDAO(OrderedProductDAO.class);
-            
+
         } catch (DAOFactoryException ex) {
             Log.error("Impossible to get dao factory for order storage system");
             throw new ServletException("Impossible to get dao factory for order storage system", ex);
@@ -83,7 +78,7 @@ public class MyOrdersServlet extends HttpServlet {
 
 
     protected void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-      
+
         String contextPath = getServletContext().getContextPath();
         if (!contextPath.endsWith("/")) {
             contextPath += "/";
@@ -92,10 +87,10 @@ public class MyOrdersServlet extends HttpServlet {
 
         try {
 
-           User u=(User) request.getSession().getAttribute("authenticatedUser"); 
-           
+           User u=(User) request.getSession().getAttribute("authenticatedUser");
+
            List<Order> orders=orderDAO.getByUser(u.getId());
-           
+
            request.setAttribute("orders", orders);
            List<Double> totals=new  ArrayList<Double>();
            for(Order o: orders)
@@ -108,9 +103,9 @@ public class MyOrdersServlet extends HttpServlet {
                totals.add(sum);
            }
            request.setAttribute("totals", totals);
-           
+
            request.getRequestDispatcher("myorders.jsp").forward(request, response);
-            
+
         } catch (DAOException ex) {
             Log.error("Error getting orders: "+ ex.toString());
             response.sendRedirect(response.encodeRedirectURL(contextPath + "../../common/error.jsp"));

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.buyhub.tag;
 
 import it.unitn.buyhub.dao.OrderDAO;
@@ -32,7 +27,7 @@ public class ChangeCapabilityModal extends SimpleTagSupport {
     PageContext pageContext;
     private ShopDAO shopDAO;
     private UserDAO userDAO;
-    
+
     /**
      * Called by the container to invoke this tag. The implementation of this
      * method is provided by the tag library developer, and handles all tag
@@ -44,19 +39,19 @@ public class ChangeCapabilityModal extends SimpleTagSupport {
         pageContext = (PageContext) getJspContext();
         try{
             init();
-            
-            
-            User u = userDAO.getByPrimaryKey(id);            
-            
+
+
+            User u = userDAO.getByPrimaryKey(id);
+
             out.println("<button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#Modal"+id+"\">\n" +
                         Utility.getLocalizedString(pageContext, "change_capability")+"\n" +
                         "</button>");
-            
+
             out.println(createModal(u));
-            
-            
-            
-            
+
+
+
+
         } catch(Exception e){
             Log.error(e);
             throw new JspException("Error creating DAOs:", e);
@@ -64,10 +59,10 @@ public class ChangeCapabilityModal extends SimpleTagSupport {
         try {
                  out.println("</div>");
         } catch (Exception ex) {
-            
+
             Log.error(ex);
             throw new JspException("Error in ChangeCapabilityModal tag: ", ex);
-        
+
         }
     }
 
@@ -82,19 +77,19 @@ public class ChangeCapabilityModal extends SimpleTagSupport {
         }
         try {
           userDAO=daoFactory.getDAO(UserDAO.class);
-            
+
         } catch (DAOFactoryException ex) {
             throw new ServletException("Impossible to get dao factory for capability modals", ex);
         }
     }
- 
- 
- 
- 
+
+
+
+
   private String createModal(User u)
     {
-        
-           
+
+
 
             String content="<!-- Modal -->\n" +
             "<div class=\"modal fade\" id=\"Modal"+u.getId()+"\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalCenterTitle\" aria-hidden=\"true\">\n" +
@@ -109,8 +104,8 @@ public class ChangeCapabilityModal extends SimpleTagSupport {
             "      </div>\n" +
             "      <div class=\"modal-body\">\n"
                     + "<div class=\"container-fluid capability_modal\">";
-            
-            
+
+
             for(Utility.CAPABILITY c : Utility.CAPABILITY.values())
             {
                 if(u.getCapability()!=c.ordinal())
@@ -125,9 +120,9 @@ public class ChangeCapabilityModal extends SimpleTagSupport {
                     content+="\" role=\"button\">"+Utility.getLocalizedString(pageContext, "capability_"+c.ordinal())+"</a><br/>";
                 }
             }
-            
-            
-            content+=    
+
+
+            content+=
                     "</div>\n"+
             "      </div>\n" +
             "    </div>\n" +
@@ -135,10 +130,10 @@ public class ChangeCapabilityModal extends SimpleTagSupport {
             "</div>"+
             "</div>";
 
-        
-        
+
+
         return content;
     }
-    
-    
+
+
 }

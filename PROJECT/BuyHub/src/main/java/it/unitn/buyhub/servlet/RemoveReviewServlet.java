@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.buyhub.servlet;
 
 import it.unitn.buyhub.dao.CoordinateDAO;
@@ -28,15 +23,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
- * @author Daniso
+ * Servlet to remove a review from a product (if exist).
+ * @author Matteo Battilana
  */
 public class RemoveReviewServlet extends HttpServlet {
-    
+
     private ReviewDAO reviewDao;
     private UserDAO userDao;
     private ProductDAO productDAO;
-    
+
     @Override
     public void init() throws ServletException {
         DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
@@ -66,18 +61,18 @@ public class RemoveReviewServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         response.setContentType("text/html;charset=UTF-8");
-        
+
         String productId = (String) request.getParameter("id_product");
         String reviewId = (String) request.getParameter("id_review");
         User owner = (User) request.getSession().getAttribute("authenticatedUser");
-        
+
         String contextPath = getServletContext().getContextPath();
         if (!contextPath.endsWith("/")) {
             contextPath += "/";
         }
-        
+
         try {
             if (owner != null && reviewId != null && !reviewId.equals("") && productId != null && !productId.equals("")) {
                 Review rev = reviewDao.getByPrimaryKey(Integer.valueOf(reviewId));
@@ -88,14 +83,14 @@ public class RemoveReviewServlet extends HttpServlet {
                         Log.error("Error removieng review");
                     }
                 }
-                
-               
-                
+
+
+
             }
         } catch (Exception ex) {
             Log.error("Error adding review" + ex.getMessage().toString());
         }
-        
+
          response.sendRedirect(response.encodeRedirectURL(contextPath + "product?id=" + productId));
     }
 
@@ -126,5 +121,5 @@ public class RemoveReviewServlet extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
     }
-    
+
 }

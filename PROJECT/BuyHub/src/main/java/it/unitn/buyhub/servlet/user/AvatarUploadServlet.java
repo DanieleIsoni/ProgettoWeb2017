@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.buyhub.servlet.user;
 
 
@@ -27,7 +22,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 /**
- *
+ * With this servlet a user can upload his avatar picture
  * @author maxgiro96
  */
 public class AvatarUploadServlet extends HttpServlet {
@@ -47,21 +42,21 @@ public class AvatarUploadServlet extends HttpServlet {
             Log.error("Impossible to get dao factory for user storage system");
             throw new ServletException("Impossible to get dao factory for user storage system", ex);
         }
-        
+
         Log.info("AvatUploadServlet init done");
     }
 
-    
-    
-    
+
+
+
         // location to store file uploaded
     private static final String UPLOAD_DIRECTORY = "upload";
- 
+
     // upload settings
     private static final int MEMORY_THRESHOLD   = 1024 * 1024 * 3;  // 3MB
     private static final int MAX_FILE_SIZE      = 1024 * 1024 * 40; // 40MB
     private static final int MAX_REQUEST_SIZE   = 1024 * 1024 * 50; // 50MB
-    
+
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -73,17 +68,17 @@ public class AvatarUploadServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        
+
+
         User user = (User) request.getSession().getAttribute("authenticatedUser");
         String contextPath = getServletContext().getContextPath();
         if (!contextPath.endsWith("/")) {
             contextPath += "/";
         }
-        
+
         // checks if the request actually contains upload file
         if (!ServletFileUpload.isMultipartContent(request)) {
-            
+
             // if not, we stop here
             PrintWriter writer = response.getWriter();
             writer.println("Error: Form must has enctype=multipart/form-data.");
@@ -92,23 +87,23 @@ public class AvatarUploadServlet extends HttpServlet {
             return;
 
         }
-        
- 
+
+
         // configures upload settings
         DiskFileItemFactory factory = new DiskFileItemFactory();
         // sets memory threshold - beyond which files are stored in disk
         factory.setSizeThreshold(MEMORY_THRESHOLD);
         // sets temporary location to store files
         factory.setRepository(new File(System.getProperty("java.io.tmpdir")));
-        
+
         ServletFileUpload upload = new ServletFileUpload(factory);
-         
+
         // sets maximum size of upload file
         upload.setFileSizeMax(MAX_FILE_SIZE);
-         
+
         // sets maximum size of request (include file + form data)
         upload.setSizeMax(MAX_REQUEST_SIZE);
-        
+
         try {
             List<FileItem> formItems = upload.parseRequest(request);
             if (formItems != null && formItems.size() > 0) {
@@ -121,14 +116,14 @@ public class AvatarUploadServlet extends HttpServlet {
                     // processes only fields that are not form fields
                     if (!item.isFormField() && item.getFieldName().equals("avatar") && item.getSize()>0) {
                         String fileName = new File(item.getName()).getName();
-                        
+
                         Utility.saveJPEG(item.getInputStream(),"avatars/"+user.getUsername());
                         user.setAvatar("UploadedContent/avatars/"+user.getUsername()+".jpg");
                         userDao.update(user);
                         Log.info("User "+user.getUsername()+" changed avatar image");
                         done=true;
                         response.sendRedirect(response.encodeRedirectURL(contextPath + "restricted/myself.jsp"));
-            
+
                     }
                     else  if(item.isFormField() && item.getFieldName().equals("remove"))
                     {
@@ -145,20 +140,20 @@ public class AvatarUploadServlet extends HttpServlet {
                         Log.info("User "+user.getUsername()+" removed avatar");
                         done=true;
                         response.sendRedirect(response.encodeRedirectURL(contextPath + "restricted/myself.jsp"));
-                        
+
 
                     }
                 }
             }
-            
+
             response.sendRedirect(response.encodeRedirectURL(contextPath + "restricted/myself.jsp"));
-            
-            
+
+
         } catch (Exception ex) {
            Log.error("Error in avatar upload:"+ ex.getMessage());
-            
+
         }
-        
+
     }
 
     @Override

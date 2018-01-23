@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.buyhub.tag;
 
 import it.unitn.buyhub.utils.Utility;
@@ -24,11 +19,11 @@ import javax.servlet.jsp.tagext.SimpleTagSupport;
  */
 public class HomepageSlider extends SimpleTagSupport {
 
- 
+
     @Override
     public void doTag() throws JspException {
         PageContext pageContext = (PageContext)getJspContext();
-        
+
         JspWriter out = getJspContext().getOut();
         String path=pageContext.getServletContext().getRealPath("/images/slider_images")+"/";
         String lang = Utility.getLocalizedString(pageContext, "language");
@@ -55,5 +50,5 @@ public class HomepageSlider extends SimpleTagSupport {
             }
         }
     }
-    
+
 }
