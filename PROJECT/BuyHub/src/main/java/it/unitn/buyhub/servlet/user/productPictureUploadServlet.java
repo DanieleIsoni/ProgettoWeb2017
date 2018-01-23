@@ -51,7 +51,7 @@ public class productPictureUploadServlet extends HttpServlet {
             throw new ServletException("Impossible to get dao factory for picture storage system", ex);
         }
 
-        Log.info("AvatUploadServlet init done");
+//        Log.info("AvatUploadServlet init done");
     }
 
 

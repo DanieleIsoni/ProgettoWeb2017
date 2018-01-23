@@ -35,7 +35,7 @@ public class EditShopServlet extends HttpServlet {
             Log.error("Impossible to get dao factory for shop storage system");
             throw new ServletException("Impossible to get dao factory for shop storage system", ex);
         }
-        Log.info("EditShopServlet init done");
+//        Log.info("EditShopServlet init done");
     }
 
     /**

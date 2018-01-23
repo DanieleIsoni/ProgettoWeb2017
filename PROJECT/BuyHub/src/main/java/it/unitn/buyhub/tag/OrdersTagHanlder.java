@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package it.unitn.buyhub.tag;
 
 import it.unitn.buyhub.dao.OrderDAO;
@@ -34,9 +29,9 @@ public class OrdersTagHanlder extends SimpleTagSupport {
     private OrderDAO orderDAO;
     private OrderedProductDAO orderedProductDAO;
     private PageContext pageContext;
-   
-    
-    
+
+
+
     /**
      * Called by the container to invoke this tag. The implementation of this
      * method is provided by the tag library developer, and handles all tag
@@ -53,8 +48,8 @@ public class OrdersTagHanlder extends SimpleTagSupport {
             throw new JspException("Error creating DAOs:", e);
         }
         try {
-            
-            
+
+
            String modals="";
            out.println("<div class=\"row\">\n" +
 "                <div class=\"row shop_page_shipment_info\">\n" +
@@ -83,7 +78,7 @@ public class OrdersTagHanlder extends SimpleTagSupport {
                                     "<td> #"+o.getId()+"</td>"+
                                     "<td>"+o.getUser().getFirstName() + " "+o.getUser().getLastName()+"</td>"+
                                     "<td>"+total+"</td>"+
-                                    
+
                                     "<td><button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#Modal"+o.getId()+"\">\n" +
                                     Utility.getLocalizedString(pageContext, "order_details")+"  \n" +
                                     "</button></td></tr>"
@@ -91,22 +86,22 @@ public class OrdersTagHanlder extends SimpleTagSupport {
                         modals+=createModal(o, byOrder)+"\n";
                     }
                 }
-                 
+
             }
-           
+
            out.println("</table>");
-           
+
             out.println("<!--------MOADLS CONTENT--------------->");
 
             out.println(modals);
             out.println("<!--------MOADLS CONTENT END--------------->");
 
-           
-            
-            
+
+
+
             out.println("</div>");
         } catch (Exception ex) {
-            
+
             Log.error(ex);
             throw new JspException("Error in OrdersTagHanlder tag: ", ex);
         }
@@ -115,7 +110,7 @@ public class OrdersTagHanlder extends SimpleTagSupport {
     public void setShop_id(String shop_id) {
         this.shop_id = shop_id;
     }
-    
+
     private void init() throws ServletException {
         DAOFactory daoFactory = (DAOFactory) pageContext.getAttribute("daoFactory", PageContext.APPLICATION_SCOPE);
         if (daoFactory == null) {
@@ -124,15 +119,15 @@ public class OrdersTagHanlder extends SimpleTagSupport {
         try {
             orderDAO = daoFactory.getDAO(OrderDAO.class);
             orderedProductDAO = daoFactory.getDAO(OrderedProductDAO.class);
-            
+
         } catch (DAOFactoryException ex) {
             throw new ServletException("Impossible to get dao factory for orders table printer", ex);
         }
     }
-    
+
     private String createModal(Order o, List<OrderedProduct> orederedProduct)
     {
-        
+
             float total=0;
                 for (OrderedProduct op: orederedProduct)
                    total+= op.getQuantity()*op.getPrice();
@@ -150,15 +145,15 @@ public class OrdersTagHanlder extends SimpleTagSupport {
             "      </div>\n" +
             "      <div class=\"modal-body\">\n"
                     + "<div class=\"container-fluid\">";
-            
+
             content+="<div class='row'>";
             content+=Utility.getLocalizedString(pageContext, "name")+": "+o.getUser().getFirstName()+" "+o.getUser().getLastName()+" (#"+o.getUser().getId()+")<br/>\n";
             content+=Utility.getLocalizedString(pageContext, "email_address")+": "+o.getUser().getEmail()+"<br/>\n";
             content+=Utility.getLocalizedString(pageContext, "shipment_mode_singular")+": "+o.getShipment()+"<br/>\n";
             content+=Utility.getLocalizedString(pageContext, "total")+": €"+String.format("%.2f", total)+"<br/>\n";
             content+="</div><div class='row'>\n";
-            
-            
+
+
             content+="<table class='table-striped table-bordered'>";
             content+="<thead><td>"+"ID"+"</td><td>"+Utility.getLocalizedString(pageContext, "product_name")
                     +"</td><td>"+Utility.getLocalizedString(pageContext, "element_quantity")+"</td><td>"
@@ -172,11 +167,11 @@ public class OrdersTagHanlder extends SimpleTagSupport {
                 content+="<td>"+String.format("%.2f", op.getPrice())+"</td>";
                 content+="</tr>\n";
             }
-                
+
             content+="</table>\n";
-            
-                    
-            content+=    
+
+
+            content+=
                     "</div>\n"+
             "      </div>\n" +
             "    </div>\n" +
@@ -184,9 +179,9 @@ public class OrdersTagHanlder extends SimpleTagSupport {
             "</div>"+
             "</div>";
 
-        
-        
+
+
         return content;
     }
-    
+
 }

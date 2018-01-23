@@ -73,7 +73,7 @@ public class MyOrdersServlet extends HttpServlet {
             Log.error("Impossible to get dao factory for order storage system");
             throw new ServletException("Impossible to get dao factory for order storage system", ex);
         }
-        Log.info("OrdersServlet init done");
+//        Log.info("OrdersServlet init done");
     }
 
 

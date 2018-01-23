@@ -45,7 +45,7 @@ public class RemoveNotificationServlet extends HttpServlet {
             Log.error("Impossible to get dao factory for notification storage system");
             throw new ServletException("Impossible to get dao factory for notification storage system", ex);
         }
-        Log.info("CreateNewShopServlet init done");
+//        Log.info("CreateNewShopServlet init done");
     }
 
     /**

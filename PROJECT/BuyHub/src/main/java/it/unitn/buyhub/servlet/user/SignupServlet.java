@@ -45,7 +45,7 @@ public class SignupServlet extends HttpServlet {
             Log.error("Impossible to get dao factory for user storage system");
             throw new ServletException("Impossible to get dao factory for user storage system", ex);
         }
-        Log.info("SignupServlet init done");
+//        Log.info("SignupServlet init done");
     }
 
     /**

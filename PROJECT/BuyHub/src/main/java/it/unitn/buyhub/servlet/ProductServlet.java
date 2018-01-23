@@ -65,7 +65,7 @@ public class ProductServlet extends HttpServlet {
             Log.error("Impossible to get dao factory for product storage system");
             throw new ServletException("Impossible to get dao factory for product storage system", ex);
         }
-        Log.info("ProductServlet init done");
+//        Log.info("ProductServlet init done");
     }
 
 

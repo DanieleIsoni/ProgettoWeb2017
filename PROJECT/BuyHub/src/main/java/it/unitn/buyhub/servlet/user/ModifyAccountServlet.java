@@ -35,7 +35,7 @@ public class ModifyAccountServlet extends HttpServlet {
             throw new ServletException("Impossible to get dao factory for user storage system", ex);
         }
 
-        Log.info("ModifyAccountServlet init done");
+//        Log.info("ModifyAccountServlet init done");
     }
 
     /**

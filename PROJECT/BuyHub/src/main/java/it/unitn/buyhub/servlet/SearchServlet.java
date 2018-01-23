@@ -255,7 +255,7 @@ public class SearchServlet extends HttpServlet {
             throw new ServletException("Impossible to get dao factory for prduct storage system", ex);
         }
 
-        Log.info("SearchServlet init done");
+//        Log.info("SearchServlet init done");
 
     }
 

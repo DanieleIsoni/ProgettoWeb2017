@@ -46,7 +46,7 @@ public class RequestPasswordChangeServlet extends HttpServlet {
             Log.error("Impossible to get dao factory for user storage system");
             throw new ServletException("Impossible to get dao factory for user storage system", ex);
         }
-        Log.info("SignupServlet init done");
+//        Log.info("SignupServlet init done");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

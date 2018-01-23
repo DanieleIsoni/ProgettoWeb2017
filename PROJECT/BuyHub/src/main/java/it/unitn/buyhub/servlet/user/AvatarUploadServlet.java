@@ -43,7 +43,7 @@ public class AvatarUploadServlet extends HttpServlet {
             throw new ServletException("Impossible to get dao factory for user storage system", ex);
         }
 
-        Log.info("AvatUploadServlet init done");
+//        Log.info("AvatUploadServlet init done");
     }
 
 
