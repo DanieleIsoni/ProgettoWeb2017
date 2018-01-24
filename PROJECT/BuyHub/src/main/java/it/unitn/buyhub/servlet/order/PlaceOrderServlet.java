@@ -18,6 +18,8 @@ import it.unitn.buyhub.utils.Log;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -69,7 +71,7 @@ public class PlaceOrderServlet extends HttpServlet {
                 } else {
                     int c = Integer.valueOf(request.getParameter("shipment"));
                     Coordinate coordinate = coordinateDAO.getByPrimaryKey(c);
-                    if (coordinate.getOpening_hours().length() == 0 || coordinate.getShop().getId() != s.getId()) {
+                    if (coordinate.getOpening_hours() != null && coordinate.getOpening_hours().length() == 0 || coordinate.getShop().getId() != s.getId()) {
                         throw new Exception("Erorr: wrong shipment mode");
                     } else {
                         o.setShipment("Pickup @ " + coordinate.getAddress());
@@ -112,9 +114,9 @@ public class PlaceOrderServlet extends HttpServlet {
                 response.sendRedirect(response.encodeRedirectURL(contextPath + "cart.jsp"));
             }
         } catch (Exception ex) {
-            System.out.println(ex);
+            //System.out.println(ex);
 
-            //Logger.getLogger(PlaceOrderServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PlaceOrderServlet.class.getName()).log(Level.SEVERE, null, ex);
             Log.error("Error placing order: " + ex);
         }
     }
