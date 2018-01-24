@@ -79,9 +79,13 @@ public class OpenTicketServlet extends HttpServlet {
 
         try {
             if (owner != null && productId != null && !productId.equals("")) {
+           
                 Order order = orderDao.getByPrimaryKey(Integer.valueOf(productId));
-                if (order.getUser() == owner || owner.getCapability() == 3 || order.getShop().getOwner() == owner) {
+                
+                if (order.getUser().getId() == owner.getId() || owner.getCapability() == 3 || order.getShop().getOwner() == owner) {
+                    
                     Ticket tnew;
+                         
                     try {
                         tnew = ticketDao.getByOrder(order);
                     } catch (Exception ex2) {
