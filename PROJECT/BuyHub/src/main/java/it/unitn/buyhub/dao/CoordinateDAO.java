@@ -138,7 +138,6 @@ public interface CoordinateDAO extends DAO<Coordinate, Integer> {
      * @since 1.0.170714
      */
     public List<Coordinate> getByShop(Shop s) throws DAOException;
-    
-    
+
     public void remove(Coordinate coordinate) throws DAOException;
 }

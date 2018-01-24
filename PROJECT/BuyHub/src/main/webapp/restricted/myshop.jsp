@@ -27,20 +27,20 @@
             <div class="row">
                 <div class="col-md-4 g">
                     <gallery:Gallery></gallery:Gallery>
-                </div>
+                    </div>
 
 
                     <div class="col-md-6">
                         <div class="shop_page_name">
-                            ${myshop.name}
-                            <fmt:message key="edit_shop_info" var="esi"/>
-                            <a href="editShop.jsp" title="${esi}" id="edit_shop_btn"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                        </div>
-
-                        <div class="shop_description">
-                            ${myshop.description}
-                        </div>
+                        ${myshop.name}
+                        <fmt:message key="edit_shop_info" var="esi"/>
+                        <a href="editShop.jsp" title="${esi}" id="edit_shop_btn"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                     </div>
+
+                    <div class="shop_description">
+                        ${myshop.description}
+                    </div>
+                </div>
 
                 <div class="col-md-2">
 
@@ -105,19 +105,17 @@
                     "language": {
 
                         /*Datatable localization*/
-                        <fmt:message key="datatable_language"/>
+            <fmt:message key="datatable_language"/>
 
                     }
                 });
                 $('#orders_table').DataTable({
                     "language": {
 
-
                         /*Datatable localization*/
-                        <fmt:message key="datatable_language"/>
+            <fmt:message key="datatable_language"/>
                     }
                 });
             });
-    </script>
-    <%@include file="../common/footer.jsp" %>
-    
+        </script>
+        <%@include file="../common/footer.jsp" %>

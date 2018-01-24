@@ -21,7 +21,7 @@
             <br>
             <div class="panel panel-default panel-footer">
                 <form method="POST" id="editCoordinate-form" action="<c:url value="/EditCoordinateServlet?code=2" />">
-                    
+
                     <div class="form-group">
                         <label for="autocomplete_address"><fmt:message key="autocomplete_address"/>:</label>
                         <input type="text" name="autocomplete_address" class="form-control" id="autocomplete_address" placeholder="" onFocus="geolocate()" value="${coordinate.address}" >
@@ -29,18 +29,18 @@
 
                     <input type="hidden" name="latitude" id="latitude">
                     <input type="hidden" name="longitude" id="longitude">
-                        
+
                     <div class="form-group">
                         <label for="opening_hours"><fmt:message key="opening_hours"/></label>
                         <input type="text" name="opening_hours" class="form-control" id="opening_hours" value="${coordinate.opening_hours}">
                     </div>
-                    
+
                     <input type="hidden" name="shopId" id="shopId" value="${coordinate.shop.id}">
                     <input type="hidden" name="coordinateId" id="coordinateId" value="${coordinate.id}">
-                    
+
                     <button type="submit" class="btn btn-success"><fmt:message key="save_changes"/></button>
                 </form>
-              <br>
+                <br>
                 <div class="item_required"><fmt:message key="item_required"/></div>
 
             </div>

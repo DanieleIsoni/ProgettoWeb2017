@@ -12,7 +12,6 @@ import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.factories.DAOFactory;
 import it.unitn.buyhub.utils.Log;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 public class DeleteCoordinateServlet extends HttpServlet {
 
     private CoordinateDAO coordinateDAO;
-    
+
     public void init() throws ServletException {
         DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
         if (daoFactory == null) {
@@ -63,7 +62,7 @@ public class DeleteCoordinateServlet extends HttpServlet {
             coordinateDAO.remove(coordinate);
             response.sendRedirect(response.encodeRedirectURL(contextPath + "restricted/myshop.jsp"));
         } catch (DAOException ex) {
-            Log.error("Error deleting coordinate, "+ex);
+            Log.error("Error deleting coordinate, " + ex);
         }
     }
 

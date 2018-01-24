@@ -30,7 +30,8 @@
                 "link": "<fmt:message key="cookie_more"/>"
             }
         })
-    });
+    }
+    );
 
 </script>
 </body>

@@ -6,15 +6,12 @@
 package it.unitn.buyhub.servlet.user;
 
 import it.unitn.buyhub.dao.CoordinateDAO;
-import it.unitn.buyhub.dao.ProductDAO;
 import it.unitn.buyhub.dao.ShopDAO;
 import it.unitn.buyhub.dao.entities.Coordinate;
-import it.unitn.buyhub.dao.entities.Product;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.factories.DAOFactory;
 import it.unitn.buyhub.utils.Log;
-import it.unitn.buyhub.utils.PropertyHandler;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -30,7 +27,7 @@ public class AddCoordinateServlet extends HttpServlet {
 
     private ShopDAO shopDAO;
     private CoordinateDAO coordinateDAO;
-    
+
     @Override
     public void init() throws ServletException {
         DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
@@ -47,7 +44,7 @@ public class AddCoordinateServlet extends HttpServlet {
         }
         Log.info("AddCoordinateServlet init done");
     }
-    
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -60,23 +57,23 @@ public class AddCoordinateServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
         String address = (String) request.getParameter("autocomplete_address");
         String openingHours = (String) request.getParameter("opening_hours");
         String longitude = (String) request.getParameter("longitude");
         String latitude = (String) request.getParameter("latitude");
         int shopId = Integer.parseInt(request.getParameter("shopId"));
-        
+
         String contextPath = getServletContext().getContextPath();
         if (!contextPath.endsWith("/")) {
             contextPath += "/";
         }
-       
+
         try {
-            if(address != null && !address.equals("")){
+            if (address != null && !address.equals("")) {
                 Coordinate newCoordinate = new Coordinate();
                 newCoordinate.setAddress(address);
-                if(openingHours != null){
+                if (openingHours != null) {
                     newCoordinate.setOpening_hours(openingHours);
                 } else {
                     newCoordinate.setOpening_hours("");
@@ -85,9 +82,9 @@ public class AddCoordinateServlet extends HttpServlet {
                 newCoordinate.setLatitude(Double.valueOf(latitude));
                 newCoordinate.setLongitude(Double.valueOf(longitude));
                 Long coordinate_id = coordinateDAO.insert(newCoordinate);
-                if (coordinate_id == 0){
-                    Log.warn("Error inserting coordinate for shop "+ shopId);
-                    response.sendRedirect(response.encodeRedirectURL(contextPath+"restricted/addCoordinate.jsp?error=1&shopId="+shopId));
+                if (coordinate_id == 0) {
+                    Log.warn("Error inserting coordinate for shop " + shopId);
+                    response.sendRedirect(response.encodeRedirectURL(contextPath + "restricted/addCoordinate.jsp?error=1&shopId=" + shopId));
                 } else {
                     Log.info("Coordinate inserted correctly");
                     ((List<Coordinate>) request.getSession().getAttribute("mycoordinates")).add(newCoordinate);
@@ -95,13 +92,11 @@ public class AddCoordinateServlet extends HttpServlet {
                 }
             }
         } catch (DAOException ex) {
-            Log.error("Error creating coordinate, "+ex);
+            Log.error("Error creating coordinate, " + ex);
         }
-        
-        
+
     }
 
-    
     /**
      * Handles the HTTP <code>GET</code> method.
      *

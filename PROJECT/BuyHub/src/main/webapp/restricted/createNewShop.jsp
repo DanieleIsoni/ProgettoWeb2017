@@ -30,17 +30,17 @@
                         <label for="website"><fmt:message key="website"/>*:</label>
                         <input type="url" name="website" class="form-control" id="website" required>
                     </div>
-                        
+
                     <div class="form-group">
                         <label for="description"><fmt:message key="description"/>*:</label>
                         <textarea name="description" class="form-control" id="description" required></textarea>
                     </div>
-                        
+
                     <div class="form-group">
                         <label for="shipment"><fmt:message key="shipment_mode"/>**:</label>
                         <input type="text" name="shipment" class="form-control" id="shipment" >
                     </div>
-                        
+
                     <div class="form-group">
                         <label for="shipment_costs"><fmt:message key="shipment_costs"/>:</label>
                         <input type="number" min="0.00" step="0.01" placeholder="e.g.: 25.99" name="shipment_costs" class="form-control" id="shipment_costs" >

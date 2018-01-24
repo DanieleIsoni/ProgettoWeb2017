@@ -30,7 +30,7 @@
 
                     <input type="hidden" name="latitude" id="latitude">
                     <input type="hidden" name="longitude" id="longitude">
-                        
+
                     <div class="form-group">
                         <label for="opening_hours"><fmt:message key="opening_hours"/></label>
                         <input type="text" name="opening_hours" class="form-control" id="opening_hours">

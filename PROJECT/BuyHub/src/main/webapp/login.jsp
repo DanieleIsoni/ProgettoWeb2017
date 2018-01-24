@@ -15,7 +15,7 @@
         <title><fmt:message key="login_title"/> - BuyHub</title>
     </head>
     <body>
-        
+
         <%@include file="common/navbar.jsp" %>
         <div class="text-center login">
             <img src="images/icon.png" alt="BuyHub logo" height="42" width="42">

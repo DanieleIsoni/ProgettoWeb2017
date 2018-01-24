@@ -33,7 +33,7 @@
                 <fmt:message key="myorders_title"/> 
 
             </div>
-<<<<<<< HEAD
+            <<<<<<< HEAD
             <div class="row">
                 <table class="table table-striped table-bordered" id="users">
                     <thead>
@@ -70,58 +70,62 @@
             /*Inizializzazione tabella*/
             $(document).ready(function () {
                 $('#products_table').DataTable({
-                    "language": {
-
-                        /*Datatable localization*/
-            <fmt:message key="datatable_language"/>
-
-                    }
-                });
-=======
-                     <div class="row">
-        <table class="table table-striped table-bordered" id="users">
-          <thead>
-            <td> ID</td>
-            <td> <fmt:message key="shop_name"/></td>
-            <td> <fmt:message key="shipment_mode_singular"/></td>
-            <td> <fmt:message key="cart_total"/></td>
-            <td/> <fmt:message key="actions"/></td>
-          </thead>
-          <c:if test="${fn:length(orders) >0}">
-                <c:forEach var="i" begin="0" end="${fn:length(orders) -1}">
-                    <c:set var="order" value="${orders[i]}"/>
-                   <c:set var="total" value="${totals[i]}"/>
-                    <tr>
-                     <td>#${order.id}</td>
-                     <td>${order.shop.name}</td>
-                     <td>${order.shipment}</td>
-                     <td>&euro; <fmt:formatNumber minFractionDigits="2" maxFractionDigits="2">${total}</fmt:formatNumber></td>
-                     <td>
-                          <a href="<c:url value="openticket"/>?id_order=${order.id}" role="button" class="btn_1 but btn btn-info"><fmt:message key="ticket"/>
-                          </a>
-                     </td>
-
-
-                   </tr>
-
-                </c:forEach>
-          </c:if>
-        </table>
-      </div>
-    </div>
-                    
-           
-    <script>
-        /*Inizializzazione tabella*/
-        $(document).ready(function () {
-            $('#products_table').DataTable({
                 "language": {
 
-                    /*Datatable localization*/
-        <fmt:message key="datatable_language"/>
+                /*Datatable localization*/
+                    <fmt:message key="datatable_language"/>
 
                 }
->>>>>>> Now is required either coordinate or shipment info for creating a new shop, and is implemented the addition of new Coordinates for a shop
-            });
-        </script>   
-        <%@include file="../common/footer.jsp" %>
+                });
+                        === === =
+        <div class="row">
+        <table class="table table-striped table-bordered" id="users">
+        <thead>
+        <td> ID</td>
+                    <td> <fmt:message key="shop_name"/></td>
+                            <td> <fmt:message key="shipment_mode_singular"/></td>
+                                    <td> <fmt:message key="cart_total"/></td>
+                                    <td/> <fmt:message key="actions"/></td>
+                                    </thead>
+                                    <c:if test="${fn:length(orders) >0}">
+                                        <c:forEach var="i" begin="0" end="${fn:length(orders) -1}">
+                                            <c:set var="order" value="${orders[i]}"/>
+                                            <c:set var="total" value="${totals[i]}"/>
+                                            <tr>
+                                                <td>#${order.id}</td>
+                                                <td>${order.shop.name}</td>
+                                                <td>${order.shipment}</td>
+                                                <td>&euro; <fmt:formatNumber minFractionDigits="2" maxFractionDigits="2">${total}</fmt:formatNumber></td>
+                                                    <td>
+                                                        <a href="<c:url value="openticket"/>?id_order=${order.id}" role="button" class="btn_1 but btn btn-info"><fmt:message key="ticket"/>
+                                                            </a>
+                                                        </td>
+                
+                
+                                            </tr>
+            
+            </c:forEach>
+                                    </c:if>
+                        </table>
+                </div>
+                </div>
+                    
+                    
+                    <script>
+                /*Inizializzazione tabella*/
+                $(document).ready(function () {
+                $('#pro
+                    ducts_table').DataTable({
+                "language": {
+
+
+                /*Datatable localization*/
+                        <fmt:message key="datatable_language"/>
+
+                    }
+                    >>
+                                >>>>> Now is required eit her  coordinate or shipment info for creatin
+                                        g a n ew  shop, and is implemented the addition of new Coordinates for a shop
+                            });
+                        </script>   
+                        <%@include file="../common/footer.jsp" %>

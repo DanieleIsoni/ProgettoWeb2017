@@ -65,29 +65,29 @@
             </select>
             <form  class="navbar-form" id="search" role="search" action="<c:url value="/search.jsp"/>">
 
-                
-                    <select id="width-tmp-select">
-                        <option id="width-tmp-option"></option>
-                    </select>
-                    <form  class="navbar-form" id="search" role="search" action="<c:url value="/search.jsp"/>">
-                        <div class="input-group" id="search-input">
-                            <div class="input-group-btn search-panel">
-                                <select name="c" class="btn btn-default dropdown-toggle search-btn" id="search_category" >
-                                    <option value="-1" selected="selected"><fmt:message key="all_categories"/></option>
-                                    <nv:CategoriesPrinter  style="select"/>
-                                </select>
-                            </div>  
-                                    <input type="text" class="form-control typeahead" name="q" id="search_text"  autocomplete="off" placeholder="<fmt:message key="search"/>">
-                            <span class="input-group-btn">
-                                <button class="btn btn-default search-btn" type="submit">
-                                    <span class="glyphicon glyphicon-search"></span>
-                                </button>
-                            </span>
-                        </div>
-                    </form>
-                </div>
-            </form>
+
+                <select id="width-tmp-select">
+                    <option id="width-tmp-option"></option>
+                </select>
+                <form  class="navbar-form" id="search" role="search" action="<c:url value="/search.jsp"/>">
+                    <div class="input-group" id="search-input">
+                        <div class="input-group-btn search-panel">
+                            <select name="c" class="btn btn-default dropdown-toggle search-btn" id="search_category" >
+                                <option value="-1" selected="selected"><fmt:message key="all_categories"/></option>
+                                <nv:CategoriesPrinter  style="select"/>
+                            </select>
+                        </div>  
+                        <input type="text" class="form-control typeahead" name="q" id="search_text"  autocomplete="off" placeholder="<fmt:message key="search"/>">
+                               <span class="input-group-btn">
+                            <button class="btn btn-default search-btn" type="submit">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </span>
+                    </div>
+                </form>
         </div>
-        <!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
+        </form>
+    </div>
+    <!-- /.navbar-collapse -->
+</div><!-- /.container-fluid -->
 </nav>
