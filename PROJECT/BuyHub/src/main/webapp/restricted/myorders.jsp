@@ -88,23 +88,23 @@
             <td/> <fmt:message key="actions"/></td>
           </thead>
           <c:if test="${fn:length(orders) >0}">
-            <c:forEach var="i" begin="0" end="${fn:length(orders) -1}">
-                <c:set var="order" value="${orders[i]}"/>
-               <c:set var="total" value="${totals[i]}"/>
-                <tr>
-                 <td>#${order.id}</td>
-                 <td>${order.shop.name}</td>
-                 <td>${order.shipment}</td>
-                 <td>&euro; <fmt:formatNumber minFractionDigits="2" maxFractionDigits="2">${total}</fmt:formatNumber></td>
-                 <td>
-                      <a href="<c:url value="openticket"/>?id_order=${order.id}" role="button" class="btn_1 but btn btn-info"><fmt:message key="ticket"/>
-                      </a>
-                 </td>
+                <c:forEach var="i" begin="0" end="${fn:length(orders) -1}">
+                    <c:set var="order" value="${orders[i]}"/>
+                   <c:set var="total" value="${totals[i]}"/>
+                    <tr>
+                     <td>#${order.id}</td>
+                     <td>${order.shop.name}</td>
+                     <td>${order.shipment}</td>
+                     <td>&euro; <fmt:formatNumber minFractionDigits="2" maxFractionDigits="2">${total}</fmt:formatNumber></td>
+                     <td>
+                          <a href="<c:url value="openticket"/>?id_order=${order.id}" role="button" class="btn_1 but btn btn-info"><fmt:message key="ticket"/>
+                          </a>
+                     </td>
 
 
-               </tr>
+                   </tr>
 
-            </c:forEach>
+                </c:forEach>
           </c:if>
         </table>
       </div>

@@ -47,6 +47,8 @@
         <url-pattern>/restricted/editCoordinate.jsp</url-pattern>
         <url-pattern>/EditCoordinateServlet</url-pattern>
         <url-pattern>/DeleteCoordinateServlet</url-pattern>
+        <url-pattern>/restricted/productPictureUpload</url-pattern>
+        
     </filter-mapping>
     <filter-mapping>
         <filter-name>AuthenticationFilter</filter-name>
