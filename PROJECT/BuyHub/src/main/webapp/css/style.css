@@ -258,9 +258,12 @@ div.detailed_review_header {
     }
 }
 
-@media (max-width: 745px) {
+@media (max-width: 767px) {
     #search_category {
         width: 100px !important;
+    }
+    #search-input{
+        display: inline-table;
     }
 }
 
