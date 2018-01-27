@@ -1,4 +1,4 @@
-
+<div id="space"></div>
 <div id="footer">
     <div id="footer_inner">
         &#9400; BuyHub Inc. 2017
@@ -10,6 +10,7 @@
 <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css" />
 <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
 <script>
+    $("#space").height($(window).height()-$("body").height()+40);
     window.addEventListener("load", function () {
         window.cookieconsent.initialise({
             "palette": {
