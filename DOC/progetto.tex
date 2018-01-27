@@ -43,6 +43,8 @@ Per ogni entità presente che necessita di interazioni con il Database è stato 
 \includegraphics[width=0.3\linewidth]{img/dao}
 \end{center}
 
+Questa archietttura architettura di classi permette di poter estendere l'applicazione su qualsiasi tipo di database, semplicemente riscrivendone le classi di interfaccia con il database.
+
 \section{Struttura del database}
 
 Il database è stato strutturato per essere il più semplice possibile nell'utilizzo. \E stato strutturato secondo le principali regole di design relazionale, utilizzando chiavi esterne e indici. Sono state inoltre incluse alcune tabelle e alcuni campi superflui, utili per un'implementazione futura. Di seguito una rapida descrizione delle tabelle:
@@ -137,7 +139,14 @@ I parametri opzionali sono:
   \item \texttt{minRev}: il minimo del valore delle recensioni.
 \end{itemize}
 Il controllo sul nome del prodotto e sul range di prezzo è effettuato all'interno del DAO del prodotto (mediante SQL per il prezzo e algoritmo di Jaro-Winkler per il nome), mentre il controllo sulla categoria e sul valore minimo della media delle recensioni è effettuato mediante un predicato invocato dal metodo \texttt{removeIf} della lista prodotti.
-Oltre alla lista prodotti nel risultato sono restituiti anche il numero di pagine, il tipo di ordinamento usato e la pagina corrente.
+Oltre alla lista prodotti nel risultato sono restituiti anche il numero di pagine, il tipo di ordinamento usato e la pagina corrente. Al momento della ricezione dei risultati dal server vengono creati anche i pulsanti di navigazione tra le pagine. Questi sono realizzati dinamicamente e presentano sempre almeno 5 pulsanti (se il numero di pagine è superiore a 5). Detto $n$ il numero di pagine e $p$ la pagina corrente, i pulsanti visualizzati (in genere) sono:
+\begin{itemize}
+  \item $1$
+  \item $p-1$
+  \item $p$ - la pagina corrente
+  \item $p+1$
+  \item $n$
+\end{itemize}
 
 
 \chapter{Logging}
@@ -154,11 +163,32 @@ La cartella \texttt{\$CATALINA\_HOME} è in genere la cartella di installazione 
 Per semplificare la struttura del DB abbiamo deciso di implementare i vari punti vendita dei negozi come una relazione uno a molti tra \texttt{shop} e \texttt{coordinate}. All'interno della tabella \texttt{coordinate} abbiamo inserito il campo \texttt{opening\_hours} che contiene gli orari del punto vendita, nel caso in cui per il cliente sia disponibile il ritiro in negozio. Nel caso di negozi che effettuano soltanto vendita online questo campo resta vuoto e viene sostituito all'interno della pagina web con un messaggio che specifica le modalità di vendita solo online del negozio.
 
 \section{Carrello}
-Il carrello utente, visto come contenitore temporaneo di prodotti da acquistare è stato implementato a livello di \textit{sessione}; questo significa che i prodotti aggiunti in una sessione non saranno salvati sul database e quindi in un futuro login il carrello sarà vuoto.
+Il carrello utente, visto come contenitore temporaneo di prodotti da acquistare è stato implementato a livello di sessione: questo significa che i prodotti aggiunti in una sessione non saranno salvati sul database e quindi in un futuro login il carrello sarà vuoto. Questa tecnica ci consente inoltre di limitare il più possibile l'interazione con il database, che in caso di grande traffico potrebbe essere rallentato dalla continua aggiunta e rimozione di prodotti dal carrello dei vari utenti.
+
+\section{Privilegi degli utenti}
+Il sito prevede 3 categorie di utenti, identificati da un intero:
+\begin{itemize}
+\item 0: utente disabilitato
+\item 1: utente normale
+\item 2: utente abilitato alla gestione di un negozio
+\item 3:amministratore
+\end{itemize}
+
+Un utente amministratore non può avere negozi. Questo è, oltre che un vincolo implementativo, anche un principio di sicurezza: se un'operazione può coinvolgere 2 utenti, questi non possono essere lo stesso utente (\textit{Segregation of duties}).
+
+\section{Filtri}
+Sono stati realizzati tre filtri, che permettono di regolare l'accesso all'area riservata e alle pagine dei negozi e amminsitrative, implementando così l'autorizzazione.
+\begin{itemize}
+  \item \texttt{it.unitn.buyhub.filter.AuthenticationFilter}: controlla l'accesso alle pagine riservate agli utenti abilitati (ovvero la cartella \texttt{/restricted/}).
+  \item \texttt{it.unitn.buyhub.filter.AuthorizationFilter}: controlla che un utente non possa modificare risorse che appartengono o sono legate ad altri utenti.
+  \item \texttt{it.unitn.buyhub.filter.AdminFilter}: limita l'accesso alla sezione amministrativa  (ovvero la cartella \texttt{/restricted/admin/}) ai soli amministratori.
+\end{itemize}
+
+L'uso dei filtri permette di implementare in maniera più approfondita il pattern MVC, oltre a consentire di escludere la logica di sicurezza dalle singole pagine o servlet.
 
 \chapter{Upload/Download}
 
-L'upload dei file è stato gestito mediante la libreria \texttt{com.oreilly.servlet}, mentre il salvataggio dei file è gestito da alcuni metodi all'interno della classe \texttt{Utility}.
+L'upload dei file è stato gestito mediante la libreria \texttt{org.apache.commons.fileupload}, mentre il salvataggio dei file è gestito da alcuni metodi all'interno della classe \texttt{Utility}.
 
 In particolare, il metodo \texttt{saveJPEG} si occupa di salvare un immagine, dandogli un nome casuale basato su un UUID, convertendola a JPEG, mediante la libreria ImageIO, integrata in Java.
 Purtroppo questa libreria non gestisce correttamente le trasparenze nelle immagini PNG, e al momento, non è ancora stata trovata una soluzione per ovviare a questo problema, in quanto non è possibile dedurre se questo errore di codifica è avvenuto o no.
@@ -171,6 +201,7 @@ La scelta di utilizzare questo sistema è stata piuttosto ardua, in quanto, non 
 
 Un'altra soluzione, volendo realizzare un prodotto per il mondo reale, sono i CDN, in particolare quelli specifici per le immagini, come cloudinary.com o imgix.com. Questi servizi, però, sono in genere a pagamento e non permettono il controllo completo delle proprie immagini. Per questi motivi la scelta è ricaduta nel caricare le immagini in un path locale alla cartella di esecuzione, ma esterno al \texttt{contextPath}, in modo da preservare i file tra le diverse esecuzioni e deploy dell'applicazione.
 
+La libreria \texttt{org.apache.commons.fileupload} è stata scelta in favore della più comune \\\texttt{com.oreilly.servlet} grazie al maggiore supporto, oltre che alla presenza di versioni più recenti rispetto all'altra libreria.
 
 
 
@@ -186,7 +217,7 @@ Questo codice è poi cifrato mediante AES128 secondo una chiave segreta presente
 \]
 
 \chapter{Homepage}
-Nella homepage vengono visualizzati gli ultimi 10 prodotti inseriti nel database, sulla base dell'ID. Sopra agli ultimi prodotti è presente uno slider con alcune immagini, contenute nella cartella \texttt{images/slider\_images}. Lo slider supporta la localizzazione: carica, mediante un taghandler, tutti i file presenti nella cartella corrispondente alla lingua selezionata. Ad esempio, se la lingua è italiano, caricherà tutte le immagini presenti nella cartella \texttt{images/slider\_images/it/}.
+Nella homepage vengono visualizzati gli ultimi 10 prodotti inseriti nel database, sulla base dell'ID. Sopra agli ultimi prodotti è presente uno slider con alcune immagini, contenute nella cartella \\\texttt{images/slider\_images}. Lo slider supporta la localizzazione: carica, mediante un taghandler, tutti i file presenti nella cartella corrispondente alla lingua selezionata. Ad esempio, se la lingua è italiano, caricherà tutte le immagini presenti nella cartella \texttt{images/slider\_images/it/}.
 
 
 \chapter{Mail}
@@ -203,12 +234,6 @@ All'interno di questa classe sono implemntati diversi componenti:
 L'invio della mail è effettuato mediante la classe \texttt{javax.mail}, che effettua un collegamento \texttt{SMTP} e consegna il messaggio al server. Le credenziali di accesso al server sono ``hardcoded'' all'interno della classe, perciò è richiesto modificarle prima di eseguire l'applicazione.
 
 Abbiamo scelto di salvare le credenziali in questo modo in quanto ogni provider di posta utilizza parametri diversi per l'invio e realizzare un codice funzionante per ogni provider avrebbe causato problemi di sicurezza (ad esempio la connessione cifrata non è supportata da tutti i provider, sarebbe stato quindi necessario disabilitarla).
-
-
-
-
-\chapter{Altri capitoli}
-\chapter{Conclusioni}
 
 \chapter{Appendice}
 \section{Categorie prodotti}
