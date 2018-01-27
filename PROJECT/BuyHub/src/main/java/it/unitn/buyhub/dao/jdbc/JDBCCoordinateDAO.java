@@ -370,16 +370,30 @@ public class JDBCCoordinateDAO extends JDBCDAO<Coordinate, Integer> implements C
         }
     }
 
-    public void remove(Coordinate coordinate) throws DAOException {
+    /**
+     * Remove the coordinate passed as parameter and returns it.
+     *
+     * @param coordinate the coordinate used to remove the persistence system.
+     * @return a boolean value, true if removed.
+     * @throws DAOException if an error occurred during the action.
+     *
+     * @author Daniele Isoni
+     * @since 1.0.170425
+     */
+    @Override
+    public boolean remove(Coordinate coordinate) throws DAOException {
         try (PreparedStatement stm = CON.prepareStatement("DELETE FROM coordinates WHERE coordinates.id = ?")) {
             stm.setInt(1, coordinate.getId());
             if (stm.executeUpdate() == 1) {
                 Log.info("Coordinate " + coordinate.getId() + " deleted");
+                return true;
             } else {
                 Log.error("Error in executing delete");
+                return false;
             }
         } catch (SQLException ex) {
             throw new DAOException("Impossible to delete the coordinate", ex);
         }
     }
+    
 }

@@ -549,13 +549,26 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
 
     }
 
-    public void remove(Product product) throws DAOException {
+    /**
+     * Remove the product passed as parameter and returns it.
+     *
+     * @param product the product used to remove the persistence system.
+     * @return a boolean value, true if removed.
+     * @throws DAOException if an error occurred during the action.
+     *
+     * @author Daniele Isoni
+     * @since 1.0.170425
+     */
+    @Override
+    public boolean remove(Product product) throws DAOException {
         try (PreparedStatement stm = CON.prepareStatement("DELETE FROM products WHERE products.id = ?")) {
             stm.setInt(1, product.getId());
             if (stm.executeUpdate() == 1) {
                 Log.info("Prod " + product.getId() + " deleted");
+                return true;
             } else {
                 Log.error("Error in executing delete");
+                return false;
             }
         } catch (SQLException ex) {
             throw new DAOException("Impossible to delete the product", ex);

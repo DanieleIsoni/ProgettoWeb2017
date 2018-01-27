@@ -139,5 +139,15 @@ public interface CoordinateDAO extends DAO<Coordinate, Integer> {
      */
     public List<Coordinate> getByShop(Shop s) throws DAOException;
 
-    public void remove(Coordinate coordinate) throws DAOException;
+    /**
+     * Remove the coordinate passed as parameter and returns it.
+     *
+     * @param coordinate the coordinate used to remove the persistence system.
+     * @return a boolean value, true if removed.
+     * @throws DAOException if an error occurred during the action.
+     *
+     * @author Daniele Isoni
+     * @since 1.0.170425
+     */
+    public boolean remove(Coordinate coordinate) throws DAOException;
 }

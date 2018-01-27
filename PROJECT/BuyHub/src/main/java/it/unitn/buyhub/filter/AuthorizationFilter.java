@@ -33,7 +33,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- *
+ * It is a filter that has the purpose not to permit users to modify items owned by other users.
+ * 
  * @author Daniele Isoni
  */
 public class AuthorizationFilter implements Filter {

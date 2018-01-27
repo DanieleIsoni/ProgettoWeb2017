@@ -19,7 +19,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
+ * Shops use this servlet to edit coordinates: invoked both before and after the
+ * modifications.
+ * 
  * @author Daniele Isoni
  */
 public class EditCoordinateServlet extends HttpServlet {

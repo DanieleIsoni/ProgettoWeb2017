@@ -54,22 +54,21 @@
 
 
                 <div class="col-md-6">
-
-                    <div class="row ">
-                        <div class="link_box col-md-6 col-centered">
-                            <ul class="list-unstyled ">
-                                <li> <a href="modifyAccount.jsp" ><fmt:message key="modify_account"/></a> </li>
-                                    <c:choose>
-                                        <c:when test="${authenticatedUser.capability eq 2}">
-                                        <li><a href="myshop.jsp"><fmt:message key="myshop_page"/></a></li>
-                                        </c:when>
-                                        <c:when test="${authenticatedUser.capability < 2}">
-                                        <li><a href="createNewShop.jsp"><fmt:message key="create_shop"/></a></li>
-                                        </c:when>
-                                    </c:choose>
-                                <li> <a href="myorders"><fmt:message key="myorders_title"/></a> </li>
-                            </ul>
-                        </div>
+                    <div class="row col-centered">
+                        <a href="modifyAccount.jsp" class="btn btn-primary avatar_button"><fmt:message key="modify_account"/></a>
+                    </div>
+                    <div class="row">
+                        <c:choose>
+                            <c:when test="${authenticatedUser.capability eq 2}">
+                            <a href="myshop.jsp" class="btn btn-primary avatar_button"><fmt:message key="myshop_page"/></a>
+                            </c:when>
+                            <c:when test="${authenticatedUser.capability < 2}">
+                            <a href="createNewShop.jsp" class="btn btn-primary avatar_button"><fmt:message key="create_shop"/></a>
+                            </c:when>
+                        </c:choose>
+                    </div>
+                    <div class="row">
+                        <a href="myorders" class="btn btn-primary avatar_button"><fmt:message key="myorders_title"/></a>
                     </div>
                 </div>
 

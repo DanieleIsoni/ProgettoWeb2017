@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
+ * With this the shops can remove coordinates
  *
  * @author Daniele Isoni
  */

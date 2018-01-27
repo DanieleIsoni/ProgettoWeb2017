@@ -182,5 +182,15 @@ public interface ProductDAO extends DAO<Product, Integer> {
      */
     public List<Product> getByNameAndPriceRange(String name, double min, double max) throws DAOException;
 
-    public void remove(Product product) throws DAOException;
+    /**
+     * Remove the product passed as parameter and returns it.
+     *
+     * @param product the product used to remove the persistence system.
+     * @return a boolean value, true if removed.
+     * @throws DAOException if an error occurred during the action.
+     *
+     * @author Daniele Isoni
+     * @since 1.0.170425
+     */
+    public boolean remove(Product product) throws DAOException;
 }

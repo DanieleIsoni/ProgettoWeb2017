@@ -20,7 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
+ * This servlet allow the shop to add a new coordinate
+ * 
  * @author Daniele Isoni
  */
 public class AddCoordinateServlet extends HttpServlet {
