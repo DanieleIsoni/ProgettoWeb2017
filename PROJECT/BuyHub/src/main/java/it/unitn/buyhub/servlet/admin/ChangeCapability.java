@@ -65,7 +65,7 @@ public class ChangeCapability extends HttpServlet {
 
             if (request.getParameter("id") != null && request.getParameter("capability") != null
                     && Integer.parseInt(request.getParameter("id")) > 0
-                    && Integer.parseInt(request.getParameter("capability")) > 0
+                    && Integer.parseInt(request.getParameter("capability")) >= 0
                     && Integer.parseInt(request.getParameter("capability")) < Utility.CAPABILITY.values().length) {
 
                 User u = userDAO.getByPrimaryKey(Integer.parseInt(request.getParameter("id")));

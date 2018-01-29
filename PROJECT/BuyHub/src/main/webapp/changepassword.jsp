@@ -17,8 +17,8 @@
     </head>
     <body>
 
+        <%@include file="common/navbar.jsp" %>
         <div class="text-center login">
-            <%@include file="common/navbar.jsp" %>
             <img src="images/icon.png" alt="BuyHub logo" height="42" width="42">
             <h3><fmt:message key="changepassord_desc"/></h3>
 
