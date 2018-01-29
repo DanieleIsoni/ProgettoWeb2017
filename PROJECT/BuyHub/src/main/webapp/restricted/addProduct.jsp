@@ -15,8 +15,9 @@
         <title><fmt:message key="addProduct_title"/> - BuyHub</title>
     </head>
     <body>
-        <div class="text-center login">
+        
             <%@include file="../common/navbar.jsp" %>
+        <div class="text-center login">
             <img src="../images/icon.png" alt="BuyHub logo" height="42" width="42">
             <h3><fmt:message key="addProduct_desc"/></h3>
             <br>
