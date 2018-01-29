@@ -90,10 +90,10 @@ public class ShopMapTagHandler extends SimpleTagSupport {
                                 + "                            <td>" + coordinate.getAddress().replace("\n", "\n<br/>\n") + "</td>\n"
                                 + "                            <td>");
                         if (coordinate.getOpening_hours() != null && !coordinate.getOpening_hours().equals("")) {
-                            System.err.println("ciao");
+
                             out.println(coordinate.getOpening_hours());
                         } else {
-                            System.err.println("culo");
+
                             out.println(Utility.getLocalizedString(pageContext, "no_opening_hours"));
                         }
                         out.println(" </td>\n");
