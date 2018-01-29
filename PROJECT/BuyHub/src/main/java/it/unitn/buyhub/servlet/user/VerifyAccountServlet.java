@@ -86,6 +86,7 @@ public class VerifyAccountServlet extends HttpServlet {
                 if (!contextPath.endsWith("/")) {
                     contextPath += "/";
                 }
+                response.sendRedirect(response.encodeRedirectURL(contextPath + "login.jsp"));
             }
         } catch (Exception ex) {
             Log.info("Error in verifing user: " + ex.toString());
