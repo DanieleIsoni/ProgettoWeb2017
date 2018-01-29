@@ -50,12 +50,10 @@ public class MessagesTagHandler extends SimpleTagSupport {
             //GET messages
             try {
                 Ticket t = ticketDao.getByPrimaryKey(id);
-                System.out.println(t.getOrder().getShop().getOwner().getId() + " -> " + user.getId() + " diverso da " + t.getOrder().getUser().getId());
-
+               
                 if (t.getOrder().getUser() == user || user.getCapability() == 3 || t.getOrder().getShop().getOwner().getId() == user.getId()) {
-                    System.out.println("IDA");
+              
                     List<Message> messages = messageDao.getByTicket(t);
-                    System.out.println("ID" + messages.size());
                     String list = "";
 
                     for (Message m : messages) {
