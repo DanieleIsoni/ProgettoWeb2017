@@ -42,7 +42,7 @@
             <td> <fmt:message key="cart_total"/></td>
             <td/> <fmt:message key="actions"/></td>
           </thead>
-
+          <c:if test="${fn:length(orders) >0}">
          <c:forEach var="i" begin="0" end="${fn:length(orders) -1}">
              <c:set var="order" value="${orders[i]}"/>
             <c:set var="total" value="${totals[i]}"/>
@@ -60,6 +60,7 @@
             </tr>
 
          </c:forEach>
+            </c:if>
         </table>
       </div>
     </div>
