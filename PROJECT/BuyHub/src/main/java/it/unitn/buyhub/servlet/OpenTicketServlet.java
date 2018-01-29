@@ -79,13 +79,13 @@ public class OpenTicketServlet extends HttpServlet {
 
         try {
             if (owner != null && productId != null && !productId.equals("")) {
-           
+
                 Order order = orderDao.getByPrimaryKey(Integer.valueOf(productId));
-                
+
                 if (order.getUser().getId() == owner.getId() || owner.getCapability() == 3 || order.getShop().getOwner() == owner) {
-                    
+
                     Ticket tnew;
-                         
+
                     try {
                         tnew = ticketDao.getByOrder(order);
                     } catch (Exception ex2) {
@@ -98,9 +98,19 @@ public class OpenTicketServlet extends HttpServlet {
                         //SEND MAIL NEW TICKET
                         PropertyHandler ph = PropertyHandler.getInstance();
                         String baseUrl = ph.getValue("baseUrl");
-                        Mailer.mail(ph.getValue("noreplyMail"), owner.getEmail(), "Opened ticket", "Opened ticket", baseUrl + "restricted/ticket.jsp?id=" + tnew.getId(), "Take a look on BuyHub");
-                        Mailer.mail(ph.getValue("noreplyMail"), order.getShop().getOwner().getEmail(), "Opened ticket", "Opened ticket", baseUrl + "restricted/ticket.jsp?id=" + tnew.getId(), "Take a look on BuyHub");
-                        Mailer.mailToAdmins(ph.getValue("noreplyMail"), "Opened ticket", "Opened ticket", baseUrl + "restricted/ticket.jsp?id=" + tnew.getId(), "Take a look on BuyHub", getServletContext());
+
+                        Mailer.mail(ph.getValue("noreplyMail"), owner.getEmail(), "Opened ticket", "Hi, <br/>\n you have succesfully opened"
+                                + " a new ticket referring order #" + tnew.getOrder().getId() + " on shop "
+                                + tnew.getOrder().getShop().getName() + ".", baseUrl + "restricted/ticket.jsp?id=" + tnew.getId(), "Take a look on BuyHub");
+
+                        Mailer.mail(ph.getValue("noreplyMail"), order.getShop().getOwner().getEmail(), "Opened ticket",
+                                "Hi,\n<br/> " + tnew.getOrder().getUser().getFirstName() + " " + tnew.getOrder().getUser().getLastName()
+                                + "opened a new ticket on your shop, referring order #" + tnew.getOrder().getId() + ".", baseUrl + "restricted/ticket.jsp?id=" + tnew.getId(), "Take a look on BuyHub");
+
+                        Mailer.mailToAdmins(ph.getValue("noreplyMail"),
+                                "Opened ticket", "Hi,\n<br/> " + tnew.getOrder().getUser().getFirstName() + " " + tnew.getOrder().getUser().getLastName()
+                                + "opened a new ticket, referring order #" + tnew.getOrder().getId() + " on shop "
+                                + tnew.getOrder().getShop().getName() + ".", baseUrl + "restricted/ticket.jsp?id=" + tnew.getId(), "Take a look on BuyHub", getServletContext());
                         //ADD notification to shop
 
                         Notification not = new Notification();

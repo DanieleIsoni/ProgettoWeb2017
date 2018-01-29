@@ -57,8 +57,8 @@ public class Mailer {
 
         //Invoke the runnable to send the mail
         //Commented for testing purposes
-        //  new RunnableMailer(from, to, subject, body, url, button_txt).run();
-        Log.info("Send mail to" + to + ", subject: " + subject + ", url:" + url + ", body: " + body);
+        //new RunnableMailer(from, to, subject, body, url, button_txt).run();
+        Log.info("Send mail to " + to + ", subject: " + subject + ", url:" + url + ", body: " + body);
     }
 
     /*
@@ -444,7 +444,7 @@ public class Mailer {
                 + "                  <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\">\n"
                 + "                    <tr>\n"
                 + "                      <td>\n"
-                + "                        <p>Hi there,</p>\n"
+                //+ "                        <p>Hi there,</p>\n"
                 + "                        <p>" + content + "</p>\n";
         if (url != null && url != "") {
             s += "                        <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"btn btn-primary\">\n"

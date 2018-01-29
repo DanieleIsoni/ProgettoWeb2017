@@ -1,15 +1,20 @@
 package it.unitn.buyhub.servlet.admin;
 
+import it.unitn.buyhub.dao.NotificationDAO;
 import it.unitn.buyhub.dao.ShopDAO;
 import it.unitn.buyhub.dao.UserDAO;
+import it.unitn.buyhub.dao.entities.Notification;
 import it.unitn.buyhub.dao.entities.Shop;
 import it.unitn.buyhub.dao.entities.User;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.factories.DAOFactory;
 import it.unitn.buyhub.utils.Log;
+import it.unitn.buyhub.utils.Mailer;
+import it.unitn.buyhub.utils.PropertyHandler;
 import it.unitn.buyhub.utils.Utility;
 import java.io.IOException;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -34,6 +39,7 @@ public class EnableShop extends HttpServlet {
      */
     private ShopDAO shopDAO;
     private UserDAO userDAO;
+    private NotificationDAO notificationDAO;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -49,6 +55,7 @@ public class EnableShop extends HttpServlet {
         try {
             shopDAO = daoFactory.getDAO(ShopDAO.class);
             userDAO = daoFactory.getDAO(UserDAO.class);
+            notificationDAO = daoFactory.getDAO(NotificationDAO.class);
 
         } catch (DAOFactoryException ex) {
             Log.error("Impossible to get dao factory for shop storage system");
@@ -82,6 +89,22 @@ public class EnableShop extends HttpServlet {
 
                 shopDAO.update(shop);
                 Log.info("Shop " + id + ": validity set to " + status);
+
+                PropertyHandler ph = PropertyHandler.getInstance();
+                String noreply = ph.getValue("noreplyMail");
+                String baseurl = ph.getValue("baseUrl");
+
+                String body = "Hi " + shop.getOwner().getFirstName() + ",\n<br/"
+                        + "your shop on BuyHub has been enabled."
+                        + "<br/> Now you can sell products!";
+                Mailer.mail(noreply, shop.getOwner().getEmail(), "Shop enabled", body, baseurl, "Take a look on BuyHub");
+
+                Notification not = new Notification();
+                not.setUser(shop.getOwner());
+                not.setStatus(false);
+                not.setDateCreation(new Date());
+                not.setDescription("Shop enabled!");
+                notificationDAO.insert(not);
 
                 response.sendRedirect(response.encodeRedirectURL("shops"));
             }
