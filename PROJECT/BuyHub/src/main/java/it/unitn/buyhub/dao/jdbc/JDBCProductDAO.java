@@ -229,7 +229,7 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
             throw new DAOException("shop is null");
         }
         List<Product> products = new ArrayList<>();
-        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM products WHERE id_shop = ?")) {
+        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM products WHERE id_shop = ? ORDER BY id")) {
             stm.setInt(1, shop.getId());
             try (ResultSet rs = stm.executeQuery()) {
 
@@ -334,7 +334,7 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
     public List<Product> getAllLimit(int number) throws DAOException {
 
         List<Product> products = new ArrayList<>();
-        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM products ORDER BY id DESC LIMIT ?")) {
+        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM products ORDER BY name DESC LIMIT ?")) {
             stm.setInt(1, number);
             try (ResultSet rs = stm.executeQuery()) {
 
@@ -389,7 +389,7 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
     @Override
     public List<Product> getAllWithPriceRange(double min, double max) throws DAOException {
         List<Product> products = new ArrayList<>();
-        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM products WHERE price >= ? AND price <= ?")) {
+        try (PreparedStatement stm = CON.prepareStatement("SELECT * FROM products WHERE price >= ? AND price <= ? ORDER BY name")) {
             stm.setDouble(1, min);
             stm.setDouble(2, max);
             try (ResultSet rs = stm.executeQuery()) {
