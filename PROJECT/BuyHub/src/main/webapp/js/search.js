@@ -145,7 +145,7 @@ function cerca_pagina(p)
                     console.log(i + "," + f)
                     //stampo il primo
                     if (1 != msg.p)
-                        s += "<button type='button' class='btn btn-secondary'>" + 1 + "</button>";
+                        s += "<button type='button' class='btn btn-secondary' onclick=\"cerca_pagina(" + 1 + ")\">" + 1 + "</button>";
                     else
                         s += "<button type='button' class='btn btn-primary' disabled>" + 1 + "</button>";
 
