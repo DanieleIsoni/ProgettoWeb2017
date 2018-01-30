@@ -267,6 +267,10 @@ div.detailed_review_header {
     }
 }
 
+.media-body{
+    width: 100%;
+}
+
 #search_category {
     width: 180px;
 }

@@ -16,7 +16,7 @@
         <%@include file="common/navbar.jsp" %>
         <div class="container">
             <div class="row">
-                <div class="col-xs-3 well center">
+                <div class="col-xs-12 col-sm-3 well center">
                     <!-- Filters -->
                     <h2><fmt:message key="filter"/></h2>
                     <br>
@@ -64,7 +64,7 @@
 
 
                 </div>
-                <div class="col-xs-9" id="products">
+                <div class="col-xs-12 col-sm-9" id="products">
                     <!-- Product list -->
                 </div>
             </div>

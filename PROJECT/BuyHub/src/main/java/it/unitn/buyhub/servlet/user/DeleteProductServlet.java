@@ -1,12 +1,15 @@
 package it.unitn.buyhub.servlet.user;
 
+import it.unitn.buyhub.dao.PictureDAO;
 import it.unitn.buyhub.dao.ProductDAO;
+import it.unitn.buyhub.dao.entities.Picture;
 import it.unitn.buyhub.dao.entities.Product;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.factories.DAOFactory;
 import it.unitn.buyhub.utils.Log;
 import java.io.IOException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 public class DeleteProductServlet extends HttpServlet {
 
     private ProductDAO productDAO;
+    private PictureDAO pictureDAO;
 
     public void init() throws ServletException {
         DAOFactory daoFactory = (DAOFactory) super.getServletContext().getAttribute("daoFactory");
@@ -28,6 +32,7 @@ public class DeleteProductServlet extends HttpServlet {
             throw new ServletException("Impossible to get dao factory for product storage system");
         }
         try {
+            pictureDAO = daoFactory.getDAO(PictureDAO.class);
             productDAO = daoFactory.getDAO(ProductDAO.class);
         } catch (DAOFactoryException ex) {
             Log.error("Impossible to get dao factory for product storage system");
@@ -54,9 +59,18 @@ public class DeleteProductServlet extends HttpServlet {
             contextPath += "/";
         }
         try {
+            boolean done = true;
             Product product = productDAO.getByPrimaryKey(prodId);
-            productDAO.remove(product);
-            response.sendRedirect(response.encodeRedirectURL(contextPath + "restricted/myshop.jsp"));
+            List<Picture> pictures = pictureDAO.getByProduct(product);
+            for(Picture p: pictures){
+                done = done && pictureDAO.removeProductPicture(product, p);
+            }
+            if(done){
+                productDAO.remove(product);
+                response.sendRedirect(response.encodeRedirectURL(contextPath + "restricted/myshop.jsp"));
+            } else {
+                response.sendRedirect(response.encodeRedirectURL(contextPath + "common/error.jsp"));
+            }
         } catch (DAOException ex) {
             Log.error("Error deleting product, " + ex);
         }

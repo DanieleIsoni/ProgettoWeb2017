@@ -154,4 +154,6 @@ public interface PictureDAO extends DAO<Picture, Integer> {
      * @since 1.0.170425
      */
     public List<Picture> getByShop(Shop shop) throws DAOException;
+    
+    public boolean removeProductPicture(Product product, Picture picture) throws DAOException;
 }

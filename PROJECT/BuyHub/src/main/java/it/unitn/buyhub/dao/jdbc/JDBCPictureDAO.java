@@ -14,6 +14,7 @@ import it.unitn.buyhub.dao.entities.User;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOException;
 import it.unitn.buyhub.dao.persistence.exceptions.DAOFactoryException;
 import it.unitn.buyhub.dao.persistence.jdbc.JDBCDAO;
+import it.unitn.buyhub.utils.Log;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -437,5 +438,35 @@ public class JDBCPictureDAO extends JDBCDAO<Picture, Integer> implements Picture
             }
             throw new DAOException("Impossible to persist the new pictures", ex);
         }
+    }
+    
+    @Override
+    public boolean removeProductPicture(Product product, Picture picture) throws DAOException {
+        try (PreparedStatement stm2 = CON.prepareStatement("DELETE FROM pictures_products WHERE pictures_products.id_product = ? AND pictures_products.id_picture = ?")) {
+                    stm2.setInt(1, product.getId());
+                    stm2.setInt(2, picture.getId());
+                    if (stm2.executeUpdate() == 1) {
+                        Log.info("Picture_product (prodId: " + product.getId() + ", picId: " + picture.getId() + ") deleted");
+                        
+                        try (PreparedStatement stm = CON.prepareStatement("DELETE FROM pictures WHERE pictures.id = ?")) {
+                            stm.setInt(1, picture.getId());
+                            if (stm.executeUpdate() == 1) {
+                                Log.info("Picture " + picture.getId() + " deleted");
+                                return true;
+                            } else {
+                                Log.error("Error in executing delete");
+                                return false;
+                            }
+                        } catch (SQLException ex) {
+                            throw new DAOException("Impossible to delete the picture", ex);
+                        }
+                    } else {
+                        Log.error("Error in executing delete");
+                        return false;
+                    }
+                } catch (SQLException ex) {
+                    throw new DAOException("Impossible to delete the picture_product", ex);
+                }
+        
     }
 }

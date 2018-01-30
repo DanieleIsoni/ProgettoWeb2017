@@ -64,9 +64,11 @@ public class ShopMapTagHandler extends SimpleTagSupport {
             }
             String markers = "var markers=[";
             String details = "var details=[";
-            
+           
             out.println("<div class=\"row maps\">");
-            out.println("<div class=\"row where_we_are\">" + Utility.getLocalizedString(pageContext, "where_we_are") + "</div>");
+            if(owner){
+                out.println("<div class=\"row where_we_are\">" + Utility.getLocalizedString(pageContext, "where_we_are") + "</div>");
+            }
 
             out.println("<div class=\"row\">");
 
