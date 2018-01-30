@@ -116,6 +116,13 @@
             <fmt:message key="datatable_language"/>
                     }
                 });
+                $('#coordinates_table').DataTable({
+                    "language": {
+
+                        /*Datatable localization*/
+            <fmt:message key="datatable_language"/>
+                    }
+                });
             });
         </script>
         <%@include file="../common/footer.jsp" %>

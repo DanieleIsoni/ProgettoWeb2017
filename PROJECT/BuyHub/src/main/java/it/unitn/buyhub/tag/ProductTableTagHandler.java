@@ -64,7 +64,7 @@ public class ProductTableTagHandler extends SimpleTagSupport {
                     + "                    <td> " + Utility.getLocalizedString(pageContext, "price") + "</td>\n");
             if (owner) {
                 out.println("<td>\n"
-                        + "                        <a href=\"addProduct.jsp?shopId=" + shopId + "\" title=\"" + Utility.getLocalizedString(pageContext, "add_product") + "\" class=\"btn btn-primary a-btn-slide-text mybtn\">\n"
+                        + "                        <a href=\"addProduct.jsp?shopId=" + shopId + "\" title=\"" + Utility.getLocalizedString(pageContext, "add") + "\" class=\"btn btn-primary a-btn-slide-text mybtn\">\n"
                         + "                            <span class=\"glyphicon myglyph glyphicon-plus\" aria-hidden=\"true\"></span>          \n"
                         + "                        </a>\n"
                         + "                    </td>\n");
@@ -73,9 +73,13 @@ public class ProductTableTagHandler extends SimpleTagSupport {
             out.println("</thead>");
             if (products != null) {
                 for (Product product : products) {
-                    out.println("<tr>\n"
-                            + "                            <td><a href=\"product?id=" + product.getId() + "\"/>" + product.getName() + "</a></td>\n"
-                            + "                            <td>" + Utility.getCategory(pageContext, product.getCategory()) + " </td>\n"
+                    out.println("<tr>\n");
+                    if(owner){
+                        out.println("                            <td><a href=\"../product?id=" + product.getId() + "\"/>" + product.getName() + "</a></td>\n");
+                    } else {
+                        out.println("                            <td><a href=\"product?id=" + product.getId() + "\"/>" + product.getName() + "</a></td>\n");
+                    }
+                    out.println("                            <td>" + Utility.getCategory(pageContext, product.getCategory()) + " </td>\n"
                             + "                            <td>\n"
                             + "                                € " + String.format("%.2f", product.getPrice()) + "\n"
                             + "                            </td>\n");

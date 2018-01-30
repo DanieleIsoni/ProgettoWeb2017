@@ -445,8 +445,8 @@ public class JDBCProductDAO extends JDBCDAO<Product, Integer> implements Product
             std.setString(1, product.getName());
             std.setString(2, product.getDescription());
             std.setDouble(3, product.getPrice());
-            std.setInt(4, product.getCategory());
-            std.setInt(5, product.getShop().getId());
+            std.setInt(4, product.getShop().getId());
+            std.setInt(5, product.getCategory());
             std.setInt(6, product.getId());
 
             if (std.executeUpdate() == 1) {

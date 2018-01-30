@@ -83,6 +83,7 @@ public class EditProductServlet extends HttpServlet {
                     if (!description.equals(product.getDescription())) {
                         product.setDescription(description);
                     }
+                    Log.info("prodID = " +  product.getId());
                     productDAO.update(product);
                     List<Product> products = productDAO.getByShop(product.getShop());
                     request.getSession().setAttribute("myproducts", products);

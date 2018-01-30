@@ -64,27 +64,30 @@ public class ShopMapTagHandler extends SimpleTagSupport {
             }
             String markers = "var markers=[";
             String details = "var details=[";
-            if (coordinates != null && coordinates.size() != 0) {
-                out.println("<div class=\"row maps\">");
-                out.println("<div class=\"row where_we_are\">" + Utility.getLocalizedString(pageContext, "where_we_are") + "</div>");
+            
+            out.println("<div class=\"row maps\">");
+            out.println("<div class=\"row where_we_are\">" + Utility.getLocalizedString(pageContext, "where_we_are") + "</div>");
 
-                out.println("<div class=\"row\">");
+            out.println("<div class=\"row\">");
 
-                if (owner) {
+            if (owner) {
+                if (coordinates != null && coordinates.size() != 0) {
                     out.println("<div class=\" map-wrapper \" >");
                     out.println("<div class=\" map \" id=\"map\"></div>");
+                }
 
-                    out.println("</div>");
-                    out.println("<div class=\"row\">\n"
-                            + "                <table class=\"table table-striped table-bordered\" id=\"coordinates_table\">\n"
-                            + "                    <thead>\n"
-                            + "                    <td> " + Utility.getLocalizedString(pageContext, "address") + "</td>\n"
-                            + "                    <td> " + Utility.getLocalizedString(pageContext, "opening_hours") + "</td>\n"
-                            + "                    <td> <a href=\"addCoordinate.jsp?shopId=" + shopId + "\" title=\"" + Utility.getLocalizedString(pageContext, "add") + "\" class=\"btn btn-primary a-btn-slide-text mybtn\">\n"
-                            + "                            <span class=\"glyphicon myglyph glyphicon-plus\" aria-hidden=\"true\"></span>          \n"
-                            + "                         </a>"
-                            + "</td>\n");
-                    out.println("</thead>");
+                out.println("</div>");
+                out.println("<div class=\"row\">\n"
+                        + "                <table class=\"table table-striped table-bordered\" id=\"coordinates_table\">\n"
+                        + "                    <thead>\n"
+                        + "                    <td> " + Utility.getLocalizedString(pageContext, "address") + "</td>\n"
+                        + "                    <td> " + Utility.getLocalizedString(pageContext, "opening_hours") + "</td>\n"
+                        + "                    <td> <a href=\"addCoordinate.jsp?shopId=" + shopId + "\" title=\"" + Utility.getLocalizedString(pageContext, "add") + "\" class=\"btn btn-primary a-btn-slide-text mybtn\">\n"
+                        + "                            <span class=\"glyphicon myglyph glyphicon-plus\" aria-hidden=\"true\"></span>          \n"
+                        + "                         </a>"
+                        + "</td>\n");
+                out.println("</thead>");
+                if (coordinates != null && coordinates.size() != 0) {
                     for (Coordinate coordinate : coordinates) {
                         out.println("<tr>\n"
                                 + "                            <td>" + coordinate.getAddress().replace("\n", "\n<br/>\n") + "</td>\n"
@@ -110,9 +113,11 @@ public class ShopMapTagHandler extends SimpleTagSupport {
                         markers += "[''," + coordinate.getLatitude() + "," + coordinate.getLongitude() + "],\n";
                         details += "`" + coordinate.getAddress() + "`, ";
                     }
-                    out.println("</table></div>");
+                }
+                out.println("</table></div>");
 
-                } else {
+            } else {
+                if (coordinates != null && coordinates.size() != 0) {
                     out.println("<div class=\" map-wrapper col-md-9\" >");
                     out.println("<div class=\" map col-md-9\" id=\"map\"></div>");
 
@@ -136,14 +141,13 @@ public class ShopMapTagHandler extends SimpleTagSupport {
                     }
                     out.println("</div>");
                 }
-
-                out.println("</div>");
-                out.println("</div>");//fine div globale
-
-                out.println("<script>\n" + markers + "];\n" + details + "];</script>");
-                out.println("<script src=\"" + Utility.getUrl(pageContext, "js/ShopMaps.js") + "\"></script>");
-
             }
+
+            out.println("</div>");
+            out.println("</div>");//fine div globale
+
+            out.println("<script>\n" + markers + "];\n" + details + "];</script>");
+            out.println("<script src=\"" + Utility.getUrl(pageContext, "js/ShopMaps.js") + "\"></script>");
 
         } catch (java.io.IOException ex) {
             throw new JspException("Error in ShopMapTagHandler tag", ex);

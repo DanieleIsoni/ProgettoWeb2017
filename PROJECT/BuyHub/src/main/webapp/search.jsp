@@ -32,9 +32,9 @@
                         <br/>
                         <h4><fmt:message key="orderby"/></h4>
                         <select class="form-control" id="orderby">
-                            <option value="0" selected><fmt:message key="name"/> (A-Z)</option>
+                            <option value="0"><fmt:message key="name"/> (A-Z)</option>
                             <option value="1"><fmt:message key="name"/> (Z-A)</option>
-                            <option value="2"><fmt:message key="price_asc"/></option>
+                            <option value="2" selected><fmt:message key="price_asc"/></option>
                             <option value="3"><fmt:message key="price_desc"/></option>
                             <option value="4"><fmt:message key="better_avg"/></option>
                             <option value="5"><fmt:message key="most_review"/></option>

@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="err" uri="/WEB-INF/tld/errors.tld" %>
 
 <!DOCTYPE html>
 <html>
