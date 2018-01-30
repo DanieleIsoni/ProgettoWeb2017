@@ -690,3 +690,11 @@ div.box
     margin: 2px;
     width: 150px;
 }
+
+
+@media (max-width: 767px) {
+    .slideshow_arrows
+    {
+        display: none;
+    }
+}
