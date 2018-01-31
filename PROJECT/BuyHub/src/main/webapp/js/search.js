@@ -102,10 +102,10 @@ function cerca_pagina(p)
                     //genero il prodotto
                     var s = "<div class='row search_item'>\n";
                     s += "<div class='media'>";
-                    s += "<div class='media-left col-xs-12'>";
+                    s += "<div class='media-left col-xs-6 col-sm-6 col-lg-4'>";
                     s += "<div class='search_img_box'><a href='product?id=" + p.id + "'><img class='media-object img-rounded img-responsive col-xs-12' src='" + p.mainPicture.path + "' alt='" + p.name + "'/></a></div>";
                     s += "</div>";
-                    s += "<div class='media-body col-xs-12'>";
+                    s += "<div class='media-body col-xs-6 col-sm-6 col-lg-8'>";
                     s += "<h4 class='media-heading'><a href='product?id=" + p.id + "'>" + p.name + "</a></h4>\n";
                     s += "<div class='item_price'>€ " + Number(p.price).toFixed(2);
                     +"</div><br/>\n";

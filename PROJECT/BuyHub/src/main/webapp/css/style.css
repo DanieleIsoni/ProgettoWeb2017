@@ -267,8 +267,21 @@ div.detailed_review_header {
     }
 }
 
+.media{
+    display: flex;
+}
+
 .media-body{
     width: 100%;
+}
+
+@media (max-width: 576px){
+    .media{
+        display: block;
+    }
+    .media-body{
+        margin-top: 10px;
+    }
 }
 
 #search_category {
